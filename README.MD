@@ -1,5 +1,7 @@
 # Vue Stencils
 
+[![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 This project contains all of the tasks I need to do to make tooling for web development with Vue.js. Think of it like a [parts bin](https://www.youtube.com/watch?t=204&v=4E793WS72aU&feature=youtu.be) for the pieces of code I use to make sites work.
 
 The goals of this project are to:
