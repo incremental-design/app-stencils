@@ -1,0 +1,32 @@
+# Vue Stencils
+
+This project contains all of the tasks I need to do to make tooling for web development with Vue.js. Think of it like a [parts bin](https://www.youtube.com/watch?t=204&v=4E793WS72aU&feature=youtu.be) for the pieces of code I use to make sites work.
+
+The goals of this project are to:
+
+- Make a set of reusable pieces of code
+- Improve the performance and reliability of the code over time
+- reduce the amount of time fixing issues with websites that use the code
+
+# Roadmap
+
+| Release | Goal:                                                                                                                        | Git Commit |
+| ------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| 1.0     | Set up a monorepo using Lerna. Then, add packages containing typescript and vue snippets for [Panic Nova.](https://nova.app) |            |
+| 1.1     | Make a vue component that plays video with an alpha channel.                                                                 |            |
+| 1.2     | Make a vue component for tabs.                                                                                               |            |
+| 1.3     | Make a vue component that morphs SVGs.                                                                                       |            |
+
+# Versioning
+
+This project uses **semantic versioning.** That means that this project is structured into **releases.** A release is a version of the project that adds new features, changes existing features or replaces old features. There are three types of releases:
+
+- Major
+- Minor
+- Patch
+
+Each major release replaces one or more old features.
+
+Each minor release adds one new feature.
+
+Each patch improves one new feature.
