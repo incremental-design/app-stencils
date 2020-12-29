@@ -1,0 +1,22 @@
+{
+  "clips" : [
+    {
+      "content" : "$AUTHOR_NAME",
+      "name" : "User Signature",
+      "trigger" : "usersig"
+    },
+    {
+      "name" : "Group Name",
+      "children" : [
+        {
+          "content" : "console.log(${:message})",
+          "name" : "Console Log",
+          "scope" : "editor",
+          "shortcut" : "cmd-alt-shift-l",
+          "syntax" : "javascript",
+          "trigger" : "log"
+        }
+      ]
+    }
+  ]
+}
