@@ -32,3 +32,20 @@ Each major release replaces one or more old features.
 Each minor release adds one new feature.
 
 Each patch improves one new feature.
+
+# Developing
+
+1. Navigate to the root of this repository.
+2. Run `lerna bootstrap`. This will install all of the new dependencies.
+
+- 🤔 `lerna bootstrap` replaces `yarn install`.
+- 🛑 Do NOT run `yarn install` in any of these repositories.
+
+2. Run `lerna run compile` to compile all of the typescript code in each package.
+
+# Publishing
+
+1. Navigate to the root of this repository.
+2. Run `lerna publish`. Lerna will ask you if you are publishing a patch, minor release or major release.
+
+- ⚠️ Once you publish a package to `npm`, it's _really_ hard to unpublish it. Do not publish unless you are absolutely sure you want to do so.
