@@ -7,7 +7,7 @@
       "message": "chore(release) publish"
     },
     "bootstrap": {
-      "npmClientArgs": ["--no-lockfile"]
+      "npmClientArgs": []
     }
   },
   "packages": ["packages/**"]
