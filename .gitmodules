@@ -1,0 +1,3 @@
+[submodule "template-repos/vue3-web-app-template"]
+	path = template-repos/vue3-web-app-template
+	url = https://designbyajay@github.com/incremental-design/web-app-template.git
