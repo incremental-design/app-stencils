@@ -43,6 +43,43 @@ Each patch improves one new feature.
 
 2. Run `lerna run compile` to compile all of the typescript code in each package.
 
+# Committing
+
+This repository uses [commitlint](https://commitlint.js.org/#/reference-configuration?id=prompt). It will not let you commit your changes unless your commit message contains the following:
+
+1. a **type**. A type is an indicator of what kinds of changes a commit contains. The types of commits are:
+
+   | Type       | When to use it:                                |
+   | :--------- | :--------------------------------------------- |
+   | `chore`    | Whenever you make a change to the tooling      |
+   | `docs`     | Whenever you make a change to the README       |
+   | `feat`     | Whenever you add a new feature                 |
+   | `fix`      | Whenever you fix a bug                         |
+   | `perf`     | Whenever you make something faster             |
+   | `refactor` | Whenever you change how your code is organized |
+   | `test`     | Whenever you write a unit test                 |
+
+2. a **subject**. A subject is a one-sentence description of the changes to a commit.
+
+3. a **body**. A body is a list of the changes you made, split up by files changed and commands run. Think of it like a 'table of contents' for your commit.
+   - You MUST begin your commit body with a blank line, or commitlint will complain.
+
+Here is an example commit:
+
+```
+feat: Add the widget to the doohicky
+```
+
+```
+
+1. added the dinglebopper to the blamf.
+2. cut the fleeb.
+3. Chumble the hizzards.
+4. Make the plumbus.
+
+See: https://www.youtube.com/watch?v=eMJk4y9NGvE
+```
+
 # Publishing
 
 1. Navigate to the root of this repository.
