@@ -80,6 +80,10 @@ feat: Add the widget to the doohicky
 See: https://www.youtube.com/watch?v=eMJk4y9NGvE
 ```
 
+If you are using a git client, such as [Tower](https://www.git-tower.com/mac?gclid=CjwKCAjwt8uGBhBAEiwAayu_9alH0wnniAyMva6TGRRNLtSv2kftMmfa6egH1qzrEa7xFAnCXco24RoCoWYQAvD_BwE), it won't have access to your `$PATH`. When it tries to run the git hooks, it will fail, because some of the commands require access to `$PATH`. You can provide access to your `$PATH` as follows:
+
+- [Add `$PATH to Tower`](https://www.git-tower.com/help/guides/integration/environment/mac)
+
 # Publishing
 
 1. Navigate to the root of this repository.
