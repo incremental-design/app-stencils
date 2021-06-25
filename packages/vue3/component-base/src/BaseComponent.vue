@@ -6,7 +6,7 @@
 import { Options, Vue } from 'vue-class-component';
 
 @Options({})
-export default class App extends Vue {}
+export default class BaseComponent extends Vue {}
 </script>
 
 <style lang="less">

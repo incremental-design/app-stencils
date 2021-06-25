@@ -1,9 +1,16 @@
 {
-  "name": "component-base",
-  "version": "0.1.0",
-  "private": true,
+  "name": "@incremental.design/vue3-component-base",
+  "version": "0.0.0",
+  "description": "base component that every other `@incremental.design/vue3-component-*` extends.",
+  "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
+  "license": "MIT",
+  "main": "dist/component-base.common.js",
+  "module": "src/BaseComponent.vue",
+  "types": "./dist/types/BaseComponent.vue.d.ts",
+  "sideEffects": true,
+  "private": false,
   "scripts": {
-    "build": "vue-cli-service build --target lib --modern --name component-base src/BaseComponent.vue"
+    "build": "vue-cli-service build --target lib --modern --name component-base src/BaseComponent.vue && rm -rf ./node_modules/.cache"
   },
   "dependencies": {
     "core-js": "^3.6.5",
