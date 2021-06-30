@@ -1,6 +1,7 @@
 node_modules
 tsconfig.tsbuildinfo
 .DS_Store
+package-lock.json
 
 # local env files
 **.env.local
