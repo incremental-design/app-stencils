@@ -92,15 +92,15 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 
 Lerna _mostly_ automates the chores of developing in a monorepo. But it does replace some of the more familiar commands you might be used to:
 
-| Task                                                                                                                 | NPM Command                        | Yarn Command               | Lerna Command               |
-| :------------------------------------------------------------------------------------------------------------------- | :--------------------------------- | :------------------------- | :-------------------------- |
-| Build Package with Webpack                                                                                           | `npm run build`                    | `yarn build`               | `lerna run build`           |
-| Install the packages listed in `package.json`                                                                        | `npm install`                      | `yarn install`             | `lerna bootstrap`           |
-| Delete `node_modules`                                                                                                | `rm -rf ./node_modules`            | `rm -rf ./node_modules`    | `lerna clean`               |
-| Add a [dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) to `package.json`        | `npm install <package>`            | `yarn add <package>`       | `lerna add <package>`       |
-| Add a [dev dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) to `package.json` | `npm install --save-dev <package>` | `yarn add --dev <package>` | `lerna add --dev <package>` |
-| Run the source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)    | `npm run serve`                    | `yarn serve`               | `lerna run serve`           |
-| Run unit tests                                                                                                       | `npm run test:unit`                | `yarn test:unit`           | `lerna run test:unit`       |
+| Task                                                                                                                 | Lerna Command               | NPM Command                        | Yarn Command               |
+| :------------------------------------------------------------------------------------------------------------------- | --------------------------- | :--------------------------------- | :------------------------- |
+| Build Package with Webpack                                                                                           | `lerna run build`           | `npm run build`                    | `yarn build`               |
+| Install the packages listed in `package.json`                                                                        | `lerna bootstrap`           | `npm install`                      | `yarn install`             |
+| Delete `node_modules`                                                                                                | `lerna clean`               | `rm -rf ./node_modules`            | `rm -rf ./node_modules`    |
+| Add a [dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) to `package.json`        | `lerna add <package>`       | `npm install <package>`            | `yarn add <package>`       |
+| Add a [dev dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) to `package.json` | `lerna add --dev <package>` | `npm install --save-dev <package>` | `yarn add --dev <package>` |
+| Run the source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)    | `lerna run serve`           | `npm run serve`                    | `yarn serve`               |
+| Run unit tests                                                                                                       | `lerna run test:unit`       | `npm run test:unit`                | `yarn test:unit`           |
 
 The reason that Lerna provides its own commands is because it actually runs the corresponding yarn or NPM command in _every_ package in the repository. Without Lerna, you would have to go to each directory and manually run said command. In a monorepo with dozens of packages, this saves a lot of time!
 
