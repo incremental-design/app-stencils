@@ -110,15 +110,15 @@ This repository uses [commitlint](https://commitlint.js.org/#/reference-configur
 
 1. a **type**. A type is an indicator of what kinds of changes a commit contains. The types of commits are:
 
-   | Type       | When to use it:                                |
-   | :--------- | :--------------------------------------------- |
-   | `chore`    | Whenever you make a change to the tooling      |
-   | `docs`     | Whenever you make a change to the README       |
-   | `feat`     | Whenever you add a new feature                 |
-   | `fix`      | Whenever you fix a bug                         |
-   | `perf`     | Whenever you make something faster             |
-   | `refactor` | Whenever you change how your code is organized |
-   | `test`     | Whenever you write a unit test                 |
+   | Type                      | When to use it:                                |
+   | :------------------------ | :--------------------------------------------- |
+   | `chore`                   | Whenever you make a change to the tooling      |
+   | `docs`                    | Whenever you make a change to the README       |
+   | `feat(<name-of-feature>)` | Whenever you add code for a new feature        |
+   | `fix`                     | Whenever you fix a bug                         |
+   | `perf`                    | Whenever you make something faster             |
+   | `refactor`                | Whenever you change how your code is organized |
+   | `test`                    | Whenever you write a unit test                 |
 
 2. a **subject**. A subject is a one-sentence description of the changes to a commit.
 
