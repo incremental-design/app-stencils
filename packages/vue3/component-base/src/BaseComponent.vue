@@ -1,106 +1,27 @@
 <template>
   <div>
-    <slot :props="{ boundAttributes, boundEventHandlers }"
-      >Base Component Default content</slot
+    <slot
+      >slot default content {{ boundAttributes }} {{ boundEventHandlers }}</slot
     >
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import { DebuggerEvent } from '@vue/reactivity';
-import { ComponentPublicInstance } from '@vue/runtime-core';
+import { defineComponent, reactive, computed, toRefs, watchEffect } from 'vue';
 
-@Options({
-  data() {
-    return {};
+export default defineComponent({
+  setup(props, { attrs, slots, emit }) {
+    // notice that setup is async. Put any async code you want in here, and Vue will wait for it to resolve before loading the component. Furthermore, if you nest this component in a `<suspense>` component, Vue will display a fallback template while it waits. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense
+    // use `reactive()` to make objects that contain data and computed properties
+    const exampleDataAndComputed: any = reactive({
+      boundAttributes: 'test',
+      boundEventHandlers: 'test', // notice that properties within a reactive object have to reference the object itself (in this case `exampleDataAndComputed`) in order to access sibling properties.
+    });
+
+    // return an object that contains all of the data, computed properties and methods you want to add to the component. Everything inside this object will be available to the component's template and options. Anything that isn't returned won't be available. Keep in mind that you don't need to return everything in the setup function. Any internal logic that you don't want to expose to the template can be tucked away here.
+    return { ...toRefs(exampleDataAndComputed) }; // you HAVE to use `...toRefs()` to destructure reactive objects
   },
-
-  provide() {
-    return {};
-  }, // see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity
-
-  props: {},
-
-  inject: [], // see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity
-
-  computed: {
-    boundAttributes: {
-      get() {
-        // function that returns the value of the computed property
-      },
-      // set(value:any){
-      //   // function that returns nothing
-      // }
-    },
-    boundEventHandlers: {
-      get() {},
-      // set(value:any){
-      //   // function that returns nothing
-      // }
-    },
-  },
-
-  methods: {}, // (when using class style components, put the methods in the class body, not in here)
-
-  watch: {},
-
-  emits: {},
-
-  directives: {},
-
-  beforeCreate() {},
-
-  created() {},
-
-  beforeMount() {},
-
-  mounted() {
-    //  this.$nextTick(function (){})  // do something right after Vue renders this component's children
-  },
-
-  beforeUpdate() {},
-
-  updated() {},
-
-  activated() {},
-
-  deactivated() {},
-
-  beforeUnmount() {},
-
-  unmounted() {},
-
-  /**
-   * Add the following imports to your file
-   * to use the errorCaptured, renderTracked,
-   * and renderTriggered hooks:
-   * import { DebuggerEvent } from '@vue/reactivity'
-   * import { ComponentPublicInstance } from '@vue/runtime-core'
-   */
-
-  errorCaptured(
-    error: any,
-    instance: ComponentPublicInstance | null,
-    info: string
-  ): boolean | void {},
-
-  renderTracked(event: DebuggerEvent): void {},
-
-  renderTriggered(event: DebuggerEvent): void {},
-})
-export default class BaseComponent extends Vue {
-  // methods go here
-}
+});
 </script>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped></style>
