@@ -2141,14 +2141,14 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=13beb216
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=5abdef02
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("slot default content " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundAttributes) + " " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundEventHandlers), 1)];
   })]);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=13beb216
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=5abdef02
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2246,18 +2246,36 @@ function _objectSpread2(target) {
 
 
 /* harmony default export */ var BaseComponentvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
+  components: {// see: https://v3.vuejs.org/api/options-assets.html#components
+    // List of components that have been imported into this file
+  },
+  props: {// see: https://v3.vuejs.org/api/options-data.html#props
+    // prop
+  },
+  emits: {// see: https://v3.vuejs.org/api/options-data.html#emits
+    // emit
+  },
   setup: function setup(props, _ref) {
     var attrs = _ref.attrs,
         slots = _ref.slots,
         emit = _ref.emit;
-    // notice that setup is async. Put any async code you want in here, and Vue will wait for it to resolve before loading the component. Furthermore, if you nest this component in a `<suspense>` component, Vue will display a fallback template while it waits. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense
-    // use `reactive()` to make objects that contain data and computed properties
-    var exampleDataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
-      boundAttributes: 'test',
-      boundEventHandlers: 'test'
-    }); // return an object that contains all of the data, computed properties and methods you want to add to the component. Everything inside this object will be available to the component's template and options. Anything that isn't returned won't be available. Keep in mind that you don't need to return everything in the setup function. Any internal logic that you don't want to expose to the template can be tucked away here.
+    // !Subroutines
+    // Use any valid typescript to process the arguments of the setup function.
+    // !Data and Computed Properties
+    // Populate the DataAndComputed object by calling the subroutines defined above.
+    var DataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({// computedPropertyName:// computed()
+    }); // !Methods
+    // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping
+    // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.
+    // !Watchers
+    // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
+    // watch()
+    // !Lifecycle Hooks
+    // You can either return an object or a render function.
+    // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.
+    // If your single file component does not have a template, return a render function.
 
-    return _objectSpread2({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toRefs"])(exampleDataAndComputed)); // you HAVE to use `...toRefs()` to destructure reactive objects
+    return _objectSpread2({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toRefs"])(DataAndComputed));
   }
 }));
 // CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=script&lang=ts

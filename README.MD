@@ -153,13 +153,13 @@ See: https://www.youtube.com/watch?v=eMJk4y9NGvE
 
 3.  Next, install Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`.
 
-### Add Dependencies:
+### Add Dependencies
 
 To install a package as dependency of any other package in this repository, use `lerna add <package name>`. To install a dev dependency, use `lerna add --dev <package name>`. Lerna will add the package to the [`dependencies`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) or [`devDependencies`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) of _every_ `package.json` file in `packages/`.
 
 What if you want one of the packages in `packages/` to be a dependency of another? Lerna takes care of this for you. When you `lerna add ...` the package, it will build it and then symlink it into the node*modules of the package that depends on it. It does all of this \_without* actually publishing your package to npmjs.org.
 
-### Build:
+### Build
 
 To build every package at once, `lerna run build`.
 
@@ -169,7 +169,7 @@ This will populate each package's `dist` folder with the latest build. In fact, 
 
 Most build scripts run Webpack. Each package's `README.md` contains more details on how Webpack works, and what you can do to configure it.
 
-### Run:
+### Run
 
 To run every package at once `lerna run serve`.
 
@@ -181,7 +181,7 @@ Most packages can't actually be run, so this command only runs the few packages 
 
 [ ] how to handle multiple TTYs interleaving standard out?
 
-### Test:
+### Test
 
 To test every package at once, `lerna run test:unit`.
 
@@ -191,9 +191,7 @@ This starts an instance of the Jest unit test framework for each package that co
 
 [ ] maybe just run one instance of jest??
 
-### Document:
-
-[ ] explain storybook
+### Document
 
 [ ] explain tsdoc
 
@@ -201,11 +199,13 @@ This starts an instance of the Jest unit test framework for each package that co
 
 This repository uses [Storybook](https://storybook.js.org) to generate **live** documentation for each component and plugin that is exported. Live documentation is documentation that actually runs the code it is describing. Storybook runs each component and displays the result in the browser. To launch the storybook `lerna run storybook:serve`.
 
+![`lerna run storybook:serve`](.readme/storybook-serve.gif)
+
 For more details on how to add a component to a storybook, consult the README of any `storybook` folder inside `packages`.
 
 [ ] show a screen recording of launching the storybook.
 
-## Publish:
+## Publish
 
 This project uses **semantic versioning.** That means that this project is structured into **releases.** A release is a version of the project that adds new features, changes existing features or replaces old features. There are three types of releases:
 
