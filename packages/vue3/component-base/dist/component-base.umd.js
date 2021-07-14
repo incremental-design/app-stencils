@@ -2150,14 +2150,14 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=5abdef02
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=4bb7ac5b
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("slot default content " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundAttributes) + " " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundEventHandlers), 1)];
   })]);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=5abdef02
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=4bb7ac5b
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2254,6 +2254,16 @@ function _objectSpread2(target) {
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=script&lang=ts
 
 
+/**
+ * Base Component
+ *
+ * - native event handlers -> seamlss state changes + seamlss event emitters
+ * - touch, tap and focus friendly
+ * - animations for seamlss state changes
+ * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
+ * - a11y and i18n friendly
+ */
+
 /* harmony default export */ var BaseComponentvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
   components: {// see: https://v3.vuejs.org/api/options-assets.html#components
     // List of components that have been imported into this file
@@ -2280,9 +2290,6 @@ function _objectSpread2(target) {
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
     // watch()
     // !Lifecycle Hooks
-    // You can either return an object or a render function.
-    // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.
-    // If your single file component does not have a template, return a render function.
 
     return _objectSpread2({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toRefs"])(DataAndComputed));
   }

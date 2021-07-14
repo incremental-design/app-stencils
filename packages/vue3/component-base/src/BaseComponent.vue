@@ -1,5 +1,10 @@
 <template>
   <div>
+    <!--
+      @slot Default Content
+        @binding BoundAttributes
+        @binding BoundEventHandlers
+    -->
     <slot
       >slot default content {{ boundAttributes }} {{ boundEventHandlers }}</slot
     >
@@ -7,19 +12,61 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, computed, toRefs, watchEffect } from 'vue';
+/**
+ * Base Component
+ *
+ * - native event handlers -> seamlss state changes + seamlss event emitters
+ * - touch, tap and focus friendly
+ * - animations for seamlss state changes
+ * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
+ * - a11y and i18n friendly
+ */
+
+import { defineComponent, reactive, computed, toRefs, watch } from 'vue';
 
 export default defineComponent({
+  components: {
+    // see: https://v3.vuejs.org/api/options-assets.html#components
+    // List of components that have been imported into this file
+  },
+
+  props: {
+    // see: https://v3.vuejs.org/api/options-data.html#props
+    // prop
+  },
+
+  emits: {
+    // see: https://v3.vuejs.org/api/options-data.html#emits
+    // emit
+  },
+
   setup(props, { attrs, slots, emit }) {
-    // notice that setup is async. Put any async code you want in here, and Vue will wait for it to resolve before loading the component. Furthermore, if you nest this component in a `<suspense>` component, Vue will display a fallback template while it waits. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense
-    // use `reactive()` to make objects that contain data and computed properties
-    const exampleDataAndComputed: any = reactive({
-      boundAttributes: 'test',
-      boundEventHandlers: 'test', // notice that properties within a reactive object have to reference the object itself (in this case `exampleDataAndComputed`) in order to access sibling properties.
+    // !Subroutines
+
+    // Use any valid typescript to process the arguments of the setup function.
+
+    // !Data and Computed Properties
+
+    // Populate the DataAndComputed object by calling the subroutines defined above.
+
+    const DataAndComputed: any = reactive({
+      // computedPropertyName:// computed()
     });
 
-    // return an object that contains all of the data, computed properties and methods you want to add to the component. Everything inside this object will be available to the component's template and options. Anything that isn't returned won't be available. Keep in mind that you don't need to return everything in the setup function. Any internal logic that you don't want to expose to the template can be tucked away here.
-    return { ...toRefs(exampleDataAndComputed) }; // you HAVE to use `...toRefs()` to destructure reactive objects
+    // !Methods
+
+    // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping
+    // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.
+
+    // !Watchers
+
+    // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
+
+    // watch()
+
+    // !Lifecycle Hooks
+
+    return { ...toRefs(DataAndComputed) };
   },
 });
 </script>
