@@ -1,22 +1,332 @@
 {
-  "clips" : [
+  "clips": [
     {
-      "content" : "$AUTHOR_NAME",
-      "name" : "User Signature",
-      "trigger" : "usersig"
+      "children": [
+        {
+          "content": "components: {},\n\n// extends: nameOfComponent // import a component, and then assign it here to extend it. Note that you can only extend ONE component. See: https://v3.vuejs.org/api/options-composition.html#extends\n\nmixins: [],\n\n// !Properties and Methods\n\nprops: {},\n\ninject: [], // see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity\n\ndata() {\n  return {}\n},\n\nprovide() {\n  return {}\n}, // see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity\n\ncomputed: {},\n\nmethods: {}, // (when using class style components, put the methods in the class body, not in here)\n\nwatch: {},\n\nemits: {},\n\ndirectives: {},\n\n// !Lifecycle Hooks\n\nbeforeCreate() {},\n\ncreated() {},\n\nbeforeMount() {},\n\nmounted() {\n  //  this.\\$nextTick(function (){})  // do something right after Vue renders this component's children\n},\n\nbeforeUpdate(){},\n\nupdated(){},\n\nactivated(){},\n\ndeactivated(){},\n\nbeforeUnmount(){},\n\nunmounted(){},\n\nerrorCaptured(error, instance){},\n\nrenderTracked(event) {},\n\nrenderTriggered(event) {},",
+          "name": "Vue 3 All Options",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "options"
+        },
+        {
+          "content": "props: { ${0:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop}\n},\n",
+          "name": "Vue 3 Props",
+          "trigger": "props:{}"
+        },
+        {
+          "content": "components: {},\n",
+          "name": "Vue 3 Components List",
+          "scope": "editor",
+          "trigger": "components:{}"
+        },
+        {
+          "content": "inject:[], ${0:// see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity}\n",
+          "name": "Vue 3 Inject",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "inject:[]"
+        },
+        {
+          "content": "data(){ ${0:// see: https://v3.vuejs.org/api/options-data.html#data-2}\n  return {\n    ${1:// data}\n  }\n},\n",
+          "name": "Vue 3 Data",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "data()"
+        },
+        {
+          "content": "provide() { ${0:// see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity}\n  return {\n    ${1:// reactive properties to provide to all descendants}\n  }\n}",
+          "name": "Vue 3 Provide",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "provide()"
+        },
+        {
+          "content": "/**\n * ${0:Description of Prop}\n * @values\n * @example\n */\n${10:prop name} : { ${10:// https://v3.vuejs.org/api/options-data.html#props}\n  type: ${12:Any Typescript Class or Constructor Function},\n  default: ${13:value},\n  required: ${14:true or false},\n  validator: (value:${15:Typescript Class}):boolean => (${16:test that returns true or false})\n}\n",
+          "name": "Vue 3 Prop",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "prop:{}"
+        },
+        {
+          "content": "computed: { ${0:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  ${1:// computed property}\n}\n",
+          "name": "Vue 3 Computed Properties",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "computed:{}"
+        },
+        {
+          "content": "${0:computedPropertyName}: { ${1:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  get(){\n  \t${2:// function that returns the value of the computed property}\n  },\n  set(value:${3:any}){\n  \t${4:// function that returns nothing}\n  }\n}\n",
+          "name": "Vue 3 computed property",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "compute:{}"
+        },
+        {
+          "content": "methods: { ${0:// see: https://v3.vuejs.org/api/options-data.html#methods}\n  ${1:// method}\n},\n",
+          "name": "Vue 3 Methods",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "methods:"
+        },
+        {
+          "content": "/**\n * ${0:Description of method}\n${1: * @param}\n${2: * @returns}\n${3: * @remarks}\n * [${4:Link Title}]{@link ${5:Link URL}}\n */\n\n${0:methodName}(${1:args}):${2:returnType}{\n  ${3:// method body}\n},\n",
+          "name": "Vue 3 Method",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "method()"
+        },
+        {
+          "content": "watch: { ${0:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  ${1:// watcher}\n}\n",
+          "name": "Vue 3 Watchers",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "watchers:{}"
+        },
+        {
+          "content": "${0:propertyName}: { ${1:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  handler(value, oldValue){\n  \t${2:// handler logic}\n  },\n  deep:${3:false},\n  immediate:${4:false},\n}\n",
+          "name": "Vue 3 Watcher",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "watcher:{}"
+        },
+        {
+          "content": "emits: { ${0:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${1:// emit}\n},\n",
+          "name": "Vue 3 Emits",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "emits:{}"
+        },
+        {
+          "content": "/**\n * ${:Description of custom event}\n * @param ${:// see: https://vue-styleguidist.github.io/docs/Documenting.html#events}\n */\n\n${0:customEventName}: (payload:any) => { ${1:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// validation logic that returns true or false}\n},\n",
+          "name": "Vue 3 Emit",
+          "trigger": "emit:{}"
+        },
+        {
+          "content": "render() { ${0:// see: https://v3.vuejs.org/api/options-dom.html#render}\n  return h(\n    ${1:'div', // HTML Tag name, component, async component or functional component}\n\t${2:\\{},}  // object with attributes, props, and events\n    ${3:\\{}}, // String, Array or Object that contain nested h(...) functions}\n  )\n  ${4:// see: https://v3.vuejs.org/guide/render-function.html#h-arguments}\n},\n",
+          "name": "Vue 3 Render Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "render()"
+        },
+        {
+          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${1:// List of components that have been imported into this file}\n},\n",
+          "name": "Vue 3 Components List",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "components:{}"
+        },
+        {
+          "content": "directives: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#directives}\n  ${1:// directive}\n},\n",
+          "name": "Vue 3 Directives List",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "directives:{}"
+        },
+        {
+          "content": "${0:nameOfDirective}: { ${1:// see: https://v3.vuejs.org/guide/custom-directive.html#custom-directives}\n  created(element:Element, binding:any){\n    ${2:// do something to element during created hook}\n  },\n  beforeMount(element:Element, binding:any){\n    ${3:// do something to element in beforeMount hook}\n  },\n  mounted(element:Element, binding:any){\n    ${4:// do something to element in mounted hook}\n  },\n  beforeUpdate(element:Element, binding:any){\n    ${5:// do something to element in beforeUpdate hook}\n  },\n  updated(element:Element, binding:any){\n    ${6:// do something to element in updated hook}\n  },\n  beforeUnmount(element:Element, binding:any){\n    ${7:// do something to element in beforeUnmount hook}\n  },\n  unmounted(element:Element, binding:any){\n    ${8:// do something to element in unmount hook}\n  }\n  ${9:// binding refers to https://v3.vuejs.org/guide/custom-directive.html#dynamic-directive-arguments}\n},\n\n",
+          "name": "Vue 3 Directive",
+          "trigger": "directive()"
+        },
+        {
+          "content": "// !Lifecycle Hooks\n\n${0:// see: https://v3.vuejs.org/api/options-lifecycle-hooks.html}\nbeforeCreate() {\n  ${1:// do something before initializing this component's VNode}\n},\n\ncreated() {\n  ${2:// do something as soon as Vue initializes this component's VNode}\n},\n\nbeforeMount() {\n  ${3:// do something before Vue calls this component's render function}\n},\n\nmounted() {\n  ${4:// do something right after Vue calls this component's render function}\n${5://  this.$nextTick(function ()\\{  // do something right after Vue renders this component's children      \\})}\n},\n\nbeforeUpdate(){\n  ${6:// Do something before re-rendering this component.}\n},\n\nupdated(){\n  ${7:// do something after re-rendering this component}\n},\n\nactivated(){\n  ${8:// do something when this component has been kept alive and is activated ( see: https://v3.vuejs.org/api/options-lifecycle-hooks.html#activated )}\n},\n\ndeactivated(){\n  ${9:// do something when this component has been kept alive and is deactivated}\n},\n\nbeforeUnmount(){\n  ${10:// do something before destroying this Component's DOM elements}\n},\n\nunmounted(){\n  ${11:// do something after destroying this Component's DOM elements and right before destroying its VNode}\n},\n\nerrorCaptured(error, instance) {\n  ${12:// do something when this component errors. Optionally return 'true' or 'false'. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#errorcaptured}\n},\n\nrenderTracked(event) {\n  ${13:// do something when this component's re-render is observed by something else https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertracked}\n},\n\nrenderTriggered(event) {\n  ${14:// do something when a state change triggers this component to re-render. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertriggered}\n},\n\n",
+          "name": "Vue 3 Lifecycle Hooks",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "lifecycleHooks"
+        }
+      ],
+      "name": "Vue 3 Options API"
     },
     {
-      "name" : "Group Name",
-      "children" : [
+      "children": [
         {
-          "content" : "console.log(${:message})",
-          "name" : "Console Log",
-          "scope" : "editor",
-          "shortcut" : "cmd-alt-shift-l",
-          "syntax" : "javascript",
-          "trigger" : "log"
+          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${0:// List of components that have been imported into this file}\n},\n\nprops: { ${1:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop}\n},\n\nemits: { ${2:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// emit}\n},\n\n${3:async }setup(props, { attrs, slots, emit }) { ${3:// If you use an async setup function, then you MUST include a `<suspense>` tag in your template. Otherwise, the setup function will never actually return. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense}\n  ${3:// You can, alternatively, use defineAsyncComponent to make an async setup function. See: https://v3.vuejs.org/guide/migration/async-components.html}\n  // Use setup within defineComponent to get typescript support.\n \n\t// Import the following before you use the setup function:\n\t// import { defineComponent,${4: InjectionKey,}${5: provide,}${6: inject,} reactive,${8: computed,} toRefs,${9: watchEffect,}${10: watch,}${11: onBeforeMount,}${12: onMounted,}${13: onBeforeUpdate,}${14: onUpdated,}${15: onActivated,}${16: onDeactivated,}${17: onBeforeUnmount,}${18: onUnmounted,}${19: onErrorCaptured,}${20: onRenderTracked,}${21: onRenderTriggered} } from 'vue'\n\n  // !Provide / Inject\n\n  // See: https://v3.vuejs.org/api/composition-api.html#provide-inject\n  // See: https://v3.vuejs.org/guide/composition-api-provide-inject.html#scenario-background\n\n\t ${4://  const key =}\n\t ${5:// provide()}\n\t ${6:// const inject =}\n\n  // !Subroutines\n  \n  // Use any valid typescript to process the arguments of the setup function.\n  \n  // !Data and Computed Properties\n  \n  // Populate the DataAndComputed object by calling the subroutines defined above.\n\t \n\t const DataAndComputed:any = reactive({\n\t\t${7:// computedPropertyName:}${8:// computed()}  \n\t })\n\t \n  // !Methods\n  \n  // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n  // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.\n\t \n  // !Watchers\n  \n  // use `watchEffect` or `watch` to trigger functions whenever a property of `DataAndComputed` changes. Make sure you use `.value` to access the value of the `DataAndComputed` property you want to watch.\n\n  // See: https://www.vuemastery.com/courses/vue-3-essentials/watch\n\t \n\t ${9:// watchEffect()}\n\t \n\t ${10:// watch()}\n\t \n  // !Lifecycle Hooks\n  \n  // You can either return an object or a render function. \n  // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.\n  // If your single file component does not have a template, return a render function.\n   \n   ${11:// onBeforeMount()}\n   \n   ${12:// onMounted()}\n   \n   ${13:// onBeforeUpdate()}\n   \n   ${14:// onUpdated()}\n   \n   ${15:// onActivated()}\n\t  \n   ${16:// onDeactivated()}\n   \n   ${17:// onBeforeUnmount()}\n   \n   ${18:// onUnmounted()}\n   \n   ${19:// onErrorCaptured()}\n   \n   ${20:// onRenderTracked()}\n   \n   ${21:// onRenderTriggered()}\n   \n   ${22:return \\{...toRefs(DataAndComputed)\\}}\n  \n}",
+          "name": "Vue 3 Setup Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "setup()"
+        },
+        {
+          "content": "const ${0:key}: InjectionKey<${1:string}> = Symbol(); // notice that the key is an ES6 symbol, and the value can be anything of <type> (in this case <string>).",
+          "name": "Vue 3 InjectionKey Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "const key ="
+        },
+        {
+          "content": "provide(${0:key},${1:'someValue'}) // the 'key' argument must be an `InjectionKey`, and the 'someValue' argument must be a value of the `InjectionKey`'s <type>. ",
+          "name": "Vue 3 Provide Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "provide()"
+        },
+        {
+          "content": "const inject = inject(${:key}) // the key must be an `InjectionKey`",
+          "name": "Vue 3 Inject Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "const inject ="
+        },
+        {
+          "content": "computed({${0:// If you use this function outside of a `reactive()`, make sure you use `.value` to unwrap reactive references.}\n\t${0:// see: https://v3.vuejs.org/api/computed-watch-api.html#computed}\n\tget:()${1:: any} => {${2:// function that returns the value of the computed property}},\n\tset:(value${1:: any}) => {${3:// function that returns nothing}}\n})\n",
+          "name": "Vue 3 Computed Property Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "computed()"
+        },
+        {
+          "content": "watchEffect( () => {\n\t// make sure you unwrap reactive references with `.value`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n})",
+          "name": "Vue 3 WatchEffect Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "watchEffect()"
+        },
+        {
+          "content": "watch( [${0:reactive(s)}], (current, previous) => {\n\t// see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#watch\n\t\n\t// note that you can watch an array of reactive values - not just a single value.\n\t\n\t$1\n\t\n},\n{\n\tdeep: ${2:true}, // see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#watching-reactive-objects\n\timmediate: ${3:false} // see: https://v3.vuejs.org/api/instance-methods.html#watch\n}\n\n\t// if you use a watcher to trigger an async function, make sure you invalidate side effects! see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#side-effect-invalidation\n)",
+          "name": "Vue 3 Watch Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "watch()"
+        },
+        {
+          "content": "onBeforeMount( () => {\n\t${0:// do something before initializing the component's VNode}\n}),\n",
+          "name": "Vue 3 OnBeforeMount Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onBeforeMount()"
+        },
+        {
+          "content": "onMounted( () => {\n\t${0:// do something as soon as Vue initializes this component's VNode}\n${5://  this.$nextTick(function ()\\{  // do something right after Vue renders this component's children      \\})}\n\n}),\n",
+          "name": "Vue 3 OnMounted Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onMounted()"
+        },
+        {
+          "content": "onBeforeUpdate( () => {\n\t${0:// do something before re-rendering this component}\n}),\n",
+          "name": "Vue 3 OnBeforeUpdate Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onBeforeUpdate()"
+        },
+        {
+          "content": "onUpdated( () => {\n\t${0:// do something after re-rendering this component.}\n}),\n",
+          "name": "Vue 3 OnUpdated Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onUpdated()"
+        },
+        {
+          "content": "onActivated( () => {\n\t${0:// do something when this component is kept alive and subsequently activated ( see: https://v3.vuejs.org/api/options-lifecycle-hooks.html#activated )}\n}),\n",
+          "name": "Vue 3 onActivated Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onActivated()"
+        },
+        {
+          "content": "onDeactivated( () => {\n\t${0:// do something when this component has been kept alive and is deactivated}\n}),\n",
+          "name": "Vue 3 onDeactivated Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onDeactivated()"
+        },
+        {
+          "content": "onBeforeUnmount( () => {\n\t${0:// do something before destroying this component's DOM elements}\n}),\n",
+          "name": "Vue 3 onBeforeUnmount Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onBeforeUnmount()"
+        },
+        {
+          "content": "onUnmounted( () => {\n\t${0:// do something after destroying this component's DOM elements and right before destroying its VNode}\n}),\n",
+          "name": "Vue 3 onUnmounted Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onUnmounted()"
+        },
+        {
+          "content": "onErrorCaptured( (error, instance) => {\n\t${0:// do something when this component errors. Optionally return 'true' or 'false'. See: See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#errorcaptured}\n}),\n",
+          "name": "Vue 3 onErrorCaptured Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onErrorCaptured()"
+        },
+        {
+          "content": "onRenderTracked( (event) => {\n\t${0:// do something when this component's re-render is observed by something else https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertracked}\n}),\n",
+          "name": "Vue 3 onRenderTracked Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onRenderTracked()"
+        },
+        {
+          "content": "onRenderTriggered( (event) => {\n\t${0:// do something when a state change triggers this component to re-render. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertriggered}\n}),\n",
+          "name": "Vue 3 onRenderTriggered Function",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "onRenderTriggered()"
         }
-      ]
+      ],
+      "name": "Vue 3 Composition API"
+    },
+    {
+      "children": [
+        {
+          "content": "@values ${:// a list of values that a prop or component accepts}",
+          "name": "Vue 3 @values",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@values"
+        },
+        {
+          "content": "@example ${:// a snippet you want to display in a code fence}",
+          "name": "Vue 3 @example",
+          "trigger": "@example"
+        },
+        {
+          "content": "@deprecated ${:// mark the following prop or component as being deprecated}",
+          "name": "Vue 3 @deprecated",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@deprecated"
+        },
+        {
+          "content": "[${:link text}]{@link ${:url}}",
+          "name": "Vue 3 @link",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@link"
+        },
+        {
+          "content": "@author ${:Your Name} <${:Your email}> ",
+          "name": "Vue 3 @author",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@author"
+        },
+        {
+          "content": "@since ${:version number}",
+          "name": "Vue 3 @since",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@since"
+        },
+        {
+          "content": "@ignore ${:// don't document this prop or component}",
+          "name": "Vue 3 @ignore",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@ignore"
+        },
+        {
+          "content": "<!--\n\t@slot ${0:Name of Slot}\n\t\t${1:@binding} ${1:Description of binding}\n-->",
+          "name": "",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "<!-- Slot"
+        }
+      ],
+      "name": "Vue 3 Docgen Tags"
     }
   ]
 }

@@ -1,8 +1,10 @@
 {
-    "identifier": "incremental.design.Vue3Snippets",
-    "name": "Vue 3 Snippets",
-    "organization": "incremental.design",
-    "description": "Lorem ipsum, dolor sit amet.",
-    "version": "1.0",
-    "categories": ["clips"]
+  "identifier": "incremental.design.Vue3Clips",
+  "name": "Vue 3 Clips",
+  "organization": "incremental.design",
+  "description": "Clips for the Vue 3 Options API, Composition API and Docgen Tags",
+  "version": "0.1.1",
+  "categories": ["clips"],
+  "repository": "https://github.com/incremental-design/app-stencils/tree/ajay-dev/libs/snippets/panic-nova/vue3-snippets-for-panic-nova",
+  "bugs": "https://github.com/incremental-design/app-stencils/issues"
 }

@@ -11,7 +11,8 @@ Let's get started!
 <!--
 🎈 Include a brief description of the clips your extension provides. For example:
 -->
-**Vue 3 Snippets** provides clips for **A Popular Framework**, including the most important feature, something that's really helpful, and _a little-known secret!_
+
+**Vue 3 Clips** provides clips for **Vue 3**, including the Vue 3 Composition API. It also provides helpful annotations, which include links to the Vue 3 Documentation.
 
 ## Details
 
@@ -19,23 +20,59 @@ Let's get started!
 🎈 To help users get a feel for how clips provided by your extension will work in practice, consider listing them along with any keyboard shortcuts or triggers they use:
 -->
 
-| Title         | Description                           | Trigger    |
-| ---           | ---                                   | :-:        |
-| **lipsum-5w** | Inserts 5 words of _Lorem ipsum_      | `lipsum5w` |
-| **lipsum-1p** | Inserts 1 paragraph of _Lorem ipsum_  | `lipsum1p` |
-| **lipsum-5p** | Inserts 5 paragraphs of _Lorem ipsum_ | `lipsum5p` |
+| Vue 3 Options API              |     Trigger      |
+| ------------------------------ | :--------------: |
+| **All Options**                |    `options`     |
+| **Props Object**               |    `props:{}`    |
+| **Components Object**          | `components:{}`  |
+| **Inject Array**               |   `inject:[]`    |
+| **Data Constructor Function**  |     `data()`     |
+| **Provide Function**           |   `provide()`    |
+| **Prop Object**                |    `prop:{}`     |
+| **Computed Properties Object** |  `computed:{}`   |
+| **Computed Property Object**   |   `compute:{}`   |
+| **Methods Object**             |   `methods:{}`   |
+| **Method**                     |    `method()`    |
+| **Watchers Object**            |  `watchers:{}`   |
+| **Watcher**                    |   `watcher:{}`   |
+| **Emits Object**               |    `emits:{}`    |
+| **Emit Object**                |    `emit:{}`     |
+| **Render Function**            |    `render()`    |
+| **Components List Object**     | `components:{}`  |
+| **Directives List Object**     | `directives:{}`  |
+| **Directive**                  |  `directive()`   |
+| **Lifecycle Hook Functions**   | `lifecycleHooks` |
 
-<!--
-🎈 If your extension provides too many clips to list, that's okay! Instead, consider providing an overview of what users might expect to find:
--->
+| Vue 3 Composition API          |        Trigger        |
+| ------------------------------ | :-------------------: |
+| **Setup Function**             |       `setup()`       |
+| **InjectionKey Function**      |     `const key =`     |
+| **Provide Function**           |      `provide()`      |
+| **Inject Function**            |   `const inject =`    |
+| **Computed Property Function** |     `computed()`      |
+| **WatchEffect Function**       |    `watchEffect()`    |
+| **Watch Function**             |        `Watch`        |
+| **OnBeforeMount Function**     |   `onBeforeMount()`   |
+| **onMounted Function**         |     `onMounted()`     |
+| **onBeforeUpdate Function**    |  `onBeforeUpdate()`   |
+| **onUpdated Function**         |     `onUpdated()`     |
+| **onActivated Function**       |    `onActivated()`    |
+| **onDeactivated Function**     |   `onDeactivated()`   |
+| **onBeforeUnmount Function**   |  `onBeforeUnmount()`  |
+| **onUnmounted Function**       |    `onUnmounted()`    |
+| **onErrorCaptured Function**   |  `onErrorCaptured()`  |
+| **onRenderTracked Function**   |  `onRenderTracked()`  |
+| **onRenderTriggered Function** | `onRenderTriggered()` |
 
-Vue 3 Snippets offers clips in the following categories:
-
-- Lorem
-- Ipsum
-- Dolor
-- Sit
-- Amet
+| Vue 3 Docgen Tags  |    Trigger     |
+| ------------------ | :------------: |
+| **Values Tag**     |   `@values`    |
+| **Deprecated Tag** |   `@values`    |
+| **Link Tag**       |   `@values`    |
+| **Author Tag**     |   `@values`    |
+| **Since Tag**      |   `@values`    |
+| **Ignore Tag**     |   `@values`    |
+| **Slot Tag**       | `<!-- Slot ->` |
 
 <!--
 👋 That's it! Happy developing!
