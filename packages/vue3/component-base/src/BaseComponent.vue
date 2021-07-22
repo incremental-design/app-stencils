@@ -1,12 +1,12 @@
 <template>
-  <div @="EventHandlers">
+  <div @="EventHandlers" style="transform: scale(1)">
     <!-- <div> -->
     <!--
       @slot Default Content
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot>slot default content {{ a }}</slot>
+    <slot>{{ pointer }}</slot>
   </div>
 </template>
 
@@ -22,6 +22,22 @@
  */
 
 import { defineComponent, reactive, computed, toRefs, watch } from 'vue';
+
+import {
+  ClickListener,
+  // DblclickListener,
+  MousedownListener,
+  MouseenterListener,
+  MouseleaveListener,
+  MousemoveListener,
+  MouseoutListener,
+  MouseoverListener,
+  MouseupListener,
+  // WebkitmouseforcedownListener,
+  PointerCoordinates,
+} from './use/VueSeamlssEventListeners';
+
+// todo: turn off all cursor select unless it is editable text or is copyable content. no select interface microcopy
 
 export default defineComponent({
   components: {
@@ -50,56 +66,124 @@ export default defineComponent({
 
     const DataAndComputed: any = reactive({
       // computedPropertyName:// computed()
-      a: 'hello',
+      previousEvent: false,
+      _pointer: {
+        isDown: false,
+        downSince: false,
+        x: false,
+        y: false,
+        xPercent: false,
+        yPercent: false,
+        dx: false,
+        dy: false,
+        dxPercent: false,
+        dyPercent: false,
+      },
+      pointer: computed({
+        get: (): PointerCoordinates => {
+          return DataAndComputed._pointer;
+        },
+        set: (Value: PointerCoordinates) => {
+          // NOTE: this doesn't function like a regular setter! It won't overwrite ALL of the properties of `_pointer`! It will only overwrite `x`, `y`, `xPercent`, `yPercent`, `dx`, `dy`, `dxPercent`, and `dyPercent`. In this way, it functions more like an Object.assign.
+          DataAndComputed._pointer.x = Value.x;
+          DataAndComputed._pointer.y = Value.y;
+
+          if (Value.xPercent) {
+            DataAndComputed._pointer.xPercent = Value.xPercent;
+          }
+
+          if (Value.yPercent) {
+            DataAndComputed._pointer.yPercent = Value.yPercent;
+          }
+
+          if (Value.dx) {
+            DataAndComputed._pointer.dx = Value.dx;
+          }
+
+          if (Value.dy) {
+            DataAndComputed._pointer.dy = Value.dy;
+          }
+
+          if (Value.dxPercent) {
+            DataAndComputed._pointer.dxPercent = Value.dxPercent;
+          }
+
+          if (Value.dyPercent) {
+            DataAndComputed._pointer.dyPercent = Value.dyPercent;
+          }
+        },
+      }),
     });
 
     // !Methods
 
     // !Event Handlers
     const EventHandlers = {
-      auxclick: () => {
-        console.log('auxclick');
+      mousedown: (e: Event) => {
+        DataAndComputed.pointer = MousedownListener(
+          e,
+          true,
+          true,
+          DataAndComputed.previousEvent
+        );
+
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince = e.timeStamp;
+        DataAndComputed.previousEvent = e;
       },
-      blur: () => {
-        console.log('auxclick');
+
+      mouseenter: (e: Event) => {
+        DataAndComputed.pointer = MouseenterListener(
+          e,
+          true,
+          true,
+          DataAndComputed.previousEvent
+        );
+
+        DataAndComputed.previousEvent = e;
       },
-      click: () => {
-        console.log('clicked');
+
+      mouseleave: (e: Event) => {
+        DataAndComputed.pointer = MouseleaveListener(
+          e,
+          true,
+          true,
+          DataAndComputed.previousEvent
+        );
+
+        DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
+
+        DataAndComputed.previousEvent = e;
       },
-      compositionend: () => {},
-      compositionstart: () => {},
-      compositionupdate: () => {},
-      contextmenu: () => {},
-      copy: () => {},
-      cut: () => {},
-      dblclick: () => {},
-      error: () => {},
-      focus: () => {},
-      focusin: () => {},
-      focusout: () => {},
-      fullscreenchange: () => {},
-      fullscreenerror: () => {},
-      keydown: () => {},
-      keyup: () => {},
-      mousedown: () => {},
-      mouseenter: () => {},
-      mouseleave: () => {},
-      mousemove: () => {},
-      mouseout: () => {},
-      mouseover: () => {
-        console.log('hovered');
+
+      mousemove: (e: Event) => {
+        DataAndComputed.pointer = MousemoveListener(
+          e,
+          true,
+          true,
+          DataAndComputed.previousEvent
+        );
+
+        DataAndComputed.previousEvent = e;
       },
-      mouseup: () => {},
-      overflow: () => {},
-      paste: () => {},
-      scroll: () => {},
-      select: () => {},
-      touchcancel: () => {},
-      touchend: () => {},
-      touchmove: () => {},
-      touchstart: () => {},
-      webkitmouseforcedown: () => {},
-      wheel: () => {},
+
+      mouseup: (e: Event) => {
+        DataAndComputed.pointer = MouseupListener(
+          e,
+          true,
+          true,
+          DataAndComputed.previousEvent
+        );
+
+        DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
+
+        DataAndComputed.previousEvent = e;
+      },
+      // webkitmouseforcedown: (e) => {
+      //   DataAndComputed.previousEvent = e;
+      // },
     };
     // !Watchers
 

@@ -203,6 +203,20 @@ module.exports = !DESCRIPTORS && !fails(function () {
 
 /***/ }),
 
+/***/ "129f":
+/***/ (function(module, exports) {
+
+// `SameValue` abstract operation
+// https://tc39.es/ecma262/#sec-samevalue
+// eslint-disable-next-line es/no-object-is -- safe
+module.exports = Object.is || function is(x, y) {
+  // eslint-disable-next-line no-self-compare -- NaN check
+  return x === y ? x !== 0 || 1 / x === 1 / y : x != x && y != y;
+};
+
+
+/***/ }),
+
 /***/ "159b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -416,6 +430,21 @@ var hiddenKeys = enumBugKeys.concat('length', 'prototype');
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return internalObjectKeys(O, hiddenKeys);
 };
+
+
+/***/ }),
+
+/***/ "2b19":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("23e7");
+var is = __webpack_require__("129f");
+
+// `Object.is` method
+// https://tc39.es/ecma262/#sec-object.is
+$({ target: 'Object', stat: true }, {
+  is: is
+});
 
 
 /***/ }),
@@ -2150,14 +2179,18 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=6499acde
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=1e9311fc
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
-    return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("slot default content " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.a), 1)];
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), {
+    style: {
+      "transform": "scale(1)"
+    }
+  }), [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
+    return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.pointer), 1)];
   })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=6499acde
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=1e9311fc
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2251,6 +2284,526 @@ function _objectSpread2(target) {
 
   return target;
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.is.js
+var es_object_is = __webpack_require__("2b19");
+
+// CONCATENATED MODULE: ./src/use/VueSeamlssEventListeners.ts
+
+
+var stopAndPrevent = function stopAndPrevent(e) {
+  var stopPropogation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  var preventDefault = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+
+  if (stopPropogation) {
+    e.stopPropagation();
+  }
+
+  if (preventDefault) {
+    e.preventDefault();
+  }
+};
+
+function getPointerCoordinates(event, previous) {
+  var width = event.target instanceof HTMLElement ? event.target.scrollWidth : false; // notice that we are getting scrollWidth instead of offsetWidth. That's because scrollWidth doesn't change if the target overflows its container.
+
+  var height = event.target instanceof HTMLElement ? event.target.scrollHeight : false; // notice that we are getting scrollHeight instead of offsetHeight. That's because scrollHeight doesn't change if the target overflows its container.
+
+  var previousHasSameTarget = function previousHasSameTarget() {
+    return event.target instanceof EventTarget && previous && previous.target instanceof EventTarget ? Object.is(event.target, previous.target) : false;
+  };
+
+  var MillisecondsElapsedSincePrevious = previous && previousHasSameTarget() ? event.timeStamp - previous.timeStamp : false;
+
+  var getMouseCoordinates = function getMouseCoordinates(e) {
+    var X = e.offsetX;
+    var Y = e.offsetY;
+    var DX = MillisecondsElapsedSincePrevious ? e.movementX / MillisecondsElapsedSincePrevious * 1000 : false;
+    var DY = MillisecondsElapsedSincePrevious ? e.movementY / MillisecondsElapsedSincePrevious * 1000 : false;
+    var XPercent = width ? X / width : false;
+    var YPercent = height ? Y / height : false;
+    var DXPercent = width && DX ? DX / width : false;
+    var DYPercent = height && DY ? DY / height : false;
+    var Coordinates = {
+      x: X,
+      y: Y
+    };
+
+    if (XPercent) {
+      Coordinates.xPercent = XPercent;
+    }
+
+    if (YPercent) {
+      Coordinates.yPercent = YPercent;
+    }
+
+    if (DX) {
+      Coordinates.dx = DX;
+    }
+
+    if (DY) {
+      Coordinates.dy = DY;
+    }
+
+    if (DXPercent) {
+      Coordinates.dxPercent = DXPercent;
+    }
+
+    if (DYPercent) {
+      Coordinates.dyPercent = DYPercent;
+    }
+
+    return Coordinates;
+  }; // const getTouchCoordinates = (e: TouchEvent) => {}
+
+
+  if (event instanceof MouseEvent) {
+    return getMouseCoordinates(event);
+  } // else if (e instanceof TouchEvent){
+  //   return getTouchCoordinates(e)
+  // }
+  else {
+      throw new Error("".concat(event, " is not a MouseEvent or TouchEvent"));
+    }
+} // !AuxclickListener
+
+/**
+ * AuxclickListener
+ */
+// export const AuxclickListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !BlurListener
+
+/**
+ * BlurListener
+ */
+// export const blurListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !ClickListener
+
+/**
+ * ClickListener
+ */
+
+
+var ClickListener = function ClickListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !CompositionendListener
+
+/**
+ * CompositionendListener
+ */
+// export const CompositionendListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !CompositionstartListener
+
+/**
+ * CompositionstartListener
+ */
+// export const CompositionstartListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !CompositionupdateListener
+
+/**
+ * CompositionupdateListener
+ */
+// export const CompositionupdateListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !ContextmenuListener
+
+/**
+ * ContextmenuListener
+ */
+// export const ContextmenuListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !CopyListener
+
+/**
+ * CopyListener
+ */
+// export const CopyListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !CutListener
+
+/**
+ * CutListener
+ */
+// export const CutListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !DblclickListener
+
+/**
+ * DblclickListener
+ */
+// export const DblclickListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !ErrorListener
+
+/**
+ * ErrorListener
+ */
+// export const ErrorListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !FocusListener
+
+/**
+ * FocusListener
+ */
+// export const FocusListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !FocusinListener
+
+/**
+ * FocusinListener
+ */
+// export const FocusinListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !FocusoutListener
+
+/**
+ * FocusoutListener
+ */
+// export const FocusoutListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !FullscreenchangeListener
+
+/**
+ * FullscreenchangeListener
+ */
+// export const FullscreenchangeListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !FullscreenerrorListener
+
+/**
+ * FullscreenerrorListener
+ */
+// export const FullscreenerrorListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !KeydownListener
+
+/**
+ * KeydownListener
+ */
+// export const KeydownListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !KeyupListener
+
+/**
+ * KeyupListener
+ */
+// export const KeyupListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !MousedownListener
+
+/**
+ * MousedownListener
+ */
+
+var MousedownListener = function MousedownListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MouseenterListener
+
+/**
+ * MouseenterListener
+ */
+
+var MouseenterListener = function MouseenterListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MouseleaveListener
+
+/**
+ * MouseleaveListener
+ */
+
+var MouseleaveListener = function MouseleaveListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MousemoveListener
+
+/**
+ * MousemoveListener
+ */
+
+var MousemoveListener = function MousemoveListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MouseoutListener
+
+/**
+ * MouseoutListener
+ */
+
+var MouseoutListener = function MouseoutListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MouseoverListener
+
+/**
+ * MouseoverListener
+ */
+
+var MouseoverListener = function MouseoverListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MouseupListener
+
+/**
+ * MouseupListener
+ */
+
+var MouseupListener = function MouseupListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !OverflowListener
+
+/**
+ * OverflowListener
+ */
+// export const OverflowListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !PasteListener
+
+/**
+ * PasteListener
+ */
+// export const PasteListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !ScrollListener
+
+/**
+ * ScrollListener
+ */
+// export const ScrollListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !SelectListener
+
+/**
+ * SelectListener
+ */
+// export const SelectListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !TouchcancelListener
+
+/**
+ * TouchcancelListener
+ */
+// export const TouchcancelListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !TouchendListener
+
+/**
+ * TouchendListener
+ */
+// export const TouchendListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !TouchmoveListener
+
+/**
+ * TouchmoveListener
+ */
+// export const TouchmoveListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !TouchstartListener
+
+/**
+ * TouchstartListener
+ */
+// export const TouchstartListener: Listener<PointerCoordinates> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !WebkitmouseforcedownListener
+
+/**
+ * WebkitmouseforcedownListener
+ */
+// export const WebkitmouseforcedownListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+// !WheelListener
+
+/**
+ * WheelListener
+ */
+// export const WheelListener: Listener<void> = (
+//   e,
+//   stopPropogation,
+//   preventDefault,
+//   p
+// ) => {
+//   stopAndPrevent(e, stopPropogation, preventDefault);
+// };
+
+/**
+ * MouseListeners contains ALL listeners that respond to MouseEvents
+ */
+
+var MouseListeners = {
+  ClickListener: ClickListener,
+  // DblclickListener,
+  MousedownListener: MousedownListener,
+  MouseenterListener: MouseenterListener,
+  MouseleaveListener: MouseleaveListener,
+  MousemoveListener: MousemoveListener,
+  MouseoutListener: MouseoutListener,
+  MouseoverListener: MouseoverListener,
+  MouseupListener: MouseupListener
+};
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=script&lang=ts
 
 
@@ -2263,6 +2816,8 @@ function _objectSpread2(target) {
  * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
  * - a11y and i18n friendly
  */
+
+ // todo: turn off all cursor select unless it is editable text or is copyable content. no select interface microcopy
 
 /* harmony default export */ var BaseComponentvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
   components: {// see: https://v3.vuejs.org/api/options-assets.html#components
@@ -2284,54 +2839,83 @@ function _objectSpread2(target) {
     // Populate the DataAndComputed object by calling the subroutines defined above.
     var DataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
       // computedPropertyName:// computed()
-      a: 'hello'
+      previousEvent: false,
+      _pointer: {
+        isDown: false,
+        downSince: false,
+        x: false,
+        y: false,
+        xPercent: false,
+        yPercent: false,
+        dx: false,
+        dy: false,
+        dxPercent: false,
+        dyPercent: false
+      },
+      pointer: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])({
+        get: function get() {
+          return DataAndComputed._pointer;
+        },
+        set: function set(Value) {
+          // NOTE: this doesn't function like a regular setter! It won't overwrite ALL of the properties of `_pointer`! It will only overwrite `x`, `y`, `xPercent`, `yPercent`, `dx`, `dy`, `dxPercent`, and `dyPercent`. In this way, it functions more like an Object.assign.
+          DataAndComputed._pointer.x = Value.x;
+          DataAndComputed._pointer.y = Value.y;
+
+          if (Value.xPercent) {
+            DataAndComputed._pointer.xPercent = Value.xPercent;
+          }
+
+          if (Value.yPercent) {
+            DataAndComputed._pointer.yPercent = Value.yPercent;
+          }
+
+          if (Value.dx) {
+            DataAndComputed._pointer.dx = Value.dx;
+          }
+
+          if (Value.dy) {
+            DataAndComputed._pointer.dy = Value.dy;
+          }
+
+          if (Value.dxPercent) {
+            DataAndComputed._pointer.dxPercent = Value.dxPercent;
+          }
+
+          if (Value.dyPercent) {
+            DataAndComputed._pointer.dyPercent = Value.dyPercent;
+          }
+        }
+      })
     }); // !Methods
     // !Event Handlers
 
     var EventHandlers = {
-      auxclick: function auxclick() {
-        console.log('auxclick');
+      mousedown: function mousedown(e) {
+        DataAndComputed.pointer = MousedownListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince = e.timeStamp;
+        DataAndComputed.previousEvent = e;
       },
-      blur: function blur() {
-        console.log('auxclick');
+      mouseenter: function mouseenter(e) {
+        DataAndComputed.pointer = MouseenterListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.previousEvent = e;
       },
-      click: function click() {
-        console.log('clicked');
+      mouseleave: function mouseleave(e) {
+        DataAndComputed.pointer = MouseleaveListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
+        DataAndComputed.previousEvent = e;
       },
-      compositionend: function compositionend() {},
-      compositionstart: function compositionstart() {},
-      compositionupdate: function compositionupdate() {},
-      contextmenu: function contextmenu() {},
-      copy: function copy() {},
-      cut: function cut() {},
-      dblclick: function dblclick() {},
-      error: function error() {},
-      focus: function focus() {},
-      focusin: function focusin() {},
-      focusout: function focusout() {},
-      fullscreenchange: function fullscreenchange() {},
-      fullscreenerror: function fullscreenerror() {},
-      keydown: function keydown() {},
-      keyup: function keyup() {},
-      mousedown: function mousedown() {},
-      mouseenter: function mouseenter() {},
-      mouseleave: function mouseleave() {},
-      mousemove: function mousemove() {},
-      mouseout: function mouseout() {},
-      mouseover: function mouseover() {
-        console.log('hovered');
+      mousemove: function mousemove(e) {
+        DataAndComputed.pointer = MousemoveListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.previousEvent = e;
       },
-      mouseup: function mouseup() {},
-      overflow: function overflow() {},
-      paste: function paste() {},
-      scroll: function scroll() {},
-      select: function select() {},
-      touchcancel: function touchcancel() {},
-      touchend: function touchend() {},
-      touchmove: function touchmove() {},
-      touchstart: function touchstart() {},
-      webkitmouseforcedown: function webkitmouseforcedown() {},
-      wheel: function wheel() {}
+      mouseup: function mouseup(e) {
+        DataAndComputed.pointer = MouseupListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
+        DataAndComputed.previousEvent = e;
+      }
     }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
     // watch()
