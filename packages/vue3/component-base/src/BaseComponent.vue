@@ -1,13 +1,12 @@
 <template>
-  <div>
+  <div @="EventHandlers">
+    <!-- <div> -->
     <!--
       @slot Default Content
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot
-      >slot default content {{ boundAttributes }} {{ boundEventHandlers }}</slot
-    >
+    <slot>slot default content {{ a }}</slot>
   </div>
 </template>
 
@@ -51,13 +50,57 @@ export default defineComponent({
 
     const DataAndComputed: any = reactive({
       // computedPropertyName:// computed()
+      a: 'hello',
     });
 
     // !Methods
 
-    // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping
-    // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.
-
+    // !Event Handlers
+    const EventHandlers = {
+      auxclick: () => {
+        console.log('auxclick');
+      },
+      blur: () => {
+        console.log('auxclick');
+      },
+      click: () => {
+        console.log('clicked');
+      },
+      compositionend: () => {},
+      compositionstart: () => {},
+      compositionupdate: () => {},
+      contextmenu: () => {},
+      copy: () => {},
+      cut: () => {},
+      dblclick: () => {},
+      error: () => {},
+      focus: () => {},
+      focusin: () => {},
+      focusout: () => {},
+      fullscreenchange: () => {},
+      fullscreenerror: () => {},
+      keydown: () => {},
+      keyup: () => {},
+      mousedown: () => {},
+      mouseenter: () => {},
+      mouseleave: () => {},
+      mousemove: () => {},
+      mouseout: () => {},
+      mouseover: () => {
+        console.log('hovered');
+      },
+      mouseup: () => {},
+      overflow: () => {},
+      paste: () => {},
+      scroll: () => {},
+      select: () => {},
+      touchcancel: () => {},
+      touchend: () => {},
+      touchmove: () => {},
+      touchstart: () => {},
+      webkitmouseforcedown: () => {},
+      wheel: () => {},
+    };
     // !Watchers
 
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
@@ -66,7 +109,7 @@ export default defineComponent({
 
     // !Lifecycle Hooks
 
-    return { ...toRefs(DataAndComputed) };
+    return { ...toRefs(DataAndComputed), EventHandlers };
   },
 });
 </script>

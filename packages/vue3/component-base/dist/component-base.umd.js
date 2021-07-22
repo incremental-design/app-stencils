@@ -2150,14 +2150,14 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=4bb7ac5b
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=6499acde
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", null, [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
-    return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("slot default content " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundAttributes) + " " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.boundEventHandlers), 1)];
-  })]);
+  return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
+    return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])("slot default content " + Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.a), 1)];
+  })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=4bb7ac5b
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=6499acde
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2282,16 +2282,64 @@ function _objectSpread2(target) {
     // Use any valid typescript to process the arguments of the setup function.
     // !Data and Computed Properties
     // Populate the DataAndComputed object by calling the subroutines defined above.
-    var DataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({// computedPropertyName:// computed()
+    var DataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
+      // computedPropertyName:// computed()
+      a: 'hello'
     }); // !Methods
-    // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping
-    // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.
-    // !Watchers
+    // !Event Handlers
+
+    var EventHandlers = {
+      auxclick: function auxclick() {
+        console.log('auxclick');
+      },
+      blur: function blur() {
+        console.log('auxclick');
+      },
+      click: function click() {
+        console.log('clicked');
+      },
+      compositionend: function compositionend() {},
+      compositionstart: function compositionstart() {},
+      compositionupdate: function compositionupdate() {},
+      contextmenu: function contextmenu() {},
+      copy: function copy() {},
+      cut: function cut() {},
+      dblclick: function dblclick() {},
+      error: function error() {},
+      focus: function focus() {},
+      focusin: function focusin() {},
+      focusout: function focusout() {},
+      fullscreenchange: function fullscreenchange() {},
+      fullscreenerror: function fullscreenerror() {},
+      keydown: function keydown() {},
+      keyup: function keyup() {},
+      mousedown: function mousedown() {},
+      mouseenter: function mouseenter() {},
+      mouseleave: function mouseleave() {},
+      mousemove: function mousemove() {},
+      mouseout: function mouseout() {},
+      mouseover: function mouseover() {
+        console.log('hovered');
+      },
+      mouseup: function mouseup() {},
+      overflow: function overflow() {},
+      paste: function paste() {},
+      scroll: function scroll() {},
+      select: function select() {},
+      touchcancel: function touchcancel() {},
+      touchend: function touchend() {},
+      touchmove: function touchmove() {},
+      touchstart: function touchstart() {},
+      webkitmouseforcedown: function webkitmouseforcedown() {},
+      wheel: function wheel() {}
+    }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
     // watch()
     // !Lifecycle Hooks
 
-    return _objectSpread2({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toRefs"])(DataAndComputed));
+    return _objectSpread2(_objectSpread2({}, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toRefs"])(DataAndComputed)), {}, {
+      EventHandlers: EventHandlers
+    });
   }
 }));
 // CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=script&lang=ts

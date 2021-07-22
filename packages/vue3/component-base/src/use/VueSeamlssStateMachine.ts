@@ -14,7 +14,7 @@ interface VueReactiveStateMachine<Affordances> {
   states: States<Affordances>;
 }
 
-class ButtonStates
+export class ButtonStates
   implements
     VueReactiveStateMachine<
       SEAMLSS.Affordances.Focusable & SEAMLSS.Affordances.Pressable
