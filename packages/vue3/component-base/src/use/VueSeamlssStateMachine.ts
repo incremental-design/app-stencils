@@ -1,6 +1,6 @@
 import { reactive, computed } from 'vue';
 import { UnwrapNestedRefs, WritableComputedRef } from '@vue/reactivity';
-import SEAMLSS from '@/use/SeamlssIntefaces';
+import SEAMLSS from '@/use/Seamlss/SeamlssIntefaces';
 
 type States<Affordances> = UnwrapNestedRefs<
   {

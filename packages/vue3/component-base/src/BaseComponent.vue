@@ -34,8 +34,13 @@ import {
   MouseoverListener,
   MouseupListener,
   // WebkitmouseforcedownListener,
-  PointerCoordinates,
-} from './use/VueSeamlssEventListeners';
+  TouchstartListener,
+  // TouchmoveListener,
+  // TouchendListener,
+  // TouchcancelListener,
+} from './use/Seamlss/DOMEventListeners/';
+
+import { PointerCoordinates } from './use/Seamlss/DOMEventListeners/Utils';
 
 // todo: turn off all cursor select unless it is editable text or is copyable content. no select interface microcopy
 
@@ -72,10 +77,12 @@ export default defineComponent({
         downSince: false,
         x: false,
         y: false,
+        rViewport: false,
         xPercent: false,
         yPercent: false,
         dx: false,
         dy: false,
+        drViewport: false,
         dxPercent: false,
         dyPercent: false,
       },
@@ -184,6 +191,12 @@ export default defineComponent({
       // webkitmouseforcedown: (e) => {
       //   DataAndComputed.previousEvent = e;
       // },
+      touchstart: (e: Event) => {
+        console.log(e);
+        TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+      },
     };
     // !Watchers
 

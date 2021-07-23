@@ -1,5 +1,5 @@
 import { UnwrapNestedRefs, WritableComputedRef } from '@vue/reactivity';
-import SEAMLSS from '@/use/SeamlssIntefaces';
+import SEAMLSS from '@/use/Seamlss/SeamlssIntefaces';
 declare type States<Affordances> = UnwrapNestedRefs<{
     [State in keyof Affordances]: Affordances[State] | WritableComputedRef<Affordances[State]>;
 }>;

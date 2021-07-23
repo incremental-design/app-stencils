@@ -2170,7 +2170,7 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=1e9311fc
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=0a5286f9
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), {
@@ -2181,7 +2181,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.pointer), 1)];
   })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=1e9311fc
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=0a5286f9
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2275,12 +2275,218 @@ function _objectSpread2(target) {
 
   return target;
 }
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/Listener.ts
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.is.js
 var es_object_is = __webpack_require__("2b19");
 
-// CONCATENATED MODULE: ./src/use/VueSeamlssEventListeners.ts
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/PointerCoordinates.ts
 
 
+/**
+ * PointerCoordinates describe all of the metrics a pointer can have. A pointer is any means of targeting a specific pixel within an HTMLelement.
+ * @typeParam x is the horizontal component of the location of the pointer, in pixels, relative to the element. For example, if the pointer is 50 pixels to the right of the left edge of the element, x will be 50.
+ *
+ * @typeParam y is the vertical component of the location of the pointer, in pixels, relative to the element. For example, if the cursor is 50 pixels below the top edge of the element, y will be 50.
+ *
+ * @typeParam rViewport is the size of the pointer's radius relative to the viewport, in pixels. Think of the pointer as a circle. The size of the pointer can vary. When the pointer is a mouse cursor, the radius is zero. When the pointer is a pair of touch points, the radius is half of the distance between each touch point. When the pointer is three or more touch points, the radius is the radius of the smallest cirlce that can enclose all three touch points.
+ *
+ * @typeParam xPercent is the horizontal component of the location of the pointer, in percentage, relative to the element. For example, if the cursor is 50 pixels to the right of the left edge, and 50 pixels to the left of the right edge of the element, then xPercent will be .5
+ *
+ * @typeParam yPercent is the horizontal component of the location of the pointer, in decimal, relative to the element. For example, if the pointer is 50 pixels below the top edge, and 50 pixels above the bottom edge of the element, then yPercent will be .5
+ *
+ *
+ * @typeParam dx is the horizontal component of the pointer's velocity, measured in pixels per second. For example, if the pointer is moving 5 pixels to the right each second, dx will be 5.
+ *
+ * @typeParam dy is the vertical component of the pointer's velocity, measured in pixels per second. For example, if the pointer is moving 5 pixels down each second, dy will be 5.
+ *
+ * @typeParam drViewport is the change in size of the pointer's radius, relative to the viewport, measured in pixels per second. For example, if the pointer's is growing at a rate of 5 pixels per second, dr will be 5.
+ *
+ * @typeParam dxPercent is the horizontal component of the pointer's velocity, measured in percent per second. For example, if the pointer is moving 5 pixels to the right each second, and the width of the element is 50 pixels, then dxPercent is .1.
+ *
+ * @typeParam dyPercent is the vertical component of the pointer's velocity, measured in percent per second. For example, if the pointer is moving 5 pixels down each second, and the height of the element is 50 pixels, then dyPercent is .1.
+ *
+ * @remarks Notice that the coordinate space of `r` and `dr` are relative to the browser {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Viewport_concepts | viewport} ... NOT the coordinate space of the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement | HTMLElement}. This is a REALLY important design choice, because it lets the radius express the distance between fingertips on a device screen, regardless of the scale of the HTMLElement being touched. For example: take an 100x100px HTMLElement that is scaled to 50% of its original width and height. This element will still be 100x100px in its coordinate space. However, it will appear to be 50x50px in the viewport. Furthermore, if you move a pointer horizontally across the HTMLElement at a speed of 10px per second relative to the viewport, the `dx` of the pointer will be 20px per second, because it's covering twice as much distance, relative to the HTMLElement, as it would be if the HTMLElement was scaled to 100%. While this scaling is very helpful for tracking the position of a pointer within an element, it would create an unhelpful feedback loop if it was applied to the pointer's radius. That's because of this codebase implements the pinch-to-zoom gesture. Pinching changes the size of the radius. The size of the radius drives the scale of the HTMLElement's coordinate space. Increasing the size of the radius increases the scale of the space, and vice versa. Because of how the HTMLElement's coordinate space can be scaled relative to the radius, the radius cannot be measured relative to the HTMLElement's coordinate space.
+ */
+function getPointerCoordinates(event, previous) {
+  // type Return = {
+  //   x: number;
+  //   y: number;
+  //   rViewport: number;
+  //   [key: string]: number;
+  // };
+  var Target = event.target instanceof HTMLElement ? {
+    width: event.target.scrollWidth,
+    height: event.target.scrollHeight
+  } : {
+    width: false,
+    height: false
+  }; // notice that we are getting scrollWidth and scrollHeight instead of offsetWidth and offsetHeight. That's because scrollWidth and scrollHeight don't change if the target overflows its container.
+
+  var previousHasSameTarget = function previousHasSameTarget() {
+    return event.target instanceof EventTarget && previous && previous.target instanceof EventTarget ? Object.is(event.target, previous.target) : false;
+  };
+
+  var MillisecondsElapsedSincePrevious = previous && previousHasSameTarget() ? event.timeStamp - previous.timeStamp : false;
+  var getCoordinates = {
+    mouse: function mouse(e) {
+      // first, we get the required properties of the PointerCoordinates type
+      var Coordinates = {
+        x: e.offsetX,
+        y: e.offsetY,
+        numberOfTouchPoints: 0
+      }; // then, we get all of the optional properties
+
+      if (MillisecondsElapsedSincePrevious) {
+        Coordinates.dy = e.movementX / MillisecondsElapsedSincePrevious * 1000;
+        Coordinates.dx = e.movementY / MillisecondsElapsedSincePrevious * 1000;
+      }
+
+      if (Target.width) {
+        Coordinates.xPercent = Coordinates.x / Target.width;
+
+        if (Coordinates.dx) {
+          Coordinates.dxPercent = Coordinates.dx / Target.width;
+        }
+      }
+
+      if (Target.height) {
+        Coordinates.yPercent = Coordinates.y / Target.height;
+
+        if (Coordinates.dy) {
+          Coordinates.dyPercent = Coordinates.dy / Target.height;
+        }
+      }
+
+      return Coordinates;
+    },
+    touch: function touch(e) {
+      // first, we get the required properties of the PointerCoordinates type
+      var Coordinates = {
+        x: 0,
+        y: 0,
+        numberOfTouchPoints: 0
+      };
+      return Coordinates;
+    }
+  }; //   const getTouchCoordinates = (e: TouchEvent) => {
+  //     const getTargetBounds = (): void => {
+  //       const ElementBoundingRect =
+  //         event.target instanceof HTMLElement
+  //           ? event.target.getBoundingClientRect()
+  //           : false;
+  //
+  //       if (ElementBoundingRect) {
+  //         Target.viewportLeft = ElementBoundingRect.left;
+  //         Target.viewportTop = ElementBoundingRect.top;
+  //
+  //         Target.viewportWidth = ElementBoundingRect.width;
+  //         Target.viewportHeight = ElementBoundingRect.height;
+  //
+  //         if (Target.width) {
+  //           Target.scaleX = Target.viewportWidth / Target.width;
+  //         }
+  //
+  //         if (Target.height) {
+  //           Target.scaleY = Target.viewportHeight / Target.height;
+  //         }
+  //       }
+  //     };
+  //     getTargetBounds();
+  //
+  //     const TouchPoints = e.targetTouches;
+  //
+  //     const TouchPointCoordinates: Array<Array<number>> = []; // 2D array is more efficient than nested object
+  //
+  //     for (let Index = 0; Index < TouchPoints.length; Index++) {
+  //       const TouchPoint = TouchPoints.item(Index);
+  //
+  //       if (TouchPoint) {
+  //         TouchPointCoordinates.push([TouchPoint.clientX, TouchPoint.clientY]); // notice that we are using `clientX` and `clientY` ... NOT `pageX` and `pageY`, or `screenX` and `screenY`. This is a very important distinction. See: https://developer.mozilla.org/en-US/docs/Web/API/Touch#browser_compatibility
+  //       }
+  //     }
+  //
+  //     let CenterpointX: number;
+  //     let CenterpointY: number;
+  //     let RViewport: number;
+  //
+  //     const calculateRelativeX = (TouchX: number) => {
+  //       // TouchX will be the `clientX` of the Touch item
+  //       if (ElementBoundingRect && ScaleX) {
+  //         return (TouchX - ElementBoundingRect.left) / ScaleX;
+  //       } else {
+  //         return TouchX; // in the case that the HTML element has no scale or no bounding rect, just return the original TouchX, which is relative to the viewport.
+  //       }
+  //     };
+  //     const calculateRelativeY = (TouchY: number) => {
+  //       // TouchY will be the `clientY` of the Touch item
+  //       if (ElementBoundingRect && ScaleY) {
+  //         return (TouchY - ElementBoundingRect.left) / ScaleY;
+  //       } else {
+  //         return TouchY; // in the case that the HTML element has no scale or no bounding rect, just return the original TouchY, which is relative to the viewport.
+  //       }
+  //     };
+  //
+  //     const getDistanceBetween = (
+  //       X1: number,
+  //       Y1: number,
+  //       X2: number,
+  //       Y2: number
+  //     ) => {
+  //       const DX = X2 - X1;
+  //       const DY = Y2 - Y1;
+  //       return Math.sqrt(DX ** 2 + DY ** 2);
+  //     };
+  //
+  //     const NumberOfTouchPoints = TouchPointCoordinates.length;
+  //
+  //     switch (NumberOfTouchPoints) {
+  //       case 0:
+  //         throw new Error(
+  //           'it should be impossible to have a touch event with no touch points'
+  //         );
+  //       case 1:
+  //         RViewport = 0; // by definition, the radius of a pointer with only one touch point is zero.
+  //         CenterpointX = calculateRelativeX(TouchPointCoordinates[0][0]);
+  //         CenterpointY = calculateRelativeY(TouchPointCoordinates[0][1]);
+  //         break;
+  //       case 2:
+  //         RViewport =
+  //           getDistanceBetween(
+  //             TouchPointCoordinates[0][0],
+  //             TouchPointCoordinates[0][1],
+  //             TouchPointCoordinates[1][0],
+  //             TouchPointCoordinates[1][1]
+  //           ) / 2;
+  //         CenterpointX = calculateRelativeX(
+  //           (TouchPointCoordinates[1][0] + TouchPointCoordinates[0][0]) / 2
+  //         );
+  //         CenterpointY = calculateRelativeY(
+  //           (TouchPointCoordinates[1][1] + TouchPointCoordinates[0][1]) / 2
+  //         );
+  //         break;
+  //       default:
+  //         throw new Error(
+  //           `I have not implemented a way to find the centerpoint and radius for more than two touch points`
+  //         );
+  //     }
+  //
+  //     const Coordinates: Return = {
+  //       x: CenterpointX,
+  //       y: CenterpointY,
+  //       rViewport: RViewport,
+  //     };
+  //   };
+
+  if (event instanceof MouseEvent) {
+    return getCoordinates.mouse(event);
+  } else if (event instanceof TouchEvent) {
+    return getCoordinates.touch(event);
+  } else {
+    throw new Error("".concat(event, " is not a MouseEvent or TouchEvent"));
+  }
+}
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/StopAndPrevent.ts
 var stopAndPrevent = function stopAndPrevent(e) {
   var stopPropogation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
   var preventDefault = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
@@ -2293,306 +2499,129 @@ var stopAndPrevent = function stopAndPrevent(e) {
     e.preventDefault();
   }
 };
-
-function getPointerCoordinates(event, previous) {
-  var width = event.target instanceof HTMLElement ? event.target.scrollWidth : false; // notice that we are getting scrollWidth instead of offsetWidth. That's because scrollWidth doesn't change if the target overflows its container.
-
-  var height = event.target instanceof HTMLElement ? event.target.scrollHeight : false; // notice that we are getting scrollHeight instead of offsetHeight. That's because scrollHeight doesn't change if the target overflows its container.
-
-  var previousHasSameTarget = function previousHasSameTarget() {
-    return event.target instanceof EventTarget && previous && previous.target instanceof EventTarget ? Object.is(event.target, previous.target) : false;
-  };
-
-  var MillisecondsElapsedSincePrevious = previous && previousHasSameTarget() ? event.timeStamp - previous.timeStamp : false;
-
-  var getMouseCoordinates = function getMouseCoordinates(e) {
-    var X = e.offsetX;
-    var Y = e.offsetY;
-    var DX = MillisecondsElapsedSincePrevious ? e.movementX / MillisecondsElapsedSincePrevious * 1000 : false;
-    var DY = MillisecondsElapsedSincePrevious ? e.movementY / MillisecondsElapsedSincePrevious * 1000 : false;
-    var XPercent = width ? X / width : false;
-    var YPercent = height ? Y / height : false;
-    var DXPercent = width && DX ? DX / width : false;
-    var DYPercent = height && DY ? DY / height : false;
-    var Coordinates = {
-      x: X,
-      y: Y
-    };
-
-    if (XPercent) {
-      Coordinates.xPercent = XPercent;
-    }
-
-    if (YPercent) {
-      Coordinates.yPercent = YPercent;
-    }
-
-    if (DX) {
-      Coordinates.dx = DX;
-    }
-
-    if (DY) {
-      Coordinates.dy = DY;
-    }
-
-    if (DXPercent) {
-      Coordinates.dxPercent = DXPercent;
-    }
-
-    if (DYPercent) {
-      Coordinates.dyPercent = DYPercent;
-    }
-
-    return Coordinates;
-  }; // const getTouchCoordinates = (e: TouchEvent) => {}
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/index.ts
 
 
-  if (event instanceof MouseEvent) {
-    return getMouseCoordinates(event);
-  } // else if (e instanceof TouchEvent){
-  //   return getTouchCoordinates(e)
-  // }
-  else {
-      throw new Error("".concat(event, " is not a MouseEvent or TouchEvent"));
-    }
-} // !AuxclickListener
+
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/CompositionListeners.ts
+ // !CompositionstartListener
 
 /**
- * AuxclickListener
- */
-// export const AuxclickListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !BlurListener
-
-/**
- * BlurListener
- */
-// export const blurListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !ClickListener
-
-/**
- * ClickListener
+ * CompositionstartListener
  */
 
-
-var ClickListener = function ClickListener(e, stopPropogation, preventDefault, p) {
+var CompositionListeners_CompositionstartListener = function CompositionstartListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
-  return getPointerCoordinates(e, p);
+}; // !CompositionupdateListener
+
+/**
+ * CompositionupdateListener
+ */
+
+var CompositionListeners_CompositionupdateListener = function CompositionupdateListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
 }; // !CompositionendListener
 
 /**
  * CompositionendListener
  */
-// export const CompositionendListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !CompositionstartListener
 
-/**
- * CompositionstartListener
- */
-// export const CompositionstartListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !CompositionupdateListener
-
-/**
- * CompositionupdateListener
- */
-// export const CompositionupdateListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !ContextmenuListener
-
-/**
- * ContextmenuListener
- */
-// export const ContextmenuListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !CopyListener
-
-/**
- * CopyListener
- */
-// export const CopyListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !CutListener
-
-/**
- * CutListener
- */
-// export const CutListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !DblclickListener
-
-/**
- * DblclickListener
- */
-// export const DblclickListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !ErrorListener
-
-/**
- * ErrorListener
- */
-// export const ErrorListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !FocusListener
+var CompositionListeners_CompositionendListener = function CompositionendListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/FocusListeners.ts
+ // !FocusListener
 
 /**
  * FocusListener
  */
-// export const FocusListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !FocusinListener
+
+var FocusListeners_FocusListener = function FocusListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !SelectListener
+
+/**
+ * SelectListener
+ */
+
+var FocusListeners_SelectListener = function SelectListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !FocusinListener
 
 /**
  * FocusinListener
  */
-// export const FocusinListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !FocusoutListener
+
+var FocusListeners_FocusinListener = function FocusinListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !FocusoutListener
 
 /**
  * FocusoutListener
  */
-// export const FocusoutListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !FullscreenchangeListener
+
+var FocusListeners_FocusoutListener = function FocusoutListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !BlurListener
 
 /**
- * FullscreenchangeListener
+ * BlurListener
  */
-// export const FullscreenchangeListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !FullscreenerrorListener
 
-/**
- * FullscreenerrorListener
- */
-// export const FullscreenerrorListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !KeydownListener
+var FocusListeners_blurListener = function blurListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/KeyboardListeners.ts
+ // !KeydownListener
 
 /**
  * KeydownListener
  */
-// export const KeydownListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !KeyupListener
+
+var KeyboardListeners_KeydownListener = function KeydownListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !KeyupListener
 
 /**
  * KeyupListener
  */
-// export const KeyupListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !MousedownListener
+
+var KeyboardListeners_KeyupListener = function KeyupListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/MouseListeners.ts
+ // !AuxclickListener
+
+/**
+ * AuxclickListener
+ */
+
+var MouseListeners_AuxclickListener = function AuxclickListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !DblclickListener
+
+/**
+ * DblclickListener
+ */
+
+var MouseListeners_DblclickListener = function DblclickListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !ClickListener
+
+/**
+ * ClickListener
+ */
+
+var MouseListeners_ClickListener = function ClickListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !MousedownListener
 
 /**
  * MousedownListener
  */
 
-var MousedownListener = function MousedownListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MousedownListener = function MousedownListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MouseenterListener
@@ -2601,7 +2630,7 @@ var MousedownListener = function MousedownListener(e, stopPropogation, preventDe
  * MouseenterListener
  */
 
-var MouseenterListener = function MouseenterListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MouseenterListener = function MouseenterListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MouseleaveListener
@@ -2610,7 +2639,7 @@ var MouseenterListener = function MouseenterListener(e, stopPropogation, prevent
  * MouseleaveListener
  */
 
-var MouseleaveListener = function MouseleaveListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MouseleaveListener = function MouseleaveListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MousemoveListener
@@ -2619,7 +2648,7 @@ var MouseleaveListener = function MouseleaveListener(e, stopPropogation, prevent
  * MousemoveListener
  */
 
-var MousemoveListener = function MousemoveListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MousemoveListener = function MousemoveListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MouseoutListener
@@ -2628,7 +2657,7 @@ var MousemoveListener = function MousemoveListener(e, stopPropogation, preventDe
  * MouseoutListener
  */
 
-var MouseoutListener = function MouseoutListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MouseoutListener = function MouseoutListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MouseoverListener
@@ -2637,7 +2666,7 @@ var MouseoutListener = function MouseoutListener(e, stopPropogation, preventDefa
  * MouseoverListener
  */
 
-var MouseoverListener = function MouseoverListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MouseoverListener = function MouseoverListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
 }; // !MouseupListener
@@ -2646,155 +2675,148 @@ var MouseoverListener = function MouseoverListener(e, stopPropogation, preventDe
  * MouseupListener
  */
 
-var MouseupListener = function MouseupListener(e, stopPropogation, preventDefault, p) {
+var MouseListeners_MouseupListener = function MouseupListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
   return getPointerCoordinates(e, p);
+}; // !WebkitmouseforcedownListener
+
+/**
+ * WebkitmouseforcedownListener
+ */
+
+var MouseListeners_WebkitmouseforcedownListener = function WebkitmouseforcedownListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !ContextmenuListener
+
+/**
+ * ContextmenuListener
+ */
+
+var MouseListeners_ContextmenuListener = function ContextmenuListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !WheelListener
+
+/**
+ * WheelListener
+ */
+
+var MouseListeners_WheelListener = function WheelListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/PasteboardListeners.ts
+ // !CutListener
+
+/**
+ * CutListener
+ */
+
+var PasteboardListeners_CutListener = function CutListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !CopyListener
+
+/**
+ * CopyListener
+ */
+
+var PasteboardListeners_CopyListener = function CopyListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !PasteListener
+
+/**
+ * PasteListener
+ */
+
+var PasteboardListeners_PasteListener = function PasteListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/ScrollListeners.ts
+ // !ScrollListener
+
+/**
+ * ScrollListener
+ */
+
+var ScrollListeners_ScrollListener = function ScrollListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
 }; // !OverflowListener
 
 /**
  * OverflowListener
  */
-// export const OverflowListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !PasteListener
 
-/**
- * PasteListener
- */
-// export const PasteListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !ScrollListener
-
-/**
- * ScrollListener
- */
-// export const ScrollListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !SelectListener
-
-/**
- * SelectListener
- */
-// export const SelectListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !TouchcancelListener
-
-/**
- * TouchcancelListener
- */
-// export const TouchcancelListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !TouchendListener
-
-/**
- * TouchendListener
- */
-// export const TouchendListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !TouchmoveListener
-
-/**
- * TouchmoveListener
- */
-// export const TouchmoveListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !TouchstartListener
+var ScrollListeners_OverflowListener = function OverflowListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/TouchListeners.ts
+ // !TouchstartListener
 
 /**
  * TouchstartListener
  */
-// export const TouchstartListener: Listener<PointerCoordinates> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !WebkitmouseforcedownListener
+
+var TouchListeners_TouchstartListener = function TouchstartListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
+}; // !TouchmoveListener
 
 /**
- * WebkitmouseforcedownListener
+ * TouchmoveListener
  */
-// export const WebkitmouseforcedownListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
-// !WheelListener
+
+var TouchListeners_TouchmoveListener = function TouchmoveListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !TouchendListener
 
 /**
- * WheelListener
+ * TouchendListener
  */
-// export const WheelListener: Listener<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
+
+var TouchListeners_TouchendListener = function TouchendListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !TouchcancelListener
 
 /**
- * MouseListeners contains ALL listeners that respond to MouseEvents
+ * TouchcancelListener
  */
 
-var MouseListeners = {
-  ClickListener: ClickListener,
-  // DblclickListener,
-  MousedownListener: MousedownListener,
-  MouseenterListener: MouseenterListener,
-  MouseleaveListener: MouseleaveListener,
-  MousemoveListener: MousemoveListener,
-  MouseoutListener: MouseoutListener,
-  MouseoverListener: MouseoverListener,
-  MouseupListener: MouseupListener
+var TouchListeners_TouchcancelListener = function TouchcancelListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
 };
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/WindowListeners.ts
+ // !ErrorListener
+
+/**
+ * ErrorListener
+ */
+
+var WindowListeners_ErrorListener = function ErrorListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !FullscreenchangeListener
+
+/**
+ * FullscreenchangeListener
+ */
+
+var WindowListeners_FullscreenchangeListener = function FullscreenchangeListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+}; // !FullscreenerrorListener
+
+/**
+ * FullscreenerrorListener
+ */
+
+var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e, stopPropogation, preventDefault, p) {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+// CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/index.ts
+
+
+
+
+
+
+
+
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=script&lang=ts
 
 
@@ -2836,10 +2858,12 @@ var MouseListeners = {
         downSince: false,
         x: false,
         y: false,
+        rViewport: false,
         xPercent: false,
         yPercent: false,
         dx: false,
         dy: false,
+        drViewport: false,
         dxPercent: false,
         dyPercent: false
       },
@@ -2882,30 +2906,39 @@ var MouseListeners = {
 
     var EventHandlers = {
       mousedown: function mousedown(e) {
-        DataAndComputed.pointer = MousedownListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer = MouseListeners_MousedownListener(e, true, true, DataAndComputed.previousEvent);
         DataAndComputed.pointer.isDown = true;
         DataAndComputed.pointer.downSince = e.timeStamp;
         DataAndComputed.previousEvent = e;
       },
       mouseenter: function mouseenter(e) {
-        DataAndComputed.pointer = MouseenterListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer = MouseListeners_MouseenterListener(e, true, true, DataAndComputed.previousEvent);
         DataAndComputed.previousEvent = e;
       },
       mouseleave: function mouseleave(e) {
-        DataAndComputed.pointer = MouseleaveListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer = MouseListeners_MouseleaveListener(e, true, true, DataAndComputed.previousEvent);
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
         DataAndComputed.previousEvent = e;
       },
       mousemove: function mousemove(e) {
-        DataAndComputed.pointer = MousemoveListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer = MouseListeners_MousemoveListener(e, true, true, DataAndComputed.previousEvent);
         DataAndComputed.previousEvent = e;
       },
       mouseup: function mouseup(e) {
-        DataAndComputed.pointer = MouseupListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer = MouseListeners_MouseupListener(e, true, true, DataAndComputed.previousEvent);
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
         DataAndComputed.previousEvent = e;
+      },
+      // webkitmouseforcedown: (e) => {
+      //   DataAndComputed.previousEvent = e;
+      // },
+      touchstart: function touchstart(e) {
+        console.log(e);
+        TouchListeners_TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
       }
     }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
