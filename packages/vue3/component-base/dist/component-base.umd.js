@@ -2179,7 +2179,7 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=0a5286f9
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=4736244f
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), {
@@ -2190,7 +2190,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.pointer), 1)];
   })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=0a5286f9
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=4736244f
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2292,45 +2292,26 @@ var es_object_is = __webpack_require__("2b19");
 // CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/PointerCoordinates.ts
 
 
-/**
- * PointerCoordinates describe all of the metrics a pointer can have. A pointer is any means of targeting a specific pixel within an HTMLelement.
- * @typeParam x is the horizontal component of the location of the pointer, in pixels, relative to the element. For example, if the pointer is 50 pixels to the right of the left edge of the element, x will be 50.
- *
- * @typeParam y is the vertical component of the location of the pointer, in pixels, relative to the element. For example, if the cursor is 50 pixels below the top edge of the element, y will be 50.
- *
- * @typeParam rViewport is the size of the pointer's radius relative to the viewport, in pixels. Think of the pointer as a circle. The size of the pointer can vary. When the pointer is a mouse cursor, the radius is zero. When the pointer is a pair of touch points, the radius is half of the distance between each touch point. When the pointer is three or more touch points, the radius is the radius of the smallest cirlce that can enclose all three touch points.
- *
- * @typeParam xPercent is the horizontal component of the location of the pointer, in percentage, relative to the element. For example, if the cursor is 50 pixels to the right of the left edge, and 50 pixels to the left of the right edge of the element, then xPercent will be .5
- *
- * @typeParam yPercent is the horizontal component of the location of the pointer, in decimal, relative to the element. For example, if the pointer is 50 pixels below the top edge, and 50 pixels above the bottom edge of the element, then yPercent will be .5
- *
- *
- * @typeParam dx is the horizontal component of the pointer's velocity, measured in pixels per second. For example, if the pointer is moving 5 pixels to the right each second, dx will be 5.
- *
- * @typeParam dy is the vertical component of the pointer's velocity, measured in pixels per second. For example, if the pointer is moving 5 pixels down each second, dy will be 5.
- *
- * @typeParam drViewport is the change in size of the pointer's radius, relative to the viewport, measured in pixels per second. For example, if the pointer's is growing at a rate of 5 pixels per second, dr will be 5.
- *
- * @typeParam dxPercent is the horizontal component of the pointer's velocity, measured in percent per second. For example, if the pointer is moving 5 pixels to the right each second, and the width of the element is 50 pixels, then dxPercent is .1.
- *
- * @typeParam dyPercent is the vertical component of the pointer's velocity, measured in percent per second. For example, if the pointer is moving 5 pixels down each second, and the height of the element is 50 pixels, then dyPercent is .1.
- *
- * @remarks Notice that the coordinate space of `r` and `dr` are relative to the browser {@link https://developer.mozilla.org/en-US/docs/Web/CSS/Viewport_concepts | viewport} ... NOT the coordinate space of the {@link https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement | HTMLElement}. This is a REALLY important design choice, because it lets the radius express the distance between fingertips on a device screen, regardless of the scale of the HTMLElement being touched. For example: take an 100x100px HTMLElement that is scaled to 50% of its original width and height. This element will still be 100x100px in its coordinate space. However, it will appear to be 50x50px in the viewport. Furthermore, if you move a pointer horizontally across the HTMLElement at a speed of 10px per second relative to the viewport, the `dx` of the pointer will be 20px per second, because it's covering twice as much distance, relative to the HTMLElement, as it would be if the HTMLElement was scaled to 100%. While this scaling is very helpful for tracking the position of a pointer within an element, it would create an unhelpful feedback loop if it was applied to the pointer's radius. That's because of this codebase implements the pinch-to-zoom gesture. Pinching changes the size of the radius. The size of the radius drives the scale of the HTMLElement's coordinate space. Increasing the size of the radius increases the scale of the space, and vice versa. Because of how the HTMLElement's coordinate space can be scaled relative to the radius, the radius cannot be measured relative to the HTMLElement's coordinate space.
- */
 function getPointerCoordinates(event, previous) {
-  // type Return = {
-  //   x: number;
-  //   y: number;
-  //   rViewport: number;
-  //   [key: string]: number;
-  // };
-  var Target = event.target instanceof HTMLElement ? {
-    width: event.target.scrollWidth,
-    height: event.target.scrollHeight
-  } : {
-    width: false,
-    height: false
-  }; // notice that we are getting scrollWidth and scrollHeight instead of offsetWidth and offsetHeight. That's because scrollWidth and scrollHeight don't change if the target overflows its container.
+  var getTarget = function getTarget() {
+    if (event.target instanceof HTMLElement) {
+      var ET = event.target;
+      return {
+        width: ET.offsetWidth,
+        height: ET.offsetHeight,
+        getBoundingClientRect: function getBoundingClientRect() {
+          return ET.getBoundingClientRect();
+        }
+      };
+    } else {
+      return {
+        width: false,
+        height: false
+      };
+    }
+  };
+
+  var Target = getTarget();
 
   var previousHasSameTarget = function previousHasSameTarget() {
     return event.target instanceof EventTarget && previous && previous.target instanceof EventTarget ? Object.is(event.target, previous.target) : false;
@@ -2347,145 +2328,282 @@ function getPointerCoordinates(event, previous) {
       }; // then, we get all of the optional properties
 
       if (MillisecondsElapsedSincePrevious) {
-        Coordinates.dy = e.movementX / MillisecondsElapsedSincePrevious * 1000;
-        Coordinates.dx = e.movementY / MillisecondsElapsedSincePrevious * 1000;
+        Coordinates.dyViewport = e.movementX / MillisecondsElapsedSincePrevious * 1000;
+        Coordinates.dxViewport = e.movementY / MillisecondsElapsedSincePrevious * 1000;
       }
 
       if (Target.width) {
         Coordinates.xPercent = Coordinates.x / Target.width;
 
-        if (Coordinates.dx) {
-          Coordinates.dxPercent = Coordinates.dx / Target.width;
+        if (typeof Coordinates.dxViewport === 'number') {
+          Coordinates.dxPercent = Coordinates.dxViewport / Target.width;
         }
       }
 
       if (Target.height) {
         Coordinates.yPercent = Coordinates.y / Target.height;
 
-        if (Coordinates.dy) {
-          Coordinates.dyPercent = Coordinates.dy / Target.height;
+        if (typeof Coordinates.dyViewport === 'number') {
+          Coordinates.dyPercent = Coordinates.dyViewport / Target.height;
         }
       }
 
       return Coordinates;
     },
     touch: function touch(e) {
-      // first, we get the required properties of the PointerCoordinates type
-      var Coordinates = {
-        x: 0,
-        y: 0,
-        numberOfTouchPoints: 0
+      var getTouchPoints = function getTouchPoints() {
+        var TouchPoints = {};
+
+        var supportsTouchIdentifier = function supportsTouchIdentifier() {
+          // unfortunately not all browsers support Touch.identifier (see: https://developer.mozilla.org/en-US/docs/Web/API/Touch/identifier), so we need to do a litmus test before we run the for loop.
+          var FirstTouch = e.targetTouches.item(0);
+          return typeof (FirstTouch === null || FirstTouch === void 0 ? void 0 : FirstTouch.identifier) === 'number' ? true : false;
+        };
+
+        var DoesSupportTouchIdentifier = supportsTouchIdentifier();
+
+        var getAllPreviousTouches = function getAllPreviousTouches() {
+          if (previous && previousHasSameTarget && previous instanceof TouchEvent && // todo: remove this condition after api refactor, because it will ALWAYS be true
+          DoesSupportTouchIdentifier) {
+            var _PreviousTouches = {};
+
+            for (var Index = 0; Index < previous.targetTouches.length; Index++) {
+              var PreviousTouch = previous.targetTouches.item(Index);
+
+              if (PreviousTouch) {
+                _PreviousTouches[PreviousTouch.identifier] = {
+                  viewportX: PreviousTouch.clientX,
+                  viewportY: PreviousTouch.clientY
+                };
+              }
+            }
+
+            return _PreviousTouches;
+          } else {
+            return false;
+          }
+        };
+
+        var PreviousTouches = getAllPreviousTouches();
+
+        for (var Index = 0; Index < e.targetTouches.length; Index++) {
+          var Touch = e.targetTouches.item(Index);
+
+          if (Touch) {
+            TouchPoints[Touch.identifier] = {
+              current: {
+                viewportX: Touch.clientX,
+                viewportY: Touch.clientY
+              }
+            };
+
+            if (PreviousTouches && PreviousTouches[Touch.identifier]) {
+              TouchPoints[Touch.identifier].previous = PreviousTouches[Touch.identifier];
+            }
+          }
+        }
+
+        return TouchPoints;
       };
+
+      var TouchPoints = getTouchPoints();
+
+      var calculateTouchCenterpoint = function calculateTouchCenterpoint() {
+        var BoundingRect = Target.getBoundingClientRect ? Target.getBoundingClientRect() : false;
+
+        var calculateTargetScaleAndTranslate = function calculateTargetScaleAndTranslate() {
+          if (Target.width !== false && Target.height !== false && BoundingRect) {
+            var left = BoundingRect.left,
+                top = BoundingRect.top,
+                width = BoundingRect.width,
+                height = BoundingRect.height;
+            Target.viewportTranslateX = left;
+            Target.viewportTranslateY = top;
+            Target.scaleX = Target.width === 0 ? 0 : width / Target.width;
+            Target.scaleY = Target.height === 0 ? 0 : height / Target.height;
+          }
+        };
+
+        calculateTargetScaleAndTranslate();
+        var TouchPointIDs = Object.keys(TouchPoints);
+
+        var calculateRelativeXY = function calculateRelativeXY(C) {
+          if (typeof Target.scaleX === 'number' && typeof Target.scaleY === 'number' && typeof Target.viewportTranslateX === 'number' && typeof Target.viewportTranslateY === 'number') {
+            C.relative = {
+              x: (C.viewport.x - Target.viewportTranslateX) * Target.scaleX,
+              y: (C.viewport.y - Target.viewportTranslateY) * Target.scaleY
+            };
+          }
+        };
+
+        switch (TouchPointIDs.length) {
+          case 0:
+            // a touchend event has no touch points, because by definition, the touch has ended. To fix this, we need to revise the API.
+            throw new Error("It is technically impossible to have a touch event with no touch points. This error should never happen.");
+
+          case 1:
+            var getCenterpointOfOne = function getCenterpointOfOne() {
+              var C = {
+                viewport: {
+                  x: TouchPoints[TouchPointIDs[0]].current.viewportX,
+                  y: TouchPoints[TouchPointIDs[0]].current.viewportY
+                }
+              };
+              calculateRelativeXY(C);
+              return C;
+            };
+
+            return getCenterpointOfOne();
+
+          case 2 | 3:
+            // I know that this is hacky ... right now I'm ignoring the 3rd touch point entirely ... but it'll take me another day to write the code to handle this, and I don't have that time rn.
+            var getCenterpointOfTwo = function getCenterpointOfTwo() {
+              var Adjacent = TouchPoints[TouchPointIDs[1]].current.viewportX - TouchPoints[TouchPointIDs[0]].current.viewportX;
+              var Opposite = TouchPoints[TouchPointIDs[1]].current.viewportY - TouchPoints[TouchPointIDs[0]].current.viewportY;
+
+              var getPreviousOppositeAdjacent = function getPreviousOppositeAdjacent() {
+                function isTouchPointCoords(previous) {
+                  return previous.viewportX !== undefined && previous.viewportY !== undefined;
+                }
+
+                var P1 = TouchPoints[TouchPointIDs[1]].previous;
+                var P0 = TouchPoints[TouchPointIDs[0]].previous;
+
+                if (isTouchPointCoords(P1) && isTouchPointCoords(P0)) {
+                  return {
+                    PreviousAdjacent: P1.viewportX - P0.viewportX,
+                    PreviousOpposite: P1.viewportY - P0.viewportY
+                  };
+                } else {
+                  return false;
+                }
+              };
+
+              var PreviousAdjacentOpposite = getPreviousOppositeAdjacent();
+              var C = {
+                viewport: {
+                  x: (TouchPoints[TouchPointIDs[0]].current.viewportX + TouchPoints[TouchPointIDs[1]].current.viewportX) / 2,
+                  y: (TouchPoints[TouchPointIDs[0]].current.viewportY + TouchPoints[TouchPointIDs[1]].current.viewportY) / 2,
+                  radius: Math.pow(Math.pow(Adjacent, 2) + Math.pow(Opposite, 2), 0.5) / 2
+                }
+              };
+
+              var calculateRotation = function calculateRotation() {
+                if (PreviousAdjacentOpposite) {
+                  var PreviousAdjacent = PreviousAdjacentOpposite.PreviousAdjacent,
+                      PreviousOpposite = PreviousAdjacentOpposite.PreviousOpposite;
+
+                  var getSlopeInDegrees = function getSlopeInDegrees(Adjacent, Opposite) {
+                    if (Adjacent === 0) {
+                      // then slope is either 90 degrees or 270 degrees
+                      if (Opposite === 0) {
+                        // then there is no slope. Assume zero degrees.
+                        return 0;
+                      } else if (Opposite < 0) {
+                        return 270;
+                      } else {
+                        return 90;
+                      }
+                    } else {
+                      var Atan = Math.atan(Opposite / Adjacent);
+
+                      if (Adjacent < 0) {
+                        // then slope is between 90 and 270 degrees
+                        if (Atan === 0) {
+                          return 180;
+                        } else if (Atan > 0) {
+                          // then slope is between 180 and 270 degrees
+                          return 180 + 180 / Math.PI * Atan;
+                        } else {
+                          // then slope is between 90 and 180 degrees
+                          return 90 + 180 / Math.PI * Atan;
+                        }
+                      } else {
+                        // then slope is between 0 and 90 degrees or 270 and 360 degrees
+                        if (Atan === 0) {
+                          return 0;
+                        } else if (Atan > 0) {
+                          // then slope is between 0 and 90 degrees
+                          return 180 / Math.PI * Atan;
+                        } else {
+                          return 270 + 180 / Math.PI * Atan;
+                        }
+                      }
+                    }
+                  };
+
+                  var Slope = getSlopeInDegrees(Adjacent, Opposite);
+                  var PreviousSlope = getSlopeInDegrees(PreviousAdjacent, PreviousOpposite);
+                  C.viewport.rotation = Slope - PreviousSlope;
+                }
+              };
+
+              calculateRotation();
+              calculateRelativeXY(C);
+              return C;
+            };
+
+            return getCenterpointOfTwo();
+          // case 3:
+          // do something else
+          // const getCenterpointOfThree = (): Centerpoint => {};
+          // return getCenterpointOfThree();
+
+          default:
+            throw new Error("I haven't implemented the smallest-enclosing-circle algorithm yet. Once I do, I will be able to calculate the centerpoint of a TouchEvent with ".concat(Object.keys(TouchPoints).length, " touch points."));
+        }
+      };
+
+      var _calculateTouchCenter = calculateTouchCenterpoint(),
+          viewport = _calculateTouchCenter.viewport,
+          relative = _calculateTouchCenter.relative; // Finally, we populate and return the coordinates object
+
+
+      var Coordinates = {
+        x: relative ? relative.x : viewport.x,
+        y: relative ? relative.y : viewport.y,
+        xViewport: viewport.x,
+        yViewport: viewport.y,
+        dxViewport: function dxViewport(PreviousXViewport) {
+          return viewport.x - PreviousXViewport;
+        },
+        dyViewport: function dyViewport(PreviousYViewport) {
+          return viewport.y - PreviousYViewport;
+        },
+        numberOfTouchPoints: e.targetTouches.length
+      };
+
+      if (typeof Target.width === 'number' && typeof Target.height === 'number' && relative) {
+        Coordinates.xPercent = relative.x / Target.width;
+        Coordinates.yPercent = relative.y / Target.height;
+        var TW = Target.width;
+        var TH = Target.height;
+
+        Coordinates.dxPercent = function (PreviousXViewport) {
+          return (viewport.x - PreviousXViewport) / TW;
+        };
+
+        Coordinates.dyPercent = function (PreviousYViewport) {
+          return (viewport.y - PreviousYViewport) / TH;
+        };
+      }
+
+      if (viewport.radius) {
+        var VR = viewport.radius;
+        Coordinates.radiusViewport = VR;
+
+        Coordinates.calculateDRadiusViewport = function (PreviousRadiusViewport) {
+          return VR - PreviousRadiusViewport;
+        };
+      }
+
+      if (viewport.rotation) {
+        Coordinates.dRotationDegreesViewport = viewport.rotation;
+      }
+
       return Coordinates;
     }
-  }; //   const getTouchCoordinates = (e: TouchEvent) => {
-  //     const getTargetBounds = (): void => {
-  //       const ElementBoundingRect =
-  //         event.target instanceof HTMLElement
-  //           ? event.target.getBoundingClientRect()
-  //           : false;
-  //
-  //       if (ElementBoundingRect) {
-  //         Target.viewportLeft = ElementBoundingRect.left;
-  //         Target.viewportTop = ElementBoundingRect.top;
-  //
-  //         Target.viewportWidth = ElementBoundingRect.width;
-  //         Target.viewportHeight = ElementBoundingRect.height;
-  //
-  //         if (Target.width) {
-  //           Target.scaleX = Target.viewportWidth / Target.width;
-  //         }
-  //
-  //         if (Target.height) {
-  //           Target.scaleY = Target.viewportHeight / Target.height;
-  //         }
-  //       }
-  //     };
-  //     getTargetBounds();
-  //
-  //     const TouchPoints = e.targetTouches;
-  //
-  //     const TouchPointCoordinates: Array<Array<number>> = []; // 2D array is more efficient than nested object
-  //
-  //     for (let Index = 0; Index < TouchPoints.length; Index++) {
-  //       const TouchPoint = TouchPoints.item(Index);
-  //
-  //       if (TouchPoint) {
-  //         TouchPointCoordinates.push([TouchPoint.clientX, TouchPoint.clientY]); // notice that we are using `clientX` and `clientY` ... NOT `pageX` and `pageY`, or `screenX` and `screenY`. This is a very important distinction. See: https://developer.mozilla.org/en-US/docs/Web/API/Touch#browser_compatibility
-  //       }
-  //     }
-  //
-  //     let CenterpointX: number;
-  //     let CenterpointY: number;
-  //     let RViewport: number;
-  //
-  //     const calculateRelativeX = (TouchX: number) => {
-  //       // TouchX will be the `clientX` of the Touch item
-  //       if (ElementBoundingRect && ScaleX) {
-  //         return (TouchX - ElementBoundingRect.left) / ScaleX;
-  //       } else {
-  //         return TouchX; // in the case that the HTML element has no scale or no bounding rect, just return the original TouchX, which is relative to the viewport.
-  //       }
-  //     };
-  //     const calculateRelativeY = (TouchY: number) => {
-  //       // TouchY will be the `clientY` of the Touch item
-  //       if (ElementBoundingRect && ScaleY) {
-  //         return (TouchY - ElementBoundingRect.left) / ScaleY;
-  //       } else {
-  //         return TouchY; // in the case that the HTML element has no scale or no bounding rect, just return the original TouchY, which is relative to the viewport.
-  //       }
-  //     };
-  //
-  //     const getDistanceBetween = (
-  //       X1: number,
-  //       Y1: number,
-  //       X2: number,
-  //       Y2: number
-  //     ) => {
-  //       const DX = X2 - X1;
-  //       const DY = Y2 - Y1;
-  //       return Math.sqrt(DX ** 2 + DY ** 2);
-  //     };
-  //
-  //     const NumberOfTouchPoints = TouchPointCoordinates.length;
-  //
-  //     switch (NumberOfTouchPoints) {
-  //       case 0:
-  //         throw new Error(
-  //           'it should be impossible to have a touch event with no touch points'
-  //         );
-  //       case 1:
-  //         RViewport = 0; // by definition, the radius of a pointer with only one touch point is zero.
-  //         CenterpointX = calculateRelativeX(TouchPointCoordinates[0][0]);
-  //         CenterpointY = calculateRelativeY(TouchPointCoordinates[0][1]);
-  //         break;
-  //       case 2:
-  //         RViewport =
-  //           getDistanceBetween(
-  //             TouchPointCoordinates[0][0],
-  //             TouchPointCoordinates[0][1],
-  //             TouchPointCoordinates[1][0],
-  //             TouchPointCoordinates[1][1]
-  //           ) / 2;
-  //         CenterpointX = calculateRelativeX(
-  //           (TouchPointCoordinates[1][0] + TouchPointCoordinates[0][0]) / 2
-  //         );
-  //         CenterpointY = calculateRelativeY(
-  //           (TouchPointCoordinates[1][1] + TouchPointCoordinates[0][1]) / 2
-  //         );
-  //         break;
-  //       default:
-  //         throw new Error(
-  //           `I have not implemented a way to find the centerpoint and radius for more than two touch points`
-  //         );
-  //     }
-  //
-  //     const Coordinates: Return = {
-  //       x: CenterpointX,
-  //       y: CenterpointY,
-  //       rViewport: RViewport,
-  //     };
-  //   };
+  };
 
   if (event instanceof MouseEvent) {
     return getCoordinates.mouse(event);
@@ -2774,6 +2892,7 @@ var TouchListeners_TouchstartListener = function TouchstartListener(e, stopPropo
 
 var TouchListeners_TouchmoveListener = function TouchmoveListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
 }; // !TouchendListener
 
 /**
@@ -2782,6 +2901,7 @@ var TouchListeners_TouchmoveListener = function TouchmoveListener(e, stopPropoga
 
 var TouchListeners_TouchendListener = function TouchendListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
 }; // !TouchcancelListener
 
 /**
@@ -2790,6 +2910,7 @@ var TouchListeners_TouchendListener = function TouchendListener(e, stopPropogati
 
 var TouchListeners_TouchcancelListener = function TouchcancelListener(e, stopPropogation, preventDefault, p) {
   stopAndPrevent(e, stopPropogation, preventDefault);
+  return getPointerCoordinates(e, p);
 };
 // CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/WindowListeners.ts
  // !ErrorListener
@@ -2837,9 +2958,9 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
  * - animations for seamlss state changes
  * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
  * - a11y and i18n friendly
+ * - by default, no text should be selectable (because you can't select the text on a button)
  */
 
- // todo: turn off all cursor select unless it is editable text or is copyable content. no select interface microcopy
 
 /* harmony default export */ var BaseComponentvue_type_script_lang_ts = (Object(external_commonjs_vue_commonjs2_vue_root_Vue_["defineComponent"])({
   components: {// see: https://v3.vuejs.org/api/options-assets.html#components
@@ -2893,12 +3014,12 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
             DataAndComputed._pointer.yPercent = Value.yPercent;
           }
 
-          if (Value.dx) {
-            DataAndComputed._pointer.dx = Value.dx;
+          if (Value.dxViewport) {
+            DataAndComputed._pointer.dx = Value.dxViewport;
           }
 
-          if (Value.dy) {
-            DataAndComputed._pointer.dy = Value.dy;
+          if (Value.dxViewport) {
+            DataAndComputed._pointer.dy = Value.dyViewport;
           }
 
           if (Value.dxPercent) {
@@ -2944,10 +3065,28 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
       //   DataAndComputed.previousEvent = e;
       // },
       touchstart: function touchstart(e) {
-        console.log(e);
-        TouchListeners_TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer = TouchListeners_TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
         DataAndComputed.pointer.isDown = true;
         DataAndComputed.pointer.downSince;
+        DataAndComputed.previousEvent = e;
+      },
+      touchmove: function touchmove(e) {
+        DataAndComputed.pointer = TouchListeners_TouchmoveListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+        DataAndComputed.previousEvent = e;
+      },
+      touchend: function touchend(e) {
+        DataAndComputed.pointer = TouchListeners_TouchendListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+        DataAndComputed.previousEvent = e;
+      },
+      touchcancel: function touchcancel(e) {
+        DataAndComputed.pointer = TouchListeners_TouchcancelListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+        DataAndComputed.previousEvent = e;
       }
     }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch

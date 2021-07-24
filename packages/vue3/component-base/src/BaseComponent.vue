@@ -19,6 +19,7 @@
  * - animations for seamlss state changes
  * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
  * - a11y and i18n friendly
+ * - by default, no text should be selectable (because you can't select the text on a button)
  */
 
 import { defineComponent, reactive, computed, toRefs, watch } from 'vue';
@@ -35,14 +36,12 @@ import {
   MouseupListener,
   // WebkitmouseforcedownListener,
   TouchstartListener,
-  // TouchmoveListener,
-  // TouchendListener,
-  // TouchcancelListener,
+  TouchmoveListener,
+  TouchendListener,
+  TouchcancelListener,
 } from './use/Seamlss/DOMEventListeners/';
 
 import { PointerCoordinates } from './use/Seamlss/DOMEventListeners/Utils';
-
-// todo: turn off all cursor select unless it is editable text or is copyable content. no select interface microcopy
 
 export default defineComponent({
   components: {
@@ -103,12 +102,12 @@ export default defineComponent({
             DataAndComputed._pointer.yPercent = Value.yPercent;
           }
 
-          if (Value.dx) {
-            DataAndComputed._pointer.dx = Value.dx;
+          if (Value.dxViewport) {
+            DataAndComputed._pointer.dx = Value.dxViewport;
           }
 
-          if (Value.dy) {
-            DataAndComputed._pointer.dy = Value.dy;
+          if (Value.dxViewport) {
+            DataAndComputed._pointer.dy = Value.dyViewport;
           }
 
           if (Value.dxPercent) {
@@ -192,10 +191,52 @@ export default defineComponent({
       //   DataAndComputed.previousEvent = e;
       // },
       touchstart: (e: Event) => {
-        console.log(e);
-        TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer = TouchstartListener(
+          e,
+          true,
+          true,
+          DataAndComputed.PreviousEvent
+        );
         DataAndComputed.pointer.isDown = true;
         DataAndComputed.pointer.downSince;
+
+        DataAndComputed.previousEvent = e;
+      },
+      touchmove: (e: Event) => {
+        DataAndComputed.pointer = TouchmoveListener(
+          e,
+          true,
+          true,
+          DataAndComputed.PreviousEvent
+        );
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+
+        DataAndComputed.previousEvent = e;
+      },
+      touchend: (e: Event) => {
+        DataAndComputed.pointer = TouchendListener(
+          e,
+          true,
+          true,
+          DataAndComputed.PreviousEvent
+        );
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+
+        DataAndComputed.previousEvent = e;
+      },
+      touchcancel: (e: Event) => {
+        DataAndComputed.pointer = TouchcancelListener(
+          e,
+          true,
+          true,
+          DataAndComputed.PreviousEvent
+        );
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince;
+
+        DataAndComputed.previousEvent = e;
       },
     };
     // !Watchers

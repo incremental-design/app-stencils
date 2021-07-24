@@ -26,13 +26,15 @@ export const TouchstartListener: Listener<PointerCoordinates> = (
  * TouchmoveListener
  */
 
-export const TouchmoveListener: Listener<void> = (
+export const TouchmoveListener: Listener<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
   p
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
+
+  return getPointerCoordinates(e, p);
 };
 
 // !TouchendListener
@@ -40,13 +42,15 @@ export const TouchmoveListener: Listener<void> = (
  * TouchendListener
  */
 
-export const TouchendListener: Listener<void> = (
+export const TouchendListener: Listener<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
   p
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
+
+  return getPointerCoordinates(e, p);
 };
 
 // !TouchcancelListener
@@ -54,11 +58,13 @@ export const TouchendListener: Listener<void> = (
  * TouchcancelListener
  */
 
-export const TouchcancelListener: Listener<void> = (
+export const TouchcancelListener: Listener<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
   p
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
+
+  return getPointerCoordinates(e, p);
 };
