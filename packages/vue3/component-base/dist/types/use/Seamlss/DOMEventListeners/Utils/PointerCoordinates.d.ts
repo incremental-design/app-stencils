@@ -27,23 +27,30 @@
  */
 export declare type PointerCoordinates = MouseCoordinates & TouchAdditionalCoordinates;
 declare type MouseCoordinates = {
-    x: number;
-    y: number;
-    xPercent?: number;
-    yPercent?: number;
-    dxViewport?: number | ((PreviousXViewport: number) => number);
-    dyViewport?: number | ((PreviousYViewport: number) => number);
-    dxPercent?: number | ((PreviousXViewport: number) => number);
-    dyPercent?: number | ((PreviousYViewport: number) => number);
+    event: MouseEvent | TouchEvent;
+    relative: {
+        x: number;
+        y: number;
+        xPercent?: number;
+        yPercent?: number;
+        dxPercent?: number;
+        dyPercent?: number;
+    };
+    viewport?: {
+        dx?: number;
+        dy?: number;
+    };
 };
 declare type TouchAdditionalCoordinates = {
-    xViewport?: number;
-    yViewport?: number;
     numberOfTouchPoints: number;
-    radiusViewport?: number;
-    calculateDRadiusViewport?: (PreviousRadiusViewport: number) => number;
-    dRotationDegreesViewport?: number;
+    viewport?: {
+        x?: number;
+        y?: number;
+        radius?: number;
+        dRadius?: (PreviousRadiusViewport: number) => number;
+        dRotation?: number;
+    };
 };
-export declare function getPointerCoordinates(event: Event, previous?: Event): PointerCoordinates;
+export declare function getPointerCoordinates(event: Event, previous?: PointerCoordinates | false): PointerCoordinates;
 export {};
 //# sourceMappingURL=PointerCoordinates.d.ts.map

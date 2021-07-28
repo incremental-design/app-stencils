@@ -11,5 +11,5 @@
  * @example
  * <div @click="(event) => { ClickListener(event, true, true) }"></div>
  */
-export declare type Listener<Returns> = (event: Event, stopPropogation?: boolean, preventDefault?: boolean, previous?: Event) => Returns;
+export declare type Listener<Returns> = (event: Event, stopPropogation?: boolean, preventDefault?: boolean, previous?: Returns | false) => Returns;
 //# sourceMappingURL=Listener.d.ts.map

@@ -2179,18 +2179,18 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=4736244f
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=908365c4
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), {
     style: {
-      "transform": "scale(1)"
+      "transform": "scale(0.5)"
     }
   }), [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.pointer), 1)];
   })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=4736244f
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=908365c4
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2314,37 +2314,42 @@ function getPointerCoordinates(event, previous) {
   var Target = getTarget();
 
   var previousHasSameTarget = function previousHasSameTarget() {
-    return event.target instanceof EventTarget && previous && previous.target instanceof EventTarget ? Object.is(event.target, previous.target) : false;
+    return event.target instanceof EventTarget && previous && previous.event.target instanceof EventTarget ? Object.is(event.target, previous.event.target) : false;
   };
 
-  var MillisecondsElapsedSincePrevious = previous && previousHasSameTarget() ? event.timeStamp - previous.timeStamp : false;
+  var MillisecondsElapsedSincePrevious = previous && previousHasSameTarget() ? event.timeStamp - previous.event.timeStamp : false;
   var getCoordinates = {
     mouse: function mouse(e) {
       // first, we get the required properties of the PointerCoordinates type
       var Coordinates = {
-        x: e.offsetX,
-        y: e.offsetY,
+        event: e,
+        relative: {
+          x: e.offsetX,
+          y: e.offsetY
+        },
         numberOfTouchPoints: 0
       }; // then, we get all of the optional properties
 
       if (MillisecondsElapsedSincePrevious) {
-        Coordinates.dyViewport = e.movementX / MillisecondsElapsedSincePrevious * 1000;
-        Coordinates.dxViewport = e.movementY / MillisecondsElapsedSincePrevious * 1000;
+        Coordinates.viewport = {
+          dx: e.movementX / MillisecondsElapsedSincePrevious * 1000,
+          dy: e.movementY / MillisecondsElapsedSincePrevious * 1000
+        };
       }
 
       if (Target.width) {
-        Coordinates.xPercent = Coordinates.x / Target.width;
+        Coordinates.relative.xPercent = Coordinates.relative.x / Target.width;
 
-        if (typeof Coordinates.dxViewport === 'number') {
-          Coordinates.dxPercent = Coordinates.dxViewport / Target.width;
+        if (Coordinates.viewport && typeof Coordinates.viewport.dx === 'number') {
+          Coordinates.relative.dxPercent = Coordinates.viewport.dx / Target.width;
         }
       }
 
       if (Target.height) {
-        Coordinates.yPercent = Coordinates.y / Target.height;
+        Coordinates.relative.yPercent = Coordinates.relative.y / Target.height;
 
-        if (typeof Coordinates.dyViewport === 'number') {
-          Coordinates.dyPercent = Coordinates.dyViewport / Target.height;
+        if (Coordinates.viewport && typeof Coordinates.viewport.dy === 'number') {
+          Coordinates.relative.dyPercent = Coordinates.viewport.dy / Target.height;
         }
       }
 
@@ -2560,47 +2565,53 @@ function getPointerCoordinates(event, previous) {
 
 
       var Coordinates = {
-        x: relative ? relative.x : viewport.x,
-        y: relative ? relative.y : viewport.y,
-        xViewport: viewport.x,
-        yViewport: viewport.y,
-        dxViewport: function dxViewport(PreviousXViewport) {
-          return viewport.x - PreviousXViewport;
-        },
-        dyViewport: function dyViewport(PreviousYViewport) {
-          return viewport.y - PreviousYViewport;
+        event: e,
+        relative: relative ? {
+          x: relative.x,
+          y: relative.y
+        } : {
+          x: viewport.x,
+          y: viewport.y
         },
         numberOfTouchPoints: e.targetTouches.length
       };
+      var Viewport = {
+        x: viewport.x,
+        y: viewport.y
+      };
 
       if (typeof Target.width === 'number' && typeof Target.height === 'number' && relative) {
-        Coordinates.xPercent = relative.x / Target.width;
-        Coordinates.yPercent = relative.y / Target.height;
-        var TW = Target.width;
-        var TH = Target.height;
+        Coordinates.relative.xPercent = relative.x / Target.width;
+        Coordinates.relative.yPercent = relative.y / Target.height;
 
-        Coordinates.dxPercent = function (PreviousXViewport) {
-          return (viewport.x - PreviousXViewport) / TW;
-        };
+        if (previous && previous.viewport && MillisecondsElapsedSincePrevious) {
+          if (previous.viewport.x) {
+            var MovementX = viewport.x - previous.viewport.x;
+            Viewport.dx = MovementX / MillisecondsElapsedSincePrevious * 1000;
+            Coordinates.relative.dxPercent = Viewport.dx / Target.width;
+          }
 
-        Coordinates.dyPercent = function (PreviousYViewport) {
-          return (viewport.y - PreviousYViewport) / TH;
-        };
+          if (previous.viewport.y) {
+            var MovementY = viewport.y - previous.viewport.y;
+            Viewport.dy = MovementY / MillisecondsElapsedSincePrevious * 1000;
+            Coordinates.relative.dyPercent = Viewport.dy / Target.height;
+          }
+        }
       }
 
       if (viewport.radius) {
-        var VR = viewport.radius;
-        Coordinates.radiusViewport = VR;
+        Viewport.radius = viewport.radius;
 
-        Coordinates.calculateDRadiusViewport = function (PreviousRadiusViewport) {
-          return VR - PreviousRadiusViewport;
-        };
+        if (previous && previous.viewport && previous.viewport.radius) {
+          Viewport.dRadius = viewport.radius - previous.viewport.radius;
+        }
       }
 
       if (viewport.rotation) {
-        Coordinates.dRotationDegreesViewport = viewport.rotation;
+        Viewport.dRotation = viewport.rotation;
       }
 
+      Coordinates.viewport = Viewport;
       return Coordinates;
     }
   };
@@ -2982,111 +2993,56 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
     // Populate the DataAndComputed object by calling the subroutines defined above.
     var DataAndComputed = Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
       // computedPropertyName:// computed()
-      previousEvent: false,
-      _pointer: {
+      pointer: {
         isDown: false,
         downSince: false,
-        x: false,
-        y: false,
-        rViewport: false,
-        xPercent: false,
-        yPercent: false,
-        dx: false,
-        dy: false,
-        drViewport: false,
-        dxPercent: false,
-        dyPercent: false
-      },
-      pointer: Object(external_commonjs_vue_commonjs2_vue_root_Vue_["computed"])({
-        get: function get() {
-          return DataAndComputed._pointer;
-        },
-        set: function set(Value) {
-          // NOTE: this doesn't function like a regular setter! It won't overwrite ALL of the properties of `_pointer`! It will only overwrite `x`, `y`, `xPercent`, `yPercent`, `dx`, `dy`, `dxPercent`, and `dyPercent`. In this way, it functions more like an Object.assign.
-          DataAndComputed._pointer.x = Value.x;
-          DataAndComputed._pointer.y = Value.y;
-
-          if (Value.xPercent) {
-            DataAndComputed._pointer.xPercent = Value.xPercent;
-          }
-
-          if (Value.yPercent) {
-            DataAndComputed._pointer.yPercent = Value.yPercent;
-          }
-
-          if (Value.dxViewport) {
-            DataAndComputed._pointer.dx = Value.dxViewport;
-          }
-
-          if (Value.dxViewport) {
-            DataAndComputed._pointer.dy = Value.dyViewport;
-          }
-
-          if (Value.dxPercent) {
-            DataAndComputed._pointer.dxPercent = Value.dxPercent;
-          }
-
-          if (Value.dyPercent) {
-            DataAndComputed._pointer.dyPercent = Value.dyPercent;
-          }
-        }
-      })
+        coordinates: false
+      }
     }); // !Methods
     // !Event Handlers
 
     var EventHandlers = {
       mousedown: function mousedown(e) {
-        DataAndComputed.pointer = MouseListeners_MousedownListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.coordinates = MouseListeners_MousedownListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = true;
         DataAndComputed.pointer.downSince = e.timeStamp;
-        DataAndComputed.previousEvent = e;
       },
       mouseenter: function mouseenter(e) {
-        DataAndComputed.pointer = MouseListeners_MouseenterListener(e, true, true, DataAndComputed.previousEvent);
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.coordinates = MouseListeners_MouseenterListener(e, true, true, DataAndComputed.pointer.coordinates);
       },
       mouseleave: function mouseleave(e) {
-        DataAndComputed.pointer = MouseListeners_MouseleaveListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.coordinates = MouseListeners_MouseleaveListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
-        DataAndComputed.previousEvent = e;
       },
       mousemove: function mousemove(e) {
-        DataAndComputed.pointer = MouseListeners_MousemoveListener(e, true, true, DataAndComputed.previousEvent);
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.coordinates = MouseListeners_MousemoveListener(e, true, true, DataAndComputed.pointer.coordinates);
       },
       mouseup: function mouseup(e) {
-        DataAndComputed.pointer = MouseListeners_MouseupListener(e, true, true, DataAndComputed.previousEvent);
+        DataAndComputed.pointer.coordinates = MouseListeners_MouseupListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
-        DataAndComputed.previousEvent = e;
       },
       // webkitmouseforcedown: (e) => {
       //   DataAndComputed.previousEvent = e;
       // },
       touchstart: function touchstart(e) {
-        DataAndComputed.pointer = TouchListeners_TouchstartListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.coordinates = TouchListeners_TouchstartListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchmove: function touchmove(e) {
-        DataAndComputed.pointer = TouchListeners_TouchmoveListener(e, true, true, DataAndComputed.PreviousEvent);
+        DataAndComputed.pointer.coordinates = TouchListeners_TouchmoveListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchend: function touchend(e) {
-        DataAndComputed.pointer = TouchListeners_TouchendListener(e, true, true, DataAndComputed.PreviousEvent);
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.coordinates = TouchListeners_TouchendListener(e, true, true, DataAndComputed.pointer.coordinates);
+        DataAndComputed.pointer.isDown = false;
       },
       touchcancel: function touchcancel(e) {
-        DataAndComputed.pointer = TouchListeners_TouchcancelListener(e, true, true, DataAndComputed.PreviousEvent);
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.coordinates = TouchListeners_TouchcancelListener(e, true, true, DataAndComputed.pointer.coordinates);
+        DataAndComputed.pointer.isDown = false;
       }
     }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch

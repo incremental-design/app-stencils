@@ -1,5 +1,5 @@
 <template>
-  <div @="EventHandlers" style="transform: scale(1)">
+  <div @="EventHandlers" style="transform: scale(0.5)">
     <!-- <div> -->
     <!--
       @slot Default Content
@@ -70,55 +70,11 @@ export default defineComponent({
 
     const DataAndComputed: any = reactive({
       // computedPropertyName:// computed()
-      previousEvent: false,
-      _pointer: {
+      pointer: {
         isDown: false,
         downSince: false,
-        x: false,
-        y: false,
-        rViewport: false,
-        xPercent: false,
-        yPercent: false,
-        dx: false,
-        dy: false,
-        drViewport: false,
-        dxPercent: false,
-        dyPercent: false,
+        coordinates: false,
       },
-      pointer: computed({
-        get: (): PointerCoordinates => {
-          return DataAndComputed._pointer;
-        },
-        set: (Value: PointerCoordinates) => {
-          // NOTE: this doesn't function like a regular setter! It won't overwrite ALL of the properties of `_pointer`! It will only overwrite `x`, `y`, `xPercent`, `yPercent`, `dx`, `dy`, `dxPercent`, and `dyPercent`. In this way, it functions more like an Object.assign.
-          DataAndComputed._pointer.x = Value.x;
-          DataAndComputed._pointer.y = Value.y;
-
-          if (Value.xPercent) {
-            DataAndComputed._pointer.xPercent = Value.xPercent;
-          }
-
-          if (Value.yPercent) {
-            DataAndComputed._pointer.yPercent = Value.yPercent;
-          }
-
-          if (Value.dxViewport) {
-            DataAndComputed._pointer.dx = Value.dxViewport;
-          }
-
-          if (Value.dxViewport) {
-            DataAndComputed._pointer.dy = Value.dyViewport;
-          }
-
-          if (Value.dxPercent) {
-            DataAndComputed._pointer.dxPercent = Value.dxPercent;
-          }
-
-          if (Value.dyPercent) {
-            DataAndComputed._pointer.dyPercent = Value.dyPercent;
-          }
-        },
-      }),
     });
 
     // !Methods
@@ -126,117 +82,102 @@ export default defineComponent({
     // !Event Handlers
     const EventHandlers = {
       mousedown: (e: Event) => {
-        DataAndComputed.pointer = MousedownListener(
+        DataAndComputed.pointer.coordinates = MousedownListener(
           e,
           true,
           true,
-          DataAndComputed.previousEvent
+          DataAndComputed.pointer.coordinates
         );
 
         DataAndComputed.pointer.isDown = true;
         DataAndComputed.pointer.downSince = e.timeStamp;
-        DataAndComputed.previousEvent = e;
       },
 
       mouseenter: (e: Event) => {
-        DataAndComputed.pointer = MouseenterListener(
+        DataAndComputed.pointer.coordinates = MouseenterListener(
           e,
           true,
           true,
-          DataAndComputed.previousEvent
+          DataAndComputed.pointer.coordinates
         );
-
-        DataAndComputed.previousEvent = e;
       },
 
       mouseleave: (e: Event) => {
-        DataAndComputed.pointer = MouseleaveListener(
+        DataAndComputed.pointer.coordinates = MouseleaveListener(
           e,
           true,
           true,
-          DataAndComputed.previousEvent
+          DataAndComputed.pointer.coordinates
         );
 
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
-
-        DataAndComputed.previousEvent = e;
       },
 
       mousemove: (e: Event) => {
-        DataAndComputed.pointer = MousemoveListener(
+        DataAndComputed.pointer.coordinates = MousemoveListener(
           e,
           true,
           true,
-          DataAndComputed.previousEvent
+          DataAndComputed.pointer.coordinates
         );
-
-        DataAndComputed.previousEvent = e;
       },
 
       mouseup: (e: Event) => {
-        DataAndComputed.pointer = MouseupListener(
+        DataAndComputed.pointer.coordinates = MouseupListener(
           e,
           true,
           true,
-          DataAndComputed.previousEvent
+          DataAndComputed.pointer.coordinates
         );
 
         DataAndComputed.pointer.isDown = false;
         DataAndComputed.pointer.downSince = false;
-
-        DataAndComputed.previousEvent = e;
       },
       // webkitmouseforcedown: (e) => {
       //   DataAndComputed.previousEvent = e;
       // },
       touchstart: (e: Event) => {
-        DataAndComputed.pointer = TouchstartListener(
+        DataAndComputed.pointer.coordinates = TouchstartListener(
           e,
           true,
           true,
-          DataAndComputed.PreviousEvent
+          DataAndComputed.pointer.coordinates
         );
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
 
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchmove: (e: Event) => {
-        DataAndComputed.pointer = TouchmoveListener(
+        DataAndComputed.pointer.coordinates = TouchmoveListener(
           e,
           true,
           true,
-          DataAndComputed.PreviousEvent
+          DataAndComputed.pointer.coordinates
         );
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
 
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.isDown = true;
+        DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchend: (e: Event) => {
-        DataAndComputed.pointer = TouchendListener(
+        DataAndComputed.pointer.coordinates = TouchendListener(
           e,
           true,
           true,
-          DataAndComputed.PreviousEvent
+          DataAndComputed.pointer.coordinates
         );
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
 
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.isDown = false;
       },
       touchcancel: (e: Event) => {
-        DataAndComputed.pointer = TouchcancelListener(
+        DataAndComputed.pointer.coordinates = TouchcancelListener(
           e,
           true,
           true,
-          DataAndComputed.PreviousEvent
+          DataAndComputed.pointer.coordinates
         );
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince;
 
-        DataAndComputed.previousEvent = e;
+        DataAndComputed.pointer.isDown = false;
       },
     };
     // !Watchers

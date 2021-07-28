@@ -29,28 +29,35 @@ export declare type PointerCoordinates = MouseCoordinates &
   TouchAdditionalCoordinates;
 
 type MouseCoordinates = {
-  x: number;
-  y: number;
-  xPercent?: number;
-  yPercent?: number;
-  dxViewport?: number | ((PreviousXViewport: number) => number);
-  dyViewport?: number | ((PreviousYViewport: number) => number);
-  dxPercent?: number | ((PreviousXViewport: number) => number);
-  dyPercent?: number | ((PreviousYViewport: number) => number);
+  event: MouseEvent | TouchEvent;
+  relative: {
+    x: number;
+    y: number;
+    xPercent?: number;
+    yPercent?: number;
+    dxPercent?: number;
+    dyPercent?: number;
+  };
+  viewport?: {
+    dx?: number;
+    dy?: number;
+  };
 };
 
 type TouchAdditionalCoordinates = {
-  xViewport?: number;
-  yViewport?: number;
   numberOfTouchPoints: number;
-  radiusViewport?: number;
-  calculateDRadiusViewport?: (PreviousRadiusViewport: number) => number;
-  dRotationDegreesViewport?: number;
+  viewport?: {
+    x?: number;
+    y?: number;
+    radius?: number;
+    dRadius?: (PreviousRadiusViewport: number) => number;
+    dRotation?: number;
+  };
 };
 
 export function getPointerCoordinates(
   event: Event,
-  previous?: Event
+  previous?: PointerCoordinates | false
 ): PointerCoordinates {
   const getTarget = (): {
     width: number | false;
@@ -80,44 +87,57 @@ export function getPointerCoordinates(
   const previousHasSameTarget: () => boolean = () => {
     return event.target instanceof EventTarget &&
       previous &&
-      previous.target instanceof EventTarget
-      ? Object.is(event.target, previous.target)
+      previous.event.target instanceof EventTarget
+      ? Object.is(event.target, previous.event.target)
       : false;
   };
 
   const MillisecondsElapsedSincePrevious =
     previous && previousHasSameTarget()
-      ? event.timeStamp - previous.timeStamp
+      ? event.timeStamp - previous.event.timeStamp
       : false;
 
   const getCoordinates = {
     mouse: (e: MouseEvent): PointerCoordinates => {
       // first, we get the required properties of the PointerCoordinates type
       const Coordinates: PointerCoordinates = {
-        x: e.offsetX,
-        y: e.offsetY,
+        event: e,
+        relative: {
+          x: e.offsetX,
+          y: e.offsetY,
+        },
         numberOfTouchPoints: 0,
       };
 
       // then, we get all of the optional properties
       if (MillisecondsElapsedSincePrevious) {
-        Coordinates.dyViewport =
-          (e.movementX / MillisecondsElapsedSincePrevious) * 1000;
-        Coordinates.dxViewport =
-          (e.movementY / MillisecondsElapsedSincePrevious) * 1000;
+        Coordinates.viewport = {
+          dx: (e.movementX / MillisecondsElapsedSincePrevious) * 1000,
+          dy: (e.movementY / MillisecondsElapsedSincePrevious) * 1000,
+        };
       }
 
       if (Target.width) {
-        Coordinates.xPercent = Coordinates.x / Target.width;
-        if (typeof Coordinates.dxViewport === 'number') {
-          Coordinates.dxPercent = Coordinates.dxViewport / Target.width;
+        Coordinates.relative.xPercent = Coordinates.relative.x / Target.width;
+
+        if (
+          Coordinates.viewport &&
+          typeof Coordinates.viewport.dx === 'number'
+        ) {
+          Coordinates.relative.dxPercent =
+            Coordinates.viewport.dx / Target.width;
         }
       }
 
       if (Target.height) {
-        Coordinates.yPercent = Coordinates.y / Target.height;
-        if (typeof Coordinates.dyViewport === 'number') {
-          Coordinates.dyPercent = Coordinates.dyViewport / Target.height;
+        Coordinates.relative.yPercent = Coordinates.relative.y / Target.height;
+
+        if (
+          Coordinates.viewport &&
+          typeof Coordinates.viewport.dy === 'number'
+        ) {
+          Coordinates.relative.dyPercent =
+            Coordinates.viewport.dy / Target.height;
         }
       }
 
@@ -393,13 +413,20 @@ export function getPointerCoordinates(
 
       // Finally, we populate and return the coordinates object
       const Coordinates: PointerCoordinates = {
-        x: relative ? relative.x : viewport.x,
-        y: relative ? relative.y : viewport.y,
-        xViewport: viewport.x,
-        yViewport: viewport.y,
-        dxViewport: (PreviousXViewport) => viewport.x - PreviousXViewport,
-        dyViewport: (PreviousYViewport) => viewport.y - PreviousYViewport,
+        event: e,
+        relative: relative
+          ? { x: relative.x, y: relative.y }
+          : { x: viewport.x, y: viewport.y },
         numberOfTouchPoints: e.targetTouches.length,
+      };
+
+      const Viewport: {
+        x: number;
+        y: number;
+        [key: string]: number;
+      } = {
+        x: viewport.x,
+        y: viewport.y,
       };
 
       if (
@@ -407,28 +434,37 @@ export function getPointerCoordinates(
         typeof Target.height === 'number' &&
         relative
       ) {
-        Coordinates.xPercent = relative.x / Target.width;
-        Coordinates.yPercent = relative.y / Target.height;
+        Coordinates.relative.xPercent = relative.x / Target.width;
+        Coordinates.relative.yPercent = relative.y / Target.height;
 
-        const TW = Target.width;
-        const TH = Target.height;
+        if (previous && previous.viewport && MillisecondsElapsedSincePrevious) {
+          if (previous.viewport.x) {
+            const MovementX = viewport.x - previous.viewport.x;
 
-        Coordinates.dxPercent = (PreviousXViewport) =>
-          (viewport.x - PreviousXViewport) / TW;
-        Coordinates.dyPercent = (PreviousYViewport) =>
-          (viewport.y - PreviousYViewport) / TH;
+            Viewport.dx = (MovementX / MillisecondsElapsedSincePrevious) * 1000;
+            Coordinates.relative.dxPercent = Viewport.dx / Target.width;
+          }
+          if (previous.viewport.y) {
+            const MovementY = viewport.y - previous.viewport.y;
+
+            Viewport.dy = (MovementY / MillisecondsElapsedSincePrevious) * 1000;
+            Coordinates.relative.dyPercent = Viewport.dy / Target.height;
+          }
+        }
       }
 
       if (viewport.radius) {
-        const VR = viewport.radius;
-        Coordinates.radiusViewport = VR;
-        Coordinates.calculateDRadiusViewport = (PreviousRadiusViewport) =>
-          VR - PreviousRadiusViewport;
+        Viewport.radius = viewport.radius;
+        if (previous && previous.viewport && previous.viewport.radius) {
+          Viewport.dRadius = viewport.radius - previous.viewport.radius;
+        }
       }
 
       if (viewport.rotation) {
-        Coordinates.dRotationDegreesViewport = viewport.rotation;
+        Viewport.dRotation = viewport.rotation;
       }
+
+      Coordinates.viewport = Viewport;
 
       return Coordinates;
     },

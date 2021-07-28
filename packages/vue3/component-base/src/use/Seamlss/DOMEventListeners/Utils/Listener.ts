@@ -15,5 +15,5 @@ export declare type Listener<Returns> = (
   event: Event,
   stopPropogation?: boolean,
   preventDefault?: boolean,
-  previous?: Event
+  previous?: Returns | false
 ) => Returns;
