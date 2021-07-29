@@ -8,8 +8,10 @@
  * @returns Returns - the type of information the listener will return from the event.
  *
  * To use the listener in your Vue components, you need to wrap it in a callback, and bind it to the name of the event you want to listen to:
+ *
  * @example
  * <div @click="(event) => { ClickListener(event, true, true) }"></div>
+ *
  */
 export declare type Listener<Returns> = (
   event: Event,

@@ -2179,7 +2179,7 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=908365c4
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=043ccf04
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["mergeProps"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), {
@@ -2190,7 +2190,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.pointer), 1)];
   })], 16);
 }
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=908365c4
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=043ccf04
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.keys.js
 var es_object_keys = __webpack_require__("b64b");
@@ -2356,263 +2356,308 @@ function getPointerCoordinates(event, previous) {
       return Coordinates;
     },
     touch: function touch(e) {
-      var getTouchPoints = function getTouchPoints() {
-        var TouchPoints = {};
+      var P = previous || false;
+      var PreviousTouchEvent = P && P.event instanceof TouchEvent ? P.event : false;
 
-        var supportsTouchIdentifier = function supportsTouchIdentifier() {
-          // unfortunately not all browsers support Touch.identifier (see: https://developer.mozilla.org/en-US/docs/Web/API/Touch/identifier), so we need to do a litmus test before we run the for loop.
-          var FirstTouch = e.targetTouches.item(0);
-          return typeof (FirstTouch === null || FirstTouch === void 0 ? void 0 : FirstTouch.identifier) === 'number' ? true : false;
+      if (e.targetTouches.length > 0) {
+        // we can short-circuit all of the following calculations if there are no touch points, because we can simply re-use `P`, the previous touch coordinates, if they are available.
+        var getTouchPoints = function getTouchPoints() {
+          var TouchPoints = {};
+
+          var supportsTouchIdentifier = function supportsTouchIdentifier() {
+            // unfortunately not all browsers support Touch.identifier (see: https://developer.mozilla.org/en-US/docs/Web/API/Touch/identifier), so we need to do a litmus test before we run the for loop.
+            var FirstTouch = e.targetTouches.item(0);
+            return typeof (FirstTouch === null || FirstTouch === void 0 ? void 0 : FirstTouch.identifier) === 'number' ? true : false;
+          };
+
+          var DoesSupportTouchIdentifier = supportsTouchIdentifier();
+
+          var getAllPreviousTouches = function getAllPreviousTouches() {
+            if (PreviousTouchEvent && DoesSupportTouchIdentifier) {
+              var _PreviousTouches = {};
+
+              for (var Index = 0; Index < PreviousTouchEvent.targetTouches.length; Index++) {
+                var PreviousTouch = PreviousTouchEvent.targetTouches.item(Index);
+
+                if (PreviousTouch) {
+                  _PreviousTouches[PreviousTouch.identifier] = {
+                    viewportX: PreviousTouch.clientX,
+                    viewportY: PreviousTouch.clientY
+                  };
+                }
+              }
+
+              return _PreviousTouches;
+            } else {
+              return false;
+            }
+          };
+
+          var PreviousTouches = getAllPreviousTouches();
+
+          for (var Index = 0; Index < e.targetTouches.length; Index++) {
+            var Touch = e.targetTouches.item(Index);
+
+            if (Touch) {
+              TouchPoints[Touch.identifier] = {
+                current: {
+                  viewportX: Touch.clientX,
+                  viewportY: Touch.clientY
+                }
+              };
+
+              if (PreviousTouches && PreviousTouches[Touch.identifier]) {
+                TouchPoints[Touch.identifier].previous = PreviousTouches[Touch.identifier];
+              }
+            }
+          }
+
+          return TouchPoints;
         };
 
-        var DoesSupportTouchIdentifier = supportsTouchIdentifier();
+        var TouchPoints = getTouchPoints();
 
-        var getAllPreviousTouches = function getAllPreviousTouches() {
-          if (previous && previousHasSameTarget && previous instanceof TouchEvent && // todo: remove this condition after api refactor, because it will ALWAYS be true
-          DoesSupportTouchIdentifier) {
-            var _PreviousTouches = {};
+        var calculateTouchCenterpoint = function calculateTouchCenterpoint() {
+          var BoundingRect = Target.getBoundingClientRect ? Target.getBoundingClientRect() : false;
 
-            for (var Index = 0; Index < previous.targetTouches.length; Index++) {
-              var PreviousTouch = previous.targetTouches.item(Index);
+          var calculateTargetScaleAndTranslate = function calculateTargetScaleAndTranslate() {
+            if (Target.width !== false && Target.height !== false && BoundingRect) {
+              var left = BoundingRect.left,
+                  top = BoundingRect.top,
+                  width = BoundingRect.width,
+                  height = BoundingRect.height;
+              Target.viewportTranslateX = left;
+              Target.viewportTranslateY = top;
+              Target.scaleX = Target.width === 0 ? 0 : width / Target.width;
+              Target.scaleY = Target.height === 0 ? 0 : height / Target.height;
+            }
+          };
 
-              if (PreviousTouch) {
-                _PreviousTouches[PreviousTouch.identifier] = {
-                  viewportX: PreviousTouch.clientX,
-                  viewportY: PreviousTouch.clientY
+          calculateTargetScaleAndTranslate();
+          var TouchPointIDs = Object.keys(TouchPoints);
+
+          var calculateRelativeXY = function calculateRelativeXY(C) {
+            if (typeof Target.scaleX === 'number' && typeof Target.scaleY === 'number' && typeof Target.viewportTranslateX === 'number' && typeof Target.viewportTranslateY === 'number') {
+              C.relative = {
+                x: (C.viewport.x - Target.viewportTranslateX) * Target.scaleX,
+                y: (C.viewport.y - Target.viewportTranslateY) * Target.scaleY
+              };
+            }
+          };
+
+          switch (TouchPointIDs.length) {
+            case 1:
+              var getCenterpointOfOne = function getCenterpointOfOne() {
+                var C = {
+                  viewport: {
+                    x: TouchPoints[TouchPointIDs[0]].current.viewportX,
+                    y: TouchPoints[TouchPointIDs[0]].current.viewportY
+                  }
                 };
-              }
-            }
-
-            return _PreviousTouches;
-          } else {
-            return false;
-          }
-        };
-
-        var PreviousTouches = getAllPreviousTouches();
-
-        for (var Index = 0; Index < e.targetTouches.length; Index++) {
-          var Touch = e.targetTouches.item(Index);
-
-          if (Touch) {
-            TouchPoints[Touch.identifier] = {
-              current: {
-                viewportX: Touch.clientX,
-                viewportY: Touch.clientY
-              }
-            };
-
-            if (PreviousTouches && PreviousTouches[Touch.identifier]) {
-              TouchPoints[Touch.identifier].previous = PreviousTouches[Touch.identifier];
-            }
-          }
-        }
-
-        return TouchPoints;
-      };
-
-      var TouchPoints = getTouchPoints();
-
-      var calculateTouchCenterpoint = function calculateTouchCenterpoint() {
-        var BoundingRect = Target.getBoundingClientRect ? Target.getBoundingClientRect() : false;
-
-        var calculateTargetScaleAndTranslate = function calculateTargetScaleAndTranslate() {
-          if (Target.width !== false && Target.height !== false && BoundingRect) {
-            var left = BoundingRect.left,
-                top = BoundingRect.top,
-                width = BoundingRect.width,
-                height = BoundingRect.height;
-            Target.viewportTranslateX = left;
-            Target.viewportTranslateY = top;
-            Target.scaleX = Target.width === 0 ? 0 : width / Target.width;
-            Target.scaleY = Target.height === 0 ? 0 : height / Target.height;
-          }
-        };
-
-        calculateTargetScaleAndTranslate();
-        var TouchPointIDs = Object.keys(TouchPoints);
-
-        var calculateRelativeXY = function calculateRelativeXY(C) {
-          if (typeof Target.scaleX === 'number' && typeof Target.scaleY === 'number' && typeof Target.viewportTranslateX === 'number' && typeof Target.viewportTranslateY === 'number') {
-            C.relative = {
-              x: (C.viewport.x - Target.viewportTranslateX) * Target.scaleX,
-              y: (C.viewport.y - Target.viewportTranslateY) * Target.scaleY
-            };
-          }
-        };
-
-        switch (TouchPointIDs.length) {
-          case 0:
-            // a touchend event has no touch points, because by definition, the touch has ended. To fix this, we need to revise the API.
-            throw new Error("It is technically impossible to have a touch event with no touch points. This error should never happen.");
-
-          case 1:
-            var getCenterpointOfOne = function getCenterpointOfOne() {
-              var C = {
-                viewport: {
-                  x: TouchPoints[TouchPointIDs[0]].current.viewportX,
-                  y: TouchPoints[TouchPointIDs[0]].current.viewportY
-                }
-              };
-              calculateRelativeXY(C);
-              return C;
-            };
-
-            return getCenterpointOfOne();
-
-          case 2 | 3:
-            // I know that this is hacky ... right now I'm ignoring the 3rd touch point entirely ... but it'll take me another day to write the code to handle this, and I don't have that time rn.
-            var getCenterpointOfTwo = function getCenterpointOfTwo() {
-              var Adjacent = TouchPoints[TouchPointIDs[1]].current.viewportX - TouchPoints[TouchPointIDs[0]].current.viewportX;
-              var Opposite = TouchPoints[TouchPointIDs[1]].current.viewportY - TouchPoints[TouchPointIDs[0]].current.viewportY;
-
-              var getPreviousOppositeAdjacent = function getPreviousOppositeAdjacent() {
-                function isTouchPointCoords(previous) {
-                  return previous.viewportX !== undefined && previous.viewportY !== undefined;
-                }
-
-                var P1 = TouchPoints[TouchPointIDs[1]].previous;
-                var P0 = TouchPoints[TouchPointIDs[0]].previous;
-
-                if (isTouchPointCoords(P1) && isTouchPointCoords(P0)) {
-                  return {
-                    PreviousAdjacent: P1.viewportX - P0.viewportX,
-                    PreviousOpposite: P1.viewportY - P0.viewportY
-                  };
-                } else {
-                  return false;
-                }
+                calculateRelativeXY(C);
+                return C;
               };
 
-              var PreviousAdjacentOpposite = getPreviousOppositeAdjacent();
-              var C = {
-                viewport: {
-                  x: (TouchPoints[TouchPointIDs[0]].current.viewportX + TouchPoints[TouchPointIDs[1]].current.viewportX) / 2,
-                  y: (TouchPoints[TouchPointIDs[0]].current.viewportY + TouchPoints[TouchPointIDs[1]].current.viewportY) / 2,
-                  radius: Math.pow(Math.pow(Adjacent, 2) + Math.pow(Opposite, 2), 0.5) / 2
-                }
-              };
+              return getCenterpointOfOne();
 
-              var calculateRotation = function calculateRotation() {
-                if (PreviousAdjacentOpposite) {
-                  var PreviousAdjacent = PreviousAdjacentOpposite.PreviousAdjacent,
-                      PreviousOpposite = PreviousAdjacentOpposite.PreviousOpposite;
+            case 2:
+            case 3:
+              // I know that this is hacky ... right now I'm ignoring the 3rd touch point entirely ... but it'll take me another day to write the code to handle this, and I don't have that time rn.
+              var getCenterpointOfTwo = function getCenterpointOfTwo() {
+                var Adjacent = TouchPoints[TouchPointIDs[1]].current.viewportX - TouchPoints[TouchPointIDs[0]].current.viewportX;
+                var Opposite = TouchPoints[TouchPointIDs[1]].current.viewportY - TouchPoints[TouchPointIDs[0]].current.viewportY;
 
-                  var getSlopeInDegrees = function getSlopeInDegrees(Adjacent, Opposite) {
-                    if (Adjacent === 0) {
-                      // then slope is either 90 degrees or 270 degrees
-                      if (Opposite === 0) {
-                        // then there is no slope. Assume zero degrees.
-                        return 0;
-                      } else if (Opposite < 0) {
-                        return 270;
-                      } else {
-                        return 90;
-                      }
-                    } else {
-                      var Atan = Math.atan(Opposite / Adjacent);
+                var getPreviousOppositeAdjacent = function getPreviousOppositeAdjacent() {
+                  function isTouchPointCoords(previous) {
+                    return previous.viewportX !== undefined && previous.viewportY !== undefined;
+                  }
 
-                      if (Adjacent < 0) {
-                        // then slope is between 90 and 270 degrees
-                        if (Atan === 0) {
-                          return 180;
-                        } else if (Atan > 0) {
-                          // then slope is between 180 and 270 degrees
-                          return 180 + 180 / Math.PI * Atan;
-                        } else {
-                          // then slope is between 90 and 180 degrees
-                          return 90 + 180 / Math.PI * Atan;
-                        }
-                      } else {
-                        // then slope is between 0 and 90 degrees or 270 and 360 degrees
-                        if (Atan === 0) {
+                  var P1 = TouchPoints[TouchPointIDs[1]].previous;
+                  var P0 = TouchPoints[TouchPointIDs[0]].previous;
+
+                  if (isTouchPointCoords(P1) && isTouchPointCoords(P0)) {
+                    return {
+                      PreviousAdjacent: P1.viewportX - P0.viewportX,
+                      PreviousOpposite: P1.viewportY - P0.viewportY
+                    };
+                  } else {
+                    return false;
+                  }
+                };
+
+                var PreviousAdjacentOpposite = getPreviousOppositeAdjacent();
+                var C = {
+                  viewport: {
+                    x: (TouchPoints[TouchPointIDs[0]].current.viewportX + TouchPoints[TouchPointIDs[1]].current.viewportX) / 2,
+                    y: (TouchPoints[TouchPointIDs[0]].current.viewportY + TouchPoints[TouchPointIDs[1]].current.viewportY) / 2,
+                    radius: Math.pow(Math.pow(Adjacent, 2) + Math.pow(Opposite, 2), 0.5) / 2
+                  }
+                };
+
+                var calculateRotation = function calculateRotation() {
+                  if (PreviousAdjacentOpposite) {
+                    var PreviousAdjacent = PreviousAdjacentOpposite.PreviousAdjacent,
+                        PreviousOpposite = PreviousAdjacentOpposite.PreviousOpposite;
+
+                    var getSlopeInDegrees = function getSlopeInDegrees(Adjacent, Opposite) {
+                      if (Adjacent === 0) {
+                        // then slope is either 90 degrees or 270 degrees
+                        if (Opposite === 0) {
+                          // then there is no slope. Assume zero degrees.
                           return 0;
-                        } else if (Atan > 0) {
-                          // then slope is between 0 and 90 degrees
-                          return 180 / Math.PI * Atan;
+                        } else if (Opposite < 0) {
+                          return 270;
                         } else {
-                          return 270 + 180 / Math.PI * Atan;
+                          return 90;
+                        }
+                      } else {
+                        var Atan = Math.atan(Opposite / Adjacent);
+
+                        if (Adjacent < 0) {
+                          // then slope is between 90 and 270 degrees
+                          if (Atan === 0) {
+                            return 180;
+                          } else if (Atan > 0) {
+                            // then slope is between 180 and 270 degrees
+                            return 180 + 180 / Math.PI * Atan;
+                          } else {
+                            // then slope is between 90 and 180 degrees
+                            return 90 + 180 / Math.PI * Atan;
+                          }
+                        } else {
+                          // then slope is between 0 and 90 degrees or 270 and 360 degrees
+                          if (Atan === 0) {
+                            return 0;
+                          } else if (Atan > 0) {
+                            // then slope is between 0 and 90 degrees
+                            return 180 / Math.PI * Atan;
+                          } else {
+                            return 270 + 180 / Math.PI * Atan;
+                          }
                         }
                       }
-                    }
-                  };
+                    };
 
-                  var Slope = getSlopeInDegrees(Adjacent, Opposite);
-                  var PreviousSlope = getSlopeInDegrees(PreviousAdjacent, PreviousOpposite);
-                  C.viewport.rotation = Slope - PreviousSlope;
-                }
+                    var Slope = getSlopeInDegrees(Adjacent, Opposite);
+                    var PreviousSlope = getSlopeInDegrees(PreviousAdjacent, PreviousOpposite);
+                    C.viewport.rotation = Slope - PreviousSlope;
+                  }
+                };
+
+                calculateRotation();
+                calculateRelativeXY(C);
+                return C;
               };
 
-              calculateRotation();
-              calculateRelativeXY(C);
-              return C;
-            };
+              return getCenterpointOfTwo();
+            // case 3:
+            // do something else
+            // const getCenterpointOfThree = (): Centerpoint => {};
+            // return getCenterpointOfThree();
 
-            return getCenterpointOfTwo();
-          // case 3:
-          // do something else
-          // const getCenterpointOfThree = (): Centerpoint => {};
-          // return getCenterpointOfThree();
+            default:
+              throw new Error("I haven't implemented the smallest-enclosing-circle algorithm yet. Once I do, I will be able to calculate the centerpoint of a TouchEvent with ".concat(Object.keys(TouchPoints).length, " touch points."));
+          }
+        };
 
-          default:
-            throw new Error("I haven't implemented the smallest-enclosing-circle algorithm yet. Once I do, I will be able to calculate the centerpoint of a TouchEvent with ".concat(Object.keys(TouchPoints).length, " touch points."));
-        }
-      };
-
-      var _calculateTouchCenter = calculateTouchCenterpoint(),
-          viewport = _calculateTouchCenter.viewport,
-          relative = _calculateTouchCenter.relative; // Finally, we populate and return the coordinates object
+        var _calculateTouchCenter = calculateTouchCenterpoint(),
+            viewport = _calculateTouchCenter.viewport,
+            relative = _calculateTouchCenter.relative; // Finally, we populate and return the coordinates object
 
 
-      var Coordinates = {
-        event: e,
-        relative: relative ? {
-          x: relative.x,
-          y: relative.y
-        } : {
+        var Coordinates = {
+          event: e,
+          relative: relative ? {
+            x: relative.x,
+            y: relative.y
+          } : {
+            x: viewport.x,
+            y: viewport.y
+          },
+          numberOfTouchPoints: e.targetTouches.length
+        };
+        var Viewport = {
           x: viewport.x,
           y: viewport.y
-        },
-        numberOfTouchPoints: e.targetTouches.length
-      };
-      var Viewport = {
-        x: viewport.x,
-        y: viewport.y
-      };
+        };
 
-      if (typeof Target.width === 'number' && typeof Target.height === 'number' && relative) {
-        Coordinates.relative.xPercent = relative.x / Target.width;
-        Coordinates.relative.yPercent = relative.y / Target.height;
+        if (typeof Target.width === 'number' && typeof Target.height === 'number' && relative) {
+          Coordinates.relative.xPercent = relative.x / Target.width;
+          Coordinates.relative.yPercent = relative.y / Target.height;
 
-        if (previous && previous.viewport && MillisecondsElapsedSincePrevious) {
-          if (previous.viewport.x) {
-            var MovementX = viewport.x - previous.viewport.x;
-            Viewport.dx = MovementX / MillisecondsElapsedSincePrevious * 1000;
-            Coordinates.relative.dxPercent = Viewport.dx / Target.width;
-          }
+          if (previous && previous.viewport && MillisecondsElapsedSincePrevious) {
+            if (previous.viewport.x) {
+              var MovementX = viewport.x - previous.viewport.x;
+              Viewport.dx = MovementX / MillisecondsElapsedSincePrevious * 1000;
+              Coordinates.relative.dxPercent = Viewport.dx / Target.width;
+            }
 
-          if (previous.viewport.y) {
-            var MovementY = viewport.y - previous.viewport.y;
-            Viewport.dy = MovementY / MillisecondsElapsedSincePrevious * 1000;
-            Coordinates.relative.dyPercent = Viewport.dy / Target.height;
+            if (previous.viewport.y) {
+              var MovementY = viewport.y - previous.viewport.y;
+              Viewport.dy = MovementY / MillisecondsElapsedSincePrevious * 1000;
+              Coordinates.relative.dyPercent = Viewport.dy / Target.height;
+            }
           }
         }
-      }
 
-      if (viewport.radius) {
-        Viewport.radius = viewport.radius;
+        if (viewport.radius) {
+          Viewport.radius = viewport.radius;
 
-        if (previous && previous.viewport && previous.viewport.radius) {
-          Viewport.dRadius = viewport.radius - previous.viewport.radius;
+          if (previous && previous.viewport && previous.viewport.radius) {
+            Viewport.dRadius = viewport.radius - previous.viewport.radius;
+          }
+        }
+
+        if (viewport.rotation) {
+          Viewport.dRotation = viewport.rotation;
+        }
+
+        Coordinates.viewport = Viewport;
+        return Coordinates;
+      } else {
+        if (P) {
+          var _Coordinates = {
+            event: e,
+            relative: {
+              x: P.relative.x,
+              y: P.relative.y,
+              dxPercent: 0,
+              dyPercent: 0
+            },
+            viewport: {
+              dx: 0,
+              dy: 0
+            },
+            numberOfTouchPoints: 0
+          };
+
+          if (typeof P.relative.xPercent === 'number') {
+            _Coordinates.relative.xPercent = P.relative.xPercent;
+          }
+
+          if (typeof P.relative.yPercent === 'number') {
+            _Coordinates.relative.yPercent = P.relative.yPercent;
+          }
+
+          if (P.viewport && _Coordinates.viewport) {
+            if (typeof P.viewport.x === 'number') {
+              _Coordinates.viewport.x = P.viewport.x;
+            }
+
+            if (typeof P.viewport.y === 'number') {
+              _Coordinates.viewport.y = P.viewport.y;
+            }
+          }
+
+          if (P.viewport && typeof P.viewport.radius === 'number' && _Coordinates.viewport) {
+            _Coordinates.viewport.radius = P.viewport.radius;
+          }
+
+          return _Coordinates;
+        } else {
+          throw new Error('a touchend or touchcancel event always follows a touchstart or touchmove event. Please supply the PointerCoordinates for the touchstart or touchmove event to the touchend and touchcancel event listener');
         }
       }
-
-      if (viewport.rotation) {
-        Viewport.dRotation = viewport.rotation;
-      }
-
-      Coordinates.viewport = Viewport;
-      return Coordinates;
     }
   };
 
@@ -3039,10 +3084,12 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
       touchend: function touchend(e) {
         DataAndComputed.pointer.coordinates = TouchListeners_TouchendListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
       },
       touchcancel: function touchcancel(e) {
         DataAndComputed.pointer.coordinates = TouchListeners_TouchcancelListener(e, true, true, DataAndComputed.pointer.coordinates);
         DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
       }
     }; // !Watchers
     // See: https://www.vuemastery.com/courses/vue-3-essentials/watch

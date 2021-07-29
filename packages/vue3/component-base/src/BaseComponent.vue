@@ -168,6 +168,7 @@ export default defineComponent({
         );
 
         DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
       },
       touchcancel: (e: Event) => {
         DataAndComputed.pointer.coordinates = TouchcancelListener(
@@ -178,6 +179,7 @@ export default defineComponent({
         );
 
         DataAndComputed.pointer.isDown = false;
+        DataAndComputed.pointer.downSince = false;
       },
     };
     // !Watchers

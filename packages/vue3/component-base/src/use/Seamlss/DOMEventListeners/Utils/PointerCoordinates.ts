@@ -152,321 +152,373 @@ export function getPointerCoordinates(
           current: TouchPointCoords;
         };
       };
-      const getTouchPoints = () => {
-        const TouchPoints: TouchPointList = {};
 
-        const supportsTouchIdentifier = (): boolean => {
-          // unfortunately not all browsers support Touch.identifier (see: https://developer.mozilla.org/en-US/docs/Web/API/Touch/identifier), so we need to do a litmus test before we run the for loop.
-          const FirstTouch = e.targetTouches.item(0);
+      const P = previous || false;
+      const PreviousTouchEvent =
+        P && P.event instanceof TouchEvent ? P.event : false;
 
-          return typeof FirstTouch?.identifier === 'number' ? true : false;
-        };
-        const DoesSupportTouchIdentifier = supportsTouchIdentifier();
+      if (e.targetTouches.length > 0) {
+        // we can short-circuit all of the following calculations if there are no touch points, because we can simply re-use `P`, the previous touch coordinates, if they are available.
+        const getTouchPoints = () => {
+          const TouchPoints: TouchPointList = {};
 
-        const getAllPreviousTouches = () => {
-          if (
-            previous &&
-            previousHasSameTarget &&
-            previous instanceof TouchEvent && // todo: remove this condition after api refactor, because it will ALWAYS be true
-            DoesSupportTouchIdentifier
-          ) {
-            const PreviousTouches: { [id: number]: TouchPointCoords } = {};
+          const supportsTouchIdentifier = (): boolean => {
+            // unfortunately not all browsers support Touch.identifier (see: https://developer.mozilla.org/en-US/docs/Web/API/Touch/identifier), so we need to do a litmus test before we run the for loop.
+            const FirstTouch = e.targetTouches.item(0);
 
-            for (
-              let Index = 0;
-              Index < previous.targetTouches.length;
-              Index++
-            ) {
-              const PreviousTouch = previous.targetTouches.item(Index);
+            return typeof FirstTouch?.identifier === 'number' ? true : false;
+          };
+          const DoesSupportTouchIdentifier = supportsTouchIdentifier();
 
-              if (PreviousTouch) {
-                PreviousTouches[PreviousTouch.identifier] = {
-                  viewportX: PreviousTouch.clientX,
-                  viewportY: PreviousTouch.clientY,
-                };
+          const getAllPreviousTouches = () => {
+            if (PreviousTouchEvent && DoesSupportTouchIdentifier) {
+              const PreviousTouches: { [id: number]: TouchPointCoords } = {};
+
+              for (
+                let Index = 0;
+                Index < PreviousTouchEvent.targetTouches.length;
+                Index++
+              ) {
+                const PreviousTouch = PreviousTouchEvent.targetTouches.item(
+                  Index
+                );
+
+                if (PreviousTouch) {
+                  PreviousTouches[PreviousTouch.identifier] = {
+                    viewportX: PreviousTouch.clientX,
+                    viewportY: PreviousTouch.clientY,
+                  };
+                }
+              }
+
+              return PreviousTouches;
+            } else {
+              return false;
+            }
+          };
+          const PreviousTouches = getAllPreviousTouches();
+
+          for (let Index = 0; Index < e.targetTouches.length; Index++) {
+            const Touch = e.targetTouches.item(Index);
+
+            if (Touch) {
+              TouchPoints[Touch.identifier] = {
+                current: {
+                  viewportX: Touch.clientX,
+                  viewportY: Touch.clientY,
+                },
+              };
+              if (PreviousTouches && PreviousTouches[Touch.identifier]) {
+                TouchPoints[Touch.identifier].previous =
+                  PreviousTouches[Touch.identifier];
               }
             }
+          }
 
-            return PreviousTouches;
-          } else {
-            return false;
+          return TouchPoints;
+        };
+
+        const TouchPoints = getTouchPoints();
+
+        // once we've gotten the touch points, we have to find the centerpoint. The centerpoint is the center of the smallest circle that circumscribes all of the touchpoints
+        type Centerpoint = {
+          viewport: {
+            x: number;
+            y: number;
+            radius?: number;
+            rotation?: number;
+          };
+          relative?: {
+            x: number;
+            y: number;
+          };
+        };
+        const calculateTouchCenterpoint = (): Centerpoint => {
+          const BoundingRect = Target.getBoundingClientRect
+            ? Target.getBoundingClientRect()
+            : false;
+
+          const calculateTargetScaleAndTranslate = (): void => {
+            if (
+              Target.width !== false &&
+              Target.height !== false &&
+              BoundingRect
+            ) {
+              const { left, top, width, height } = BoundingRect;
+              Target.viewportTranslateX = left;
+              Target.viewportTranslateY = top;
+              Target.scaleX = Target.width === 0 ? 0 : width / Target.width;
+              Target.scaleY = Target.height === 0 ? 0 : height / Target.height;
+            }
+          };
+          calculateTargetScaleAndTranslate();
+
+          const TouchPointIDs = Object.keys(TouchPoints);
+
+          const calculateRelativeXY = (C: Centerpoint): void => {
+            if (
+              typeof Target.scaleX === 'number' &&
+              typeof Target.scaleY === 'number' &&
+              typeof Target.viewportTranslateX === 'number' &&
+              typeof Target.viewportTranslateY === 'number'
+            ) {
+              C.relative = {
+                x: (C.viewport.x - Target.viewportTranslateX) * Target.scaleX,
+                y: (C.viewport.y - Target.viewportTranslateY) * Target.scaleY,
+              };
+            }
+          };
+
+          switch (TouchPointIDs.length) {
+            case 1:
+              const getCenterpointOfOne = (): Centerpoint => {
+                const C: Centerpoint = {
+                  viewport: {
+                    x: TouchPoints[TouchPointIDs[0]].current.viewportX,
+                    y: TouchPoints[TouchPointIDs[0]].current.viewportY,
+                  },
+                };
+
+                calculateRelativeXY(C);
+
+                return C;
+              };
+              return getCenterpointOfOne();
+            case 2:
+            case 3: // I know that this is hacky ... right now I'm ignoring the 3rd touch point entirely ... but it'll take me another day to write the code to handle this, and I don't have that time rn.
+              const getCenterpointOfTwo = (): Centerpoint => {
+                const Adjacent =
+                  TouchPoints[TouchPointIDs[1]].current.viewportX -
+                  TouchPoints[TouchPointIDs[0]].current.viewportX;
+
+                const Opposite =
+                  TouchPoints[TouchPointIDs[1]].current.viewportY -
+                  TouchPoints[TouchPointIDs[0]].current.viewportY;
+
+                const getPreviousOppositeAdjacent = () => {
+                  function isTouchPointCoords(
+                    previous: TouchPointCoords | undefined
+                  ): previous is TouchPointCoords {
+                    return (
+                      (previous as TouchPointCoords).viewportX !== undefined &&
+                      (previous as TouchPointCoords).viewportY !== undefined
+                    );
+                  }
+
+                  const P1 = TouchPoints[TouchPointIDs[1]].previous;
+                  const P0 = TouchPoints[TouchPointIDs[0]].previous;
+
+                  if (isTouchPointCoords(P1) && isTouchPointCoords(P0)) {
+                    return {
+                      PreviousAdjacent: P1.viewportX - P0.viewportX,
+                      PreviousOpposite: P1.viewportY - P0.viewportY,
+                    };
+                  } else {
+                    return false;
+                  }
+                };
+                const PreviousAdjacentOpposite = getPreviousOppositeAdjacent();
+
+                const C: Centerpoint = {
+                  viewport: {
+                    x:
+                      (TouchPoints[TouchPointIDs[0]].current.viewportX +
+                        TouchPoints[TouchPointIDs[1]].current.viewportX) /
+                      2,
+                    y:
+                      (TouchPoints[TouchPointIDs[0]].current.viewportY +
+                        TouchPoints[TouchPointIDs[1]].current.viewportY) /
+                      2,
+                    radius: (Adjacent ** 2 + Opposite ** 2) ** 0.5 / 2,
+                  },
+                };
+
+                const calculateRotation = (): void => {
+                  if (PreviousAdjacentOpposite) {
+                    const {
+                      PreviousAdjacent,
+                      PreviousOpposite,
+                    } = PreviousAdjacentOpposite;
+
+                    const getSlopeInDegrees = (
+                      Adjacent: number,
+                      Opposite: number
+                    ) => {
+                      if (Adjacent === 0) {
+                        // then slope is either 90 degrees or 270 degrees
+                        if (Opposite === 0) {
+                          // then there is no slope. Assume zero degrees.
+                          return 0;
+                        } else if (Opposite < 0) {
+                          return 270;
+                        } else {
+                          return 90;
+                        }
+                      } else {
+                        const Atan = Math.atan(Opposite / Adjacent);
+                        if (Adjacent < 0) {
+                          // then slope is between 90 and 270 degrees
+                          if (Atan === 0) {
+                            return 180;
+                          } else if (Atan > 0) {
+                            // then slope is between 180 and 270 degrees
+                            return 180 + (180 / Math.PI) * Atan;
+                          } else {
+                            // then slope is between 90 and 180 degrees
+                            return 90 + (180 / Math.PI) * Atan;
+                          }
+                        } else {
+                          // then slope is between 0 and 90 degrees or 270 and 360 degrees
+                          if (Atan === 0) {
+                            return 0;
+                          } else if (Atan > 0) {
+                            // then slope is between 0 and 90 degrees
+                            return (180 / Math.PI) * Atan;
+                          } else {
+                            return 270 + (180 / Math.PI) * Atan;
+                          }
+                        }
+                      }
+                    };
+
+                    const Slope = getSlopeInDegrees(Adjacent, Opposite);
+                    const PreviousSlope = getSlopeInDegrees(
+                      PreviousAdjacent,
+                      PreviousOpposite
+                    );
+
+                    C.viewport.rotation = Slope - PreviousSlope;
+                  }
+                };
+                calculateRotation();
+
+                calculateRelativeXY(C);
+
+                return C;
+              };
+              return getCenterpointOfTwo();
+            // case 3:
+            // do something else
+            // const getCenterpointOfThree = (): Centerpoint => {};
+            // return getCenterpointOfThree();
+            default:
+              throw new Error(
+                `I haven't implemented the smallest-enclosing-circle algorithm yet. Once I do, I will be able to calculate the centerpoint of a TouchEvent with ${
+                  Object.keys(TouchPoints).length
+                } touch points.`
+              );
           }
         };
-        const PreviousTouches = getAllPreviousTouches();
 
-        for (let Index = 0; Index < e.targetTouches.length; Index++) {
-          const Touch = e.targetTouches.item(Index);
+        const { viewport, relative } = calculateTouchCenterpoint();
 
-          if (Touch) {
-            TouchPoints[Touch.identifier] = {
-              current: {
-                viewportX: Touch.clientX,
-                viewportY: Touch.clientY,
-              },
-            };
-            if (PreviousTouches && PreviousTouches[Touch.identifier]) {
-              TouchPoints[Touch.identifier].previous =
-                PreviousTouches[Touch.identifier];
+        // Finally, we populate and return the coordinates object
+        const Coordinates: PointerCoordinates = {
+          event: e,
+          relative: relative
+            ? { x: relative.x, y: relative.y }
+            : { x: viewport.x, y: viewport.y },
+          numberOfTouchPoints: e.targetTouches.length,
+        };
+
+        const Viewport: {
+          x: number;
+          y: number;
+          [key: string]: number;
+        } = {
+          x: viewport.x,
+          y: viewport.y,
+        };
+
+        if (
+          typeof Target.width === 'number' &&
+          typeof Target.height === 'number' &&
+          relative
+        ) {
+          Coordinates.relative.xPercent = relative.x / Target.width;
+          Coordinates.relative.yPercent = relative.y / Target.height;
+
+          if (
+            previous &&
+            previous.viewport &&
+            MillisecondsElapsedSincePrevious
+          ) {
+            if (previous.viewport.x) {
+              const MovementX = viewport.x - previous.viewport.x;
+
+              Viewport.dx =
+                (MovementX / MillisecondsElapsedSincePrevious) * 1000;
+              Coordinates.relative.dxPercent = Viewport.dx / Target.width;
+            }
+            if (previous.viewport.y) {
+              const MovementY = viewport.y - previous.viewport.y;
+
+              Viewport.dy =
+                (MovementY / MillisecondsElapsedSincePrevious) * 1000;
+              Coordinates.relative.dyPercent = Viewport.dy / Target.height;
             }
           }
         }
 
-        return TouchPoints;
-      };
-      const TouchPoints = getTouchPoints();
+        if (viewport.radius) {
+          Viewport.radius = viewport.radius;
+          if (previous && previous.viewport && previous.viewport.radius) {
+            Viewport.dRadius = viewport.radius - previous.viewport.radius;
+          }
+        }
 
-      // once we've gotten the touch points, we have to find the centerpoint. The centerpoint is the center of the smallest circle that circumscribes all of the touchpoints
-      type Centerpoint = {
-        viewport: {
-          x: number;
-          y: number;
-          radius?: number;
-          rotation?: number;
-        };
-        relative?: {
-          x: number;
-          y: number;
-        };
-      };
-      const calculateTouchCenterpoint = (): Centerpoint => {
-        const BoundingRect = Target.getBoundingClientRect
-          ? Target.getBoundingClientRect()
-          : false;
+        if (viewport.rotation) {
+          Viewport.dRotation = viewport.rotation;
+        }
 
-        const calculateTargetScaleAndTranslate = (): void => {
+        Coordinates.viewport = Viewport;
+
+        return Coordinates;
+      } else {
+        if (P) {
+          const Coordinates: PointerCoordinates = {
+            event: e,
+            relative: {
+              x: P.relative.x,
+              y: P.relative.y,
+              dxPercent: 0,
+              dyPercent: 0,
+            },
+            viewport: {
+              dx: 0,
+              dy: 0,
+            },
+            numberOfTouchPoints: 0,
+          };
+
+          if (typeof P.relative.xPercent === 'number') {
+            Coordinates.relative.xPercent = P.relative.xPercent;
+          }
+          if (typeof P.relative.yPercent === 'number') {
+            Coordinates.relative.yPercent = P.relative.yPercent;
+          }
+          if (P.viewport && Coordinates.viewport) {
+            if (typeof P.viewport.x === 'number') {
+              Coordinates.viewport.x = P.viewport.x;
+            }
+            if (typeof P.viewport.y === 'number') {
+              Coordinates.viewport.y = P.viewport.y;
+            }
+          }
           if (
-            Target.width !== false &&
-            Target.height !== false &&
-            BoundingRect
+            P.viewport &&
+            typeof P.viewport.radius === 'number' &&
+            Coordinates.viewport
           ) {
-            const { left, top, width, height } = BoundingRect;
-            Target.viewportTranslateX = left;
-            Target.viewportTranslateY = top;
-            Target.scaleX = Target.width === 0 ? 0 : width / Target.width;
-            Target.scaleY = Target.height === 0 ? 0 : height / Target.height;
+            Coordinates.viewport.radius = P.viewport.radius;
           }
-        };
-        calculateTargetScaleAndTranslate();
-
-        const TouchPointIDs = Object.keys(TouchPoints);
-
-        const calculateRelativeXY = (C: Centerpoint): void => {
-          if (
-            typeof Target.scaleX === 'number' &&
-            typeof Target.scaleY === 'number' &&
-            typeof Target.viewportTranslateX === 'number' &&
-            typeof Target.viewportTranslateY === 'number'
-          ) {
-            C.relative = {
-              x: (C.viewport.x - Target.viewportTranslateX) * Target.scaleX,
-              y: (C.viewport.y - Target.viewportTranslateY) * Target.scaleY,
-            };
-          }
-        };
-
-        switch (TouchPointIDs.length) {
-          case 0:
-            // a touchend event has no touch points, because by definition, the touch has ended. To fix this, we need to revise the API.
-            throw new Error(
-              `It is technically impossible to have a touch event with no touch points. This error should never happen.`
-            );
-          case 1:
-            const getCenterpointOfOne = (): Centerpoint => {
-              const C: Centerpoint = {
-                viewport: {
-                  x: TouchPoints[TouchPointIDs[0]].current.viewportX,
-                  y: TouchPoints[TouchPointIDs[0]].current.viewportY,
-                },
-              };
-
-              calculateRelativeXY(C);
-
-              return C;
-            };
-            return getCenterpointOfOne();
-          case 2 | 3: // I know that this is hacky ... right now I'm ignoring the 3rd touch point entirely ... but it'll take me another day to write the code to handle this, and I don't have that time rn.
-            const getCenterpointOfTwo = (): Centerpoint => {
-              const Adjacent =
-                TouchPoints[TouchPointIDs[1]].current.viewportX -
-                TouchPoints[TouchPointIDs[0]].current.viewportX;
-
-              const Opposite =
-                TouchPoints[TouchPointIDs[1]].current.viewportY -
-                TouchPoints[TouchPointIDs[0]].current.viewportY;
-
-              const getPreviousOppositeAdjacent = () => {
-                function isTouchPointCoords(
-                  previous: TouchPointCoords | undefined
-                ): previous is TouchPointCoords {
-                  return (
-                    (previous as TouchPointCoords).viewportX !== undefined &&
-                    (previous as TouchPointCoords).viewportY !== undefined
-                  );
-                }
-
-                const P1 = TouchPoints[TouchPointIDs[1]].previous;
-                const P0 = TouchPoints[TouchPointIDs[0]].previous;
-
-                if (isTouchPointCoords(P1) && isTouchPointCoords(P0)) {
-                  return {
-                    PreviousAdjacent: P1.viewportX - P0.viewportX,
-                    PreviousOpposite: P1.viewportY - P0.viewportY,
-                  };
-                } else {
-                  return false;
-                }
-              };
-              const PreviousAdjacentOpposite = getPreviousOppositeAdjacent();
-
-              const C: Centerpoint = {
-                viewport: {
-                  x:
-                    (TouchPoints[TouchPointIDs[0]].current.viewportX +
-                      TouchPoints[TouchPointIDs[1]].current.viewportX) /
-                    2,
-                  y:
-                    (TouchPoints[TouchPointIDs[0]].current.viewportY +
-                      TouchPoints[TouchPointIDs[1]].current.viewportY) /
-                    2,
-                  radius: (Adjacent ** 2 + Opposite ** 2) ** 0.5 / 2,
-                },
-              };
-
-              const calculateRotation = (): void => {
-                if (PreviousAdjacentOpposite) {
-                  const {
-                    PreviousAdjacent,
-                    PreviousOpposite,
-                  } = PreviousAdjacentOpposite;
-
-                  const getSlopeInDegrees = (
-                    Adjacent: number,
-                    Opposite: number
-                  ) => {
-                    if (Adjacent === 0) {
-                      // then slope is either 90 degrees or 270 degrees
-                      if (Opposite === 0) {
-                        // then there is no slope. Assume zero degrees.
-                        return 0;
-                      } else if (Opposite < 0) {
-                        return 270;
-                      } else {
-                        return 90;
-                      }
-                    } else {
-                      const Atan = Math.atan(Opposite / Adjacent);
-                      if (Adjacent < 0) {
-                        // then slope is between 90 and 270 degrees
-                        if (Atan === 0) {
-                          return 180;
-                        } else if (Atan > 0) {
-                          // then slope is between 180 and 270 degrees
-                          return 180 + (180 / Math.PI) * Atan;
-                        } else {
-                          // then slope is between 90 and 180 degrees
-                          return 90 + (180 / Math.PI) * Atan;
-                        }
-                      } else {
-                        // then slope is between 0 and 90 degrees or 270 and 360 degrees
-                        if (Atan === 0) {
-                          return 0;
-                        } else if (Atan > 0) {
-                          // then slope is between 0 and 90 degrees
-                          return (180 / Math.PI) * Atan;
-                        } else {
-                          return 270 + (180 / Math.PI) * Atan;
-                        }
-                      }
-                    }
-                  };
-
-                  const Slope = getSlopeInDegrees(Adjacent, Opposite);
-                  const PreviousSlope = getSlopeInDegrees(
-                    PreviousAdjacent,
-                    PreviousOpposite
-                  );
-
-                  C.viewport.rotation = Slope - PreviousSlope;
-                }
-              };
-              calculateRotation();
-
-              calculateRelativeXY(C);
-
-              return C;
-            };
-            return getCenterpointOfTwo();
-          // case 3:
-          // do something else
-          // const getCenterpointOfThree = (): Centerpoint => {};
-          // return getCenterpointOfThree();
-          default:
-            throw new Error(
-              `I haven't implemented the smallest-enclosing-circle algorithm yet. Once I do, I will be able to calculate the centerpoint of a TouchEvent with ${
-                Object.keys(TouchPoints).length
-              } touch points.`
-            );
-        }
-      };
-
-      const { viewport, relative } = calculateTouchCenterpoint();
-
-      // Finally, we populate and return the coordinates object
-      const Coordinates: PointerCoordinates = {
-        event: e,
-        relative: relative
-          ? { x: relative.x, y: relative.y }
-          : { x: viewport.x, y: viewport.y },
-        numberOfTouchPoints: e.targetTouches.length,
-      };
-
-      const Viewport: {
-        x: number;
-        y: number;
-        [key: string]: number;
-      } = {
-        x: viewport.x,
-        y: viewport.y,
-      };
-
-      if (
-        typeof Target.width === 'number' &&
-        typeof Target.height === 'number' &&
-        relative
-      ) {
-        Coordinates.relative.xPercent = relative.x / Target.width;
-        Coordinates.relative.yPercent = relative.y / Target.height;
-
-        if (previous && previous.viewport && MillisecondsElapsedSincePrevious) {
-          if (previous.viewport.x) {
-            const MovementX = viewport.x - previous.viewport.x;
-
-            Viewport.dx = (MovementX / MillisecondsElapsedSincePrevious) * 1000;
-            Coordinates.relative.dxPercent = Viewport.dx / Target.width;
-          }
-          if (previous.viewport.y) {
-            const MovementY = viewport.y - previous.viewport.y;
-
-            Viewport.dy = (MovementY / MillisecondsElapsedSincePrevious) * 1000;
-            Coordinates.relative.dyPercent = Viewport.dy / Target.height;
-          }
+          return Coordinates;
+        } else {
+          throw new Error(
+            'a touchend or touchcancel event always follows a touchstart or touchmove event. Please supply the PointerCoordinates for the touchstart or touchmove event to the touchend and touchcancel event listener'
+          );
         }
       }
-
-      if (viewport.radius) {
-        Viewport.radius = viewport.radius;
-        if (previous && previous.viewport && previous.viewport.radius) {
-          Viewport.dRadius = viewport.radius - previous.viewport.radius;
-        }
-      }
-
-      if (viewport.rotation) {
-        Viewport.dRotation = viewport.rotation;
-      }
-
-      Coordinates.viewport = Viewport;
-
-      return Coordinates;
     },
   };
 
