@@ -299,10 +299,15 @@ export function getPointerCoordinates(
                   function isTouchPointCoords(
                     previous: TouchPointCoords | undefined
                   ): previous is TouchPointCoords {
-                    return (
-                      (previous as TouchPointCoords).viewportX !== undefined &&
-                      (previous as TouchPointCoords).viewportY !== undefined
-                    );
+                    if (previous) {
+                      return (
+                        (previous as TouchPointCoords).viewportX !==
+                          undefined &&
+                        (previous as TouchPointCoords).viewportY !== undefined
+                      );
+                    } else {
+                      return false;
+                    }
                   }
 
                   const P1 = TouchPoints[TouchPointIDs[1]].previous;
@@ -360,12 +365,9 @@ export function getPointerCoordinates(
                           // then slope is between 90 and 270 degrees
                           if (Atan === 0) {
                             return 180;
-                          } else if (Atan > 0) {
-                            // then slope is between 180 and 270 degrees
-                            return 180 + (180 / Math.PI) * Atan;
                           } else {
-                            // then slope is between 90 and 180 degrees
-                            return 90 + (180 / Math.PI) * Atan;
+                            // then slope is between 90 and 270 degrees
+                            return 180 + (180 / Math.PI) * Atan;
                           }
                         } else {
                           // then slope is between 0 and 90 degrees or 270 and 360 degrees
@@ -374,8 +376,9 @@ export function getPointerCoordinates(
                           } else if (Atan > 0) {
                             // then slope is between 0 and 90 degrees
                             return (180 / Math.PI) * Atan;
+                            // return 45; // correct
                           } else {
-                            return 270 + (180 / Math.PI) * Atan;
+                            return 360 + (180 / Math.PI) * Atan;
                           }
                         }
                       }
@@ -386,7 +389,6 @@ export function getPointerCoordinates(
                       PreviousAdjacent,
                       PreviousOpposite
                     );
-
                     C.viewport.rotation = Slope - PreviousSlope;
                   }
                 };
@@ -467,8 +469,9 @@ export function getPointerCoordinates(
           }
         }
 
-        if (viewport.rotation) {
-          Viewport.dRotation = viewport.rotation;
+        if (viewport.rotation && MillisecondsElapsedSincePrevious) {
+          Viewport.dRotation =
+            (viewport.rotation / MillisecondsElapsedSincePrevious) * 1000;
         }
 
         Coordinates.viewport = Viewport;
