@@ -1,7 +1,7 @@
 # App Stencils
 
-[ ] make a banner image
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
+
 This [monorepo](https://lerna.js.org/) contains all of the templates, components, plugins and utilities that incremental.design uses to make websites, web apps, and prototypes. Essentially, this is how [incremental.design](https://incremental.design) makes great stuff fast 🏎.
 
 # Installation:
@@ -30,9 +30,9 @@ Each package contains its own `README` with instructions that are specific to it
 
 The packages that are currently in this repository are:
 
-| Package                                   | Type                        | Location                       |
-| :---------------------------------------- | :-------------------------- | :----------------------------- |
-| `@incremental.design/vue3-component-base` | Vue 3 Single File Component | `packages/vue3/component-base` |
+| Package                                                                               | Type                        | Location                       |
+| :------------------------------------------------------------------------------------ | :-------------------------- | :----------------------------- |
+| [`@incremental.design/vue3-component-base`](./packages/vue3/component-base/README.md) | Vue 3 Single File Component | `packages/vue3/component-base` |
 
 ## How App Stencils works:
 

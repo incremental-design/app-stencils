@@ -1,13 +1,15 @@
 <template>
-  <div @="EventHandlers" style="transform: scale(0.5)">
+  <div @="EventHandlers">
+    <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!-- <div> -->
     <!--
       @slot Default Content
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot>{{ pointer }}</slot>
+    <slot>{{ DataAndComputed.pointer }}</slot>
   </div>
+  <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
 
 <script lang="ts">
@@ -19,10 +21,10 @@
  * - animations for seamlss state changes
  * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
  * - a11y and i18n friendly
- * - by default, no text should be selectable (because you can't select the text on a button)
+ * - by default, no text should be selectable (because you can't select the text on a button) (user-select === none)
  */
 
-import { defineComponent, reactive, computed, toRefs, watch } from 'vue';
+import { defineComponent, reactive, computed, watch } from 'vue';
 
 import {
   ClickListener,
@@ -190,9 +192,11 @@ export default defineComponent({
 
     // !Lifecycle Hooks
 
-    return { ...toRefs(DataAndComputed), EventHandlers };
+    return { DataAndComputed, EventHandlers };
   },
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+/* todo: pointer-events none? user-select none? */
+</style>

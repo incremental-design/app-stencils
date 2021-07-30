@@ -431,6 +431,17 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
+/***/ "60e9":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_BaseComponent_vue_vue_type_style_index_0_id_145b1fec_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("9bce");
+/* harmony import */ var _node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_BaseComponent_vue_vue_type_style_index_0_id_145b1fec_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_mini_css_extract_plugin_dist_loader_js_ref_6_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_6_oneOf_1_1_node_modules_vue_loader_v16_dist_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_oneOf_1_2_node_modules_cache_loader_dist_cjs_js_ref_0_0_node_modules_vue_loader_v16_dist_index_js_ref_0_1_BaseComponent_vue_vue_type_style_index_0_id_145b1fec_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* unused harmony reexport * */
+
+
+/***/ }),
+
 /***/ "69f3":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -812,6 +823,13 @@ module.exports = isForced;
 
 /***/ }),
 
+/***/ "9bce":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "9bf2":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1186,14 +1204,17 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=25735b77
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--12-0!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=template&id=145b1fec&scoped=true
 
-function render(_ctx, _cache, $props, $setup, $data, $options) {
+
+var _withId = /*#__PURE__*/Object(external_commonjs_vue_commonjs2_vue_root_Vue_["withScopeId"])("data-v-145b1fec");
+
+var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createBlock"])("div", Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toHandlers"])(_ctx.EventHandlers), [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["renderSlot"])(_ctx.$slots, "default", {}, function () {
     return [Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createTextVNode"])(Object(external_commonjs_vue_commonjs2_vue_root_Vue_["toDisplayString"])(_ctx.DataAndComputed.pointer), 1)];
-  })], 16);
-}
-// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=25735b77
+  }, {}, true)], 16);
+});
+// CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=template&id=145b1fec&scoped=true
 
 // CONCATENATED MODULE: ./src/use/Seamlss/DOMEventListeners/Utils/Listener.ts
 
@@ -1917,7 +1938,7 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
 
 
 
-
+ // todo: recategorize according to https://developer.mozilla.org/en-US/docs/Web/Events ?
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=script&lang=ts
 /**
  * Base Component
@@ -1927,7 +1948,7 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
  * - animations for seamlss state changes
  * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
  * - a11y and i18n friendly
- * - by default, no text should be selectable (because you can't select the text on a button)
+ * - by default, no text should be selectable (because you can't select the text on a button) (user-select === none)
  */
 
 
@@ -2017,11 +2038,17 @@ var WindowListeners_FullscreenerrorListener = function FullscreenerrorListener(e
 }));
 // CONCATENATED MODULE: ./src/BaseComponent.vue?vue&type=script&lang=ts
  
+// EXTERNAL MODULE: ./src/BaseComponent.vue?vue&type=style&index=0&id=145b1fec&scoped=true&lang=css
+var BaseComponentvue_type_style_index_0_id_145b1fec_scoped_true_lang_css = __webpack_require__("60e9");
+
 // CONCATENATED MODULE: ./src/BaseComponent.vue
 
 
 
+
+
 BaseComponentvue_type_script_lang_ts.render = render
+BaseComponentvue_type_script_lang_ts.__scopeId = "data-v-145b1fec"
 
 /* harmony default export */ var BaseComponent = (BaseComponentvue_type_script_lang_ts);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js

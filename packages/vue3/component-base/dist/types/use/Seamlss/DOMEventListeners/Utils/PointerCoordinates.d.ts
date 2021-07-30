@@ -47,7 +47,7 @@ declare type TouchAdditionalCoordinates = {
         x?: number;
         y?: number;
         radius?: number;
-        dRadius?: (PreviousRadiusViewport: number) => number;
+        dRadius?: number;
         dRotation?: number;
     };
 };

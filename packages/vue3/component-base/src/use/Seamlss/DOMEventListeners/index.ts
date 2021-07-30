@@ -6,3 +6,5 @@ export * from './PasteboardListeners';
 export * from './ScrollListeners';
 export * from './TouchListeners';
 export * from './WindowListeners';
+
+// todo: recategorize according to https://developer.mozilla.org/en-US/docs/Web/Events ?
