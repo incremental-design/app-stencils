@@ -4,11 +4,11 @@
 
 This [monorepo](https://lerna.js.org/) contains all of the templates, components, plugins and utilities that incremental.design uses to make websites, web apps, and prototypes. Essentially, this is how [incremental.design](https://incremental.design) makes great stuff fast 🏎.
 
-# Installation:
+## Installation:
 
 This is a monorepo. That means that it contains several packages, each of which is published to [npm](https://www.npmjs.com/org/incremental.design?tab=packages). To use any of these packages, simply run `npm install @incremental.design/<name of package>` or `yarn add @incremental.design/<name of package>`.
 
-# Usage:
+## Usage:
 
 How to use App Stencils in your codebase:
 
@@ -16,7 +16,7 @@ How to use App Stencils in your codebase:
 
 [ ] summarize the amazing new capabilities the reader will unlock when they use this project. Then describe how they can activate these capabilities.
 
-## Packages:
+### Packages:
 
 This repository contains the following types of packages:
 
@@ -34,13 +34,13 @@ The packages that are currently in this repository are:
 | :------------------------------------------------------------------------------------ | :-------------------------- | :----------------------------- |
 | [`@incremental.design/vue3-component-base`](./packages/vue3/component-base/README.md) | Vue 3 Single File Component | `packages/vue3/component-base` |
 
-## How App Stencils works:
+### How App Stencils works:
 
 App stencils is a monorepo that is managed by [Lerna](https://lerna.js.org/). Unlike most repositories, this repository contains the source code for not one, but several packages. In fact, the packages in this repository import each other. For example, every Vue 3 Single File Component package in this repository imports the `@incremental.design/vue3-component-base` package. Lerna is the tool that takes care of building each package and making it available to import into other packages.
 
 This repository cannot be "run" in the typical sense of the word. It doesn't contain an executable, such as a web server or an app. Instead, it contains pieces of code - libraries - that can be imported into other apps.
 
-# Roadmap:
+## Roadmap:
 
 | Release | Goal:                                                                                                                        | Git Commit |
 | ------- | ---------------------------------------------------------------------------------------------------------------------------- | ---------- |
@@ -49,11 +49,11 @@ This repository cannot be "run" in the typical sense of the word. It doesn't con
 | 1.2     | Make a vue component for tabs.                                                                                               |            |
 | 1.3     | Make a vue component that morphs SVGs.                                                                                       |            |
 
-# Contribute to App Stencils:
+## Contribute to App Stencils:
 
 To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globally. If you are on a mac, the best way to do this is to install [homebrew](brew.sh), and then `brew install lerna`.
 
-## Setup:
+### Setup:
 
 1. Navigate to the root of this repository.
 2. Run `lerna bootstrap`. This will install all of the new dependencies.
@@ -62,7 +62,7 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 - 🤔 `lerna bootstrap` replaces `yarn install`.
 - 🛑 Do NOT run `yarn install` in any of these repositories.
 
-### Repository Structure:
+#### Repository Structure:
 
 ![All packages are inside the `packages` repository.](.readme/repo-structure.png)
 
@@ -88,7 +88,7 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 | tsconfig.json         | Contains all of the settings that Typescript uses to interpret and compile `.ts` files.                                             | No               |
 | yarn.lock             | [Lockfile](https://classic.yarnpkg.com/en/docs/yarn-lock/) that is automatically created by `lerna bootstrap`                       | No               |
 
-## Develop:
+### Develop:
 
 Lerna _mostly_ automates the chores of developing in a monorepo. But it does replace some of the more familiar commands you might be used to:
 
@@ -104,7 +104,7 @@ Lerna _mostly_ automates the chores of developing in a monorepo. But it does rep
 
 The reason that Lerna provides its own commands is because it actually runs the corresponding yarn or NPM command in _every_ package in the repository. Without Lerna, you would have to go to each directory and manually run said command. In a monorepo with dozens of packages, this saves a lot of time!
 
-### Commit
+#### Commit
 
 This repository uses [commitlint](https://commitlint.js.org/#/reference-configuration?id=prompt). It will not let you commit your changes unless your commit message contains the following:
 
@@ -153,13 +153,15 @@ See: https://www.youtube.com/watch?v=eMJk4y9NGvE
 
 3.  Next, install Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`.
 
-### Add Dependencies
+<!-- need to briefly go over how commits are cherry-picked into feature branches, and then squashed into the main branch -->
+
+#### Add Dependencies
 
 To install a package as dependency of any other package in this repository, use `lerna add <package name>`. To install a dev dependency, use `lerna add --dev <package name>`. Lerna will add the package to the [`dependencies`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) or [`devDependencies`](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) of _every_ `package.json` file in `packages/`.
 
 What if you want one of the packages in `packages/` to be a dependency of another? Lerna takes care of this for you. When you `lerna add ...` the package, it will build it and then symlink it into the node*modules of the package that depends on it. It does all of this \_without* actually publishing your package to npmjs.org.
 
-### Build
+#### Build
 
 To build every package at once, `lerna run build`.
 
@@ -169,7 +171,7 @@ This will populate each package's `dist` folder with the latest build. In fact, 
 
 Most build scripts run Webpack. Each package's `README.md` contains more details on how Webpack works, and what you can do to configure it.
 
-### Run
+#### Run
 
 To run every package at once `lerna run serve`.
 
@@ -181,7 +183,7 @@ Most packages can't actually be run, so this command only runs the few packages 
 
 [ ] how to handle multiple TTYs interleaving standard out?
 
-### Test
+#### Test
 
 To test every package at once, `lerna run test:unit`.
 
@@ -191,11 +193,14 @@ This starts an instance of the Jest unit test framework for each package that co
 
 [ ] maybe just run one instance of jest??
 
-### Document
+#### Document
 
-[ ] explain tsdoc
+This repository contains multiple levels of documentation:
+![Levels of Documentation](.readme/diagram-levels-of-documentation.png)
 
-[ ] explain how to install tsdoc helpers
+<!-- need to explain why no docgen tools -->
+
+<!-- need to explain which tsdoc and vue-docgen tags to use -->
 
 This repository uses [Storybook](https://storybook.js.org) to generate **live** documentation for each component and plugin that is exported. Live documentation is documentation that actually runs the code it is describing. Storybook runs each component and displays the result in the browser. To launch the storybook `lerna run storybook:serve`.
 
@@ -203,9 +208,7 @@ This repository uses [Storybook](https://storybook.js.org) to generate **live** 
 
 For more details on how to add a component to a storybook, consult the README of any `storybook` folder inside `packages`.
 
-[ ] show a screen recording of launching the storybook.
-
-## Publish
+### Publish
 
 This project uses **semantic versioning.** That means that this project is structured into **releases.** A release is a version of the project that adds new features, changes existing features or replaces old features. There are three types of releases:
 
