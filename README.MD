@@ -183,6 +183,8 @@ Most packages can't actually be run, so this command only runs the few packages 
 
 [ ] how to handle multiple TTYs interleaving standard out?
 
+<!-- add instructions on how to use the vue devtools -->
+
 #### Test
 
 To test every package at once, `lerna run test:unit`.
@@ -190,6 +192,8 @@ To test every package at once, `lerna run test:unit`.
 This starts an instance of the Jest unit test framework for each package that contains unit tests. So, if your computer's fans start to sound like a jet engine at idle 🛩 ... this is why.
 
 [ ] add instructions on how to write tests, and where to put them
+
+<!-- there should be ONE test file per folder within a package. The test file should inventory and test everything in the folder -->
 
 [ ] maybe just run one instance of jest??
 

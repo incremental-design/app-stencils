@@ -28,17 +28,22 @@ export class ButtonStates
    * This class implements a state machine in a {@link `reactive` | https://v3.vuejs.org/api/basic-reactivity.html#reactive} object.
    *
    */
+  #internal: UnwrapNestedRefs<any>; // ES2020 private fields ftw
+
   public states;
   constructor() {
+    this.#internal = reactive({
+      pressed: true,
+    });
+
     const states = reactive({
       isFocused: true,
-      _pressed: true,
       isPressed: computed({
         get: (): boolean => {
-          return this.states.isFocused && this.states._pressed;
+          return this.states.isFocused && this.#internal.pressed;
         },
         set: (value: boolean) => {
-          this.states._pressed = value;
+          this.#internal.pressed = value;
         },
       }),
     });

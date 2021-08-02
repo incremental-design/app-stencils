@@ -7,7 +7,13 @@
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot>{{ DataAndComputed.pointer }}</slot>
+    <slot :Pointer="DataAndComputed.pointer" :State="DataAndComputed.state">
+      isPressed: {{ DataAndComputed.state.isPressed }}
+      <br />
+      isFocused: {{ DataAndComputed.state.isFocused }}
+      <br />
+      coordinates {{ DataAndComputed.pointer.coordinates }}
+    </slot>
   </div>
   <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
@@ -24,7 +30,13 @@
  * - by default, no text should be selectable (because you can't select the text on a button) (user-select === none)
  */
 
-import { defineComponent, reactive, computed, watch } from 'vue';
+import {
+  defineComponent,
+  reactive,
+  computed,
+  watchEffect,
+  UnwrapRef,
+} from 'vue';
 
 import {
   ClickListener,
@@ -44,6 +56,8 @@ import {
 } from './use/Seamlss/DOMEventListeners/';
 
 import { PointerCoordinates } from './use/Seamlss/DOMEventListeners/Utils';
+
+import { ButtonStates } from './use';
 
 export default defineComponent({
   components: {
@@ -77,6 +91,7 @@ export default defineComponent({
         downSince: false,
         coordinates: false,
       },
+      state: new ButtonStates(),
     });
 
     // !Methods
@@ -84,6 +99,8 @@ export default defineComponent({
     // !Event Handlers
     const EventHandlers = {
       mousedown: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = MousedownListener(
           e,
           true,
@@ -96,6 +113,8 @@ export default defineComponent({
       },
 
       mouseenter: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = MouseenterListener(
           e,
           true,
@@ -105,6 +124,8 @@ export default defineComponent({
       },
 
       mouseleave: (e: Event) => {
+        DataAndComputed.state.isFocused = false;
+
         DataAndComputed.pointer.coordinates = MouseleaveListener(
           e,
           true,
@@ -117,6 +138,8 @@ export default defineComponent({
       },
 
       mousemove: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = MousemoveListener(
           e,
           true,
@@ -126,6 +149,8 @@ export default defineComponent({
       },
 
       mouseup: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = MouseupListener(
           e,
           true,
@@ -140,6 +165,8 @@ export default defineComponent({
       //   DataAndComputed.previousEvent = e;
       // },
       touchstart: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = TouchstartListener(
           e,
           true,
@@ -151,6 +178,8 @@ export default defineComponent({
         DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchmove: (e: Event) => {
+        DataAndComputed.state.isFocused = true;
+
         DataAndComputed.pointer.coordinates = TouchmoveListener(
           e,
           true,
@@ -159,9 +188,10 @@ export default defineComponent({
         );
 
         DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince = e.timeStamp;
       },
       touchend: (e: Event) => {
+        DataAndComputed.state.isFocused = false;
+
         DataAndComputed.pointer.coordinates = TouchendListener(
           e,
           true,
@@ -173,6 +203,8 @@ export default defineComponent({
         DataAndComputed.pointer.downSince = false;
       },
       touchcancel: (e: Event) => {
+        DataAndComputed.state.isFocused = false;
+
         DataAndComputed.pointer.coordinates = TouchcancelListener(
           e,
           true,
@@ -186,9 +218,9 @@ export default defineComponent({
     };
     // !Watchers
 
-    // See: https://www.vuemastery.com/courses/vue-3-essentials/watch
-
-    // watch()
+    watchEffect(() => {
+      DataAndComputed.state.isPressed = DataAndComputed.pointer.isDown;
+    });
 
     // !Lifecycle Hooks
 
