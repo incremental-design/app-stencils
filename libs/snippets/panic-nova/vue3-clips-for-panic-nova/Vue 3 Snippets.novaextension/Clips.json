@@ -10,7 +10,7 @@
           "trigger": "options"
         },
         {
-          "content": "props: { ${0:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{\\}}\n},\n",
+          "content": "props: { ${0:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{}}\n},\n",
           "name": "Vue 3 Props",
           "trigger": "props:{}"
         },
@@ -42,14 +42,14 @@
           "trigger": "provide()"
         },
         {
-          "content": "/**\n * ${0:prop name} ${1:/*description of prop*/}\n * @values\n * @example\n */\n${0:prop name} : { ${10:// https://v3.vuejs.org/api/options-data.html#props}\n  type: ${12:Any Typescript Class or Constructor Function},\n  default: ${13:() => (/*value to return*/)},\n  required: ${14:true},\n  validator: (value:${15:any}):boolean => (${16:/* test that returns true or false */})\n}\n",
+          "content": "/**\n * ${0:prop name} ${1:/*description of prop*/}\n * @values\n * @example\n */\n${0:prop name} : { ${10:// https://v3.vuejs.org/api/options-data.html#props}\n  type: ${12:Any Typescript Class or Constructor Function},\n  default: ${13:() => (/*value to return*/)},\n  required: ${14:true},\n  validator: (value:${15:any}):boolean => (${16:/* test that returns true or false */})\n},\n",
           "name": "Vue 3 Prop",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "prop:{}"
         },
         {
-          "content": "computed: { ${0:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  ${1:// compute:\\{\\}}\n}\n",
+          "content": "computed: { ${0:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  ${1:// compute:\\{}}\n},\n",
           "name": "Vue 3 Computed Properties",
           "scope": "editor",
           "syntax": "vue",
@@ -77,7 +77,7 @@
           "trigger": "method()"
         },
         {
-          "content": "watch: { ${0:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  ${1:// watcher:\\{\\}}\n}\n",
+          "content": "watch: { ${0:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  ${1:// watcher:\\{}}\n}\n",
           "name": "Vue 3 Watchers",
           "scope": "editor",
           "syntax": "vue",
@@ -91,7 +91,7 @@
           "trigger": "watcher:{}"
         },
         {
-          "content": "emits: { ${0:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${1:// emit:\\{\\}}\n},\n",
+          "content": "emits: { ${0:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${1:// emit:\\{}}\n},\n",
           "name": "Vue 3 Emits",
           "scope": "editor",
           "syntax": "vue",
@@ -103,7 +103,7 @@
           "trigger": "emit:{}"
         },
         {
-          "content": "render() { ${0:// see: https://v3.vuejs.org/api/options-dom.html#render}\n  return h(\n    ${1:'div', // HTML Tag name, component, async component or functional component}\n\t${2:\\{\\},}  // object with attributes, props, and events\n    ${3:\\{\\},} // String, Array or Object that contain nested h(...) functions}\n  )\n  ${4:// see: https://v3.vuejs.org/guide/render-function.html#h-arguments}\n},\n",
+          "content": "render() { ${0:// see: https://v3.vuejs.org/api/options-dom.html#render}\n  return h(\n    ${1:'div', // HTML Tag name, component, async component or functional component}\n\t${2:\\{},}  // object with attributes, props, and events\n    ${3:\\{},} // String, Array or Object that contain nested h(...) functions}\n  )\n  ${4:// see: https://v3.vuejs.org/guide/render-function.html#h-arguments}\n},\n",
           "name": "Vue 3 Render Function",
           "scope": "editor",
           "syntax": "vue",
@@ -124,7 +124,7 @@
           "trigger": "directives:{}"
         },
         {
-          "content": "${0:nameOfDirective}: { ${1:// see: https://v3.vuejs.org/guide/custom-directive.html#custom-directives}\n  created(element:Element, binding:any){\n    ${2:// do something to element during created hook}\n  },\n  beforeMount(element:Element, binding:any){\n    ${3:// do something to element in beforeMount hook}\n  },\n  mounted(element:Element, binding:any){\n    ${4:// do something to element in mounted hook}\n  },\n  beforeUpdate(element:Element, binding:any){\n    ${5:// do something to element in beforeUpdate hook}\n  },\n  updated(element:Element, binding:any){\n    ${6:// do something to element in updated hook}\n  },\n  beforeUnmount(element:Element, binding:any){\n    ${7:// do something to element in beforeUnmount hook}\n  },\n  unmounted(element:Element, binding:any){\n    ${8:// do something to element in unmount hook}\n  }\n  ${9:// binding refers to https://v3.vuejs.org/guide/custom-directive.html#dynamic-directive-arguments}\n},\n\n",
+          "content": "${0:nameOfDirective}: { ${1:// see: https://v3.vuejs.org/guide/custom-directive.html#custom-directives}\n  created(element:Element, binding:any){\n    ${2:// do something to element during created hook}\n  },\n  beforeMount(element:Element, binding:any){\n    ${3:// do something to element in beforeMount hook}\n  },\n  mounted(element:Element, binding:any){\n    ${4:// do something to element in mounted hook}\n  },\n  beforeUpdate(element:Element, binding:any){\n    ${5:// do something to element in beforeUpdate hook}\n  },\n  updated(element:Element, binding:any){\n    ${6:// do something to element in updated hook}\n  },\n  beforeUnmount(element:Element, binding:any){\n    ${7:// do something to element in beforeUnmount hook}\n  },\n  unmounted(element:Element, binding:any){\n    ${8:// do something to element in unmount hook}\n  },\n  ${9:// binding refers to https://v3.vuejs.org/guide/custom-directive.html#dynamic-directive-arguments}\n},\n\n",
           "name": "Vue 3 Directive",
           "trigger": "directive()"
         },
@@ -141,7 +141,7 @@
     {
       "children": [
         {
-          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${0:// List of components that have been imported into this file}\n},\n\nprops: { ${1:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{\\}}\n},\n\nemits: { ${2:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// emit:\\{\\}}\n},\n\n${3:async }setup(props, { attrs, slots, emit }) { ${3:// If you use an async setup function, then you MUST include a `<suspense>` tag in your template. Otherwise, the setup function will never actually return. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense}\n  ${3:// You can, alternatively, use defineAsyncComponent to make an async setup function. See: https://v3.vuejs.org/guide/migration/async-components.html}\n  // Use setup within defineComponent to get typescript support.\n \n\t// Import the following before you use the setup function:\n\t// import { defineComponent,${4: InjectionKey,}${5: provide,}${6: inject,} reactive,${8: computed,} toRefs,${9: watchEffect,}${10: watch,}${11: onBeforeMount,}${12: onMounted,}${13: onBeforeUpdate,}${14: onUpdated,}${15: onActivated,}${16: onDeactivated,}${17: onBeforeUnmount,}${18: onUnmounted,}${19: onErrorCaptured,}${20: onRenderTracked,}${21: onRenderTriggered} } from 'vue'\n\n  // !Provide / Inject\n\n  // See: https://v3.vuejs.org/api/composition-api.html#provide-inject\n  // See: https://v3.vuejs.org/guide/composition-api-provide-inject.html#scenario-background\n\n\t ${4://  const key =}\n\t ${5:// provide()}\n\t ${6:// const inject =}\n\n  // !Subroutines\n  \n  // Use any valid typescript to process the arguments of the setup function.\n  \n  // !Data and Computed Properties\n  \n  // Populate the DataAndComputed object by calling the subroutines defined above.\n\t \n\t const DataAndComputed:any = reactive({\n\t\t${7:computedPropertyName: computed()}  \n\t })\n\t \n  // !Methods\n  \n  // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n  // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.\n\t \n  // !Watchers\n  \n  // use `watchEffect` or `watch` to trigger functions whenever a property of `DataAndComputed` changes. Make sure you use `.value` to access the value of the `DataAndComputed` property you want to watch.\n\n  // See: https://www.vuemastery.com/courses/vue-3-essentials/watch\n\t \n\t ${9:// watchEffect()}\n\t \n\t ${10:// watch()}\n\t \n  // !Lifecycle Hooks\n  \n  // You can either return an object or a render function. \n  // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.\n  // If your single file component does not have a template, return a render function.\n   \n   ${11:// onBeforeMount()}\n   \n   ${12:// onMounted()}\n   \n   ${13:// onBeforeUpdate()}\n   \n   ${14:// onUpdated()}\n   \n   ${15:// onActivated()}\n\t  \n   ${16:// onDeactivated()}\n   \n   ${17:// onBeforeUnmount()}\n   \n   ${18:// onUnmounted()}\n   \n   ${19:// onErrorCaptured()}\n   \n   ${20:// onRenderTracked()}\n   \n   ${21:// onRenderTriggered()}\n   \n   ${22:return \\{...toRefs(DataAndComputed)\\}}\n  \n}",
+          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${0:// List of components that have been imported into this file}\n},\n\nprops: { ${1:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{}}\n},\n\nemits: { ${2:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// emit:\\{}}\n},\n\n${3:async }setup(props, { attrs, slots, emit }) { ${3:// If you use an async setup function, then you MUST include a `<suspense>` tag in your template. Otherwise, the setup function will never actually return. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense}\n  ${3:// You can, alternatively, use defineAsyncComponent to make an async setup function. See: https://v3.vuejs.org/guide/migration/async-components.html}\n  // Use setup within defineComponent to get typescript support.\n \n\t// Import the following before you use the setup function:\n\t// import { defineComponent,${4: InjectionKey,}${5: provide,}${6: inject,} reactive,${8: computed,} toRefs,${9: watchEffect,}${10: watch,}${11: onBeforeMount,}${12: onMounted,}${13: onBeforeUpdate,}${14: onUpdated,}${15: onActivated,}${16: onDeactivated,}${17: onBeforeUnmount,}${18: onUnmounted,}${19: onErrorCaptured,}${20: onRenderTracked,}${21: onRenderTriggered} } from 'vue'\n\n  // !Provide / Inject\n\n  // See: https://v3.vuejs.org/api/composition-api.html#provide-inject\n  // See: https://v3.vuejs.org/guide/composition-api-provide-inject.html#scenario-background\n\n\t ${4://  const key =}\n\t ${5:// provide()}\n\t ${6:// const inject =}\n\n  // !Subroutines\n  \n  // Use any valid typescript to process the arguments of the setup function.\n  \n  // !Data and Computed Properties\n  \n  // Populate the DataAndComputed object by calling the subroutines defined above.\n\t \n\t const DataAndComputed:any = reactive({\n\t\t${7:computedPropertyName: computed()}  \n\t })\n\t \n  // !Methods\n  \n  // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n  // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.\n\t \n  // !Watchers\n  \n  // use `watchEffect` or `watch` to trigger functions whenever a property of `DataAndComputed` changes. Make sure you use `.value` to access the value of the `DataAndComputed` property you want to watch.\n\n  // See: https://www.vuemastery.com/courses/vue-3-essentials/watch\n\t \n\t ${9:// watchEffect()}\n\t \n\t ${10:// watch()}\n\t \n  // !Lifecycle Hooks\n  \n  // You can either return an object or a render function. \n  // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.\n  // If your single file component does not have a template, return a render function.\n   \n   ${11:// onBeforeMount()}\n   \n   ${12:// onMounted()}\n   \n   ${13:// onBeforeUpdate()}\n   \n   ${14:// onUpdated()}\n   \n   ${15:// onActivated()}\n\t  \n   ${16:// onDeactivated()}\n   \n   ${17:// onBeforeUnmount()}\n   \n   ${18:// onUnmounted()}\n   \n   ${19:// onErrorCaptured()}\n   \n   ${20:// onRenderTracked()}\n   \n   ${21:// onRenderTriggered()}\n   \n   ${22:return \\{...toRefs(DataAndComputed)\\}}\n  \n}",
           "name": "Vue 3 Setup Function",
           "scope": "editor",
           "syntax": "vue",
