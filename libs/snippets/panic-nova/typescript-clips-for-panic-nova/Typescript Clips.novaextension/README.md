@@ -17,7 +17,7 @@ Typescript's first-class support for classes, interfaces, and type declarations 
 
 TSdoc is _the_ standard way to add context to your code. It splits your documentation into **sections**, each of which corresponds to a single function, variable, class or method. It further splits each section into **tags**. Each tag describes a different aspect of the section. Together, they give other developers a comprehensive understanding of the code you wrote. As an added bonus, TSdoc also formats your documentation into a website or markdown file, with [Typedoc](https://typedoc.org).
 
-### How to use TSdoc Sections
+### Use TSdoc Sections
 
 To use TSdoc, you need to write your documentation inside multi-line comments:
 
@@ -155,54 +155,57 @@ The list of modifiers contains tags separated by spaces, none of which are follo
 
 If all of this is a lot to remember, don't worry, I've made a few clips that make it a LOT easier:
 
-- `/class` is a TSdoc section that describes a class. It expands to:
+#### Use the `/class` clip to document a class. It expands to:
 
-  ````typescript
-  /**
-   * What is the class's single responsibility?
-   *
-   * @remarks
-   * When should you use the class? What performance benefits or other magical powers does it confer upon you?
-   * When shouldn't you use the class?
-   * What states does this class furnish?
-   * What behaviors does this class furnish?
-   * Can you inject dependencies into this class?
-   * Are there any situations where it makes sense to extend this class, rather than inject dependencies into it?
-   * How does the code in this class work?
-   *
-   * @example
-   * ```typescript
-   *	// example of how to use this class here
-   * ```
-   *
-   * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
-   */
-  ````
+````typescript
+/**
+ * What is the class's single responsibility?
+ *
+ * @remarks
+ * When should you use the class? What performance benefits or other magical powers does it confer upon you?
+ * When shouldn't you use the class?
+ * What states does this class furnish?
+ * What behaviors does this class furnish?
+ * Can you inject dependencies into this class?
+ * Are there any situations where it makes sense to extend this class, rather than inject dependencies into it?
+ * How does the code in this class work?
+ *
+ * @example
+ * ```typescript
+ *	// example of how to use this class here
+ * ```
+ *
+ * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
+ */
+````
 
-- `/method` is a TSdoc section that describes a method or function. It expands to:
-  ```typescript
-  /**
-   * What does this method or function do?
-   *
-   * @param name - description
-   *
-   * @returnstype and meaning of return value
-   *
-   * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
-   */
-  ```
-- `/const` is a TSdoc section that describes a variable. It expands to:
-  ```typescript
-  /**
-   * Summary
-   *
-   * Block Tags
-   *
-   * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
-   */
-  ```
+#### Use the `/method` clip to document a method or function. It expands to:
 
-### How to use TSdoc tags:
+```typescript
+/**
+ * What does this method or function do?
+ *
+ * @param name - description
+ *
+ * @returnstype and meaning of return value
+ *
+ * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
+ */
+```
+
+#### Use the `/const` clip to document a variable. It expands to:
+
+```typescript
+/**
+ * Summary
+ *
+ * Block Tags
+ *
+ * @alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual
+ */
+```
+
+### Use TSdoc tags:
 
 Remember how I mentioned that every TSdoc section has a summary, blocks, and a list of modifiers? Some tags describe blocks, and others describe modifiers. But that's not all - you can actually tags _within_ blocks. Here are all of the following [tags](https://tsdoc.org/mobile_nav) you can use, grouped by what they describe:
 
@@ -228,24 +231,24 @@ Remember how I mentioned that every TSdoc section has a summary, blocks, and a l
 | :------------------------------------------------------ | :------------ | :--------------------------------------------------------------------------------------------- |
 | [@inheritDoc](https://tsdoc.org/pages/tags/inheritdoc/) | `@inheritDoc` | Copies the `@remarks` `@params` `@typeParam` from another section into the current section.    |
 | [@label](https://tsdoc.org/pages/tags/label/)           | `@label`      | Adds an arbitrary label to the block that contains it, so that the block can be referenced it. |
-| [@link](https://tsdoc.org/pages/tags/link/)             | `@link`       |                                                                                                |
+| [@link](https://tsdoc.org/pages/tags/link/)             | `@link`       | Links to another section, or a website.                                                        |
 
 #### Tags that describe modifiers
 
 Note that the `@mod` clip expands to: `@alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual`. This includes all of the available modifier clips, each of which occupies its own tab stop. This makes it east to choose the ones you want. Keep in mind that you **must** place these modifiers on the [LAST](https://tsdoc.org/pages/spec/tag_kinds/) line of the TSdoc comment.
 
-| Tag                                                             | Clip   | What it does: |
-| :-------------------------------------------------------------- | :----- | :------------ |
-| [@alpha](https://tsdoc.org/pages/tags/alpha/)                   | `@mod` |               |
-| [@beta](https://tsdoc.org/pages/tags/beta/)                     | `@mod` |               |
-| [@eventProperty](https://tsdoc.org/pages/tags/eventproperty/)   | `@mod` |               |
-| [@experimental](https://tsdoc.org/pages/tags/experimental/)     | `@mod` |               |
-| [@internal](https://tsdoc.org/pages/tags/internal/)             | `@mod` |               |
-| [@override](https://tsdoc.org/pages/tags/override/)             | `@mod` |               |
-| [@packageDocumentation](https://tsdoc.org/pages/tags/override/) | `@mod` |               |
-| [@public](https://tsdoc.org/pages/tags/public/)                 | `@mod` |               |
-| [@readonly](https://tsdoc.org/pages/tags/readonly/)             | `@mod` |               |
-| [@sealed](https://tsdoc.org/pages/tags/sealed/)                 | `@mod` |               |
-| [@virtual](https://tsdoc.org/pages/tags/virtual/)               | `@mod` |               |
+| Tag                                                                         | Clip   | What it does:                                                                                                                                                            |
+| :-------------------------------------------------------------------------- | :----- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@alpha](https://tsdoc.org/pages/tags/alpha/)                               | `@mod` | Marks code as an 'alpha' release.                                                                                                                                        |
+| [@beta](https://tsdoc.org/pages/tags/beta/)                                 | `@mod` | Marks code as a 'beta' release.                                                                                                                                          |
+| [@eventProperty](https://tsdoc.org/pages/tags/eventproperty/)               | `@mod` | Indicates that a method returns a [Browser Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) or [Node Event](https://nodejs.org/api/events.html).           |
+| [@experimental](https://tsdoc.org/pages/tags/experimental/)                 | `@mod` | Marks code as 'experimental' release.                                                                                                                                    |
+| [@internal](https://tsdoc.org/pages/tags/internal/)                         | `@mod` | Excludes code from a public API.                                                                                                                                         |
+| [@override](https://tsdoc.org/pages/tags/override/)                         | `@mod` | Marks a class as overriding the class from which it inherits.                                                                                                            |
+| [@packageDocumentation](https://tsdoc.org/pages/tags/packagedocumentation/) | `@mod` | Indicates that a section describes an entire package - not just the code it immediately precedes. **This should only ever be used in the package's entry `.d.ts file.`** |
+| [@public](https://tsdoc.org/pages/tags/public/)                             | `@mod` | Marks code as a stable, 'public' release. This code shouldn't change.                                                                                                    |
+| [@readonly](https://tsdoc.org/pages/tags/readonly/)                         | `@mod` | Marks a variable or property as being read-only.                                                                                                                         |
+| [@sealed](https://tsdoc.org/pages/tags/sealed/)                             | `@mod` | Indicates that a class should never be extended.                                                                                                                         |
+| [@virtual](https://tsdoc.org/pages/tags/virtual/)                           | `@mod` | Indicates that a class can not only be extended, but can also be overridden without consequence.                                                                         |
 
 When you use any of the above clips within a TSdoc section, it will automatically add in the tag name, and a placeholder for any additional text that follows the tag.
