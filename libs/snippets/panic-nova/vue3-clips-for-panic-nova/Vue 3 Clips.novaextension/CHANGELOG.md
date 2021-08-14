@@ -19,3 +19,7 @@ Add commas to end of objects for clips in `Vue 3 Options API`.
 
 Improve description of `Vue 3 Docgen Tags`.
 Add documentation syntax to clips in `Vue 3 Options API` and `Vue 3 Composition API`
+
+### Version 0.1.5
+
+Change order of tab stops in `Vue 3 Options API` > `Vue 3 Prop`

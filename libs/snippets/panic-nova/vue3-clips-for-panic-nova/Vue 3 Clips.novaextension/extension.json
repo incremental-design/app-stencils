@@ -3,7 +3,7 @@
   "name": "Vue 3 Clips",
   "organization": "incremental.design",
   "description": "Clips for the Vue 3 Options API, Composition API and Docgen Tags",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "categories": ["clips"],
   "repository": "https://github.com/incremental-design/app-stencils/tree/ajay-dev/libs/snippets/panic-nova/vue3-snippets-for-panic-nova",
   "bugs": "https://github.com/incremental-design/app-stencils/issues"
