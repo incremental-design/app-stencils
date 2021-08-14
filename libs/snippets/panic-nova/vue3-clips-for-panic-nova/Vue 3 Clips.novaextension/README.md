@@ -61,13 +61,3 @@
 | [@param](http://usejsdoc.org/tags-param.html)                                      | `@param`      | Describes the values that the method it documents accepts for an argument.                          |
 | [@slot](https://vue-styleguidist.github.io/docs/Documenting.html#slots)            | `@slot`       | Describes what can be inserted into the slot of the template it documents.                          |
 | [@binding](https://vue-styleguidist.github.io/docs/Documenting.html#slots)         | `@binding`    | Describes the values a property of the scoped slot it documents can have.                           |
-
-| Vue 3 Docgen Tags  |    Trigger     |
-| ------------------ | :------------: |
-| **Values Tag**     |   `@values`    |
-| **Deprecated Tag** |   `@values`    |
-| **Link Tag**       |   `@values`    |
-| **Author Tag**     |   `@values`    |
-| **Since Tag**      |   `@values`    |
-| **Ignore Tag**     |   `@values`    |
-| **Slot Tag**       | `<!-- Slot ->` |
