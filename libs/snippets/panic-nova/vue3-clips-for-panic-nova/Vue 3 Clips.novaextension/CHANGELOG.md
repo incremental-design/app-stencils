@@ -14,3 +14,8 @@ Update names of clips in group `Vue 3 Docgen API`.
 ### Version 0.1.3
 
 Add commas to end of objects for clips in `Vue 3 Options API`.
+
+### Version 0.1.4
+
+Improve description of `Vue 3 Docgen Tags`.
+Add documentation syntax to clips in `Vue 3 Options API` and `Vue 3 Composition API`

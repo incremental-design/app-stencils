@@ -10,7 +10,7 @@
           "trigger": "options"
         },
         {
-          "content": "props: { ${0:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{}}\n},\n",
+          "content": "props: { ${0:/* see: https://v3.vuejs.org/api/options-data.html#props */}\n  ${1:// prop:\\{\\}}\n},\n",
           "name": "Vue 3 Props",
           "trigger": "props:{}"
         },
@@ -21,42 +21,42 @@
           "trigger": "components:{}"
         },
         {
-          "content": "inject:[], ${0:// see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity}\n",
+          "content": "inject:[], ${0:/* see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity */}\n",
           "name": "Vue 3 Inject",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "inject:[]"
         },
         {
-          "content": "data(){ ${0:// see: https://v3.vuejs.org/api/options-data.html#data-2}\n  return {\n    ${1:// data}\n  }\n},\n",
+          "content": "data(){ ${0:/* see: https://v3.vuejs.org/api/options-data.html#data-2 */}\n  return {\n    ${1:// data}\n  }\n},\n",
           "name": "Vue 3 Data",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "data()"
         },
         {
-          "content": "provide() { ${0:// see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity}\n  return {\n    ${1:// reactive properties to provide to all descendants}\n  }\n}",
+          "content": "provide() { ${0:/* see: https://v3.vuejs.org/guide/component-provide-inject.html#working-with-reactivity */}\n  return {\n    ${1:// reactive properties to provide to all descendants}\n  }\n}",
           "name": "Vue 3 Provide",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "provide()"
         },
         {
-          "content": "/**\n * ${0:prop name} ${1:/*description of prop*/}\n * @values\n * @example\n */\n${0:prop name} : { ${10:// https://v3.vuejs.org/api/options-data.html#props}\n  type: ${12:Any Typescript Class or Constructor Function},\n  default: ${13:() => (/*value to return*/)},\n  required: ${14:true},\n  validator: (value:${15:any}):boolean => (${16:/* test that returns true or false */})\n},\n",
+          "content": "/**\n * ${0:prop name} ${11:/*description of prop*/}\n *\n * @values ${12:List of values the prop accepts} \n *\n * @example\n * ```${13:vue}\n *\n *\t${3:// example of setting prop on component}\n *\n * ```\n ${:* @ignore}\n */\n${0:prop name} : { ${1:// https://v3.vuejs.org/api/options-data.html#props}\n  type: ${2:Any Typescript Class or Constructor Function},\n  default: ${3:() => (/*value to return*/)},\n  required: ${4:true},\n  validator: (value:${5:any}):boolean => (${6:/* test that returns true or false */})\n},\n",
           "name": "Vue 3 Prop",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "prop:{}"
         },
         {
-          "content": "computed: { ${0:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  ${1:// compute:\\{}}\n},\n",
+          "content": "computed: { ${0:/* see: https://v3.vuejs.org/api/options-data.html#computed */}\n  ${1:// compute:\\{\\}}\n},\n",
           "name": "Vue 3 Computed Properties",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "computed:{}"
         },
         {
-          "content": "${0:computedPropertyName}: { ${1:// see: https://v3.vuejs.org/api/options-data.html#computed}\n  get(){\n  \t${2:// function that returns the value of the computed property}\n  },\n  set(value:${3:any}){\n  \t${4:// function that returns nothing}\n  }\n}\n",
+          "content": "/**\n * ${0:computedPropertyName} ${5:Description of what the property does.}\n */\n${0:computedPropertyName}: { ${1:/* see: https://v3.vuejs.org/api/options-data.html#computed */}\n  get(){\n  \t${2:// function that returns the value of the computed property}\n  },\n  set(value:${3:any}){\n  \t${4:// function that returns nothing}\n  }\n}\n",
           "name": "Vue 3 computed property",
           "scope": "editor",
           "syntax": "vue",
@@ -70,21 +70,21 @@
           "trigger": "methods:{}"
         },
         {
-          "content": "/**\n * ${0:Description of method}\n${1: * @param}\n${2: * @returns}\n${3: * @remarks}\n * [${4:Link Title}]{@link ${5:Link URL}}\n */\n\n${0:methodName}(${1:args}):${2:returnType}{\n  ${3:// method body}\n},\n",
+          "content": "/**\n * ${0:methodName} ${10:Description of method}\n *\n ${11:* @param }${1:name}${12: - Description of values argument takes and what it affects.}\n *\n ${13:* @returns} ${14:Description of what the method returns}\n *\n ${15:* @event} ${16:List of events this method `$emit`s, if any}\n ${17:* @remarks}\n ${17:* Any explanation of implementation details or reasons you made this method.}\n *\n ${18:* @public}\n */\n\n${0:methodName}(${1:arg}):${2:returnType}{\n  ${3:// method body}\n},\n",
           "name": "Vue 3 Method",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "method()"
         },
         {
-          "content": "watch: { ${0:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  ${1:// watcher:\\{}}\n}\n",
+          "content": "watch: { ${0:/* see: https://v3.vuejs.org/api/options-data.html#watch */}\n  ${1:// watcher:\\{\\}}\n}\n",
           "name": "Vue 3 Watchers",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "watchers:{}"
         },
         {
-          "content": "${0:propertyName}: { ${1:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  handler(value, oldValue){\n  \t${2:// handler logic}\n  },\n  deep:${3:false},\n  immediate:${4:false},\n}\n",
+          "content": "/**\n ${10:* @event} ${11:List of events this method `$emit`s, if any}\n */\n${0:propertyName}: { ${1:// see: https://v3.vuejs.org/api/options-data.html#watch}\n  handler(value, oldValue){\n  \t${2:// handler logic}\n  },\n  deep:${3:false},\n  immediate:${4:false},\n}\n",
           "name": "Vue 3 Watcher",
           "scope": "editor",
           "syntax": "vue",
@@ -98,7 +98,7 @@
           "trigger": "emits:{}"
         },
         {
-          "content": "/**\n * ${:Description of custom event}\n * @param ${:// see: https://vue-styleguidist.github.io/docs/Documenting.html#events}\n */\n\n${0:customEventName}: (payload:any) => { ${1:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// validation logic that returns true or false}\n},\n",
+          "content": "/**\n * ${:Description of custom event}\n *\n ${11:* @param }${1:payload}${12: - Description of values payload takes and what it affects.}\n */\n\n${0:customEventName}: (${1:payload}:any) => { ${1:/* see: https://v3.vuejs.org/api/options-data.html#emits */}\n  ${2:// validation logic that returns true or false}\n},\n",
           "name": "Vue 3 Emit",
           "trigger": "emit:{}"
         },
@@ -141,7 +141,7 @@
     {
       "children": [
         {
-          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${0:// List of components that have been imported into this file}\n},\n\nprops: { ${1:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{}}\n},\n\nemits: { ${2:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// emit:\\{}}\n},\n\n${3:async }setup(props, { attrs, slots, emit }) { ${3:// If you use an async setup function, then you MUST include a `<suspense>` tag in your template. Otherwise, the setup function will never actually return. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense}\n  ${3:// You can, alternatively, use defineAsyncComponent to make an async setup function. See: https://v3.vuejs.org/guide/migration/async-components.html}\n  // Use setup within defineComponent to get typescript support.\n \n\t// Import the following before you use the setup function:\n\t// import { defineComponent,${4: InjectionKey,}${5: provide,}${6: inject,} reactive,${8: computed,} toRefs,${9: watchEffect,}${10: watch,}${11: onBeforeMount,}${12: onMounted,}${13: onBeforeUpdate,}${14: onUpdated,}${15: onActivated,}${16: onDeactivated,}${17: onBeforeUnmount,}${18: onUnmounted,}${19: onErrorCaptured,}${20: onRenderTracked,}${21: onRenderTriggered} } from 'vue'\n\n  // !Provide / Inject\n\n  // See: https://v3.vuejs.org/api/composition-api.html#provide-inject\n  // See: https://v3.vuejs.org/guide/composition-api-provide-inject.html#scenario-background\n\n\t ${4://  const key =}\n\t ${5:// provide()}\n\t ${6:// const inject =}\n\n  // !Subroutines\n  \n  // Use any valid typescript to process the arguments of the setup function.\n  \n  // !Data and Computed Properties\n  \n  // Populate the DataAndComputed object by calling the subroutines defined above.\n\t \n\t const DataAndComputed:any = reactive({\n\t\t${7:computedPropertyName: computed()}  \n\t })\n\t \n  // !Methods\n  \n  // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n  // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.\n\t \n  // !Watchers\n  \n  // use `watchEffect` or `watch` to trigger functions whenever a property of `DataAndComputed` changes. Make sure you use `.value` to access the value of the `DataAndComputed` property you want to watch.\n\n  // See: https://www.vuemastery.com/courses/vue-3-essentials/watch\n\t \n\t ${9:// watchEffect()}\n\t \n\t ${10:// watch()}\n\t \n  // !Lifecycle Hooks\n  \n  // You can either return an object or a render function. \n  // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.\n  // If your single file component does not have a template, return a render function.\n   \n   ${11:// onBeforeMount()}\n   \n   ${12:// onMounted()}\n   \n   ${13:// onBeforeUpdate()}\n   \n   ${14:// onUpdated()}\n   \n   ${15:// onActivated()}\n\t  \n   ${16:// onDeactivated()}\n   \n   ${17:// onBeforeUnmount()}\n   \n   ${18:// onUnmounted()}\n   \n   ${19:// onErrorCaptured()}\n   \n   ${20:// onRenderTracked()}\n   \n   ${21:// onRenderTriggered()}\n   \n   ${22:return \\{...toRefs(DataAndComputed)\\}}\n  \n}",
+          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${0:// List of components that have been imported into this file}\n},\n\nprops: { ${1:// see: https://v3.vuejs.org/api/options-data.html#props}\n  ${1:// prop:\\{\\}}\n},\n\nemits: { ${2:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${2:// emit:\\{\\}}\n},\n\n${3:async }setup(props, { attrs, slots, emit }) { ${3:// If you use an async setup function, then you MUST include a `<suspense>` tag in your template. Otherwise, the setup function will never actually return. See: https://www.vuemastery.com/courses/vue-3-essentials/suspense}\n  ${3:// You can, alternatively, use defineAsyncComponent to make an async setup function. See: https://v3.vuejs.org/guide/migration/async-components.html}\n  // Use setup within defineComponent to get typescript support.\n \n\t// Import the following before you use the setup function:\n\t// import { defineComponent,${4: InjectionKey,}${5: provide,}${6: inject,} reactive,${8: computed,} toRefs,${9: watchEffect,}${10: watch,}${11: onBeforeMount,}${12: onMounted,}${13: onBeforeUpdate,}${14: onUpdated,}${15: onActivated,}${16: onDeactivated,}${17: onBeforeUnmount,}${18: onUnmounted,}${19: onErrorCaptured,}${20: onRenderTracked,}${21: onRenderTriggered} } from 'vue'\n\n  // !Provide / Inject\n\n  // See: https://v3.vuejs.org/api/composition-api.html#provide-inject\n  // See: https://v3.vuejs.org/guide/composition-api-provide-inject.html#scenario-background\n\n\t ${4://  const key =}\n\t ${5:// provide()}\n\t ${6:// const inject =}\n\n  // !Subroutines\n  \n  // Use any valid typescript to process the arguments of the setup function.\n  \n  // !Data and Computed Properties\n  \n  // Populate the DataAndComputed object by calling the subroutines defined above.\n\t \n\t const DataAndComputed:any = reactive({\n\t \t${7:/**}\n\t\t ${7:* computedPropertyName} ${8:Description of what the property does.}\n\t\t ${7:*/}\n\t\t${7:computedPropertyName: computed()}  \n\t })\n\t \n  // !Methods\n  \n  // Use any plain function to define a method. Make sure that you use `.value` when you access any of the reactive values in `DataAndComputed`. See: https://v3.vuejs.org/guide/reactivity-fundamentals.html#ref-unwrapping\n  // You must add all methods to the return object if you want them to be available to your template. If you do not have a template, you must reference all methods within your render function.\n  \n  // method()\n\t \n  // !Watchers\n  \n  // use `watchEffect` or `watch` to trigger functions whenever a property of `DataAndComputed` changes. Make sure you use `.value` to access the value of the `DataAndComputed` property you want to watch.\n\n  // See: https://www.vuemastery.com/courses/vue-3-essentials/watch\n\t \n\t ${9:// watchEffect()}\n\t \n\t ${10:// watch()}\n\t \n  // !Lifecycle Hooks\n  \n  // You can either return an object or a render function. \n  // If your single file component has a template, return an object. This object should contain all of the variables and functions you want to access from within the template.\n  // If your single file component does not have a template, return a render function.\n   \n   ${11:// onBeforeMount()}\n   \n   ${12:// onMounted()}\n   \n   ${13:// onBeforeUpdate()}\n   \n   ${14:// onUpdated()}\n   \n   ${15:// onActivated()}\n\t  \n   ${16:// onDeactivated()}\n   \n   ${17:// onBeforeUnmount()}\n   \n   ${18:// onUnmounted()}\n   \n   ${19:// onErrorCaptured()}\n   \n   ${20:// onRenderTracked()}\n   \n   ${21:// onRenderTriggered()}\n   \n   ${22:return \\{...toRefs(DataAndComputed)\\}}\n  \n}",
           "name": "Vue 3 Setup Function",
           "scope": "editor",
           "syntax": "vue",
@@ -272,40 +272,47 @@
     {
       "children": [
         {
-          "content": "@values ${:// a list of values that a prop or component accepts}",
+          "content": "\n* @values ${:// a list of values that a prop or component accepts}\n*",
           "name": "Vue 3 Values Tag",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "@values"
         },
         {
-          "content": "@example \n${:// a snippet you want to display in a code fence}",
+          "content": "\n* @example \n* ```typescript\n*\n*\t${:// example of your code}\n*\n* ```\n*",
           "name": "Vue 3 Example Tag",
           "trigger": "@example"
         },
         {
-          "content": "@deprecated ${:// mark the following prop or component as being deprecated}",
+          "content": "\n* @deprecated Use {@link ${:API item}} instead.\n*",
           "name": "Vue 3 Deprecated Tag",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "@deprecated"
         },
         {
-          "content": "[${:link text}]{@link ${:url}}",
+          "content": "\n* @see {@link ${0:URL}} ${1:Description}\n*",
+          "name": "Vue 3 See Tag",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@see"
+        },
+        {
+          "content": "{@link ${:url} | ${:link text}}",
           "name": "Vue 3 Link Tag",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "@link"
         },
         {
-          "content": "@author ${:Your Name} <${:Your email}> ",
+          "content": "\n* @author ${:Your Name} <${:Your email}> \n*",
           "name": "Vue 3 Author Tag",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "@author"
         },
         {
-          "content": "@since ${:version number}",
+          "content": "\n* @since ${:version number}\n*",
           "name": "Vue 3 Since Tag",
           "scope": "editor",
           "syntax": "vue",
@@ -324,6 +331,13 @@
           "scope": "editor",
           "syntax": "vue",
           "trigger": "<!-- Slot"
+        },
+        {
+          "content": "\n* ${11:@param }${1:name}${12: - Description of values argument takes and what it affects.}\n*",
+          "name": "Vue 3 Param Tag",
+          "scope": "editor",
+          "syntax": "vue",
+          "trigger": "@param"
         }
       ],
       "name": "Vue 3 Docgen Tags"
