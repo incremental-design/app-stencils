@@ -15,9 +15,10 @@
           "trigger": "props:{}"
         },
         {
-          "content": "components: {},\n",
+          "content": "components: { ${0:/* see: https://v3.vuejs.org/api/options-assets.html#components */}\n  ${1:// List of components that have been imported into this file}\n},\n",
           "name": "Vue 3 Components List",
           "scope": "editor",
+          "syntax": "vue",
           "trigger": "components:{}"
         },
         {
@@ -63,7 +64,7 @@
           "trigger": "compute:{}"
         },
         {
-          "content": "methods: { ${0:// see: https://v3.vuejs.org/api/options-data.html#methods}\n  ${1:// method()}\n},\n",
+          "content": "methods: { ${0:/* see: https://v3.vuejs.org/api/options-data.html#methods */}\n  ${1:// method()}\n},\n",
           "name": "Vue 3 Methods",
           "scope": "editor",
           "syntax": "vue",
@@ -91,7 +92,7 @@
           "trigger": "watcher:{}"
         },
         {
-          "content": "emits: { ${0:// see: https://v3.vuejs.org/api/options-data.html#emits}\n  ${1:// emit:\\{}}\n},\n",
+          "content": "emits: { ${0:/* see: https://v3.vuejs.org/api/options-data.html#emits */}\n  ${1:// emit:\\{}}\n},\n",
           "name": "Vue 3 Emits",
           "scope": "editor",
           "syntax": "vue",
@@ -103,33 +104,26 @@
           "trigger": "emit:{}"
         },
         {
-          "content": "render() { ${0:// see: https://v3.vuejs.org/api/options-dom.html#render}\n  return h(\n    ${1:'div', // HTML Tag name, component, async component or functional component}\n\t${2:\\{},}  // object with attributes, props, and events\n    ${3:\\{},} // String, Array or Object that contain nested h(...) functions}\n  )\n  ${4:// see: https://v3.vuejs.org/guide/render-function.html#h-arguments}\n},\n",
+          "content": "render() { ${0:/* see: https://v3.vuejs.org/api/options-dom.html#render */}\n  return h(\n    ${1:'div', /* HTML Tag name, component, async component or functional component */}\n\t${2:\\{\\}  /* object with attributes, props, and events */},\n    ${3:\\{\\} /* String, Array or Object that contain nested h(...) functions\\} */},\n  )\n  ${4:/* see: https://v3.vuejs.org/guide/render-function.html#h-arguments */}\n},\n",
           "name": "Vue 3 Render Function",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "render()"
         },
         {
-          "content": "components: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#components}\n  ${1:// List of components that have been imported into this file}\n},\n",
-          "name": "Vue 3 Components List",
-          "scope": "editor",
-          "syntax": "vue",
-          "trigger": "components:{}"
-        },
-        {
-          "content": "directives: { ${0:// see: https://v3.vuejs.org/api/options-assets.html#directives}\n  ${1:// directive()}\n},\n",
+          "content": "directives: { ${0:/* see: https://v3.vuejs.org/api/options-assets.html#directives */}\n  ${1:// directive()}\n},\n",
           "name": "Vue 3 Directives List",
           "scope": "editor",
           "syntax": "vue",
           "trigger": "directives:{}"
         },
         {
-          "content": "${0:nameOfDirective}: { ${1:// see: https://v3.vuejs.org/guide/custom-directive.html#custom-directives}\n  created(element:Element, binding:any){\n    ${2:// do something to element during created hook}\n  },\n  beforeMount(element:Element, binding:any){\n    ${3:// do something to element in beforeMount hook}\n  },\n  mounted(element:Element, binding:any){\n    ${4:// do something to element in mounted hook}\n  },\n  beforeUpdate(element:Element, binding:any){\n    ${5:// do something to element in beforeUpdate hook}\n  },\n  updated(element:Element, binding:any){\n    ${6:// do something to element in updated hook}\n  },\n  beforeUnmount(element:Element, binding:any){\n    ${7:// do something to element in beforeUnmount hook}\n  },\n  unmounted(element:Element, binding:any){\n    ${8:// do something to element in unmount hook}\n  },\n  ${9:// binding refers to https://v3.vuejs.org/guide/custom-directive.html#dynamic-directive-arguments}\n},\n\n",
+          "content": "${0:nameOfDirective}: { ${1:/* see: https://v3.vuejs.org/guide/custom-directive.html#custom-directives */}\n  created(element:Element, binding:any){\n    ${2:// do something to element during created hook}\n  },\n  beforeMount(element:Element, binding:any){\n    ${3:// do something to element in beforeMount hook}\n  },\n  mounted(element:Element, binding:any){\n    ${4:// do something to element in mounted hook}\n  },\n  beforeUpdate(element:Element, binding:any){\n    ${5:// do something to element in beforeUpdate hook}\n  },\n  updated(element:Element, binding:any){\n    ${6:// do something to element in updated hook}\n  },\n  beforeUnmount(element:Element, binding:any){\n    ${7:// do something to element in beforeUnmount hook}\n  },\n  unmounted(element:Element, binding:any){\n    ${8:// do something to element in unmount hook}\n  },\n  ${9:// binding refers to https://v3.vuejs.org/guide/custom-directive.html#dynamic-directive-arguments}\n},\n\n",
           "name": "Vue 3 Directive",
           "trigger": "directive()"
         },
         {
-          "content": "// !Lifecycle Hooks\n\n${0:// see: https://v3.vuejs.org/api/options-lifecycle-hooks.html}\nbeforeCreate() {\n  ${1:// do something before initializing this component's VNode}\n},\n\ncreated() {\n  ${2:// do something as soon as Vue initializes this component's VNode}\n},\n\nbeforeMount() {\n  ${3:// do something before Vue calls this component's render function}\n},\n\nmounted() {\n  ${4:// do something right after Vue calls this component's render function}\n${5://  this.$nextTick(function ()\\{  // do something right after Vue renders this component's children      \\})}\n},\n\nbeforeUpdate(){\n  ${6:// Do something before re-rendering this component.}\n},\n\nupdated(){\n  ${7:// do something after re-rendering this component}\n},\n\nactivated(){\n  ${8:// do something when this component has been kept alive and is activated ( see: https://v3.vuejs.org/api/options-lifecycle-hooks.html#activated )}\n},\n\ndeactivated(){\n  ${9:// do something when this component has been kept alive and is deactivated}\n},\n\nbeforeUnmount(){\n  ${10:// do something before destroying this Component's DOM elements}\n},\n\nunmounted(){\n  ${11:// do something after destroying this Component's DOM elements and right before destroying its VNode}\n},\n\nerrorCaptured(error, instance) {\n  ${12:// do something when this component errors. Optionally return 'true' or 'false'. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#errorcaptured}\n},\n\nrenderTracked(event) {\n  ${13:// do something when this component's re-render is observed by something else https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertracked}\n},\n\nrenderTriggered(event) {\n  ${14:// do something when a state change triggers this component to re-render. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertriggered}\n},\n\n",
+          "content": "// !Lifecycle Hooks\n\n${0:/* see: https://v3.vuejs.org/api/options-lifecycle-hooks.html */}\nbeforeCreate() {\n  ${1:/* do something before initializing this component's VNode */}\n},\n\ncreated() {\n  ${2:/* do something as soon as Vue initializes this component's VNode */}\n},\n\nbeforeMount() {\n  ${3:/* do something before Vue calls this component's render function */}\n},\n\nmounted() {\n  ${4:/* do something right after Vue calls this component's render function */}\n${5://  this.$nextTick(function ()\\{  /* do something right after Vue renders this component's children */      \\})}\n},\n\nbeforeUpdate(){\n  ${6:/* Do something before re-rendering this component. */}\n},\n\nupdated(){\n  ${7:/* do something after re-rendering this component */}\n},\n\nactivated(){\n  ${8:/* do something when this component has been kept alive and is activated ( see: https://v3.vuejs.org/api/options-lifecycle-hooks.html#activated ) */}\n},\n\ndeactivated(){\n  ${9:/* do something when this component has been kept alive and is deactivated */}\n},\n\nbeforeUnmount(){\n  ${10:/* do something before destroying this Component's DOM elements */}\n},\n\nunmounted(){\n  ${11:/* do something after destroying this Component's DOM elements and right before destroying its VNode */}\n},\n\nerrorCaptured(error, instance) {\n  ${12:/* do something when this component errors. Optionally return 'true' or 'false'. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#errorcaptured */}\n},\n\nrenderTracked(event) {\n  ${13:/* do something when this component's re-render is observed by something else https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertracked */}\n},\n\nrenderTriggered(event) {\n  ${14:/* do something when a state change triggers this component to re-render. See: https://v3.vuejs.org/api/options-lifecycle-hooks.html#rendertriggered */}\n},\n\n",
           "name": "Vue 3 Lifecycle Hooks",
           "scope": "editor",
           "syntax": "vue",
@@ -271,6 +265,13 @@
     },
     {
       "children": [
+        {
+          "content": "/**\n * ${1:What is the component's single responsibility?} \n *\n ${2:* @remarks}\n * ${2:When should you use the component? What performance benefits or other magical powers does it confer upon you?}\n * ${2:When shouldn't you use the component?}\n * ${2:What states does this component furnish?}\n * ${2:What behaviors does this component furnish?}\n * ${2:Can you inject dependencies into this component, with props, slots or the inject option?}\n * ${2:Are there any situations where it makes sense to extend this component, rather than inject dependencies into it?}\n * ${2:How does the code in this component work?}\n * \n ${3:* @example}\n ${3:* ```vue}\n ${3:*\t// example of how to use this class here}\n ${3:* ```}\n *\n */",
+          "name": "Vue Component Documentation",
+          "scope": "editor",
+          "syntax": "typescript",
+          "trigger": "/component"
+        },
         {
           "content": "\n* @values ${:// a list of values that a prop or component accepts}\n*",
           "name": "Vue 3 Values Tag",

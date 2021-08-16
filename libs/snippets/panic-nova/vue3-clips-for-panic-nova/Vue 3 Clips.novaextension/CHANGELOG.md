@@ -23,3 +23,8 @@ Add documentation syntax to clips in `Vue 3 Options API` and `Vue 3 Composition 
 ### Version 0.1.5
 
 Change order of tab stops in `Vue 3 Options API` > `Vue 3 Prop`
+
+### Version 0.1.6
+
+Add `/component` clip, which stubs out documentation that you can put at the root of a component.
+Update README.

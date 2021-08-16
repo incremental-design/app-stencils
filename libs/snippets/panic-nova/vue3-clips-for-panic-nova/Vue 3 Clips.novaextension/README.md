@@ -1,50 +1,75 @@
-**Vue 3 Clips** provides clips for **Vue 3**, including the Vue 3 Composition API. It also provides helpful annotations, which include links to the Vue 3 Documentation.
+**Vue 3 Clips** provides clips for:
 
-## Details
+- **Vue 3 Options API**
+- **Vue 3 Composition API**
+- **Vue 3 Docgen Tags**
 
-| Vue 3 Options API              |     Trigger      |
-| ------------------------------ | :--------------: |
-| **All Options**                |    `options`     |
-| **Props Object**               |    `props:{}`    |
-| **Components Object**          | `components:{}`  |
-| **Inject Array**               |   `inject:[]`    |
-| **Data Constructor Function**  |     `data()`     |
-| **Provide Function**           |   `provide()`    |
-| **Prop Object**                |    `prop:{}`     |
-| **Computed Properties Object** |  `computed:{}`   |
-| **Computed Property Object**   |   `compute:{}`   |
-| **Methods Object**             |   `methods:{}`   |
-| **Method**                     |    `method()`    |
-| **Watchers Object**            |  `watchers:{}`   |
-| **Watcher**                    |   `watcher:{}`   |
-| **Emits Object**               |    `emits:{}`    |
-| **Emit Object**                |    `emit:{}`     |
-| **Render Function**            |    `render()`    |
-| **Components List Object**     | `components:{}`  |
-| **Directives List Object**     | `directives:{}`  |
-| **Directive**                  |  `directive()`   |
-| **Lifecycle Hook Functions**   | `lifecycleHooks` |
+If you want to write Vue code in Nova, you've probably already installed the [Vue](nova://extension/?id=com.tommasonegri.Vue&name=Vue) extension. If you haven't, what are you waiting for? It's essential for Vue development! If you have, you've probably noticed that it provides several clips for scaffolding Vue files, but it doesn't provide clips for the _contents_ of a vue file. That's what these clips are for. Add these clips to your editor, and it'll help you organize your vue components, and document your code as you go. Use it alongside the Vue extension for a complete Vue development experience.
 
-| Vue 3 Composition API          |        Trigger        |
-| ------------------------------ | :-------------------: |
-| **Setup Function**             |       `setup()`       |
-| **InjectionKey Function**      |     `const key =`     |
-| **Provide Function**           |      `provide()`      |
-| **Inject Function**            |   `const inject =`    |
-| **Computed Property Function** |     `computed()`      |
-| **WatchEffect Function**       |    `watchEffect()`    |
-| **Watch Function**             |        `Watch`        |
-| **OnBeforeMount Function**     |   `onBeforeMount()`   |
-| **onMounted Function**         |     `onMounted()`     |
-| **onBeforeUpdate Function**    |  `onBeforeUpdate()`   |
-| **onUpdated Function**         |     `onUpdated()`     |
-| **onActivated Function**       |    `onActivated()`    |
-| **onDeactivated Function**     |   `onDeactivated()`   |
-| **onBeforeUnmount Function**   |  `onBeforeUnmount()`  |
-| **onUnmounted Function**       |    `onUnmounted()`    |
-| **onErrorCaptured Function**   |  `onErrorCaptured()`  |
-| **onRenderTracked Function**   |  `onRenderTracked()`  |
-| **onRenderTriggered Function** | `onRenderTriggered()` |
+If you've been writing Vue [single-file components](https://v3.vuejs.org/guide/single-file-component.html#single-file-components) for a while, you've probably noticed that they get really complicated, really fast. Use these clips to bring some order to the chaos. These clips stub out the options in the options API, and the setup function in the composition API. They even stub out the [vue-styleguidist](https://vue-styleguidist.github.io) docgen comments for your components, props, methods, events and slots. Once I started using these clips in my code, it became much easier for other people to follow. If you use these clips throughout your code, the same will happen for you.
+
+Getting started is really easy:
+
+If you want to stub out all of the options in a vue component, use the `options` clip.
+
+If you want to stub out all of the functions in a setup function, use the `setup()` clip.
+
+After you use either of those clips, just follow the instructions contained within them. Every other clip you need is already contained inside both of them. All you need to do is uncomment the clip you want to expand, and hit tab to complete it!
+
+Here are all of the clips that this extension provides.
+
+## Vue 3 Options API
+
+| Options                                                                                   | Clip             | What it does:                                                                                                           |
+| ----------------------------------------------------------------------------------------- | :--------------- | :---------------------------------------------------------------------------------------------------------------------- |
+| **[All Options](https://v3.vuejs.org/api/options-api.html)**                              | `options`        | Stubs out every option in the options API. Use it inside the `export default {...}` block of your Vue component.        |
+| **[Props Object](https://v3.vuejs.org/api/options-data.html#props)**                      | `props:{}`       | Stubs out an object that contains the definition of every prop in your component.                                       |
+| **[Components Object](https://v3.vuejs.org/api/options-composition.html#provide-inject)** | `components:{}`  | Stubs out an object that contains a hash of components that you imported, and want to use in your component's template. |
+| **[Inject Array](https://v3.vuejs.org/api/options-composition.html#provide-inject)**      | `inject:[]`      | Holds a list of properties provided by ancestor components that you want to inject.                                     |
+| **[Data Constructor Function](https://v3.vuejs.org/api/options-data.html#data-2)**        | `data()`         | Holds the values you want to initialize your component with.                                                            |
+| **[Provide Function](https://v3.vuejs.org/api/options-composition.html#provide-inject)**  | `provide()`      | Holds a list of properties that you want to provide to descendent components.                                           |
+| **[Prop Object](https://v3.vuejs.org/api/options-data.html#props)**                       | `prop:{}`        | Stubs out an object that contains reactive properties that you want to receive from your component's parents.           |
+| **[Computed Properties Object](https://v3.vuejs.org/api/options-data.html#computed)**     | `computed:{}`    | Stubs out an object that contains reactive computed properties.                                                         |
+| **[Computed Property Object](https://v3.vuejs.org/api/options-data.html#computed)**       | `compute:{}`     | Stubs out an object that contains a single reactive computed property.                                                  |
+| **[Methods Object](https://v3.vuejs.org/api/options-data.html#methods)**                  | `methods:{}`     | Stubs out an object that contains all of the methods you want your component to expose to its template.                 |
+| **[Method](https://v3.vuejs.org/api/options-data.html#methods)**                          | `method()`       | Stubs out a single method.                                                                                              |
+| **[Watchers Object](https://v3.vuejs.org/api/options-data.html#watch)**                   | `watchers:{}`    | Stubs out an object that contains all of the properties you want to watch for changes.                                  |
+| **[Watcher](https://v3.vuejs.org/api/options-data.html#watch)**                           | `watcher:{}`     | Stubs out an object that contains the function you want to run when a property changes.                                 |
+| **[Emits Object](https://v3.vuejs.org/api/options-data.html#emits)**                      | `emits:{}`       | Stubs out an object that contains the custom events you want your component to emit.                                    |
+| **[Emit Object](https://v3.vuejs.org/api/options-data.html#emits)**                       | `emit:{}`        | Stubs out an object that defines a custom event.                                                                        |
+| **[Render Function](https://v3.vuejs.org/api/options-dom.html#render)**                   | `render()`       | Stubs out a function that renders your component's template. This function replaces any template your component has.    |
+| **[Directives Object](https://v3.vuejs.org/api/options-assets.html#directives)**          | `directives:{}`  | Stubs out an object that contains all of the custom directives you want your component to have.                         |
+| **[Directive](https://v3.vuejs.org/guide/custom-directive.html)**                         | `directive()`    | Stubs out a custom directive.                                                                                           |
+| **[Lifecycle Hook Functions](https://v3.vuejs.org/api/options-lifecycle-hooks.html)**     | `lifecycleHooks` | Stubs out all of your component's lifecycle hooks.                                                                      |
+
+## Vue 3 Composition API
+
+| Function                                                                                        | Clip                  | What it does:                                                                                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------- | :-------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **[Setup Function](https://v3.vuejs.org/api/composition-api.html#setup)**                       | `setup()`             | Stubs out a function that initializes your component with all of the data, computed properties, watchers, lifecycle hooks, provides and injects that you would otherwise define using the Options API.                                    |
+| **[InjectionKey Function](https://v3.vuejs.org/api/composition-api.html#provide-inject)**       | `const key =`         | Stubs out a symbol which uniquely identifies an injected item.                                                                                                                                                                            |
+| **[Provide Function](https://v3.vuejs.org/api/composition-api.html#provide-inject)**            | `provide()`           | Stubs out a function that makes a property available to every descendent of your component.                                                                                                                                               |
+| **[Inject Function](https://v3.vuejs.org/api/composition-api.html#provide-inject)**             | `const inject =`      | Stubs out a statement which injects an item that an ancestor provides your component.                                                                                                                                                     |
+| **[Computed Property Function](https://v3.vuejs.org/api/computed-watch-api.html#computed)**     | `computed()`          | Stubs out a function that defines a reactive computed property.                                                                                                                                                                           |
+| **[WatchEffect Function](https://v3.vuejs.org/api/computed-watch-api.html#watcheffect)**        | `watchEffect()`       | Stubs out a function that defines a callback that runs when a property changes.                                                                                                                                                           |
+| **[Watch Function](https://v3.vuejs.org/api/computed-watch-api.html#watch)**                    | `watch()`             | Stubs out a function that defines a callback that runs when a property changes. Unlike `watchEffect()`, watch receives both the previous and current value of a property, so that you can conditionally run code based on the difference. |
+| **[OnBeforeMount Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**     | `onBeforeMount()`     | Stubs out a function that runs code before your component is mounted.                                                                                                                                                                     |
+| **[onMounted Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**         | `onMounted()`         | Stubs out a function that runs code as soon as your component is mounted.                                                                                                                                                                 |
+| **[onBeforeUpdate Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**    | `onBeforeUpdate()`    | Stubs out a function that runs code before your component is patched with changes to the DOM.                                                                                                                                             |
+| **[onUpdated Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**         | `onUpdated()`         | Stubs out a function that runs code as soon as your component is patched with changes to the DOM.                                                                                                                                         |
+| **[onActivated Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**       | `onActivated()`       | Stubs out a function that runs code when your kept-alive component is activated.                                                                                                                                                          |
+| **[onDeactivated Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**     | `onDeactivated()`     | Stubs out a function that runs code before your kept-alive component is deactivated.                                                                                                                                                      |
+| **[onBeforeUnmount Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**   | `onBeforeUnmount()`   | Stubs out a function that runs code before your component is unmounted.                                                                                                                                                                   |
+| **[onUnmounted Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**       | `onUnmounted()`       | Stubs out a function that runs code as soon as your component is unmounted.                                                                                                                                                               |
+| **[onErrorCaptured Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**   | `onErrorCaptured()`   | Stubs out a function that runs code whenever an error occurs in your component.                                                                                                                                                           |
+| **[onRenderTracked Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)**   | `onRenderTracked()`   | Stubs out a function that runs code as soon as your component is rendered.                                                                                                                                                                |
+| **[onRenderTriggered Function](https://v3.vuejs.org/api/composition-api.html#lifecycle-hooks)** | `onRenderTriggered()` | Stubs out a function that runs code as soon as a change elsewhere in the Virtual DOM triggers a re-render of your component.                                                                                                              |
+
+## Vue 3 Docgen Tags
+
+| Section   | Clip         | What it does:                                                                                                          |
+| :-------- | :----------- | :--------------------------------------------------------------------------------------------------------------------- |
+| component | `/component` | Describes the purpose and behavior of the component. Place it directly above a component's `export default` statement. |
 
 | Tag                                                                                | Clip          | What it does:                                                                                       |
 | :--------------------------------------------------------------------------------- | :------------ | :-------------------------------------------------------------------------------------------------- |
