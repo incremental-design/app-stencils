@@ -1,8 +1,8 @@
 **Typescript Clips** provides clips for **Typescript**, including [TSdoc](https://tsdoc.org) tags.
 
-## Typescript Clips
+<!-- ## Typescript Clips -->
 
-| | |
+<!-- | | | -->
 
 ## TSdoc Clips
 
