@@ -28,3 +28,7 @@ Change order of tab stops in `Vue 3 Options API` > `Vue 3 Prop`
 
 Add `/component` clip, which stubs out documentation that you can put at the root of a component.
 Update README.
+
+### Version 0.1.7
+
+Make `/component` clip available in Vue files.

@@ -268,8 +268,8 @@
         {
           "content": "/**\n * ${1:What is the component's single responsibility?} \n *\n ${2:* @remarks}\n * ${2:When should you use the component? What performance benefits or other magical powers does it confer upon you?}\n * ${2:When shouldn't you use the component?}\n * ${2:What states does this component furnish?}\n * ${2:What behaviors does this component furnish?}\n * ${2:Can you inject dependencies into this component, with props, slots or the inject option?}\n * ${2:Are there any situations where it makes sense to extend this component, rather than inject dependencies into it?}\n * ${2:How does the code in this component work?}\n * \n ${3:* @example}\n ${3:* ```vue}\n ${3:*\t// example of how to use this class here}\n ${3:* ```}\n *\n */",
           "name": "Vue Component Documentation",
+          "syntax": "vue",
           "scope": "editor",
-          "syntax": "typescript",
           "trigger": "/component"
         },
         {
