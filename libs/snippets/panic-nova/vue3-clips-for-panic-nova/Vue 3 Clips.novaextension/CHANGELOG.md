@@ -36,3 +36,7 @@ Make `/component` clip available in Vue files.
 ### Version 0.1.8
 
 Change trigger for `Vue 3 Slot Tag` to `@slot`
+
+### Version 0.1.9
+
+Change code fence language in `Vue 3 Example Tag` from `typescript` to `vue`

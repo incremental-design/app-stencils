@@ -280,7 +280,7 @@
           "trigger": "@values"
         },
         {
-          "content": "\n* @example \n* ```typescript\n*\n*\t${:// example of your code}\n*\n* ```\n*",
+          "content": "\n* @example \n* ```vue\n*\n*\t${:// example of your code}\n*\n* ```\n*",
           "name": "Vue 3 Example Tag",
           "trigger": "@example"
         },
