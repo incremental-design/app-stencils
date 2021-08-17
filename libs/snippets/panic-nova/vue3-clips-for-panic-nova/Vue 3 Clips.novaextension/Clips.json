@@ -280,6 +280,11 @@
           "trigger": "@values"
         },
         {
+          "content": "/**\n * ${:Description of custom event}\n *\n ${11:* @param }${1:payload}${12: - Description of values payload takes and what it affects.}\n */",
+          "name": "Vue 3 Event Tag",
+          "trigger": "@event"
+        },
+        {
           "content": "\n* @example \n* ```vue\n*\n*\t${:// example of your code}\n*\n* ```\n*",
           "name": "Vue 3 Example Tag",
           "trigger": "@example"
