@@ -331,7 +331,7 @@
           "name": "Vue 3 Slot Tag",
           "scope": "editor",
           "syntax": "vue",
-          "trigger": "<!-- Slot"
+          "trigger": "@slot"
         },
         {
           "content": "\n* ${11:@param }${1:name}${12: - Description of values argument takes and what it affects.}\n*",

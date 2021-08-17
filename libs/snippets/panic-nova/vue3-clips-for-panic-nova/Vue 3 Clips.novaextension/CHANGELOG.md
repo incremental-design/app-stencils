@@ -32,3 +32,7 @@ Update README.
 ### Version 0.1.7
 
 Make `/component` clip available in Vue files.
+
+### Version 0.1.8
+
+Change trigger for `Vue 3 Slot Tag` to `@slot`
