@@ -25,11 +25,11 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 | node_modules/.bin     | Contains binaries that you can run with `npx <name of binary>`                                                                      | No               |
 | packages              | Contains all of the components, plugins and utilities that are published to NPM.                                                    | Yes              |
 | template-repos        | Contains submodules that point to template repositories into which you can import packages.                                         | No               |
-| .eslintrc.json        | Contains the rules that ESlint uses to check `.js` and `.ts` files for errors.                                                      |                  |
-| .gitattributes        | Contains a [list of files](https://git-scm.com/docs/gitattributes) that git should version with LFS.                                |                  |
-| .gitignore            | Contains a [list of files](https://git-scm.com/docs/gitignore) that git should ignore.                                              |                  |
-| .gitmodules           | Contains the list of submodules included in `template-repos`                                                                        |                  |
-| .prettierrc.json      | Contains the [settings](https://prettier.io/docs/en/configuration.html) that prettier uses to format code.                          |                  |
+| .eslintrc.json        | Contains the rules that ESlint uses to check `.js` and `.ts` files for errors.                                                      | No               |
+| .gitattributes        | Contains a [list of files](https://git-scm.com/docs/gitattributes) that git should version with LFS.                                | No               |
+| .gitignore            | Contains a [list of files](https://git-scm.com/docs/gitignore) that git should ignore.                                              | No               |
+| .gitmodules           | Contains the list of submodules included in `template-repos`                                                                        | No               |
+| .prettierrc.json      | Contains the [settings](https://prettier.io/docs/en/configuration.html) that prettier uses to format code.                          | No               |
 | .commitlint.config.js | Contains the [settings](https://commitlint.js.org/#/reference-configuration) that commitlint follows when checking commit messages. | No               |
 | lerna.json            | Contains the [configuration](https://github.com/lerna/lerna#lernajson) that Lerna uses to find, link, build and publish packages.   | No               |
 | package.json          | Contains all of the dependencies of this project, as well as settings for building and publishing this project.                     | No               |
@@ -59,15 +59,15 @@ This repository uses [commitlint](https://commitlint.js.org/#/reference-configur
 
 1. a **type**. A type is an indicator of what kinds of changes a commit contains. The types of commits are:
 
-   | Type                      | When to use it:                                |
-   | :------------------------ | :--------------------------------------------- |
-   | `chore`                   | Whenever you make a change to the tooling      |
-   | `docs`                    | Whenever you make a change to the README       |
-   | `feat(<name-of-feature>)` | Whenever you add code for a new feature        |
-   | `fix`                     | Whenever you fix a bug                         |
-   | `perf`                    | Whenever you make something faster             |
-   | `refactor`                | Whenever you change how your code is organized |
-   | `test`                    | Whenever you write a unit test                 |
+   | Type                       | When to use it:                                |
+   | :------------------------- | :--------------------------------------------- |
+   | `chore(<name-of-feature>)` | Whenever you make a change to the tooling      |
+   | `docs(<name-of-feature>)`  | Whenever you make a change to the README       |
+   | `feat(<name-of-feature>)`  | Whenever you add code for a new feature        |
+   | `fix`                      | Whenever you fix a bug                         |
+   | `perf`                     | Whenever you make something faster             |
+   | `refactor`                 | Whenever you change how your code is organized |
+   | `test`                     | Whenever you write a unit test                 |
 
 2. a **subject**. A subject is a one-sentence description of the changes to a commit.
 
