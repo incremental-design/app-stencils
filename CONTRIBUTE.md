@@ -1,6 +1,10 @@
 ## Contribute to App Stencils:
 
-To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globally. If you are on a mac, the best way to do this is to install [homebrew](brew.sh), and then `brew install lerna`.
+Before you can contribute to app stencils, you need to install [Lerna](lerna.js.org).
+
+You've probably used npm or yarn to manage and run tasks in your Vue projects. However, you can't use either in App Stencils, because this repository is managed by Lerna, which effectively replaces both of them. Much like NPM and Yarn, Lerna is a command line utility that you have to install globally. If you're on a Mac, the best way to to this is to install [homebrew](brew.sh), and then `brew install lerna`.
+
+To check if Lerna is installed on your computer, run `Lerna -v`. If it's installed, it will print the version number (e.g. `4.0.0`).
 
 ### Setup:
 
@@ -13,7 +17,7 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 
 #### Repository Structure:
 
-![All packages are inside the `packages` repository.](.readme/diagram-repo-structure.png)
+![All packages are inside the `packages` folder.](.readme/diagram-repo-structure.png)
 
 | File or Folder:       | What it does:                                                                                                                       | Can you edit it? |
 | :-------------------- | :---------------------------------------------------------------------------------------------------------------------------------- | :--------------- |
@@ -39,7 +43,13 @@ To contribute to App Stencils, you need to install [Lerna](lerna.js.org) globall
 
 ### Develop:
 
-Lerna _mostly_ automates the chores of developing in a monorepo. But it does replace some of the more familiar commands you might be used to:
+#### Run tasks with Lerna:
+
+Use `lerna <command>` to run tasks in App stencils. Do not use `yarn <command>` or `npm <command>`.
+
+Lerna lets you develop the code in App Stencils as if it was a single package, even though it's actually split into many packages. Without Lerna, this would be difficult, because you would have to run the same `yarn <command>` (e.g. `yarn install`, `yarn build`) in each package. When you run `lerna <command>`, (e.g. `lerna bootstrap`, `lerna build`), it actually runs the corresponding `yarn` command in every package at once. But that's not all - it also changes the location from which packages are retrieved. `yarn install` retrieves packages from `npmjs.com`, unless specifically configured otherwise. `Lerna bootstrap` retrieves packages from the `packages` folder, and only falls back to `npmjs.com` if the package can't be found within it. This means that you don't have to publish a package before importing it elsewhere within the App Stencils. Without Lerna, you would either have to publish each package to `npmjs.com` or manually configure yarn to retrieve them from `packages`.
+
+Use the following Lerna commands to run tasks in App Stencils
 
 | Task                                                                                                                 | Lerna Command               | NPM Command                        | Yarn Command               |
 | :------------------------------------------------------------------------------------------------------------------- | --------------------------- | :--------------------------------- | :------------------------- |
@@ -51,7 +61,6 @@ Lerna _mostly_ automates the chores of developing in a monorepo. But it does rep
 | Run the source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)    | `lerna run serve`           | `npm run serve`                    | `yarn serve`               |
 | Run unit tests                                                                                                       | `lerna run test:unit`       | `npm run test:unit`                | `yarn test:unit`           |
 
-The reason that Lerna provides its own commands is because it actually runs the corresponding yarn or NPM command in _every_ package in the repository. Without Lerna, you would have to go to each directory and manually run said command. In a monorepo with dozens of packages, this saves a lot of time!
 #### Break commits into small pieces:
 
 Keep your commits small. A commit is the smallest set of changes needed to:
