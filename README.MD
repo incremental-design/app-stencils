@@ -13,22 +13,11 @@ App stencils contains the following packages, each of which is published to [npm
 | Package                                                                               | Type                        | Purpose                                                        | Location                       |
 | :------------------------------------------------------------------------------------ | :-------------------------- | :------------------------------------------------------------- | :----------------------------- |
 | [`@incremental.design/vue3-component-base`](./packages/vue3/component-base/README.md) | Vue 3 Single File Component | Handle multitouch, sensor, mouse, keyboard and gamepad inputs. | `packages/vue3/component-base` |
+|                                                                                       |                             |                                                                |                                |
 
-<!-- ## Usage: -->
-
-<!-- * what you want the reader to do -->
+## Usage:
 
 Consult each package's README for instructions on how to use it in your codebase.
-
-<!-- * why?
-   * desired outcome
-   * underlying problem
-   * action
-   * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-<!-- * how do? -->
 
 <!-- ### How App Stencils works: -->
 
