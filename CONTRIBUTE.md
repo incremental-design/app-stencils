@@ -61,6 +61,32 @@ Use the following Lerna commands to run tasks in App Stencils
 | Run the source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)    | `lerna run serve`           | `npm run serve`                    | `yarn serve`               |
 | Run unit tests                                                                                                       | `lerna run test:unit`       | `npm run test:unit`                | `yarn test:unit`           |
 
+#### Follow naming conventions:
+
+Whenever you add a file or folder to App Stencils, name it as follows:
+
+| Type:   | Contents:              | Capitalization: | Part of Speech:                                                                  | Example:                    |
+| ------- | ---------------------- | --------------- | -------------------------------------------------------------------------------- | --------------------------- |
+| `.vue`  | Vue Component          | PascalCase      | Subject                                                                          | `BaseComponent.vue`         |
+| `.ts`   | Typescript Classes     | PascalCase      | Subject                                                                          | `VueSeamlssStateMachine.ts` |
+| `.ts`   | Typescript Function(s) | PascalCase      | Subject                                                                          | `CompositionListeners.ts`   |
+| `.js`   | configuration script   | lowercase       | n/a (these names are usually predetermined by the build tools that consume them) | `vue.config.js`             |
+| `.json` | configuration object   | lowercase       | n/a (these names are usually predetermined by the build tools that consume them) | `package.json`              |
+| `.sh`   | shell script           | snake_case      | Predicate                                                                        | `clean-and-serve.sh`        |
+| folder  | anything               | kebab-case      | Subject                                                                          | `event-listeners`           |
+
+Whenever you add code to a typescript or vue file, name it as follows:
+
+| Type:                                       | Capitalization: | Part of Speech: | Example:                               |
+| ------------------------------------------- | --------------- | --------------- | -------------------------------------- |
+| exportable `const`, `var`, `let` or `class` | PascalCase      | Subject         | `ClickListener`                        |
+| object property                             | camelCase       | Subject         | `ClickListener.duration`               |
+| method                                      | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
+
+When other developers read your code, they need to be able to figure out what each word represents, especially if it those words are defined in other files. This task becomes even more difficult in the absence of an IDE with jump-to-definition support. When you follow the aformentioned naming convention, it makes this task a little easier. That's because it uses both the part of speech and capitalization to denote meaning. When you use this convention, other developers can safely assume that every word that begins with a capital letter corresponds to an importable ES6 module member, such as a vue component, typescript class, or typescript function. They can also differentiate folder paths from filenames, and object properties from methods. Naming conventions make your code easy to read.
+
+<!-- #### Put each feature in its own package: -->
+
 #### Break commits into small pieces:
 
 Keep your commits small. A commit is the smallest set of changes needed to:
