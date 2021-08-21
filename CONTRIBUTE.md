@@ -52,29 +52,45 @@ Lerna _mostly_ automates the chores of developing in a monorepo. But it does rep
 | Run unit tests                                                                                                       | `lerna run test:unit`       | `npm run test:unit`                | `yarn test:unit`           |
 
 The reason that Lerna provides its own commands is because it actually runs the corresponding yarn or NPM command in _every_ package in the repository. Without Lerna, you would have to go to each directory and manually run said command. In a monorepo with dozens of packages, this saves a lot of time!
+#### Break commits into small pieces:
 
-#### Commit
+Keep your commits small. A commit is the smallest set of changes needed to:
 
-This repository uses [commitlint](https://commitlint.js.org/#/reference-configuration?id=prompt). It will not let you commit your changes unless your commit message contains the following:
+- make a single change to the build tooling
+- update the documentation for a single feature
+- modify a single feature
+- fix a bug in a single feature
+- improve the performance of a single feature
+- refactor a single feature
+- test a single feature
+
+In particular, commits should _never_ span multiple packages or even multiple features within a package.
+
+When other developers browse your commit history, they should be able to understand the effect of each change you made. As the size of a commit grows, this becomes harder to do. Furthermore, the larger a commit is, the more likely it is to introduce a bug. When you keep your commits small, it's easier to reason about them and isolate bugs. If your commits are small enough, other developers will have no trouble stepping through and reproducing each of them.
+
+#### Follow commit conventions:
+
+Describe each of your commits with a message that contains:
 
 1. a **type**. A type is an indicator of what kinds of changes a commit contains. The types of commits are:
 
-   | Type                       | When to use it:                                |
-   | :------------------------- | :--------------------------------------------- |
-   | `chore(<name-of-feature>)` | Whenever you make a change to the tooling      |
-   | `docs(<name-of-feature>)`  | Whenever you make a change to the README       |
-   | `feat(<name-of-feature>)`  | Whenever you add code for a new feature        |
-   | `fix`                      | Whenever you fix a bug                         |
-   | `perf`                     | Whenever you make something faster             |
-   | `refactor`                 | Whenever you change how your code is organized |
-   | `test`                     | Whenever you write a unit test                 |
+| Type                       | When to use it:                                |
+| :------------------------- | :--------------------------------------------- |
+| `chore(<name-of-feature>)` | Whenever you make a change to the tooling      |
+| `docs(<name-of-feature>)`  | Whenever you make a change to the README       |
+| `feat(<name-of-feature>)`  | Whenever you add code for a new feature        |
+| `fix`                      | Whenever you fix a bug                         |
+| `perf`                     | Whenever you make something faster             |
+| `refactor`                 | Whenever you change how your code is organized |
+| `test`                     | Whenever you write a unit test                 |
 
 2. a **subject**. A subject is a one-sentence description of the changes to a commit.
 
-3. a **body**. A body is a list of the changes you made, split up by files changed and commands run. Think of it like a 'table of contents' for your commit.
-   - You MUST begin your commit body with a blank line, or commitlint will complain.
+3. (Optional): a **body**. A body is a list of the changes you made, split up by files changed and commands run. Think of it like a 'table of contents' for your commit.
 
-Here is an example commit:
+- You MUST begin your commit body with a blank line, or commitlint will complain.
+
+For example:
 
 ```
 feat: Add the widget to the doohicky
@@ -90,19 +106,21 @@ feat: Add the widget to the doohicky
 See: https://www.youtube.com/watch?v=eMJk4y9NGvE
 ```
 
-⚠️ If you are using a git client, such as [Tower](https://www.git-tower.com/mac?gclid=CjwKCAjwt8uGBhBAEiwAayu_9alH0wnniAyMva6TGRRNLtSv2kftMmfa6egH1qzrEa7xFAnCXco24RoCoWYQAvD_BwE), it won't have access to your `$PATH`. When it tries to run the git hooks, it will fail, because some of the commands require access to `$PATH`. You can provide access to your `$PATH` as follows:
+Your commit history is a super way to teach other developers your techniques. However, your commits only have instructional value if other people can understand how they fit together. When you use the same message format to describe each commit, it's easy for other developers to compare them to each other.
 
-- [Add `$PATH to Tower`](https://www.git-tower.com/help/guides/integration/environment/mac)
+⚠️ This repository uses [commitlint](https://commitlint.js.org/#/reference-configuration?id=prompt). It will not let you commit your changes unless your commit message follows the format.
 
-⚠️ If Lerna is installed in your home directory, your git client probably won't be able to find it, and will error when you try to commit.
+- ⚠️ If you are using a git client, such as [Tower](https://www.git-tower.com/mac?gclid=CjwKCAjwt8uGBhBAEiwAayu_9alH0wnniAyMva6TGRRNLtSv2kftMmfa6egH1qzrEa7xFAnCXco24RoCoWYQAvD_BwE), it won't have access to your `$PATH`. When it tries to run the git hooks, it will fail, because some of the commands require access to `$PATH`. You can provide access to your `$PATH` as follows:
 
-1.  To find out if Lerna is installed in your home directory, run `which lerna`. If the terminal responds with `~/.npm-global/bin/lerna`, then Lerna is installed in your home directory. If it responds `/usr/local/bin/lerna` then it isn't.
+  - [Add `$PATH to Tower`](https://www.git-tower.com/help/guides/integration/environment/mac)
 
-2.  To fix this, uninstall Lerna with `npm uninstall -g lerna`. Pay attention to the `-g` flag. It tells NPM to delete Lerna from `~/.npm-global/bin/`
+- ⚠️ If Lerna is installed in your home directory, your git client probably won't be able to find it, and will error when you try to commit.
 
-3.  Next, install Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`.
+  1.  To find out if Lerna is installed in your home directory, run `which lerna`. If the terminal responds with `~/.npm-global/bin/lerna`, then Lerna is installed in your home directory. If it responds `/usr/local/bin/lerna` then it isn't.
 
-<!-- need to briefly go over how commits are cherry-picked into feature branches, and then squashed into the main branch -->
+  2.  To fix this, uninstall Lerna with `npm uninstall -g lerna`. Pay attention to the `-g` flag. It tells NPM to delete Lerna from `~/.npm-global/bin/`
+
+  3.  Next, install Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`.
 
 #### Add Dependencies
 
@@ -185,6 +203,8 @@ This repository uses [Storybook](https://storybook.js.org) to generate **live** 
 For more details on how to add a component to a storybook, consult the README of any `storybook` folder inside `packages`.
 
 ### Publish
+
+<!-- need to briefly go over how commits are cherry-picked into feature branches, and then squashed into the main branch -->
 
 This project uses **semantic versioning.** That means that this project is structured into **releases.** A release is a version of the project that adds new features, changes existing features or replaces old features. There are three types of releases:
 
