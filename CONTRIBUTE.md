@@ -212,7 +212,7 @@ Each level of documentation focuses on a different part of this project. The mon
 
 ![Levels of Documentation](.readme/diagram-levels-of-documentation.png)
 
-As you add to or modify the code in this repository, you need to update every level of documentation. This helps other contributors understand what you changed.
+As you add to or modify the code in this repository, update every level of documentation. This helps other contributors understand what you changed.
 
 When most of us read an unfamiliar piece of code, several questions flash through our minds: "what does this code do?", "what happens if I change it?", "who wrote it?", "why?", and "what were they thinking?". To understand the code, we have to understand the **context** in which it was written. Context is the intersection between the person who wrote the code, the problem they were trying to solve, and the information available to them at the time. Unfortunately, code itself doesn't communicate context. To fix this, we need to write **documentation**. Documentation explains what the code does, why you should use it, how it works, and how you can modify it. It saves us the hours of detective work and the tedium of testing the code to learn what it does. Without it, most of us will literally ignore the code, rendering it useless. When documentation is successful, we take the time to read it. We don't skip over it, because we know that it will save us time testing the code.
 
@@ -220,22 +220,14 @@ When you make changes to the code, include the following details in each level o
 
 | Level of Documentation | Details to include:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Monorepo               | <ul><li>Link to the package that contains your code, in `README.md` > Usage > Packages</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| Monorepo               | <ul><li>Link to the package that contains your code, in `README.md` > Usage > Packages</li><li>If the package exports a component, a storybook.js demo of the component. For more details on how to add a component to a storybook, consult the [README of `storybook` folder](./packages/storybook/README.md) inside `packages`.</li></ul>                                                                                                                                                                                                                                                                                                                              |
 | Package                | <ul><li>List of methods, components, classes, functions, modules, or any other "things" that your code provides to its users, in `packages/.../<name-of-package>/README.md` > Usage</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | Folder                 | <ul><li>Link to the file that contains your code in `packages/.../<name-of-package>/.../<folder>/README.md` > Contents</li><li>Any changes or additions to the overall functionality of the code contained within `packages/.../<name-of-package>/.../<folder>/`. This includes how logic is spread through the files in the folder, and how the files depend on each other.</li><li>The same list of methods, components, classes, functions, modules, or any other "things" that you added to the package-level documentation.</li><li>Any special instructions for adding to or changing the code within a file, including how it affects its dependencies.</li></ul> |
 | File                   | Any [`tsdoc`](https://tsdoc.org/), [`jsdoc`](https://jsdoc.app), [`vue-docgen`](https://vue-styleguidist.github.io/docs/Docgen.html) or other [multi-line comments](https://www.w3schools.com/js/js_comments.asp) that describe what each block of code does. This includes the parameters it accepts, the arguments it returns, the side effects (also known as state changes) it has when it runs, and the reason you structured the code as you did.                                                                                                                                                                                                                  |
 
-<!-- need to walk through adding a piece of code, and what documentation to add where, and why -->
-
-<!-- need to explain why no docgen tools -->
-
-<!-- need to explain which tsdoc and vue-docgen tags to use -->
-
-This repository uses [Storybook](https://storybook.js.org) to generate **live** documentation for each component and plugin that is exported. Live documentation is documentation that actually runs the code it is describing. Storybook runs each component and displays the result in the browser. To launch the storybook `lerna run storybook:serve`.
+This repository uses [Storybook](https://storybook.js.org) to generate **live** demos for each Vue component in App stencils. Storybook runs each component and displays the result in the browser. To launch the storybook `lerna run storybook:serve`.
 
 ![`lerna run storybook:serve`](.readme/storybook-serve.gif)
-
-For more details on how to add a component to a storybook, consult the README of any `storybook` folder inside `packages`.
 
 ### Publish
 
@@ -261,3 +253,13 @@ To publish new versions of every package in this repository:
 - 🧐 Lerna runs this repository in [locked mode](https://github.com/lerna/lerna#fixedlocked-mode-default). That means that every package in this repository has the same version as the repository itself. Publishing any change to any package will increment the version for EVERY other package.
 
 - ⚠️ Once you publish a package to `npm`, it's _really_ hard to unpublish it. Do not publish unless you are absolutely sure you want to do so.
+
+<!-- * what you want the reader to do -->
+
+<!-- * why?
+   * desired outcome
+   * underlying problem
+   * action
+   * compare action to doing nothing -->
+
+<!-- * how tell if succeeded? -->
