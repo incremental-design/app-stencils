@@ -1,25 +1,16 @@
-[ ] need to explain how to add components to the storybook
+<!-- walk through how to add components to storybook -->
 
-# storybook
+# App Stencils Storybook
 
-## Project setup
+[ ] Explain why this project is worth your reader's time and mental effort to learn and use.
 
-```
-yarn install
-```
+## Usage:
 
-### Compiles and hot-reloads for development
+<!-- ### Launch the storybook:  -->
 
-```
-yarn serve
-```
+<!-- ### Add a story: -->
 
-### Compiles and minifies for production
+## Folder Structure:
 
-```
-yarn build
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[ ] List each file, and what it does.
+[ ] Identify whether you are open to pull requests for a specific file or not.
