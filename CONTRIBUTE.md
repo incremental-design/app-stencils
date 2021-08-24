@@ -84,7 +84,9 @@ App Stencils also contains a **Storybook** - a set of interactive demos of each 
 
 Whenever you add Vue components to App Stencils, make sure you [demo them with Storybook](#use-storybook-to-demo-your-vue-components).
 
-<!-- need to explain why storybook important -->
+The best Vue components are as easy to understand as they are to customize. When you demo Vue components with Storybook, you show other developers what your component looks like, how it behaves, and how they can customize it. You help them understand how the component works. That's because unlike inline documentation, Storybook actually runs your component, exposing all of the parameters to which it responds. Storybook makes it possible for other developers to play with the parameters, so they can learn by _doing_ rather than by _guessing_. This is especially important, given that the more customizable a Vue component is, the more varied its appearance and behavior becomes. When you use storybook, you maximize customizability, without maximizing confusion.
+
+To learn how to add a component to the Storybook, see: ["Use Storybook to demo your vue components"](#use-storybook-to-demo-your-vue-components).
 
 ## Develop:
 
@@ -110,6 +112,7 @@ You have to build, test, document and package your code before other people can 
 Use `lerna <command>` to run tools in each of App stencils’ packages. Do not use `yarn <command>` or `npm <command>`.
 
 Lerna lets you develop the code in App Stencils as if it was a single package, even though it's actually split into many packages. Without Lerna, this would be difficult, because you would have to manually run the same `yarn <command>` (e.g. `yarn install`, `yarn build`) in each package. When you run `lerna <command>`, (e.g. `lerna bootstrap`, `lerna build`), it actually runs the corresponding `yarn` command in every package at once. But that's not all - it also changes the location from which packages are retrieved. `yarn install` retrieves packages from `npmjs.com`, unless specifically configured otherwise. `Lerna bootstrap` retrieves packages from the `packages` folder, and only falls back to `npmjs.com` if the package can't be found within it. This means that _you don't have to publish a package to `npmjs.com`_ before importing it elsewhere within the App Stencils. Without Lerna, you would either have to publish each package to `npmjs.com` or manually configure yarn to retrieve them from `packages`.
+
 Use the following Lerna commands to run tasks in App Stencils:
 
 | Task                                                                                                                 | Lerna Command               | Corresponding NPM Command          | Corresponding Yarn Command |
