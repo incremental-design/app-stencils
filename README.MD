@@ -4,37 +4,25 @@
 
 Use Vue to make user interfaces that look and feel native on iOS, Android, MacOS and Windows.
 
-Native user interfaces (UIs) use platform-specific code to respond to all of the inputs that their respective device has to offer. Even better, they follow device-specific design and usability guidelines. You probably want to make UIs that look native for iPhones, Android phones, iPads, Macs and PCs, without actually writing platform-specific code for each. It turns out that modern web browsers make this possible, but they don't make it easy. It's up to you to handle [multitouch](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events), [sensor](https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs), [location](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API), [gamepad](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API), [keyboard](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent), and [assistive inputs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA). It's also up to you to implement each platform's [design](https://developer.apple.com/design/human-interface-guidelines/) [conventions](https://material.io). And starting with a [framework](https://www.youtube.com/watch?v=cuHDQhDhvPE) doesn't solve this problem. It just moves it around - now you have to imbue each of your components with the event handlers and styles they need to look and feel like their native counterparts. With App Stencils, you don't have to start from scratch. This monorepo contains packages that respond to the same inputs, and have the same appearance as their native counterparts. Even better, each package works independently of the others. You don't need to import all of the packages to take advantage of each. Just import the ones you need and start saving time. A modern Web browser makes it possible to mimic native user interfaces. App stencils makes it easy.
+Native user interfaces (UIs) use platform-specific code to respond to all of the inputs that their respective device has to offer. Even better, they follow device-specific design and usability guidelines. You probably want to make UIs that look and feel native ib iPhones, Android phones, iPads, Macs and PCs, without actually writing platform-specific code for each. It turns out that modern web browsers make this possible, but they don't make it easy. Although they _can_ listen to most of the same  [multitouch](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events), [sensor](https://developer.mozilla.org/en-US/docs/Web/API/Sensor_APIs), [location](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API), [gamepad](https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API), [keyboard](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent), and [assistive inputs](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA) as native UIs, it’s entirely up to you to configure them to do so. It's also up to you to implement each platform's [design](https://developer.apple.com/design/human-interface-guidelines/) [conventions](https://material.io). And starting with a [framework](https://www.youtube.com/watch?v=cuHDQhDhvPE) doesn't solve this problem. It just moves it around. When you use a framework, have to imbue each of your components with the event handlers and styles they need to look and feel like their native counterparts. With App Stencils, you don't have to start from scratch. It contains UI components that respond to the same inputs, and have the same appearance as their native counterparts. Even better, each component works independently of the others. You don't need to import all of the components into your project to take advantage of each. Just import the ones you need and start saving time. A modern Web browser makes it possible to mimic native UIs. App stencils makes it easy.
 
-## Installation:
+## How to Install App Stencils:
 
-App stencils contains the following packages, each of which is published to [npm](https://www.npmjs.com/org/incremental.design?tab=packages). To install any of them, simply run `npm install @incremental.design/<name of package>` or `yarn add @incremental.design/<name of package>` within your project.
+All of the Vue components in App Stencils are published to [npm](https://www.npmjs.com/org/incremental.design?tab=packages). Each component lives inside its own package. To install a component, run `npm install @incremental.design/<name of package>` or `yarn add @incremental.design/<name of package>` within your project.
 
 | Package                                                                               | Type                        | Purpose                                                        | Location                       |
 | :------------------------------------------------------------------------------------ | :-------------------------- | :------------------------------------------------------------- | :----------------------------- |
 | [`@incremental.design/vue3-component-base`](./packages/vue3/component-base/README.md) | Vue 3 Single File Component | Handle multitouch, sensor, mouse, keyboard and gamepad inputs. | `packages/vue3/component-base` |
 |                                                                                       |                             |                                                                |                                |
 
-## Usage:
+App stencils also contains Vue 3 plugins and helper scripts; and framework-agnostic classes and functions. Like the vue components, each of these modules lives inside its own package, and all are published to npm. 
 
-Consult each package's README for instructions on how to use it in your codebase.
-
-<!-- ### How App Stencils works: -->
-
-<!-- All of the packages in app stencils fall into one of the following types:
-
-| Type of Package                                                                      | Where to find it:                             |
-| :----------------------------------------------------------------------------------- | :-------------------------------------------- |
-| Vue 3 [Single File Component](https://v3.vuejs.org/guide/single-file-component.html) | `packages/vue3/component-<name of component>` |
-| Vue 3 [Plugin](https://v3.vuejs.org/guide/plugins.html#plugins)                      | `packages/vue3/plugin-<name of plugin>`       |
-| Vue 3 Helper Script                                                                  | `packages/vue3/utility-<name of script>`      |
-
-Each package contains its own `README` with instructions that are specific to it.
-
-App stencils is a monorepo that is managed by [Lerna](https://lerna.js.org/). Unlike most repositories, this repository contains the source code for not one, but several packages. In fact, the packages in this repository import each other. For example, every Vue 3 Single File Component package in this repository imports the `@incremental.design/vue3-component-base` package. Lerna is the tool that takes care of building each package and making it available to import into other packages.
-
-This repository cannot be "run" in the typical sense of the word. It doesn't contain an executable, such as a web server or an app. Instead, it contains packages that can be imported into other projects. -->
-
+## How to use App Stencils:
+### Build UIs with Vue 3 components:
+Each package contains its own `README` with more detailed usage instructions.
+### Build your own Vue 3 components:
+## How App Stencils works:
+* need to explain helper scripts, base component, and every other vue component
 ## Roadmap:
 
 | Release | Goal:                                                                                                                        | Git Commit |
