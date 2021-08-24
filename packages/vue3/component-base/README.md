@@ -3,11 +3,8 @@
 [ ] banner image
 
 `vue3-component-base` translates [DOM element events](https://developer.mozilla.org/en-US/docs/Web/API/Element) into state changes. A **state** is a description of a visual treatment that follows a user input. Examples include 'focused', 'pressed', and 'selected'. A 'focused' user interface has a different appearance from a 'not focused' one. Likewise, a 'pressed' interface has a different appearance from a 'not pressed' one. A **user interface** is any piece of an application that responds to user input. Examples of user interfaces include buttons, fields, and links. A **state change** is a transition that occurs _while_ an element receives user input. `vue3-component-base` interprets user input and updates the state to match.
-
 # Installation:
-
 1. `yarn add @incremental.design/vue3-component-base`
-
 2. Import `vue3-component-base` into any of your Vue 3 components as follows:
 
 ```vue
@@ -78,36 +75,17 @@ To use the base component, insert the Vue markup you want to render into its slo
 
 [ ] Explain how execution works. What is the entry point for your code? Which files correspond to which functionality? What is the lifecycle of your project? Are there any singletons, side effects or shared state among instances of your project?
 
-# Roadmap:
+### Package Folder Structure:
 
-[ ] List the releases that you have added to each project, and any future releases you would like to do. If there is a date for future release, put it here. If not, let people know that there is no defined timeframe for future releases.
-
-# Contribute to `@incremental.design/vue3-component-base`:
-
-[ ] Describe the tooling needed to develop your project in 3 sentences or less. Then list each step to set that tooling up.
-
-## Setup:
-
-[ ] Describe the tooling needed to develop your project in 3 sentences or less. Then list each step to set that tooling up.
-asciicast or GIF of install prerequisites
-
-### Repository Structure:
-
-[ ] List each file, and what it does.
-[ ] Identify whether you are open to pull requests for a specific file or not.
-
-## Develop:
-
-[ ] List the steps for compiling, running, testing and documenting the code
-
-### Compile:
-
-### Run:
-
-### Test:
-
-### Document:
-
-## Deploy:
-
-[ ] List the steps for deploying project name as a package
+| File or folder:         | What it does:                                               | Should you modify it?                                                                     |
+| :---------------------- | :---------------------------------------------------------- | :---------------------------------------------------------------------------------------- |
+| `dist/*`                | Contains bundled code                                       | No, this is automatically generated at every commit, and every time `lerna build` is run. |
+| `node_modules/\*        | Contains package dependencies                               | No, this is automatically repopulated every time `lerna bootstrap` is run.                |
+| `src/BaseComponent.vue` | exports Vue component `Base`                                | No.                                                                                       |
+| `src/use/*`             | exports functions used in `BaseComponent`'s setup function. |                                                                                           |
+| `babel.config.js`       |                                                             |                                                                                           |
+| `package.json`          |                                                             |                                                                                           |
+| `README.md`             |                                                             |                                                                                           |
+| `tsconfig.json`         |                                                             |                                                                                           |
+| `vue.config.js`         |                                                             |                                                                                           |
+| `yarn.lock`             |                                                             |                                                                                           |
