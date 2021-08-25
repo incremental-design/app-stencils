@@ -1,10 +1,13 @@
 # Contribute to App Stencils:
 
 Before you can contribute to app stencils, you need to install [Lerna](lerna.js.org).
-You've probably used npm or yarn to manage and run tasks in your Vue projects. However, you can't use either in App Stencils, because this repository is managed by Lerna, which effectively replaces both of them. Much like NPM and Yarn, Lerna is a command line utility that you have to install globally.
+
+You've probably used `npm` or `yarn` to manage your Vue projects. However, you can't use either of them in App Stencils, because this repository is managed by Lerna, which effectively replaces both of them. Much like `npm` and `yarn`, Lerna is a command line utility that you have to install globally.
 
 - If you're on a Mac, the best way to to this is to install [homebrew](brew.sh), and then `brew install lerna`.
 - To check if Lerna is installed on your computer, run `Lerna -v`. If it's installed, it will print the version number (e.g. `4.0.0`).
+
+![`lerna -v`](./.readme/lerna-v.gif)
 
 <!-- ![install brew.sh, and then `brew install lerna`]() -->
 
