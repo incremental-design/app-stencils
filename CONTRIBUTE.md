@@ -227,6 +227,24 @@ All of the App Stencils code compiles to browser-ready Javascript. However, the 
 
 <!-- mention using the typescript snippets in nova here -->
 
+#### Follow Typescript naming conventions:
+
+Whenever you create a typescript file, name it as follows:
+
+| File:  | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
+| ------ | ------------------------------- | --------------- | --------------- | --------------------------- |
+| `*.ts` | Typescript Classes or Functions | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
+
+Whenever you add code to a `.ts` file within a package, name it as follows:
+
+| Code:                                       | Capitalization: | Part of Speech: | Example:                               |
+| ------------------------------------------- | --------------- | --------------- | -------------------------------------- |
+| exportable `const`, `var`, `let` or `class` | PascalCase      | Subject         | `ClickListener`                        |
+| object property                             | camelCase       | Subject         | `ClickListener.duration`               |
+| method                                      | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
+
+When the rest of us read your code, we need to be able to guess the meaning of each word, without peeking at its type definitions or documentation. As the App Stencils codebase grows, this becomes more difficult. When you follow this naming convention, it makes this task easier. That's because the capitalization and part-of-speech indicate the affordances of the code behind the word. Even if we don't know the definition and behavior of a word, it's naming convention denotes its general characteristics. This reduces the likelihood that we will have to look up the meaning of a word to understand the code surrounding it. When you follow the naming convention, you improve the readability of your code.
+
 ### Use ESlint to fix errors:
 
 <!-- have to explain how eslint is different from typescript -->
@@ -237,12 +255,29 @@ All of the App Stencils code compiles to browser-ready Javascript. However, the 
 
 <!-- Whenever you add code to a `.vue` file, name it as follows:
 
-| Type:                                       | Capitalization: | Part of Speech: | Example:                               |
-| ------------------------------------------- | --------------- | --------------- | -------------------------------------- |
-| Vue Component or Directive                  | PascalCase      | Subject         | `ClickListener`                        |
+#### Follow Vue naming conventions:
+
+Whenever you create a `vue` file, name it as follows:
+
+| File:   | Contents:     | Capitalization: | Part of Speech: | Example:                    |
+| ------- | ------------- | --------------- | --------------- | --------------------------- |
+| `*.vue` | Vue component | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
+
+Whenever you add code to a `.vue` file, name it as follows:
+
+| Code:                                       | Capitalization:                                                                    | Part of Speech:                                                                              | Example:                                |
+| ------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Vue Component or Directive                  | PascalCase                                                                         | [Multi-Word](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential) Subject | `ClickListener`                         |
 | Vue Component data, prop, computed          | camelCase       | Subject         | `ClickListener.duration`               |
 | Vue Component method                        | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
-| exportable `const`, `var`, `let` or `class` | PascalCase      | Subject         | `ClickListener`                        | -->
+| Vue event                                   | [kebab-case](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names) | Imperative                                                                                   | `send-message`, `update-state`, `click` |
+| exportable `const`, `var`, `let` or `class` | PascalCase                                                                         | Subject                                                                                      | `ClickListener`                         |
+
+When we read your Vue components, we need to be able to guess the meaning of unfamiliar words, without searching for their definitions elsewhere in the App Stencils codebase. This is especially important in Vue single-file-components, which mix different syntaxes together, reducing readability. Just like the [words in your typescript files](#follow-typescript-naming-conventions), the words in your Vue components use capitalization and part-of-speech to indicate their affordances. This restores the readability of your Vue components.
+
+<!-- #### Use Typescript in `<script>` sections -->
+
+<!-- #### Use Less in `<style>` sections -->
 
 <!-- add instructions on how to use the vue devtools -->
 
