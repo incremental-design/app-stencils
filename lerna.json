@@ -10,5 +10,5 @@
       "npmClientArgs": []
     }
   },
-  "packages": ["packages/**"]
+  "packages": ["packages/shared/*", "packages/vue3/*", "packages/storybook/*"]
 }
