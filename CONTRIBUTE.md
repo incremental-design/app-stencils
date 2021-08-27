@@ -159,19 +159,9 @@ Commitlint will prevent you from making commits unless your commit message conta
 
 For example:
 
-```
-feat(doohicky): Add the widget to the doohicky
-```
-
-```
-
-1. added the dinglebopper to the blamf.
-2. cut the fleeb.
-3. Chumble the hizzards.
-4. Make the plumbus.
-
-See: https://www.youtube.com/watch?v=eMJk4y9NGvE
-```
+| <table><tr><td>type</td><td>subject</td></tr><tr><td>`feat(plumbus):` </td><td>`repurpose the batch of schleem`</td></tr></table>                                                                                                                         |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <table><tr><td>body</td></tr><tr><td><ol><li>Add the `dinglebopper` to the `blamf`.</li><li>Cut the `fleeb`.</li><li>Chumble the `hizzards`.</li><li>Make the `plumbus`.</li></ol><br/>See: https://www.youtube.com/watch?v=eMJk4y9NGvE</td></tr></table> |
 
 #### Break commits into small pieces:
 
