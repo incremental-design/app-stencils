@@ -207,7 +207,29 @@ If Lerna is installed in your home directory, your git client probably won't be 
 
 ### Use Typescript to type-check your code:
 
+Before you write any code, make sure you install the Typescript extension for your editor.
+
+| Editor       | Extension                                                                                                                                               |
+| :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Panic Nova   | https://extensions.panic.com/extensions/apexskier/apexskier.typescript/ ![How to install typescript in Panic Nova](./.readme/get-ts-extension-nova.gif) |
+| VScode       | Typescript extension is built in - there's nothing to install.                                                                                          |
+| Sublime Text | https://packagecontrol.io/packages/TypeScript                                                                                                           |
+
+If you want Typescript to give you helpful feedback as you type, you need to make sure that the Typescript language server is running. Although Typescript checks your code for errors, it doesn't share the results with your editor. When you install the Typescript language server, it connects typescript to your editor, so you can see errors as you type. And that's not all - it also augments your editor with autocompletion and jump-to-definition support. That means that as you type in the names of classes, objects, methods or functions, the Typescript language server will grab their options, and stick them into your editor's autocompletion menu. This lets you browse and select, rather than type (and misspell), options. It also locates the source code for any class, object, method or function that you import into your code, so you don't have to dig through the repository looking for it. It's like a spellcheck and dictionary, but for your code. Without the Typescript language server, you won't receive any of these assists.
+
+#### Add type annotations to your code:
+
+Type annotations make it easy to connect your code to the rest of the App Stencils codebase.
+
+All of the App Stencils code compiles to browser-ready Javascript. However, the code is actually written in Typescript. That's because Javascript classes and functions don't indicate what inputs they receive, and what outputs they send. The only way to find out is to read the Javascript code, and test it out. This is a slow and frustrating experience that doesn't scale. No one has time to read and reason about all of the code they use. That's why we use typescript to read the code for us. It extends Javascript with [**type annotations**](https://www.typescriptlang.org/docs/handbook/2/basic-types.html) - standardized syntax that enumerates classes' and functions' inputs and outputs. When you add type annotations to your code, we don't have to read it before we use it. Typescript takes care of telling us what inputs we need to give your code, and what outputs we will receive. This literally doubles the pace at which we can write new code.
+
+<!-- put any specific guidelines for what annotations to use here -->
+
+<!-- mention using the typescript snippets in nova here -->
+
 ### Use ESlint to fix errors:
+
+<!-- have to explain how eslint is different from typescript -->
 
 ### Use Prettier to format your code:
 
