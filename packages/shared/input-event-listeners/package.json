@@ -1,0 +1,24 @@
+{
+  "name": "@incremental.design/input-event-listeners",
+  "version": "0.0.0",
+  "description": "Callbacks for `ClipboardEvent` `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` `UIEvent` `WheelEvent` listeners. These callbacks normalize and filter event details to make them easier to interpret.",
+  "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
+  "homepage": "https://github.com/incremental-design/app-stencils#readme",
+  "license": "MIT",
+  "main": "dist/input-event-listeners.js",
+  "module": "dist/input-event-listeners.module.js",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/incremental-design/app-stencils.git"
+  },
+  "scripts": {},
+  "bugs": {
+    "url": "https://github.com/incremental-design/app-stencils/issues"
+  }
+}
