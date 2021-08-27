@@ -253,7 +253,7 @@ When the rest of us read your code, we need to be able to guess the meaning of e
 
 ### Use Vue 3 to make user interface components:
 
-<!-- Whenever you add code to a `.vue` file, name it as follows:
+Every user interface component you write needs to be **irreducible** and **configurable**. A component is irreducible when the code that describes it cannot be split into separate modules without duplicating logic. A component is configurable when its code furnishes parameters that affect its appearance and behavior. There are dozens of frameworks for making user interface components. We use Vue because it occupies a special goldilocks zone in the world of app development: it is as versatile and powerful as it is familiar to programmers of different backgrounds. Whether you primarily code in Javascript, Typescript, PHP, or even Java or .net, Vue's single-file-component format functions as a lingua franca that you can pick up over time. like react and angular, Vue's single-file-components enhance HTML and CSS with reactive logic and declarative paradigm. Unlike React, it doesn't make you interleave your HTML inside javascript, and unlike Angular, it doesn't make you learn Typescript before you can get started. Best of all, Vue is [really popular](https://www.techrepublic.com/article/considering-vue-js-here-are-5-reasons-youll-love-it/), so every Vue component you write can reach a wide audience.
 
 #### Follow Vue naming conventions:
 
@@ -268,8 +268,8 @@ Whenever you add code to a `.vue` file, name it as follows:
 | Code:                                       | Capitalization:                                                                    | Part of Speech:                                                                              | Example:                                |
 | ------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------- |
 | Vue Component or Directive                  | PascalCase                                                                         | [Multi-Word](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential) Subject | `ClickListener`                         |
-| Vue Component data, prop, computed          | camelCase       | Subject         | `ClickListener.duration`               |
-| Vue Component method                        | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
+| Vue Component data, prop, computed          | camelCase                                                                          | Subject                                                                                      | `ClickListener.duration`                |
+| Vue Component method                        | camelCase                                                                          | Predicate                                                                                    | `ClickListener.calculateVelocity(...)`  |
 | Vue event                                   | [kebab-case](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names) | Imperative                                                                                   | `send-message`, `update-state`, `click` |
 | exportable `const`, `var`, `let` or `class` | PascalCase                                                                         | Subject                                                                                      | `ClickListener`                         |
 
@@ -301,15 +301,15 @@ This starts an instance of the Jest unit test framework for each package that co
 
 | Type:  | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
 | ------ | ------------------------------- | --------------- | --------------- | --------------------------- |
-| `.vue` | Vue Component                   | PascalCase      | Subject         | `BaseComponent.vue`         |
-| `.ts`  | Typescript Classes or Functions | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
 | folder | anything                        | kebab-case      | Subject         | `event-listeners`           | -->
 
 <!-- put each vue component in its own package -->
 
 <!-- need to explain /setup-function-members folder -->
 
-### Use TSC to stub Typescript packages:
+<!-- keep vue files <300 lines of code -->
+
+### Use `tsc` to stub Typescript packages:
 
 <!-- Whenever you add a folder to a typescript package, name it as follows:
 
@@ -317,23 +317,11 @@ This starts an instance of the Jest unit test framework for each package that co
 | ------ | --------- | --------------- | --------------- | ----------------- |
 | folder | anything  | kebab-case      | Subject         | `event-listeners` | -->
 
-<!-- Whenever you create a typescript file, name it as follows:
-
-| Type: | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
-| ----- | ------------------------------- | --------------- | --------------- | --------------------------- |
-| `.ts` | Typescript Classes or Functions | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
-
-Whenever you add code to a `.ts` file within a package, name it as follows:
-
-| Type:                                       | Capitalization: | Part of Speech: | Example:                               |
-| ------------------------------------------- | --------------- | --------------- | -------------------------------------- |
-| exportable `const`, `var`, `let` or `class` | PascalCase      | Subject         | `ClickListener`                        |
-| object property                             | camelCase       | Subject         | `ClickListener.duration`               |
-| method                                      | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
-
-When other developers read your code, they need to be able to figure out what each word represents, especially if it those words are defined in other files. This task becomes even more difficult in the absence of an IDE with jump-to-definition support. When you follow this naming convention, it makes this task a little easier. That's because it uses both the part of speech and capitalization to denote meaning. When you use this convention, other developers can safely assume that every word that begins with a capital letter corresponds to an importable ES6 module member, such as a vue component, typescript class, or typescript function. They can also differentiate folder paths from filenames, and object properties from methods. Naming conventions make your code easy to read. -->
-
 <!-- group related typescript modules into a single package -->
+
+<!-- keep individual typescript files <300 lines of code -->
+
+<!-- use index export convention -->
 
 ## Publish
 
