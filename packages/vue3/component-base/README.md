@@ -1,9 +1,11 @@
 # `@incremental.design/vue3-component-base`
 
-[ ] banner image
+<!-- banner image -->
 
-`vue3-component-base` translates [DOM element events](https://developer.mozilla.org/en-US/docs/Web/API/Element) into state changes. A **state** is a description of a visual treatment that follows a user input. Examples include 'focused', 'pressed', and 'selected'. A 'focused' user interface has a different appearance from a 'not focused' one. Likewise, a 'pressed' interface has a different appearance from a 'not pressed' one. A **user interface** is any piece of an application that responds to user input. Examples of user interfaces include buttons, fields, and links. A **state change** is a transition that occurs _while_ an element receives user input. `vue3-component-base` interprets user input and updates the state to match.
+`vue3-component-base` translates [UIEvents](https://developer.mozilla.org/en-US/docs/Web/API/UIEvent) into state changes. A **state** is a description of a visual treatment that follows a user input. Examples include 'focused', 'pressed', and 'selected'. A 'focused' user interface has a different appearance from a 'not focused' one. Likewise, a 'pressed' interface has a different appearance from a 'not pressed' one. A **user interface** is any piece of an application that responds to user input. Examples of user interfaces include buttons, fields, and links. A **state change** is a transition that occurs _while_ an element receives user input. `vue3-component-base` interprets user input and updates the state to match.
+
 # Installation:
+
 1. `yarn add @incremental.design/vue3-component-base`
 2. Import `vue3-component-base` into any of your Vue 3 components as follows:
 

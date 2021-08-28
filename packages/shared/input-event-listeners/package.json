@@ -6,9 +6,11 @@
   "homepage": "https://github.com/incremental-design/app-stencils#readme",
   "license": "MIT",
   "main": "dist/input-event-listeners.js",
-  "module": "dist/input-event-listeners.module.js",
+  "module": "src/input-event-listeners.ts",
+  "types": "dist/types",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "publishConfig": {
     "access": "public"
@@ -17,8 +19,13 @@
     "type": "git",
     "url": "git+https://github.com/incremental-design/app-stencils.git"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "tsc"
+  },
   "bugs": {
     "url": "https://github.com/incremental-design/app-stencils/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.4.2"
   }
 }
