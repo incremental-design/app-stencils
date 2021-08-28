@@ -23,4 +23,8 @@ pnpm-debug.log*
 *.sw?
 .nova
 
+packages/**/dist
+
 *.sync-conflict*
+
+lerna-debug.log

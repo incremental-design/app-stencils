@@ -7,7 +7,7 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 - If you're on a Mac, the best way to to this is to install [homebrew](https://brew.sh), and then `brew install lerna`.
 - To check if Lerna is installed on your computer, run `Lerna -v`. If it's installed, it will print the version number (e.g. `4.0.0`).
 
-![`lerna -v`](./.readme/lerna-v.gif)
+  ![`lerna -v`](./.readme/lerna-v.gif)
 
 <!-- ![install brew.sh, and then `brew install lerna`]() -->
 
@@ -16,7 +16,7 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 1. Navigate to the root of this repository.
 2. Run `lerna bootstrap`.
 
-![`lerna bootstrap`](./.readme/lerna-bootstrap.gif)
+   ![`lerna bootstrap`](./.readme/lerna-bootstrap.gif)
 
 - 🤔 `lerna bootstrap` replaces `yarn install`.
 - 🛑 Do NOT run `yarn install` in any of these repositories.
@@ -122,6 +122,7 @@ Use the following Lerna commands to run tasks in App Stencils:
 
 | Task                                                                                                                             | Lerna Command               | Yarn command it replaces:  | NPM command it replaces:           |
 | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | -------------------------- | ---------------------------------- |
+| Stub out a new Package                                                                                                           | `lerna create`              | n/a                        | n/a                                |
 | Build Packages                                                                                                                   | `lerna run build`           | `yarn build`               | `npm run build`                    |
 | Install the dependencies listed in each package's `package.json`                                                                 | `lerna bootstrap`           | `yarn install`             | `npm install`                      |
 | Delete each package's `node_modules`                                                                                             | `lerna clean`               | `rm -rf ./node_modules`    | `rm -rf ./node_modules`            |
@@ -301,11 +302,231 @@ This starts an instance of the Jest unit test framework for each package that co
 
 ### Use `tsc` to stub Typescript packages:
 
-<!-- Whenever you add a folder to a typescript package, name it as follows:
+1. Stub out a new package, with `lerna create @incremental.design/<name-of-package> shared --access public --es-module --license MIT`, then answer the prompts that follow.
+
+   ![`lerna create @incremental.design/input-event-listeners shared --access public --es-module --license MIT`](./.readme/lerna-create-package.gif)
+
+   | `lerna create`                    | `@incremental.design/<name-of-package>`                                                                                                                                                                                                                                                                                   | `shared`                                                 | `--access public`                          | `--es-module`                                                                                                                                                                                     | `--license MIT`                            |
+   | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------- |
+   | stubs out a `package.json` for... | a package that is <table><tr><td>[scoped](https://docs.npmjs.com/cli/v7/using-npm/scope) to</td><td>[`@incremental.design`](https://www.npmjs.com/org/incremental.design)</td></tr><tr><td>[named](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#name)</td><td>`<name-of-package>`</td></tr></table> and ... | is located at `packages/shared/<name-of-package>` and... | should be published to `npmjs.com`, and... | should have both a [`main` entry point](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#main) and a [`modules` entry point](https://github.com/rollup/rollup/wiki/pkg.module), and ... | should have the `MIT` open source license. |
+
+   <br/>
+
+   | Prompt           | Answer                                                   |
+   | :--------------- | :------------------------------------------------------- |
+   | `package name`   | Enter ↵                                                  |
+   | `version`        | Enter ↵                                                  |
+   | `description`    | Explain what this package contains in up to 3 sentences. |
+   | `keywords`       | Enter ↵                                                  |
+   | `homepage`       | Enter ↵                                                  |
+   | `license`        | Enter ↵                                                  |
+   | `entry point`    | Enter ↵                                                  |
+   | `module entry`   | Enter ↵                                                  |
+   | `git repository` | Enter ↵                                                  |
+
+2. Remove the `__tests__` folder from the package.
+
+   Although you will add tests to your typescript packages, they won't live in the `__tests__` folder. Go ahead and delete it. Then open the `package.json` and remove the `directories.test` and `scripts.test` fields.
+
+   ![Delete the `__tests__` folder, the `directories.test` and `scripts.test` fields](./.readme/remove-tests.gif)
+
+3. Remove the `lib` folder from the package.
+
+   Since all of your source code will go into `src`, the `lib` folder will never contain anything. Go ahead and delete it. Then, remove the `directories` field.
+
+   ![Delete the `lib` folder, and the `directories` field](./.readme/remove-lib.gif)
+
+4. Add typescript to the package.
+
+   Before you can write Typescript code, you have to install Typescript. `cd` to `packages/shared/<name-of-package>` and run `lerna add --dev typescript`. Lerna will add `typescript` to your `package.json`'s `devDependencies`, create a `node_modules` folder, and install the `typescript` package, and its dependencies, within it.
+
+   ![`lerna add --dev typescript`](./.readme/lerna-add-typescript.gif)
+
+5. Stub out a typescript configuration file.
+
+   Run `npx tsc --init` inside the `packages/shared/<name-of-package>` directory. This command will create a `tsconfig.json` file within it.
+
+6. Set the Typescript target and module to `esnext`.
+
+   To take full advantage of every feature that Typescript has to offer, you need to instruct it to compile and package your typescript code as `esnext` modules. This means that typescript won't add [polyfills](https://developer.mozilla.org/en-US/docs/Glossary/Polyfill) to your code to make it compatible with older browsers. While this might sound like a problem, it's actually a good thing. That's because polyfills reduce performance. Furthermore, you're writing a _library_. Other developers are going to import your library into their projects, and add whatever polyfills they see fit. When you ship your code as `esnext` modules, you give them the choice between performance and compatibility, rather than forcing a performance penalty upon them.
+
+   Open your `tsconfig.json` file, and change the `target` field from `es5` to `esnext`. Then, change the `module` field from `commonjs` to `esnext`:
+
+   ![set `target` and `module` fields to `esnext`](./.readme/tsconfig-target-module-esnext.gif)
+
+7. Set typescript module resolution to `node`.
+
+   Before you can import dependencies into your Typescript code, you have to tell Typescript to look inside the `packages/shared/<name-of-package>/node_modules` folder first. Uncomment `moduleResolution : "node"` in your `tsconfig.json` file to do this.
+
+   ![Uncomment `moduleResolution: "node"`](./.readme/tsconfig-module-resolution.gif)
+
+8. Enable source maps.
+
+   If you want to debug like a 10x developer, you need to turn on source maps. They give your browser console a way to trace issues back to the source code that caused them. And when you use your typescript code within a Vue project, they even give the Vue inspector the ability to open your editor and locate the bug. Uncomment `sourceMap: true` to enable this time-saver.
+
+   ![Uncomment `sourceMap: true`](./.readme/tsconfig-source-map.gif)
+
+9. Enable declaration generation.
+
+   You need to make sure that Typescript doesn't toss out all of the type annotations when it compiles your code. When you enable declaration file generation, Typescript scoops up all of the type annotations you wrote, and puts them in a [declaration](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html) file, adjacent to the code it compiled. To set up declaration generation you need to:
+
+   - go to your `tsconfig.json` and
+     - uncomment `declaration: true`
+     - uncomment `declarationMap: true`
+     - uncomment `declarationDir` and set it to `./dist/types`
+   - go to your `package.json` and
+     - add a `types` field, and set it to `./dist/types`
+
+   This tells typescript to generate a declaration file every time it builds your code, and it in `packages/shared/<name-of-package>/dist/types`. It also tells typescript to look for type annotations in the `./dist/types` folder whenever it imports your code into another project.
+
+   ![Enable declaration generation](./.readme/tsconfig-declaration.gif)
+
+10. Tell Typescript what to compile.
+
+    You need to tell Typescript what you want it to compile, before it will compile anything. Since all of your source code lives in the `src` folder of your package, you need to add the `"include": ["src/**/*"]` field to your `tsconfig.json`.
+
+    ![Include `src`](./.readme/tsconfig-include-src.gif)
+
+11. Tell Typescript where to put compiled code.
+
+    You need to tell Typescript where it should put the code it compiles, or it will dump it directly into `packages/shared/<name-of-package>`. Since your package's `package.json` `main` field already points to `dist/`, you need to make sure Typescript does as well. Go to your `tsconfig.json`, Uncomment `outDir` and set it to `dist/`.
+
+    ![Set `outDir`](./.readme/tsconfig-outdir.gif)
+
+12. Tell Typescript which types it needs to import.
+
+    If you want Typescript to type-check any Browser, Node or Jest API calls you make, you need to tell it to import the type declarations for those APIs:
+
+- Uncomment `types` and set it to `[" webpack-env","jest","node"]`
+- Add the `lib` field to the `compilerOptions` field and set it to `["esnext", "dom", "dom.iterable", "scripthost"]`
+
+  ![set `types` and `lib` fields](./.readme/ts-types-lib.gif)
+
+13. Tell Typescript to resolve import statements relative to the package root.
+
+    If you don't want to have to prefix all of your imports with `packages/shared/<name-of-package>`, you should tell Typescript NOT to look outside of your package for dependencies. After all, it shouldn't have to: Lerna already does the hard work of placing every dependency inside `packages/shared/<name-of-package>/node_modules`. To tell Typescript to look for dependencies within your package, uncomment the `baseURL` field.
+
+    ![Uncomment `baseURL`](./.readme/ts-baseurl.gif)
+
+14. Remove the unused parts of the typescript configuration file.
+
+    Clean out your `tsconfig.json` file so that it's easier to read. Delete every line that is commented out. You should be left with:
+
+    ```json
+    {
+      "compilerOptions": {
+        /* Language and Environment */
+        "target": "esnext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+
+        /* Modules */
+        "module": "esnext" /* Specify what module code is generated. */,
+        "moduleResolution": "node" /* Specify how TypeScript looks up a file from a given module specifier. */,
+        "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
+        "types": [
+          "webpack-env",
+          "jest",
+          "node"
+        ] /* Specify type package names to be included without being referenced in a source file. */,
+        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+
+        /* JavaScript Support */
+
+        /* Emit */
+        "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
+        "declarationMap": true /* Create sourcemaps for d.ts files. */,
+        "sourceMap": true /* Create source map files for emitted JavaScript files. */,
+        "outDir": "./dist/" /* Specify an output folder for all emitted files. */,
+        "declarationDir": "./dist/types" /* Specify the output directory for generated declaration files. */,
+
+        /* Interop Constraints */
+        "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables `allowSyntheticDefaultImports` for type compatibility. */,
+        "forceConsistentCasingInFileNames": true /* Ensure that casing is correct in imports. */,
+
+        /* Type Checking */
+        "strict": true /* Enable all strict type-checking options. */,
+
+        /* Completeness */
+        "skipLibCheck": true /* Skip type checking all .d.ts files. */
+      },
+      "include": ["src/**/*"]
+    }
+    ```
+
+    ![Delete commented configuration fields](./.readme/tsconfig-delete-comments.gif)
+
+15. Connect Typescript to Lerna.
+
+    Congratulations! You've configured Typescript to compile your source code and place it in `/dist`. Now, it will compile your code whenever you run `npx tsc` inside your package. However, it won't compile your code when you run `lerna build`. To connect Typescript to Lerna, add `"build": "tsc"` to your `package.json`'s `script` field. Now, whenever you run `lerna build`, it will run your `package.json`'s `script.build` command for you.
+
+    ![Add `"build": "tsc"` to `package.json`](./.readme/tsconfig-build-script.gif)
+
+16. Convert the contents of your package's `src` to typescript.
+
+    Typescript only pays attention to the `.ts`, `.tsx`, `.d.ts` files in your package's `src` folder. It will ignore any `.js` and `.jsx` files. This is a problem, because your package currently contains a single `.js` file: in `src/<name-of-package>.js`. If you ask Typescript to build your code, it won't find anything to build, and it will error instead. To fix this, change the `.js` extension in `src/<name-of-package>.js` to `.ts` (i.e. `src/<name-of-package>.ts`). Once you make this change, Typescript will notice and compile the file.
+
+    ![Convert `.js` files to `.ts`](./.readme/tsconfig-js-to-ts.gif)
+
+17. Use your Typescript code as your package's module entry point.
+
+    The best way to share your package's code is to provide us with both the Typescript AND the javascript to which it compiles. However, you can't point your package's `main` [entrypoint](https://bytearcher.com/articles/main-property-in-package.json-defines-entry-point/) to both. The little-known `modules` field solves this problem. When you point it to the raw Typescript in your package's `src` folder, it frees the `main` field to point the compiled javascript in your package's `dist` folder. When the rest of us use Typescript to import your code, it uses the `modules` field to access your package's raw Typescript code. On the other hand, when we use Javascript to import your code, it uses the `main` field to access your package's compiled javascript code.
+
+    `Lerna create` already stubbed out your `package.json`'s `main` field. All you need to do is update its `module` field to point to `src/<name-of-package>.ts`.
+
+    ![Point `package.json` `module` field to `src/<name-of-package>.ts`](./.readme/tsconfig-module.gif)
+
+18. Include your `src/` directory in your package's published contents.
+
+    When it's time to `lerna publish` your code, you need to make sure that **both** the raw Typescript code, and the compiled Javascript code are included in the package's contents. Otherwise, the `modules` field will point to a folder that doesn't exist in the package, and Typescript will be forced to fall back to the `main` field. To fix this, add the `src` directory to the `package.json`'s `files` array.
+
+    ![Add `src` to your `package.json`'s `files` array](./.readme/tsconfig-files-src.gif)
+
+    Once you're done, your package.json should look something like this:
+
+    ```json
+    {
+    "name": "@incremental.design/<name-of-package>",
+    "version": "0.0.0" /* This number may vary. Lerna will manage it for you. Don't touch it. */,
+    "description": <whatever description you gave your package in step 1>
+    "author": "Your Name <your email>",
+    "homepage": "https://github.com/incremental-design/app-stencils#readme",
+    "license": "MIT",
+    "main": "dist/<name-of-package>.js",
+    "module": "src/<name-of-package>.ts",
+    "types": "dist/types",
+    "files": [
+      "dist",
+      "src"
+    ],
+    "publishConfig": {
+      "access": "public"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/incremental-design/app-stencils.git"
+    },
+    "scripts": {
+      "build": "tsc"
+    },
+    "bugs": {
+      "url": "https://github.com/incremental-design/app-stencils/issues"
+    },
+    "devDependencies": {
+      "typescript": "^4.4.2"
+    }
+    }
+    ```
+
+    And that's it! Congratulations! You set up a typescript package!
+
+#### Follow folder naming conventions:
+
+Whenever you add a folder to a typescript package, name it as follows:
 
 | Type:  | Contents: | Capitalization: | Part of Speech: | Example:          |
 | ------ | --------- | --------------- | --------------- | ----------------- |
-| folder | anything  | kebab-case      | Subject         | `event-listeners` | -->
+| folder | anything  | kebab-case      | Subject         | `event-listeners` |
+
+When you kebab-case your folder names, it helps the rest of us differentiate them from the names of the Typescript classes, methods, functions, variables in your package.
 
 <!-- group related typescript modules into a single package -->
 

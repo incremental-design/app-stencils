@@ -1238,6 +1238,22 @@ module.exports = [
 
 /***/ }),
 
+/***/ "7a82":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $ = __webpack_require__("23e7");
+var DESCRIPTORS = __webpack_require__("83ab");
+var objectDefinePropertyModile = __webpack_require__("9bf2");
+
+// `Object.defineProperty` method
+// https://tc39.es/ecma262/#sec-object.defineproperty
+$({ target: 'Object', stat: true, forced: !DESCRIPTORS, sham: !DESCRIPTORS }, {
+  defineProperty: objectDefinePropertyModile.f
+});
+
+
+/***/ }),
+
 /***/ "7b0b":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3499,6 +3515,25 @@ function _classCallCheck(instance, Constructor) {
     throw new TypeError("Cannot call a class as a function");
   }
 }
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es.object.define-property.js
+var es_object_define_property = __webpack_require__("7a82");
+
+// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
 // CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/classApplyDescriptorGet.js
 function _classApplyDescriptorGet(receiver, descriptor) {
   if (descriptor.get) {
@@ -3568,9 +3603,21 @@ var web_dom_collections_iterator = __webpack_require__("ddb0");
 
 
 
+
 var _internal = /*#__PURE__*/new WeakMap();
 
-var VueSeamlssStateMachine_ButtonStates = function ButtonStates() {
+var VueSeamlssStateMachine_ButtonStates =
+/**
+ * This class keeps track of the state of a button.
+ * @remarks
+ * Use this class to represent the state of a button that can be focused (and hovered), and also pressed.
+ * This class furnishes and `isPressed` and `isFocused` state. It also makes sure that `isPressed` is only true if `isFocused` is true.
+ * This class does not furnish any behavior. It literally only keeps track of whether a button is focused, pressed or both.
+ * This class implements a state machine in a {@link `reactive` | https://v3.vuejs.org/api/basic-reactivity.html#reactive} object.
+ *
+ */
+// ES2020 private fields ftw
+function ButtonStates() {
   var _this = this;
 
   _classCallCheck(this, ButtonStates);
@@ -3579,6 +3626,8 @@ var VueSeamlssStateMachine_ButtonStates = function ButtonStates() {
     writable: true,
     value: void 0
   });
+
+  _defineProperty(this, "states", void 0);
 
   _classPrivateFieldSet(this, _internal, Object(external_commonjs_vue_commonjs2_vue_root_Vue_["reactive"])({
     pressed: true
@@ -3596,18 +3645,7 @@ var VueSeamlssStateMachine_ButtonStates = function ButtonStates() {
     })
   });
   this.states = states;
-}
-/**
- * This class keeps track of the state of a button.
- * @remarks
- * Use this class to represent the state of a button that can be focused (and hovered), and also pressed.
- * This class furnishes and `isPressed` and `isFocused` state. It also makes sure that `isPressed` is only true if `isFocused` is true.
- * This class does not furnish any behavior. It literally only keeps track of whether a button is focused, pressed or both.
- * This class implements a state machine in a {@link `reactive` | https://v3.vuejs.org/api/basic-reactivity.html#reactive} object.
- *
- */
-// ES2020 private fields ftw
-;
+};
 // CONCATENATED MODULE: ./src/use/index.ts
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/babel-loader/lib!./node_modules/ts-loader??ref--13-2!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader-v16/dist??ref--0-1!./src/BaseComponent.vue?vue&type=script&lang=ts
