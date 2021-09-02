@@ -2,6 +2,8 @@
 
 <!-- ## Typescript Clips -->
 
+<!-- need to reread the typescript notes, and then list best practices and how the clips help you follow them -->
+
 <!-- | | | -->
 
 ## TSdoc Clips
