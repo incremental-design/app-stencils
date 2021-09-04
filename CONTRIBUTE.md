@@ -529,6 +529,14 @@ As you develop Vue 3 components in App Stencils, you might write pieces of Types
     And that's it! Congratulations! You set up a typescript package!
 
 #### Follow folder naming conventions:
+#### Make self-contained packages:
+
+You probably want to write features, not bugs. Unfortunately, bugs are difficult to avoid, especially when your typescript modules depend on others. Even if your typescript module is bug free, it can inherit bugs from the modules it imports. The best way to limit the spread of bugs is to limit what your module imports. Don't import any typescript modules from other packages in the `packages/shared` folder. Only import typescript modules that are within the confines of that package that contains your module. If you absolutely need to import a module in another package, move your module into that package, first. When you restrict the location of your imports, it keeps bugs from spreading among the packages in `packages/shared`.
+
+| Before                                                                                                              | After                                                                                                                        |
+| :------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
+| ![Typescript modules importing other typescript modules in other packages](.readme/diagram-package-imports-bad.png) | ![Typescript modules importing other typescript modules within their own packages](.readme/diagram-package-imports-good.png) |
+
 
 Whenever you add a folder to a typescript package, name it as follows:
 
