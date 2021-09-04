@@ -297,7 +297,7 @@
           "trigger": "@deprecated"
         },
         {
-          "content": "\n* @see {@link ${0:URL}} ${1:Description}\n*",
+          "content": "\n* @see {@link ${0:URL}| ${1:Description} } \n*",
           "name": "Vue 3 See Tag",
           "scope": "editor",
           "syntax": "vue",
