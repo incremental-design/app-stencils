@@ -97,22 +97,26 @@ To learn how to add a component to Storybook, see: ["Use Storybook to demo your 
 
 You have to build, test, document and package your code before the rest of us can use it. App Stencils’ tooling not only simplifies all of these tasks, but also makes it easy to collaborate with the rest of us. That’s because each of the following tools standardizes your code. Without them, it would be difficult for the rest of us to read and edit what you wrote.
 
-| Tool                                                                       | What it does:                                                                                                                                  |
-| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Lerna](#use-lerna-to-run-the-other-tools)                                 | Splits the App Stencils codebase into multiple NPM packages, each of which can be separately installed. Runs Jest, Storybook, Vue CLI and tsc. |
-| [Commitlint](#use-commitlint-to-format-your-commit-messages)               | Formats commit messages, and rebuilds every package prior to each commit.                                                                      |
-| [Typescript](#use-typescript-to-type-check-your-code)                      | Type-checks your code as you write it.                                                                                                         |
-| [ESlint](#use-eslint-to-fix-errors)                                        | Checks your code for errors every time Lerna or Commitlint rebuild it.                                                                         |
-| [Prettier](#use-prettier-to-format-your-code)                              | Formats `.ts`, `.js`, `.vue` and most other files every time you save your changes.                                                            |
-| [Vue 3](#use-vue-3-to-make-user-interface-components)                      | Provides a declarative and reactive framework for building UIs.                                                                                |
-| [Jest](#use-jest-to-exercise-your-code)                                    | Runs unit tests.                                                                                                                               |
-| [Storybook](#use-storybook-to-demo-your-vue-components)                    | Demos Vue 3 components.                                                                                                                        |
-| [TSdoc](#use-tsdoc-to-document-your-typescript-modules-and-vue-components) | Documents typescript and Vue code.                                                                                                             |
-| [Git LFS](#use-git-lfs-to-version-images)                                  | Stores all of the images and videos used in the documentation separately from the rest of the repository.                                      |
-| [Vue CLI](#use-vue-cli-to-stub-vue-component-packages)                     | Stubs out Vue 3 libraries.                                                                                                                     |
-| [tsc](#use-tsc-to-stub-typescript-packages)                                | Stubs out Typescript libraries.                                                                                                                |
+| Tool                                                        | What it does:                                                                                                                                  |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Lerna](#run-tools-with-lerna)                              | Splits the App Stencils codebase into multiple NPM packages, each of which can be separately installed. Runs Jest, Storybook, Vue CLI and tsc. |
+| [Commitlint](#format-your-commits-with-commitlint)          | Formats commit messages, and rebuilds every package prior to each commit.                                                                      |
+| [Typescript](#Write-your-code-in-typescript)                | Type-checks your code as you write it.                                                                                                         |
+| [ESlint](#check-your-code-with-eslint)                      | Checks your code for errors every time Lerna or Commitlint rebuild it.                                                                         |
+| [Prettier](#format-your-code-with-prettier)                 | Formats `.ts`, `.js`, `.vue` and most other files every time you save your changes.                                                            |
+| [Vue 3](#make-user-interfaces-with-vue-3)                   | Provides a declarative and reactive framework for building UIs.                                                                                |
+| [Jest](#test-your-code-with-jest)                           | Runs unit tests.                                                                                                                               |
+| [Storybook](#demo-user-interface-components-with-storybook) | Demos Vue 3 components.                                                                                                                        |
+| [TSdoc](#Document your code with TSdoc)                     | Documents typescript and Vue code.                                                                                                             |
+| [Git LFS](#version-images-with-git-lfs)                     | Stores all of the images and videos used in the documentation separately from the rest of the repository.                                      |
+| [Vue CLI](#Make-vue-3-packages-with-vue-CLI)                | Stubs out Vue 3 Packages.                                                                                                                      |
+| [tsc](#Make-typescript-packages-with-tsc)                   | Stubs out Typescript Packages.                                                                                                                 |
 
-### Use Lerna to run the other tools:
+<!-- need to add a section on less and naming conventions ... otherwise less code is going to get super confusing -->
+
+<!-- ### Use Lerna to run the other tools: -->
+
+### Run tools with Lerna
 
 Use `lerna <command>` to run tools in each of App stencils’ packages. Do not use `yarn <command>` or `npm <command>`.
 
@@ -131,7 +135,9 @@ Use the following Lerna commands to run tasks in App Stencils:
 | Run each package's source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)     | `lerna run serve`           | `yarn serve`               | `npm run serve`                    |
 | Run unit tests                                                                                                                   | `lerna run test:unit`       | `yarn test:unit`           | `npm run test:unit`                |
 
-### Use Commitlint to format your commit messages:
+<!-- ### Use Commitlint to format your commit messages: -->
+
+### Format your commits with Commitlint
 
 Your commit messages are only as useful as they are easy to read. When you write your commit messages according to Commitlint’s format, it helps us understand _why_ you made the commit in the first place. That’s because Commitlint’s format forces every commit message to carry the same types of information. This makes it easy for the rest of us to compare your commits to each other and follow your train of thought.
 
@@ -196,7 +202,7 @@ If Lerna is installed in your home directory, your git client probably won't be 
 2. To fix this, uninstall Lerna with `npm uninstall -g lerna`. Pay attention to the `-g` flag. It tells NPM to delete Lerna from `~/.npm-global/bin/`
 3. Reinstall Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`, or `/opt/local/bin`, depending on your operating system and platform.
 
-### Use Typescript to type-check your code:
+### Write your code in Typescript:
 
 Before you write any code, make sure you install the Typescript extension for your editor.
 
@@ -236,15 +242,17 @@ Whenever you add code to a `.ts` file within a package, name it as follows:
 
 When the rest of us read your code, we need to be able to guess the meaning of each word, without peeking at its type definitions or documentation. As the App Stencils codebase grows, this becomes more difficult. When you follow this naming convention, it makes this task easier. That's because the capitalization and part-of-speech indicate the affordances of the code behind the word. Even if we don't know the definition and behavior of a word, it's naming convention denotes its general characteristics. This reduces the likelihood that we will have to look up the meaning of a word to understand the code surrounding it. When you follow the naming convention, you improve the readability of your code.
 
-### Use ESlint to fix errors:
+### Check your code with ESlint:
 
 <!-- have to explain how eslint is different from typescript -->
 
-### Use Prettier to format your code:
+### Format your code with Prettier:
 
-### Use Vue 3 to make user interface components:
+### Make user interfaces with Vue 3:
 
 Every user interface component you write needs to be **irreducible** and **configurable**. A component is irreducible when the code that describes it cannot be split into separate modules without duplicating logic. A component is configurable when its code furnishes parameters that affect its appearance and behavior. There are dozens of frameworks for making user interface components. We use Vue because it occupies a special goldilocks zone in the world of app development: it is as versatile and powerful as it is familiar to programmers of different backgrounds. Whether you primarily code in Javascript, Typescript, PHP, or even Java or .net, Vue's single-file-component format functions as a lingua franca that you can pick up over time. like react and angular, Vue's single-file-components enhance HTML and CSS with reactive logic and declarative paradigm. Unlike React, it doesn't make you interleave your HTML inside javascript, and unlike Angular, it doesn't make you learn Typescript before you can get started. Best of all, Vue is [really popular](https://www.techrepublic.com/article/considering-vue-js-here-are-5-reasons-youll-love-it/), so every Vue component you write can reach a wide audience.
+
+<!-- maybe mention that there is a rich pre-existing vue component open source packages, so no need to start from scratch. Instead, just wrap the components in basecomponent -->
 
 #### Follow Vue naming conventions:
 
@@ -258,10 +266,10 @@ Whenever you add code to a `.vue` file, name it as follows:
 
 | Code:                                       | Capitalization:                                                                    | Part of Speech:                                                                              | Example:                                |
 | ------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Vue Component or Directive                  | PascalCase                                                                         | [Multi-Word](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential) Subject | `ClickListener`                         |
-| Vue Component data, prop, computed          | camelCase                                                                          | Subject                                                                                      | `ClickListener.duration`                |
-| Vue Component method                        | camelCase                                                                          | Predicate                                                                                    | `ClickListener.calculateVelocity(...)`  |
-| Vue event                                   | [kebab-case](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names) | Imperative                                                                                   | `send-message`, `update-state`, `click` |
+| Component or Directive                      | PascalCase                                                                         | [Multi-Word](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential) Subject | `ClickListener`                         |
+| Data, Prop, Computed                        | camelCase                                                                          | Subject                                                                                      | `ClickListener.duration`                |
+| Method                                      | camelCase                                                                          | Predicate                                                                                    | `ClickListener.calculateVelocity(...)`  |
+| Event                                       | [kebab-case](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names) | Imperative                                                                                   | `send-message`, `update-state`, `click` |
 | exportable `const`, `var`, `let` or `class` | PascalCase                                                                         | Subject                                                                                      | `ClickListener`                         |
 
 When we read your Vue components, we need to be able to guess the meaning of unfamiliar words, without searching for their definitions elsewhere in the App Stencils codebase. This is especially important in Vue single-file-components, which mix different syntaxes together, reducing readability. Just like the [words in your typescript files](#follow-typescript-naming-conventions), the words in your Vue components use capitalization and part-of-speech to indicate their affordances. This restores the readability of your Vue components.
@@ -272,7 +280,7 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 
 <!-- add instructions on how to use the vue devtools -->
 
-### Use Jest to exercise your code:
+### Test your code with Jest:
 
 <!-- there should be ONE test file per folder within a package. The test file should inventory and test everything in the folder -->
 
@@ -280,13 +288,13 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 
 This starts an instance of the Jest unit test framework for each package that contains unit tests. So, if your computer's fans start to sound like a jet engine at idle 🛩 ... this is why. -->
 
-### Use Storybook to demo your Vue components:
+### Demo user interface components with Storybook:
 
-### Use TSdoc to document your Typescript modules and Vue components:
+### Document your code with TSdoc:
 
-### Use Git LFS to version images:
+### Version images with Git LFS:
 
-### Use Vue CLI to stub Vue component packages:
+### Make Vue 3 packages with Vue CLI:
 
 <!-- Whenever you add a file or folder to a Vue package, name it as follows:
 
@@ -302,17 +310,79 @@ This starts an instance of the Jest unit test framework for each package that co
 
 <!-- your package should have a single default export that contains the vue component, and no named exports -->
 
-### Use `tsc` to stub Typescript packages:
+<!-- prefer the composition api to the options api
+- need to explain what the two are, when the composition api became available, and why we use it
 
-1. Stub out a new package, with `lerna create @incremental.design/<name-of-package> shared --access public --es-module --license MIT`, then answer the prompts that follow.
-As you develop Vue 3 components in App Stencils, you might write pieces of Typescript code that you want to reuse in other components. However, you can only reuse code if you can _find_ it when you need it. This can become difficult in a monorepo, because each of its many packages can import from any of the others. What starts as just a handful of imports can quickly grow into a tangled mess that ensnares the rest of us. To keep App Stencils from turning into a thicket of crisscrossing dependencies, you need to move ALL of the Typescript code that you want to reuse out of your vue component, and into its own package. This package should live in the `packages/shared/` folder. Then, you need to reimport that code back into your vue component. When you place the code you want to share in the `packages/shared/` folder, it ensures that all imports point from `packages/vue3` to `packages/shared`, and makes it easier for all of us to find your code.
+- when using the setup API order the code in your export as follows:
+
+1. components
+2. props
+3. emits
+4. setup
+  1. injectionKey
+  2. provide()
+  3. inject
+  4. any setup subroutines
+  5. data + computed properties
+  6. methods
+  7. watchEffect
+  8. watch
+  9. onBeforeMount
+  10. onMounted
+  11. onBeforeUpdate
+  12. onUpdated
+  13. onActivated
+  14. onDeactivated
+  15. onBeforeUnmount
+  16. onUnmounted
+  17. onErrorCaptured
+  18. onRenderTracked
+  19. onRenderTriggered
+
+  If you're using panic nova, you can do this automatically by installing the vue 3 clips extension and using the `setup()` clip (show a gif of using the setup clip)
+ -->
+
+<!-- when you use the options api, order the options in your vue component as follows
+
+  1. components
+  2. extends
+  3. mixins
+  4. props
+  5. inject
+  6. data
+  7. provide
+  8. computed
+  9. methods
+  10. watch
+  11. emits
+  12. directives
+  13. beforeCreate
+  14. updated
+  15. activated
+  16. deactivated
+  17. beforeUnmount
+  18. unmounted
+  19. errorCaptured
+  20. renderTracked
+  21. renderTriggered
+
+  If you're using panic nova, you can do this automatically by installing the vue 3 clips extension and using the `options` clip (show a gif of using the options snippet)
+ -->
+
+### Make Typescript packages with `tsc`:
+
+The more vue components you write, the more you'll find yourself writing small variations on the same logic. At some point, you'll want to wrap this logic in a typescript module, and reuse it. However, this can create dependency management issues in a monorepo, because each of its many packages can import typescript modules from any of the others. Without strict organization, what starts as just a handful of imports can quickly grow into a tangled mess. To prevent this, we place all of the typescript modules we want to reuse in the `packages/shared` folder. Whenever you want to reuse a typescript module, you need to stub a package in the `packages/shared/` folder, and place the module inside it. Then, you need to import that module into your vue component. This helps all of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
 
 | Before                                                                                                                                                                                                                                                                  | After                                                                                                                                                                                                                                                                                                                                    |
 | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![](.readme/diagram-repo-imports-bad.png)                                                                                                                                                                                                                               | ![](.readme/diagram-repo-imports-good.png)                                                                                                                                                                                                                                                                                               |
+| ![Vue components importing typescript modules from each other.](.readme/diagram-repo-imports-bad.png)                                                                                                                                                                   | ![Vue components importing typescript modules from `packages/shared`](.readme/diagram-repo-imports-good.png)                                                                                                                                                                                                                             |
 | This is bad because:                                                                                                                                                                                                                                                    | This is good because:                                                                                                                                                                                                                                                                                                                    |
 | <ul><li>vue component packages have to export both vue components and typescript modules.</li><li>vue components import typescript modules from other vue component packages</li><li>Typescript modules import other typescript modules in different packages</li></ul> | <ul><li>Vue components only import typescript modules from the packages in the `packages/shared` folder</li><li>Typescript modules _don't_ import modules from other typescript packages</li></ul>                                                                                                                                       |
 | This makes it difficult to update any of the typescript modules without introducing bugs that are difficult to trace and fix.                                                                                                                                           | This makes it easy to trace imports from within packages in the `packages/vue3` to packages in the `packages/shared` directory, and also guarantees that typescript modules that aren't in the same package never depend on each other. This makes shared code easier to locate, and update. It also makes bugs easier to trace and fix. |
+
+#### Stub out a typescript package:
+
+1. Run `lerna create @incremental.design/<name-of-package> shared --access public --es-module --license MIT`, then answer the prompts that follow.
 
    ![`lerna create @incremental.design/input-event-listeners shared --access public --es-module --license MIT`](./.readme/lerna-create-package.gif)
 
@@ -528,7 +598,6 @@ As you develop Vue 3 components in App Stencils, you might write pieces of Types
 
     And that's it! Congratulations! You set up a typescript package!
 
-#### Follow folder naming conventions:
 #### Make self-contained packages:
 
 You probably want to write features, not bugs. Unfortunately, bugs are difficult to avoid, especially when your typescript modules depend on others. Even if your typescript module is bug free, it can inherit bugs from the modules it imports. The best way to limit the spread of bugs is to limit what your module imports. Don't import any typescript modules from other packages in the `packages/shared` folder. Only import typescript modules that are within the confines of that package that contains your module. If you absolutely need to import a module in another package, move your module into that package, first. When you restrict the location of your imports, it keeps bugs from spreading among the packages in `packages/shared`.
@@ -537,6 +606,7 @@ You probably want to write features, not bugs. Unfortunately, bugs are difficult
 | :------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
 | ![Typescript modules importing other typescript modules in other packages](.readme/diagram-package-imports-bad.png) | ![Typescript modules importing other typescript modules within their own packages](.readme/diagram-package-imports-good.png) |
 
+#### Add folders to your package:
 
 Whenever you add a folder to a typescript package, name it as follows:
 
@@ -546,17 +616,22 @@ Whenever you add a folder to a typescript package, name it as follows:
 
 When you kebab-case your folder names, it helps the rest of us differentiate them from the names of the Typescript classes, methods, functions, variables in your package.
 
-<!-- group related typescript modules into a single package -->
+<!--
 
-<!-- keep individual typescript files <300 lines of code -->
+use index export convention
 
-<!-- use index export convention -->
+every piece of code you export should live in the root of your `src/` directory. Any subfolders should ONLY contain code that is used in the folder directly above it. This makes it easier for the rest of us to find code via a terminal. It also lets us make useful generalizations about the organization of your code, improving findability and information scent.
+
+see: https://www.nngroup.com/articles/information-scent/
+
+-->
 
 <!-- your package should have a single default export, and individual named exports (for tree shaking) -->
 
-<!-- use overloaded methods rather than distinct function names (it's better to have a few customizable functions than many rigid functions) -->
+<!-- overload exports instead of making distinct exports (it's better to have a few customizable functions than many rigid functions)
 
-<!-- prefer fewer methods that can be permuted to achieve more complex results. Never have two methods that have overlapping functionality. -->
+prefer fewer methods that can be permuted to achieve more complex results. Never have two methods that have overlapping functionality.
+-->
 
 ## Publish
 
