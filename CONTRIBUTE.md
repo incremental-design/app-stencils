@@ -107,7 +107,7 @@ You have to build, test, document and package your code before the rest of us ca
 | [Vue 3](#make-user-interfaces-with-vue-3)                   | Provides a declarative and reactive framework for building UIs.                                                                                |
 | [Jest](#test-your-code-with-jest)                           | Runs unit tests.                                                                                                                               |
 | [Storybook](#demo-user-interface-components-with-storybook) | Demos Vue 3 components.                                                                                                                        |
-| [TSdoc](#Document your code with TSdoc)                     | Documents typescript and Vue code.                                                                                                             |
+| [TSdoc](#document-your-code-with-tsdoc)                     | Documents typescript and Vue code.                                                                                                             |
 | [Git LFS](#version-images-with-git-lfs)                     | Stores all of the images and videos used in the documentation separately from the rest of the repository.                                      |
 | [Vue CLI](#Make-vue-3-packages-with-vue-CLI)                | Stubs out Vue 3 Packages.                                                                                                                      |
 | [tsc](#Make-typescript-packages-with-tsc)                   | Stubs out Typescript Packages.                                                                                                                 |
@@ -606,7 +606,28 @@ You probably want to write features, not bugs. Unfortunately, bugs are difficult
 | :------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
 | ![Typescript modules importing other typescript modules in other packages](.readme/diagram-package-imports-bad.png) | ![Typescript modules importing other typescript modules within their own packages](.readme/diagram-package-imports-good.png) |
 
-#### Add folders to your package:
+#### Sort the files in your `src` folder by their exports:
+
+You need to make it easy to find the modules scattered among the typescript files in your package's `src` folder. If you don't organize your modules, this will become increasingly difficult as you add code to your package. That's because there's no intrinsic relationship between a Typescript file and the modules it contains. A single Typescript file can contain as many modules as you want, and each of those modules can import other modules from anywhere in your package. The more you re-use the same modules, the harder it is to find all of the locations in which you used them. To keep this from happening, you need to organize your modules according to the locations in which they are used, i.e.:
+
+1. Place the modules you want to export from your package in one or more files in your package's `src/` folder.
+2. Place the modules you _don't_ want to export from your package in one or more files files in one or more subfolders of your package's `src/` folder.
+3. Make sure that modules only import from the:
+
+- file that contains them.
+- folder that contains the file that contains them.
+- a subfolder of folder that contains the file that contains them.
+
+When you follow these organization rules, a module can only be imported by another module in the same folder, or a module in the parent folder. This reduces the number of files and folders you have to inspect to track down all of the locations in which a module was imported.
+
+| Before                                                                    | After                                                                              |
+| :------------------------------------------------------------------------ | :--------------------------------------------------------------------------------- |
+| ![Example of poorly-sorted modules](.readme/diagram-package-sort-bad.png) | ![Example of well-sorted modules](.readme/diagram-package-sort-good.png)           |
+| Modules import from files in their parent or ancestor folders.            | Modules only import from files in the same folder, or files in a direct subfolder. |
+
+#### Use index files to export the contents of each subfolder:
+
+#### Follow naming conventions:
 
 Whenever you add a folder to a typescript package, name it as follows:
 
@@ -616,17 +637,23 @@ Whenever you add a folder to a typescript package, name it as follows:
 
 When you kebab-case your folder names, it helps the rest of us differentiate them from the names of the Typescript classes, methods, functions, variables in your package.
 
+Also, remember to follow the aforementioned [typescript naming conventions](#follow-typescript-naming-conventions) when you populate your folders with typescript files.
+
+<!-- your package should have a single default export, and individual named exports (for tree shaking) -->
+
+<!-- use index files to export the contents of a subfolder -->
+
 <!--
 
 use index export convention
 
-every piece of code you export should live in the root of your `src/` directory. Any subfolders should ONLY contain code that is used in the folder directly above it. This makes it easier for the rest of us to find code via a terminal. It also lets us make useful generalizations about the organization of your code, improving findability and information scent.
+every piece of code you export should live in the root of your `src/` directory.
 
-see: https://www.nngroup.com/articles/information-scent/
+Any subfolders should ONLY contain code that is used in the folder directly above it. This makes it easier for the rest of us to find code via a terminal. It also lets us make useful generalizations about the organization of your code, improving findability and information scent.
+
+
 
 -->
-
-<!-- your package should have a single default export, and individual named exports (for tree shaking) -->
 
 <!-- overload exports instead of making distinct exports (it's better to have a few customizable functions than many rigid functions)
 
