@@ -643,26 +643,52 @@ When you kebab-case your folder names, it helps the rest of us differentiate the
 
 Also, remember to follow the aforementioned [typescript naming conventions](#follow-typescript-naming-conventions) when you populate your folders with typescript files.
 
-<!-- your package should have a single default export, and individual named exports (for tree shaking) -->
+#### Share both a default export, and named exports from your package:
 
-<!-- use index files to export the contents of a subfolder -->
+Your package needs to be **lightweight**. Ideally, it should add less than a dozen kilobytes to the [final bundle size](https://bundlephobia.com/) of any package that imports it. However, the more code your package contains, the heavier it will get ... unless you split your package into named exports. A named export makes it possible to export individual modules from your package. When we import a named export, only the module and the other modules it imports get added to our final bundle. When we import your package's default export, every module contained in the default export gets added to our final bundle.
 
-<!--
+To export both a default export, and one or more named exports from your package, you need to update the export statements in your package's `src/<name-of-package>.ts` file:
 
-use index export convention
+<table>
+<tr><td colspan="2"><code>src/&lt;name-of-package&gt;.ts</code></td></tr>
+<tr><td>Before</td><td>After</td></tr>
+<tr>
+<td>
+<code class="language-typescript">  
+import { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo } from './utils'
 
-every piece of code you export should live in the root of your `src/` directory.
+export default { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo }
 
-Any subfolders should ONLY contain code that is used in the folder directly above it. This makes it easier for the rest of us to find code via a terminal. It also lets us make useful generalizations about the organization of your code, improving findability and information scent.
+</code>
+</td>
+<td>
+<code class="language-typescript">
+import { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo } from './utils'
 
+export rubChumble;
 
+export pushDinglebop;
 
--->
+export repurposeSchleem;
 
-<!-- overload exports instead of making distinct exports (it's better to have a few customizable functions than many rigid functions)
+export shavePlubis;
 
-prefer fewer methods that can be permuted to achieve more complex results. Never have two methods that have overlapping functionality.
--->
+export cutFleeb;
+
+export receiveGrumbo;
+
+export default { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo }
+
+</code>
+</td>
+</tr>
+</table>
+
+<!-- need to double-check syntax -->
+
+#### Overload named exports:
+
+The more named exports your package contains, the more the rest of us have to learn before we can use any of them. That's because each export relates to the others, and we need to make sure we use the right export. The best way to reduce the number of named exports in your package, without reducing the functionality that you export is to [overload](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads) each of your module's functions, methods, classes, and class constructors, so that the same named export can be instantiated with more than one set of arguments. It's easier for the rest of us to figure out how to instantiate a single, overloaded function with just the right arguments than it is for us to choose the right export, when several of them seem to do the same thing.
 
 ## Publish
 
