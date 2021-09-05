@@ -627,6 +627,10 @@ When you follow these organization rules, a module can only be imported by anoth
 
 #### Use index files to export the contents of each subfolder:
 
+Given that there isn't an intrinsic relationship between modules and the files that contain them, you might want to regroup modules in different files. However, doing this will change the paths to the modules, breaking everything that imports them. To fix this problem, all you need to do is add an `index.ts` file to your folder, and then `export * from <name-of-file>` for each of the other files in the folder. Then, you can `import <name-of-module> from src/<path-to-folder>`, without specifying the file in which the module lives. This makes your import statements much more resilient, and spares the rest of us the tedium of digging through your package's source code to find the specific file that contains a module.
+
+![An `index.ts` file imports and re-exports every module in a folder.](.readme/diagram-index-file.png)
+
 #### Follow naming conventions:
 
 Whenever you add a folder to a typescript package, name it as follows:
