@@ -560,6 +560,18 @@ The more vue components you write, the more you will find yourself rewriting the
 
     ![Add `src` to your `package.json`'s `files` array](./.readme/tsconfig-files-src.gif)
 
+19. Change your package's `src/<name-of-package>.ts` file to PascalCase.
+
+    You need to follow the [naming conventions](#follow-typescript-naming-conventions) for typescript files. To do this:
+
+    - change the name of `src/<name-of-package>.ts` to `src/NameOfPackage.ts`
+    - change your package's `package.json`'s
+
+      - `main` field from `dist/<name-of-package>.js` to `dist/<NameOfPackage>.js`
+      - `module` field from `src/<name-of-package>.ts` to `src/<NameOfPackage>.ts`
+
+      ![](.readme/tsconfig-pascalcase.gif)
+
     Once you're done, your package.json should look something like this:
 
     ```json
@@ -570,8 +582,8 @@ The more vue components you write, the more you will find yourself rewriting the
     "author": "Your Name <your email>",
     "homepage": "https://github.com/incremental-design/app-stencils#readme",
     "license": "MIT",
-    "main": "dist/<name-of-package>.js",
-    "module": "src/<name-of-package>.ts",
+    "main": "dist/<NameOfPackage>.js",
+    "module": "src/<NameOfPackage>.ts",
     "types": "dist/types",
     "files": [
       "dist",
