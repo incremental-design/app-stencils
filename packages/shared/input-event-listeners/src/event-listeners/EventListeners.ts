@@ -1,11 +1,11 @@
 import { stopAndPrevent, Listener } from './listener-utils/';
 
-// !KeydownListener
+// !ScrollListener
 /**
- * KeydownListener
+ * ScrollListener
  */
 
-export const KeydownListener: Listener<void> = (
+export const ScrollListener: Listener<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -14,12 +14,12 @@ export const KeydownListener: Listener<void> = (
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
 
-// !KeyupListener
+// !OverflowListener
 /**
- * KeyupListener
+ * OverflowListener
  */
 
-export const KeyupListener: Listener<void> = (
+export const OverflowListener: Listener<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -27,5 +27,3 @@ export const KeyupListener: Listener<void> = (
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
-
-// need to add keypress listener
