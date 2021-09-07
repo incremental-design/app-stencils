@@ -5,8 +5,8 @@
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "homepage": "https://github.com/incremental-design/app-stencils#readme",
   "license": "MIT",
-  "main": "dist/input-event-listeners.js",
-  "module": "src/input-event-listeners.ts",
+  "main": "dist/InputEventListeners.js",
+  "module": "src/InputEventListeners.ts",
   "types": "dist/types",
   "files": [
     "dist",
