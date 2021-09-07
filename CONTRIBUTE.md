@@ -45,12 +45,28 @@ Most code is located inside the `packages` folder. App stencils splits the code 
 
 App Stencils groups packages according to their contents. Each package contains exactly ONE of the following four types of content:
 
-| Type of content:                                                                     | Where to find it:                             |
-| :----------------------------------------------------------------------------------- | :-------------------------------------------- |
-| Vue 3 [Single File Component](https://v3.vuejs.org/guide/single-file-component.html) | `packages/vue3/component-<name of component>` |
-| Vue 3 [Plugin](https://v3.vuejs.org/guide/plugins.html#plugins)                      | `packages/vue3/plugin-<name of plugin>`       |
-| Vue 3 Helper Script                                                                  | `packages/vue3/utility-<name of script>`      |
-| Typescript Presentation Logic                                                        | `packages/shared/<name-of-package>`           |
+<table>
+<thead>
+<tr>
+<th align="left">Type of content:</th>
+<th align="left">Where to find it:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/single-file-component.html">Single File Component</a></td>
+<td align="left"><code>packages/vue3/component-&lt;name of component&gt;</code></td>
+</tr>
+<tr>
+<td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/plugins.html#plugins">Plugin</a></td>
+<td align="left"><code>packages/vue3/plugin-&lt;name of plugin&gt;</code></td>
+</tr>
+<tr>
+<td align="left">Typescript Presentation Logic</td>
+<td align="left"><code>packages/shared/&lt;name-of-package&gt;</code></td>
+</tr>
+</tbody>
+</table>
 
 ### Documentation
 
@@ -76,12 +92,32 @@ When most of us read an unfamiliar piece of code, several questions flash throug
 
 When you make changes to the code, include the following details in each level of documentation:
 
-| Level of Documentation | Details to include:                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Repository             | <ul><li>Link to the package that contains your code, in [`README.md` → How to install App Stencils: → Packages](./README.MD/#how-to-install-app-stencils)</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| Package                | <ul><li>List of methods, components, classes, functions, modules, or any other "things" that your code provides to its users, in `packages/.../<name-of-package>/README.md` → Usage</li></ul>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| Folder                 | <ul><li>Link to the file that contains your code in `packages/.../<name-of-package>/.../<folder>/README.md` → Contents</li><li>Any changes or additions to the overall functionality of the code contained within `packages/.../<name-of-package>/.../<folder>/`. This includes how logic is spread through the files in the folder, and how the files depend on each other.</li><li>List of methods, components, classes, functions, modules, or any other "things" that your code provides to its users. This is the same list you added to the package level documentation.</li><li>Any special instructions for changing the code within a file, including a list of the sections of code that should <em>not</em> be altered.</li></ul> |
-| File                   | <ul><li>Any [`tsdoc`](https://tsdoc.org/), [`jsdoc`](https://jsdoc.app), [`vue-docgen`](https://vue-styleguidist.github.io/docs/Docgen.html) or other [multi-line comments](https://www.w3schools.com/js/js_comments.asp) that describe what each block of code does. This includes the parameters it accepts, the arguments it returns, the side effects (also known as state changes) it has when it runs, and the reason you structured the code as you did.</li></ul>                                                                                                                                                                                                                                                                    |
+<table>
+<thead>
+<tr>
+<th>Level of Documentation</th>
+<th>Details to include:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repository</td>
+<td><ul><li>Link to the package that contains your code, in <a href="./README.MD/#how-to-install-app-stencils"><code>README.md</code> → How to install App Stencils: → Packages</a></li></ul></td>
+</tr>
+<tr>
+<td>Package</td>
+<td><ul><li>List of methods, components, classes, functions, modules, or any other "things" that your code provides to its users, in <code>packages/.../&lt;name-of-package&gt;/README.md</code> → Usage</li></ul></td>
+</tr>
+<tr>
+<td>Folder</td>
+<td><ul><li>Link to the file that contains your code in <code>packages/.../&lt;name-of-package&gt;/.../&lt;folder&gt;/README.md</code> → Contents</li><li>Any changes or additions to the overall functionality of the code contained within <code>packages/.../&lt;name-of-package&gt;/.../&lt;folder&gt;/</code>. This includes how logic is spread through the files in the folder, and how the files depend on each other.</li><li>List of methods, components, classes, functions, modules, or any other "things" that your code provides to its users. This is the same list you added to the package level documentation.</li><li>Any special instructions for changing the code within a file, including a list of the sections of code that should <em>not</em> be altered.</li></ul></td>
+</tr>
+<tr>
+<td>File</td>
+<td><ul><li>Any <a href="https://tsdoc.org/"><code>tsdoc</code></a>, <a href="https://jsdoc.app"><code>jsdoc</code></a>, <a href="https://vue-styleguidist.github.io/docs/Docgen.html"><code>vue-docgen</code></a> or other <a href="https://www.w3schools.com/js/js_comments.asp">multi-line comments</a> that describe what each block of code does. This includes the parameters it accepts, the arguments it returns, the side effects (also known as state changes) it has when it runs, and the reason you structured the code as you did.</li></ul></td>
+</tr>
+</tbody>
+</table>
 
 App Stencils also contains a **Storybook** - a set of interactive demos of each Vue component in the repository. To launch these demos, run `lerna run storybook:serve`.
 
@@ -97,20 +133,64 @@ To learn how to add a component to Storybook, see: ["Use Storybook to demo your 
 
 You have to build, test, document and package your code before the rest of us can use it. App Stencils’ tooling not only simplifies all of these tasks, but also makes it easy to collaborate with the rest of us. That’s because each of the following tools standardizes your code. Without them, it would be difficult for the rest of us to read and edit what you wrote.
 
-| Tool                                                        | What it does:                                                                                                                                  |
-| ----------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Lerna](#run-tools-with-lerna)                              | Splits the App Stencils codebase into multiple NPM packages, each of which can be separately installed. Runs Jest, Storybook, Vue CLI and tsc. |
-| [Commitlint](#format-your-commits-with-commitlint)          | Formats commit messages, and rebuilds every package prior to each commit.                                                                      |
-| [Typescript](#Write-your-code-in-typescript)                | Type-checks your code as you write it.                                                                                                         |
-| [ESlint](#check-your-code-with-eslint)                      | Checks your code for errors every time Lerna or Commitlint rebuild it.                                                                         |
-| [Prettier](#format-your-code-with-prettier)                 | Formats `.ts`, `.js`, `.vue` and most other files every time you save your changes.                                                            |
-| [Vue 3](#make-user-interfaces-with-vue-3)                   | Provides a declarative and reactive framework for building UIs.                                                                                |
-| [Jest](#test-your-code-with-jest)                           | Runs unit tests.                                                                                                                               |
-| [Storybook](#demo-user-interface-components-with-storybook) | Demos Vue 3 components.                                                                                                                        |
-| [TSdoc](#document-your-code-with-tsdoc)                     | Documents typescript and Vue code.                                                                                                             |
-| [Git LFS](#version-images-with-git-lfs)                     | Stores all of the images and videos used in the documentation separately from the rest of the repository.                                      |
-| [Vue CLI](#Make-vue-3-packages-with-vue-CLI)                | Stubs out Vue 3 Packages.                                                                                                                      |
-| [tsc](#Make-typescript-packages-with-tsc)                   | Stubs out Typescript Packages.                                                                                                                 |
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="#run-tools-with-lerna">Lerna</a></td>
+<td>Splits the App Stencils codebase into multiple NPM packages, each of which can be separately installed. Runs Jest, Storybook, Vue CLI and tsc.</td>
+</tr>
+<tr>
+<td><a href="#format-your-commits-with-commitlint">Commitlint</a></td>
+<td>Formats commit messages, and rebuilds every package prior to each commit.</td>
+</tr>
+<tr>
+<td><a href="#Write-your-code-in-typescript">Typescript</a></td>
+<td>Type-checks your code as you write it.</td>
+</tr>
+<tr>
+<td><a href="#check-your-code-with-eslint">ESlint</a></td>
+<td>Checks your code for errors every time Lerna or Commitlint rebuild it.</td>
+</tr>
+<tr>
+<td><a href="#format-your-code-with-prettier">Prettier</a></td>
+<td>Formats <code>.ts</code>, <code>.js</code>, <code>.vue</code> and most other files every time you save your changes.</td>
+</tr>
+<tr>
+<td><a href="#make-user-interfaces-with-vue-3">Vue 3</a></td>
+<td>Provides a declarative and reactive framework for building UIs.</td>
+</tr>
+<tr>
+<td><a href="#test-your-code-with-jest">Jest</a></td>
+<td>Runs unit tests.</td>
+</tr>
+<tr>
+<td><a href="#demo-user-interface-components-with-storybook">Storybook</a></td>
+<td>Demos Vue 3 components.</td>
+</tr>
+<tr>
+<td><a href="#document-your-code-with-tsdoc">TSdoc</a></td>
+<td>Documents typescript and Vue code.</td>
+</tr>
+<tr>
+<td><a href="#version-images-with-git-lfs">Git LFS</a></td>
+<td>Stores all of the images and videos used in the documentation separately from the rest of the repository.</td>
+</tr>
+<tr>
+<td><a href="#Make-vue-3-packages-with-vue-CLI">Vue CLI</a></td>
+<td>Stubs out Vue 3 Packages.</td>
+</tr>
+<tr>
+<td><a href="#Make-typescript-packages-with-tsc">tsc</a></td>
+<td>Stubs out Typescript Packages.</td>
+</tr>
+</tbody>
+</table>
 
 <!-- need to add a section on less and naming conventions ... otherwise less code is going to get super confusing -->
 
@@ -124,18 +204,66 @@ Lerna lets you develop the code in App Stencils as if it was a single package, e
 
 Use the following Lerna commands to run tasks in App Stencils:
 
-| Task                                                                                                                             | Lerna Command               | Yarn command it replaces:  | NPM command it replaces:           |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------- | -------------------------- | ---------------------------------- |
-| Stub out a new Package                                                                                                           | `lerna create`              | n/a                        | n/a                                |
-| Build Packages                                                                                                                   | `lerna run build`           | `yarn build`               | `npm run build`                    |
-| Install the dependencies listed in each package's `package.json`                                                                 | `lerna bootstrap`           | `yarn install`             | `npm install`                      |
-| Delete each package's `node_modules`                                                                                             | `lerna clean`               | `rm -rf ./node_modules`    | `rm -rf ./node_modules`            |
-| Add a [dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies) to a package's `package.json`        | `lerna add <package>`       | `yarn add <package>`       | `npm install <package>`            |
-| Add a [dev dependency](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies) to a package's `package.json` | `lerna add --dev <package>` | `yarn add --dev <package>` | `npm install --save-dev <package>` |
-| Run each package's source code in a [Development Server](https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve)     | `lerna run serve`           | `yarn serve`               | `npm run serve`                    |
-| Run unit tests                                                                                                                   | `lerna run test:unit`       | `yarn test:unit`           | `npm run test:unit`                |
-
-<!-- ### Use Commitlint to format your commit messages: -->
+<table>
+<thead>
+<tr>
+<th>Task</th>
+<th>Lerna Command</th>
+<th>Yarn command it replaces:</th>
+<th>NPM command it replaces:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stub out a new Package</td>
+<td><code>lerna create</code></td>
+<td>n/a</td>
+<td>n/a</td>
+</tr>
+<tr>
+<td>Build Packages</td>
+<td><code>lerna run build</code></td>
+<td><code>yarn build</code></td>
+<td><code>npm run build</code></td>
+</tr>
+<tr>
+<td>Install the dependencies listed in each package's <code>package.json</code></td>
+<td><code>lerna bootstrap</code></td>
+<td><code>yarn install</code></td>
+<td><code>npm install</code></td>
+</tr>
+<tr>
+<td>Delete each package's <code>node_modules</code></td>
+<td><code>lerna clean</code></td>
+<td><code>rm -rf ./node_modules</code></td>
+<td><code>rm -rf ./node_modules</code></td>
+</tr>
+<tr>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies">dependency</a> to a package's <code>package.json</code></td>
+<td><code>lerna add &lt;package&gt;</code></td>
+<td><code>yarn add &lt;package&gt;</code></td>
+<td><code>npm install &lt;package&gt;</code></td>
+</tr>
+<tr>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies">dev dependency</a> to a package's <code>package.json</code></td>
+<td><code>lerna add --dev &lt;package&gt;</code></td>
+<td><code>yarn add --dev &lt;package&gt;</code></td>
+<td><code>npm install --save-dev &lt;package&gt;</code></td>
+</tr>
+<tr>
+<td>Run each package's source code in a <a href="https://cli.vuejs.org/guide/cli-service.html#vue-cli-service-serve">Development Server</a></td>
+<td><code>lerna run serve</code></td>
+<td><code>yarn serve</code></td>
+<td><code>npm run serve</code></td>
+</tr>
+<tr>
+<td>Run unit tests</td>
+<td><code>lerna run test:unit</code></td>
+<td><code>yarn test:unit</code></td>
+<td><code>npm run test:unit</code></td>
+</tr>
+</tbody>
+</table>
 
 ### Format your commits with Commitlint
 
@@ -166,9 +294,25 @@ Commitlint will prevent you from making commits unless your commit message conta
 
 For example:
 
-| <table><tr><td>type</td><td>subject</td></tr><tr><td>`feat(plumbus):` </td><td>`repurpose the batch of schleem`</td></tr></table>                                                                                                                         |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <table><tr><td>body</td></tr><tr><td><ol><li>Add the `dinglebopper` to the `blamf`.</li><li>Cut the `fleeb`.</li><li>Chumble the `hizzards`.</li><li>Make the `plumbus`.</li></ol><br/>See: https://www.youtube.com/watch?v=eMJk4y9NGvE</td></tr></table> |
+<table>
+<tbody>
+<!--  -->
+<tr>
+<th>Type</th>
+<th>Subject</th>
+</tr>
+<!--  -->
+<tr>
+<td>feat(plumbus):</td>
+<td>repurpose the batch of schleem</td>
+</tr>
+<!--  -->
+<tr><th colspan="2">Body</th></tr>
+<!--  -->
+<tr><td colspan="2"><ol><li>Add the <code>dinglebopper</code> to the `blamf.</li><li>Cut the <code>fleeb</code>.</li><li>Chumble the <code>hizzards</code>.</li><li>Make the <code>plumbus</code>.</li></ol><br>See: <a href="https://www.youtube.com/watch?v=eMJk4y9NGvE">https://www.youtube.com/watch?v=eMJk4y9NGvE</a></td></tr>
+<!--  -->
+</tbody>
+</table>
 
 #### Break commits into small pieces:
 
@@ -190,11 +334,32 @@ When the rest of us browse your commit history, we should be able to understand 
 
 Git clients, such as [Tower](https://www.git-tower.com/mac?gclid=CjwKCAjwt8uGBhBAEiwAayu_9alH0wnniAyMva6TGRRNLtSv2kftMmfa6egH1qzrEa7xFAnCXco24RoCoWYQAvD_BwE) do not have access to your `$PATH` by default. Commitlint cannot function unless you manually provide your Git client with your `$PATH`. You can do this as follows:
 
-| Git Client     | Platform | How to provide `$PATH`                                            |
-| :------------- | :------- | :---------------------------------------------------------------- |
-| Git Tower      | MacOS    | https://www.git-tower.com/help/guides/integration/environment/mac |
-| Github Desktop | MacOS    |                                                                   |
-| Sublime Merge  | MacOS    |                                                                   |
+<table>
+<thead>
+<tr>
+<th align="left">Git Client</th>
+<th align="left">Platform</th>
+<th align="left">How to provide <code>$PATH</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Git Tower</td>
+<td align="left">MacOS</td>
+<td align="left"><a href="https://www.git-tower.com/help/guides/integration/environment/mac">https://www.git-tower.com/help/guides/integration/environment/mac</a></td>
+</tr>
+<tr>
+<td align="left">Github Desktop</td>
+<td align="left">MacOS</td>
+<td align="left"></td>
+</tr>
+<tr>
+<td align="left">Sublime Merge</td>
+<td align="left">MacOS</td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
 
 If Lerna is installed in your home directory, your git client probably won't be able to find it, and will error when you try to commit.
 
@@ -206,11 +371,28 @@ If Lerna is installed in your home directory, your git client probably won't be 
 
 Before you write any code, make sure you install the Typescript extension for your editor.
 
-| Editor       | Extension                                                                                                                                               |
-| :----------- | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Panic Nova   | https://extensions.panic.com/extensions/apexskier/apexskier.typescript/ ![How to install typescript in Panic Nova](./.readme/get-ts-extension-nova.gif) |
-| VScode       | Typescript extension is built in - there's nothing to install.                                                                                          |
-| Sublime Text | https://packagecontrol.io/packages/TypeScript                                                                                                           |
+<table>
+<thead>
+<tr>
+<th align="left">Editor</th>
+<th align="left">Extension</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Panic Nova</td>
+<td align="left"><a href="https://extensions.panic.com/extensions/apexskier/apexskier.typescript/">https://extensions.panic.com/extensions/apexskier/apexskier.typescript/</a> <img src="./.readme/get-ts-extension-nova.gif" alt="How to install typescript in Panic Nova"></td>
+</tr>
+<tr>
+<td align="left">VScode</td>
+<td align="left">Typescript extension is built in - there's nothing to install.</td>
+</tr>
+<tr>
+<td align="left">Sublime Text</td>
+<td align="left"><a href="https://packagecontrol.io/packages/TypeScript">https://packagecontrol.io/packages/TypeScript</a></td>
+</tr>
+</tbody>
+</table>
 
 If you want Typescript to give you helpful feedback as you type, you need to make sure that the Typescript language server is running. Although Typescript checks your code for errors, it doesn't share the results with your editor. When you install the Typescript language server, it connects typescript to your editor, so you can see errors as you type. And that's not all - it also augments your editor with autocompletion and jump-to-definition support. That means that as you type in the names of classes, objects, methods or functions, the Typescript language server will grab their options, and stick them into your editor's autocompletion menu. This lets you browse and select, rather than type (and misspell), options. It also locates the source code for any class, object, method or function that you import into your code, so you don't have to dig through the repository looking for it. It's like a spellcheck and dictionary, but for your code. Without the Typescript language server, you won't receive any of these assists.
 
@@ -228,17 +410,59 @@ All of the App Stencils code compiles to browser-ready Javascript. However, the 
 
 Whenever you create a typescript file, name it as follows:
 
-| File:  | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
-| ------ | ------------------------------- | --------------- | --------------- | --------------------------- |
-| `*.ts` | Typescript Classes or Functions | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
+<table>
+<thead>
+<tr>
+<th>File:</th>
+<th>Contents:</th>
+<th>Capitalization:</th>
+<th>Part of Speech:</th>
+<th>Example:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*.ts</code></td>
+<td>Typescript Classes or Functions</td>
+<td>PascalCase</td>
+<td>Subject</td>
+<td><code>VueSeamlssStateMachine.ts</code></td>
+</tr>
+</tbody>
+</table>
 
 Whenever you add code to a `.ts` file within a package, name it as follows:
 
-| Code:                                       | Capitalization: | Part of Speech: | Example:                               |
-| ------------------------------------------- | --------------- | --------------- | -------------------------------------- |
-| exportable `const`, `var`, `let` or `class` | PascalCase      | Subject         | `ClickListener`                        |
-| object property                             | camelCase       | Subject         | `ClickListener.duration`               |
-| method                                      | camelCase       | Predicate       | `ClickListener.calculateVelocity(...)` |
+<table>
+<thead>
+<tr>
+<th>Code:</th>
+<th>Capitalization:</th>
+<th>Part of Speech:</th>
+<th>Example:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>exportable <code>const</code>, <code>var</code>, <code>let</code> or <code>class</code></td>
+<td>PascalCase</td>
+<td>Subject</td>
+<td><code>ClickListener</code></td>
+</tr>
+<tr>
+<td>object property</td>
+<td>camelCase</td>
+<td>Subject</td>
+<td><code>ClickListener.duration</code></td>
+</tr>
+<tr>
+<td>method</td>
+<td>camelCase</td>
+<td>Predicate</td>
+<td><code>ClickListener.calculateVelocity(...)</code></td>
+</tr>
+</tbody>
+</table>
 
 When the rest of us read your code, we need to be able to guess the meaning of each word, without peeking at its type definitions or documentation. As the App Stencils codebase grows, this becomes more difficult. When you follow this naming convention, it makes this task easier. That's because the capitalization and part-of-speech indicate the affordances of the code behind the word. Even if we don't know the definition and behavior of a word, it's naming convention denotes its general characteristics. This reduces the likelihood that we will have to look up the meaning of a word to understand the code surrounding it. When you follow the naming convention, you improve the readability of your code.
 
@@ -258,19 +482,71 @@ Every user interface component you write needs to be **irreducible** and **confi
 
 Whenever you create a `vue` file, name it as follows:
 
-| File:   | Contents:     | Capitalization: | Part of Speech: | Example:                    |
-| ------- | ------------- | --------------- | --------------- | --------------------------- |
-| `*.vue` | Vue component | PascalCase      | Subject         | `VueSeamlssStateMachine.ts` |
+<table>
+<thead>
+<tr>
+<th>File:</th>
+<th>Contents:</th>
+<th>Capitalization:</th>
+<th>Part of Speech:</th>
+<th>Example:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*.vue</code></td>
+<td>Vue component</td>
+<td>PascalCase</td>
+<td>Subject</td>
+<td><code>VueSeamlssStateMachine.ts</code></td>
+</tr>
+</tbody>
+</table>
 
 Whenever you add code to a `.vue` file, name it as follows:
 
-| Code:                                       | Capitalization:                                                                    | Part of Speech:                                                                              | Example:                                |
-| ------------------------------------------- | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Component or Directive                      | PascalCase                                                                         | [Multi-Word](https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential) Subject | `ClickListener`                         |
-| Data, Prop, Computed                        | camelCase                                                                          | Subject                                                                                      | `ClickListener.duration`                |
-| Method                                      | camelCase                                                                          | Predicate                                                                                    | `ClickListener.calculateVelocity(...)`  |
-| Event                                       | [kebab-case](https://vuejs.org/v2/guide/components-custom-events.html#Event-Names) | Imperative                                                                                   | `send-message`, `update-state`, `click` |
-| exportable `const`, `var`, `let` or `class` | PascalCase                                                                         | Subject                                                                                      | `ClickListener`                         |
+<table>
+<thead>
+<tr>
+<th>Code:</th>
+<th>Capitalization:</th>
+<th>Part of Speech:</th>
+<th>Example:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Component or Directive</td>
+<td>PascalCase</td>
+<td><a href="https://vuejs.org/v2/style-guide/#Multi-word-component-names-essential">Multi-Word</a> Subject</td>
+<td><code>ClickListener</code></td>
+</tr>
+<tr>
+<td>Data, Prop, Computed</td>
+<td>camelCase</td>
+<td>Subject</td>
+<td><code>ClickListener.duration</code></td>
+</tr>
+<tr>
+<td>Method</td>
+<td>camelCase</td>
+<td>Predicate</td>
+<td><code>ClickListener.calculateVelocity(...)</code></td>
+</tr>
+<tr>
+<td>Event</td>
+<td><a href="https://vuejs.org/v2/guide/components-custom-events.html#Event-Names">kebab-case</a></td>
+<td>Imperative</td>
+<td><code>send-message</code>, <code>update-state</code>, <code>click</code></td>
+</tr>
+<tr>
+<td>exportable <code>const</code>, <code>var</code>, <code>let</code> or <code>class</code></td>
+<td>PascalCase</td>
+<td>Subject</td>
+<td><code>ClickListener</code></td>
+</tr>
+</tbody>
+</table>
 
 When we read your Vue components, we need to be able to guess the meaning of unfamiliar words, without searching for their definitions elsewhere in the App Stencils codebase. This is especially important in Vue single-file-components, which mix different syntaxes together, reducing readability. Just like the [words in your typescript files](#follow-typescript-naming-conventions), the words in your Vue components use capitalization and part-of-speech to indicate their affordances. This restores the readability of your Vue components.
 
@@ -373,12 +649,32 @@ This starts an instance of the Jest unit test framework for each package that co
 
 The more vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript modules, regardless of where it is located, relative to your module. Without strict organization, what starts as just a handful of imports can quickly grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps all of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
 
-| Before                                                                                                                                                                                                                                                                  | After                                                                                                                                                                                                                                                                                                                                    |
-| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![Vue components importing typescript modules from each other.](.readme/diagram-repo-imports-bad.png)                                                                                                                                                                   | ![Vue components importing typescript modules from `packages/shared`](.readme/diagram-repo-imports-good.png)                                                                                                                                                                                                                             |
-| This is bad because:                                                                                                                                                                                                                                                    | This is good because:                                                                                                                                                                                                                                                                                                                    |
-| <ul><li>vue component packages have to export both vue components and typescript modules.</li><li>vue components import typescript modules from other vue component packages</li><li>Typescript modules import other typescript modules in different packages</li></ul> | <ul><li>Vue components only import typescript modules from the packages in the `packages/shared` folder</li><li>Typescript modules _don't_ import modules from other typescript packages</li></ul>                                                                                                                                       |
-| This makes it difficult to update any of the typescript modules without introducing bugs that are difficult to trace and fix.                                                                                                                                           | This makes it easy to trace imports from within packages in the `packages/vue3` to packages in the `packages/shared` directory, and also guarantees that typescript modules that aren't in the same package never depend on each other. This makes shared code easier to locate, and update. It also makes bugs easier to trace and fix. |
+<table>
+<thead>
+<tr>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><img src=".readme/diagram-repo-imports-bad.png" alt="Vue components importing typescript modules from each other."></td>
+<td align="left"><img src=".readme/diagram-repo-imports-good.png" alt="Vue components importing typescript modules from packages/shared"></td>
+</tr>
+<tr>
+<td align="left">This is bad because:</td>
+<td align="left">This is good because:</td>
+</tr>
+<tr>
+<td align="left"><ul><li>vue component packages have to export both vue components and typescript modules.</li><li>vue components import typescript modules from other vue component packages</li><li>Typescript modules import other typescript modules in different packages</li></ul></td>
+<td align="left"><ul><li>Vue components only import typescript modules from the packages in the <code>packages/shared</code> folder</li><li>Typescript modules <em>don't</em> import modules from other typescript packages</li></ul></td>
+</tr>
+<tr>
+<td align="left">This makes it difficult to update any of the typescript modules without introducing bugs that are difficult to trace and fix.</td>
+<td align="left">This makes it easy to trace imports from within packages in the <code>packages/vue3</code> to packages in the <code>packages/shared</code> directory, and also guarantees that typescript modules that aren't in the same package never depend on each other. This makes shared code easier to locate, and update. It also makes bugs easier to trace and fix.</td>
+</tr>
+</tbody>
+</table>
 
 #### Stub out a typescript package:
 
@@ -386,23 +682,77 @@ The more vue components you write, the more you will find yourself rewriting the
 
    ![`lerna create @incremental.design/input-event-listeners shared --access public --es-module --license MIT`](./.readme/lerna-create-package.gif)
 
-   | `lerna create`                    | `@incremental.design/<name-of-package>`                                                                                                                                                                                                                                                                                   | `shared`                                                 | `--access public`                          | `--es-module`                                                                                                                                                                                     | `--license MIT`                            |
-   | :-------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------- | :----------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------- |
-   | stubs out a `package.json` for... | a package that is <table><tr><td>[scoped](https://docs.npmjs.com/cli/v7/using-npm/scope) to</td><td>[`@incremental.design`](https://www.npmjs.com/org/incremental.design)</td></tr><tr><td>[named](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#name)</td><td>`<name-of-package>`</td></tr></table> and ... | is located at `packages/shared/<name-of-package>` and... | should be published to `npmjs.com`, and... | should have both a [`main` entry point](https://docs.npmjs.com/cli/v7/configuring-npm/package-json#main) and a [`modules` entry point](https://github.com/rollup/rollup/wiki/pkg.module), and ... | should have the `MIT` open source license. |
-
+    <table>
+    <thead>
+    <tr>
+    <th align="left"><code>lerna create</code></th>
+    <th align="left"><code>@incremental.design/&lt;name-of-package&gt;</code></th>
+    <th align="left"><code>shared</code></th>
+    <th align="left"><code>--access public</code></th>
+    <th align="left"><code>--es-module</code></th>
+    <th align="left"><code>--license MIT</code></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td align="left">stubs out a <code>package.json</code> for...</td>
+    <td align="left">a package that is <table><tbody><tr><td><a href="https://docs.npmjs.com/cli/v7/using-npm/scope">scoped</a> to</td><td><a href="https://www.npmjs.com/org/incremental.design"><code>@incremental.design</code></a></td></tr><tr><td><a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#name">named</a></td><td><code>&lt;name-of-package&gt;</code></td></tr></tbody></table> and ...</td>
+    <td align="left">is located at <code>packages/shared/&lt;name-of-package&gt;</code> and...</td>
+    <td align="left">should be published to <code>npmjs.com</code>, and...</td>
+    <td align="left">should have both a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#main"><code>main</code> entry point</a> and a <a href="https://github.com/rollup/rollup/wiki/pkg.module"><code>modules</code> entry point</a>, and ...</td>
+    <td align="left">should have the <code>MIT</code> open source license.</td>
+    </tr>
+    </tbody>
+    </table>
+    
    <br/>
 
-   | Prompt           | Answer                                                   |
-   | :--------------- | :------------------------------------------------------- |
-   | `package name`   | Enter ↵                                                  |
-   | `version`        | Enter ↵                                                  |
-   | `description`    | Explain what this package contains in up to 3 sentences. |
-   | `keywords`       | Enter ↵                                                  |
-   | `homepage`       | Enter ↵                                                  |
-   | `license`        | Enter ↵                                                  |
-   | `entry point`    | Enter ↵                                                  |
-   | `module entry`   | Enter ↵                                                  |
-   | `git repository` | Enter ↵                                                  |
+    <table>
+    <thead>
+    <tr>
+    <th align="left">Prompt</th>
+    <th align="left">Answer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td align="left"><code>package name</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>version</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>description</code></td>
+    <td align="left">Explain what this package contains in up to 3 sentences.</td>
+    </tr>
+    <tr>
+    <td align="left"><code>keywords</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>homepage</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>license</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>entry point</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>module entry</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    <tr>
+    <td align="left"><code>git repository</code></td>
+    <td align="left">Enter ↵</td>
+    </tr>
+    </tbody>
+    </table>
 
 2. Remove the `__tests__` folder from the package.
 
@@ -614,9 +964,20 @@ The more vue components you write, the more you will find yourself rewriting the
 
 You probably want to write features, not bugs. Unfortunately, bugs are difficult to avoid, especially when your typescript modules depend on others. Even if your module is free of bugs, it can inherit bugs from the modules it imports. Therefore, the best way to limit the spread of bugs is to limit what your module imports. Don't import any typescript modules from other packages in the `packages/shared` folder. Only import from within the same package. If you absolutely need to import a module that is inside another package, move your module into that package, first. When you restrict the location of your imports, it keeps bugs from spreading among the packages in the `packages/shared` folder.
 
-| Before                                                                                                              | After                                                                                                                        |
-| :------------------------------------------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------------------- |
-| ![Typescript modules importing other typescript modules in other packages](.readme/diagram-package-imports-bad.png) | ![Typescript modules importing other typescript modules within their own packages](.readme/diagram-package-imports-good.png) |
+<table>
+<thead>
+<tr>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><img src=".readme/diagram-package-imports-bad.png" alt="Typescript modules importing other typescript modules in other packages"></td>
+<td align="left"><img src=".readme/diagram-package-imports-good.png" alt="Typescript modules importing other typescript modules within their own packages"></td>
+</tr>
+</tbody>
+</table>
 
 #### Sort the files in your `src` folder by their imports:
 
@@ -628,10 +989,24 @@ When you modify a module, you need to be able to find all of the files into whic
 
 When you follow these organization rules, a module can only be imported by another module in the same folder, or a module in the parent folder. This reduces the number of files and folders you have to inspect to track down all of the locations in which a module was imported.
 
-| Before                                                                    | After                                                                              |
-| :------------------------------------------------------------------------ | :--------------------------------------------------------------------------------- |
-| ![Example of poorly-sorted modules](.readme/diagram-package-sort-bad.png) | ![Example of well-sorted modules](.readme/diagram-package-sort-good.png)           |
-| Modules import from files in their parent or ancestor folders.            | Modules only import from files in the same folder, or files in a direct subfolder. |
+<table>
+<thead>
+<tr>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><img src=".readme/diagram-package-sort-bad.png" alt="Example of poorly-sorted modules"></td>
+<td align="left"><img src=".readme/diagram-package-sort-good.png" alt="Example of well-sorted modules"></td>
+</tr>
+<tr>
+<td align="left">Modules import from files in their parent or ancestor folders.</td>
+<td align="left">Modules only import from files in the same folder, or files in a direct subfolder.</td>
+</tr>
+</tbody>
+</table>
 
 #### Use index files to export the contents of each subfolder:
 
@@ -643,9 +1018,26 @@ Given that there isn't an intrinsic relationship between modules and the files t
 
 Whenever you add a folder to a typescript package, name it as follows:
 
-| Type:  | Contents: | Capitalization: | Part of Speech: | Example:          |
-| ------ | --------- | --------------- | --------------- | ----------------- |
-| folder | anything  | kebab-case      | Subject         | `event-listeners` |
+<table>
+<thead>
+<tr>
+<th>Type:</th>
+<th>Contents:</th>
+<th>Capitalization:</th>
+<th>Part of Speech:</th>
+<th>Example:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>folder</td>
+<td>anything</td>
+<td>kebab-case</td>
+<td>Subject</td>
+<td><code>event-listeners</code></td>
+</tr>
+</tbody>
+</table>
 
 When you kebab-case your folder names, it helps the rest of us differentiate them from the names of the Typescript classes, methods, functions, variables in your package.
 
@@ -658,18 +1050,24 @@ Your package needs to be **lightweight**. Ideally, it should add less than a doz
 To export both a default export, and one or more named exports from your package, you need to update the export statements in your package's `src/<name-of-package>.ts` file:
 
 <table>
-<tr><td colspan="2"><code>src/&lt;name-of-package&gt;.ts</code></td></tr>
-<tr><td>Before</td><td>After</td></tr>
+<tr><th align="left"><code>src/&lt;name-of-package&gt;.ts</code></th></tr>
+<tr><th align="left">Before</th></tr>
 <tr>
 <td>
+<pre>
 <code class="language-typescript">  
 import { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo } from './utils'
 
 export default { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo }
 
 </code>
+</pre>
 </td>
+</tr>
+<tr><th align="left">After</th></tr>
+<tr>
 <td>
+<pre>
 <code class="language-typescript">
 import { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo } from './utils'
 
@@ -688,6 +1086,7 @@ export receiveGrumbo;
 export default { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFleeb, receiveGrumbo }
 
 </code>
+</pre>
 </td>
 </tr>
 </table>
