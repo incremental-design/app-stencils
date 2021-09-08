@@ -4,12 +4,12 @@ export default {};
 
 import { stopAndPrevent, Handler } from './handler-utils/';
 
-// !FocusHandler
+// !FocusEventHandler
 /**
- * FocusHandler
+ * FocusEventHandler
  */
 
-export const FocusHandler: Handler<void> = (
+export const FocusEventHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -31,45 +31,3 @@ export const FocusHandler: Handler<void> = (
 // ) => {
 //   stopAndPrevent(e, stopPropogation, preventDefault);
 // };
-
-// !FocusinHandler
-/**
- * FocusinHandler
- */
-
-export const FocusinHandler: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
-
-// !FocusoutHandler
-/**
- * FocusoutHandler
- */
-
-export const FocusoutHandler: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
-
-// !BlurHandler
-/**
- * BlurHandler
- */
-
-export const BlurHandler: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
