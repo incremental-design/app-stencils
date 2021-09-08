@@ -7,16 +7,20 @@ see: https://towardsdatascience.com/how-to-write-an-awesome-readme-68bf4be91f8b
 
 For bonus points, make the banner animated with html, css and svg
 
+maybe some cool retro image with a bunch of input ports and cords?
+
 see: https://github.com/sindresorhus/css-in-readme-like-wat
  -->
 
-**Make highly-interactive user interfaces, without the boilerplate.**
+**Handle every user input, without the boilerplate.**
 
-The best user interfaces respond to _everything_ a user does: every mouse movement, touch, keypress, and even device motion. Over the past decade, web APIs have grown to respond to more inputs: from mice and keyboards, to touchscreens, accelerometers and even gamepads. However, responding to _all_ of these inputs takes a lot of logic.The more inputs your code responds to, the more logic it needs to contain, and the more bloated it becomes. `input-event-listeners` moves all of this logic out of your code, so you can respond to every [event](https://developer.mozilla.org/en-US/docs/Web/API/Event), without bloating your code.
+The best user interfaces respond to _everything_ a user does: every mouse movement, touch, keypress, and even device motion. Over the past decade, web APIs have grown to respond to more inputs: from mice and keyboards, to touchscreens, accelerometers and even gamepads. However, responding to _all_ of these inputs takes a lot of logic. The more inputs your code responds to, the more logic it needs to contain, and the more bloated it becomes. `input-event-handlers` moves all of this logic out of your code, so you can respond to every [event](https://developer.mozilla.org/en-US/docs/Web/API/Event), without bloating it.
 
-Use the listeners in this package to:
+Use the handlers in this package to:
 
-- **Filter the useful information out of input events, with just one line of code:**
+- **Filter the useful information out of input events, with just five lines of code:**
+
+  ![Filter an event with just 5 lines of code](../../../.readme/diagram-filter-events-5-lines.png)
 
   Feed an event into its corresponding listener in `input-event-listener` and get an object with just the values you _actually_ need to handle an event. For example:
 
@@ -25,6 +29,8 @@ Use the listeners in this package to:
 <!-- can we automatically pick the correct listener by introspecting the event? Need to write a switch statement with instanceof event -->
 
 - **Calculate changes between instances of input events, with a single argument:**
+
+  ![To make the handler function calculate the differences between an event and a previous event, feed the results of the previous event back into the handler.](../../../.readme/diagram-calculate-events-1-argument.png)
 
   Feed a listener the current instance of a DOM event, and the object it returned from any previous event, and it will automatically calculate the changes between the two. For example:
 

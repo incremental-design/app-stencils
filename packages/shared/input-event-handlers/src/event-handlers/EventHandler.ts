@@ -5,7 +5,7 @@ import { stopAndPrevent, Handler } from './handler-utils/';
  * ScrollListener
  */
 
-export const ScrollListener: Handler<void> = (
+export const ScrollHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -19,7 +19,7 @@ export const ScrollListener: Handler<void> = (
  * OverflowListener
  */
 
-export const OverflowListener: Handler<void> = (
+export const OverflowHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -31,3 +31,5 @@ export const OverflowListener: Handler<void> = (
 // could potentially listen to cancel, canplay, canplaythrough, change, close, cuechange, durationchange, emptied, ended, input, invalid, load, loadeddata, loadedmetadata, loadstart, pause, play, playing, ratechange, reset, seeked, seeking, select, selectionchange, selectstart, stalled, submit, suspend, timeupdate, toggle, volumechange, waiting
 
 // need to show which elements these listeners are valid for. Some are valid for video players, some are valid for window only
+
+// need different handlers because all of these events have different information ... even though they are all the event class!
