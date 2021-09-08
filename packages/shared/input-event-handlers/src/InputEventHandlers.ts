@@ -1,4 +1,4 @@
-export * from './event-listeners';
+export * from './event-handlers';
 
 // make a default export with all the methods.
 

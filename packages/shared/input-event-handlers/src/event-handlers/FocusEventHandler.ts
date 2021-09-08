@@ -2,14 +2,14 @@ export default {};
 
 // blur, focus, focusin, focusout
 
-import { stopAndPrevent, Listener } from './listener-utils/';
+import { stopAndPrevent, Handler } from './handler-utils/';
 
-// !FocusListener
+// !FocusHandler
 /**
- * FocusListener
+ * FocusHandler
  */
 
-export const FocusListener: Listener<void> = (
+export const FocusHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -18,12 +18,12 @@ export const FocusListener: Listener<void> = (
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
 
-// // !SelectListener
+// // !SelectHandler
 // /**
-//  * SelectListener
+//  * SelectHandler
 //  */
 //
-// export const SelectListener: Listener<void> = (
+// export const SelectHandler: Handler<void> = (
 //   e,
 //   stopPropogation,
 //   preventDefault,
@@ -32,12 +32,12 @@ export const FocusListener: Listener<void> = (
 //   stopAndPrevent(e, stopPropogation, preventDefault);
 // };
 
-// !FocusinListener
+// !FocusinHandler
 /**
- * FocusinListener
+ * FocusinHandler
  */
 
-export const FocusinListener: Listener<void> = (
+export const FocusinHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -46,12 +46,12 @@ export const FocusinListener: Listener<void> = (
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
 
-// !FocusoutListener
+// !FocusoutHandler
 /**
- * FocusoutListener
+ * FocusoutHandler
  */
 
-export const FocusoutListener: Listener<void> = (
+export const FocusoutHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -60,12 +60,12 @@ export const FocusoutListener: Listener<void> = (
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
 
-// !BlurListener
+// !BlurHandler
 /**
- * BlurListener
+ * BlurHandler
  */
 
-export const blurListener: Listener<void> = (
+export const BlurHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,

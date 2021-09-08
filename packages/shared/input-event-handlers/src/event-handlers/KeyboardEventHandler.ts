@@ -1,11 +1,11 @@
-import { stopAndPrevent, Listener } from './listener-utils/';
+import { stopAndPrevent, Handler } from './handler-utils/';
 
 // !KeydownListener
 /**
  * KeydownListener
  */
 
-export const KeydownListener: Listener<void> = (
+export const KeydownListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -19,7 +19,7 @@ export const KeydownListener: Listener<void> = (
  * KeyupListener
  */
 
-export const KeyupListener: Listener<void> = (
+export const KeyupListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,

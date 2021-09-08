@@ -1,13 +1,13 @@
 import { PointerCoordinates, getPointerCoordinates } from './pointer-utils';
 
-import { stopAndPrevent, Listener } from './listener-utils';
+import { stopAndPrevent, Handler } from './handler-utils';
 
-// !AuxclickListener
+// !AuxclickHandler
 /**
- * AuxclickListener
+ * AuxclickHandler
  */
 
-export const AuxclickListener: Listener<void> = (
+export const AuxclickHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -16,56 +16,12 @@ export const AuxclickListener: Listener<void> = (
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
 
-// !ClickListener
+// !ClickHandler
 /**
- * ClickListener
+ * ClickHandler
  */
 
-export const ClickListener: Listener<PointerCoordinates> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-
-  return getPointerCoordinates(e, p);
-};
-
-// !ContextmenuListener
-/**
- * ContextmenuListener
- */
-
-export const ContextmenuListener: Listener<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
-
-// !DblclickListener
-/**
- * DblclickListener
- */
-
-export const DblclickListener: Listener<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
-
-// !MousedownListener
-/**
- * MousedownListener
- */
-
-export const MousedownListener: Listener<PointerCoordinates> = (
+export const ClickHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -76,12 +32,40 @@ export const MousedownListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MouseenterListener
+// !ContextmenuHandler
 /**
- * MouseenterListener
+ * ContextmenuHandler
  */
 
-export const MouseenterListener: Listener<PointerCoordinates> = (
+export const ContextmenuHandler: Handler<void> = (
+  e,
+  stopPropogation,
+  preventDefault,
+  p
+) => {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+
+// !DblclickHandler
+/**
+ * DblclickHandler
+ */
+
+export const DblclickHandler: Handler<void> = (
+  e,
+  stopPropogation,
+  preventDefault,
+  p
+) => {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+};
+
+// !MousedownHandler
+/**
+ * MousedownHandler
+ */
+
+export const MousedownHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -92,12 +76,12 @@ export const MouseenterListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MouseleaveListener
+// !MouseenterHandler
 /**
- * MouseleaveListener
+ * MouseenterHandler
  */
 
-export const MouseleaveListener: Listener<PointerCoordinates> = (
+export const MouseenterHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -108,12 +92,12 @@ export const MouseleaveListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MousemoveListener
+// !MouseleaveHandler
 /**
- * MousemoveListener
+ * MouseleaveHandler
  */
 
-export const MousemoveListener: Listener<PointerCoordinates> = (
+export const MouseleaveHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -124,12 +108,12 @@ export const MousemoveListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MouseoutListener
+// !MousemoveHandler
 /**
- * MouseoutListener
+ * MousemoveHandler
  */
 
-export const MouseoutListener: Listener<PointerCoordinates> = (
+export const MousemoveHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -140,12 +124,12 @@ export const MouseoutListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MouseoverListener
+// !MouseoutHandler
 /**
- * MouseoverListener
+ * MouseoutHandler
  */
 
-export const MouseoverListener: Listener<PointerCoordinates> = (
+export const MouseoutHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -156,12 +140,12 @@ export const MouseoverListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !MouseupListener
+// !MouseoverHandler
 /**
- * MouseupListener
+ * MouseoverHandler
  */
 
-export const MouseupListener: Listener<PointerCoordinates> = (
+export const MouseoverHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -172,12 +156,28 @@ export const MouseupListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !WebkitmouseforcedownListener
+// !MouseupHandler
 /**
- * WebkitmouseforcedownListener
+ * MouseupHandler
  */
 
-export const WebkitmouseforcedownListener: Listener<void> = (
+export const MouseupHandler: Handler<PointerCoordinates> = (
+  e,
+  stopPropogation,
+  preventDefault,
+  p
+) => {
+  stopAndPrevent(e, stopPropogation, preventDefault);
+
+  return getPointerCoordinates(e, p);
+};
+
+// !WebkitmouseforcedownHandler
+/**
+ * WebkitmouseforcedownHandler
+ */
+
+export const WebkitmouseforcedownHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,

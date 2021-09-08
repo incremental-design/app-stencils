@@ -1,15 +1,15 @@
 import { PointerCoordinates, getPointerCoordinates } from './pointer-utils';
 
-import { stopAndPrevent, Listener } from './listener-utils';
+import { stopAndPrevent, Handler } from './handler-utils';
 
-// make passive true?? https://stackoverflow.com/questions/37721782/what-are-passive-event-listeners
+// make passive true?? https://stackoverflow.com/questions/37721782/what-are-passive-event-Handlers
 
-// !TouchstartListener
+// !TouchstartHandler
 /**
- * TouchstartListener
+ * TouchstartHandler
  */
 
-export const TouchstartListener: Listener<PointerCoordinates> = (
+export const TouchstartHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -20,12 +20,12 @@ export const TouchstartListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !TouchmoveListener
+// !TouchmoveHandler
 /**
- * TouchmoveListener
+ * TouchmoveHandler
  */
 
-export const TouchmoveListener: Listener<PointerCoordinates> = (
+export const TouchmoveHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -36,12 +36,12 @@ export const TouchmoveListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !TouchendListener
+// !TouchendHandler
 /**
- * TouchendListener
+ * TouchendHandler
  */
 
-export const TouchendListener: Listener<PointerCoordinates> = (
+export const TouchendHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,
@@ -52,12 +52,12 @@ export const TouchendListener: Listener<PointerCoordinates> = (
   return getPointerCoordinates(e, p);
 };
 
-// !TouchcancelListener
+// !TouchcancelHandler
 /**
- * TouchcancelListener
+ * TouchcancelHandler
  */
 
-export const TouchcancelListener: Listener<PointerCoordinates> = (
+export const TouchcancelHandler: Handler<PointerCoordinates> = (
   e,
   stopPropogation,
   preventDefault,

@@ -1,11 +1,11 @@
-import { stopAndPrevent, Listener } from './listener-utils/';
+import { stopAndPrevent, Handler } from './handler-utils/';
 
 // !CutListener
 /**
  * CutListener
  */
 
-export const CutListener: Listener<void> = (
+export const CutListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -19,7 +19,7 @@ export const CutListener: Listener<void> = (
  * CopyListener
  */
 
-export const CopyListener: Listener<void> = (
+export const CopyListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -33,7 +33,7 @@ export const CopyListener: Listener<void> = (
  * PasteListener
  */
 
-export const PasteListener: Listener<void> = (
+export const PasteListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,

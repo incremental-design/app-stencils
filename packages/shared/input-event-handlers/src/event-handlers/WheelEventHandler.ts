@@ -1,4 +1,4 @@
-import { stopAndPrevent, Listener } from './listener-utils';
+import { stopAndPrevent, Handler } from './handler-utils';
 
 // make passive true?? https://stackoverflow.com/questions/37721782/what-are-passive-event-listeners
 
@@ -7,7 +7,7 @@ import { stopAndPrevent, Listener } from './listener-utils';
  * WheelListener
  */
 
-export const WheelListener: Listener<void> = (
+export const WheelListener: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,

@@ -1,6 +1,6 @@
-import { Listener } from './';
+import { Handler } from './';
 
-export const stopAndPrevent: Listener<void> = (
+export const stopAndPrevent: Handler<void> = (
   e,
   stopPropogation = true,
   preventDefault = true
