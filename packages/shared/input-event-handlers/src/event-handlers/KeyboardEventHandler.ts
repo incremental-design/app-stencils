@@ -1,11 +1,11 @@
 import { stopAndPrevent, Handler } from './handler-utils/';
 
-// !KeydownListener
+// !KeyboardEventHandler
 /**
- * KeydownListener
+ * KeyboardEventHandler
  */
 
-export const KeydownListener: Handler<void> = (
+export const KeyboardEventHandler: Handler<void> = (
   e,
   stopPropogation,
   preventDefault,
@@ -13,19 +13,3 @@ export const KeydownListener: Handler<void> = (
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
-
-// !KeyupListener
-/**
- * KeyupListener
- */
-
-export const KeyupListener: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
-
-// need to add keypress listener
