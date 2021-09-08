@@ -13,3 +13,5 @@ export const ClipboardEventHandler: Handler<void> = (
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
+
+// remove these events ... maybe put them in a plugin

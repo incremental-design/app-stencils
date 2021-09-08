@@ -15,3 +15,7 @@ export const WheelListener: Handler<void> = (
 ) => {
   stopAndPrevent(e, stopPropogation, preventDefault);
 };
+
+// shim scroll even through this event. refer to note "don't confuse wheel event with scroll event ..." in: https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event
+
+// even though scroll isn't a wheel event, it needs to be aliased here for compatibility
