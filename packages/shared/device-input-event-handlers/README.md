@@ -551,6 +551,8 @@ export default {
 </script>
 ```
 
+<!-- might need to go back in and provide a couple examples of how to open up and use an object in the watch function to get the event type ... but not important right now -->
+
 ### How `@incremental.design/device-input-event-listeners` works:
 
 <!--
@@ -570,11 +572,3 @@ See [Roadmap](../../../README.md#roadmap)
 ## Contribute to `@incremental.design/input-event-listeners`:
 
 See [Contribute to App Stencils](../../../CONTRIBUTE.md)
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->

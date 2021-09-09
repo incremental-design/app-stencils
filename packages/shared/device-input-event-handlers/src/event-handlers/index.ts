@@ -1,4 +1,3 @@
-export * from './ClipboardEventHandler';
 export * from './DeviceEventHandler';
 export * from './DragEventHandler';
 export * from './FocusEventHandler';
