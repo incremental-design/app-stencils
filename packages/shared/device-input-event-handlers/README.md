@@ -555,15 +555,13 @@ export default {
 
 ### How `@incremental.design/device-input-event-listeners` works:
 
-<!--
-need to explain distinction between events, listeners and handlers
+If you peel back the surface of a modern web browser, there are a _lot_ of events firing [all of the time](https://www.youtube.com/watch?v=cCOL7MC4Pl0). As you scroll this webpage, hundreds of events are firing every second! But, listening to all of those events is a lot of work for the browser. If it had to describe everything that was happening in a given second, it would run out of memory in a matter of a few minutes! That's why browser have event listeners. When you use a `v-on` directive, or call `addEventListener` on an object in the browser's API, you're telling it _what_ to listen for and _when_ to alert you. Depending on what you listen for, you might receive just a few events, or you might receive a continuous stream. That's where this package's handlers shine.
 
-every event has one or more listeners. Some have several listeners. Listeners tell the browser _when_ you want to hear about an event. They are important because potentially thousands of events can go on at the exact same time! All that chatter can overwhelm your computer's memory, crashing your app.
+Most user input is continuous. When you scroll on a webpage, anywhere from sixty to a few hundred events fire every second. Every time you move the page even a pixel, an entirely new event fires. And if you want your components to truly _hear everything_, you have to process all of them. Every handler in this package does just that. It reduces the event it receives into just a few, essential metrics. Then, it compares each metric to those of the event it just processed.
 
-the same handler can respond to any of an event's listeners. That's because
- -->
+You've probably noticed that every handler in this package shares roughly the same method signature, and all return an object that contain common members, such as the `eventType` field. That's because every handler in this package extends the same, [generic function](./src/event-handlers/handler-utils/Handler.ts), and every returned object extends the same generic returned object <!-- actually need to implement this -->. This makes it easy to get a 'feel' for the functions in this package. Once you understand how one of them works, it's not a stretch to understand them all.
 
-<!-- need to explain that the generic event handler just wraps the specific ones -->
+If you've been using `handle(...)` function, rather than its more specific counterparts, it turns out that you've actually been using the specific counterparts the entire time! That's because all the `handle(...)` function does is check the type of event it received and the type listener that sent it, and route the event to the function that knows how to handle that event. Of course, this means that the `handle(...)` function has to wrap all of the other functions it calls, increasing the final bundle size of your project. But, it's a small tradeoff for the convenience.
 
 ## Roadmap:
 
