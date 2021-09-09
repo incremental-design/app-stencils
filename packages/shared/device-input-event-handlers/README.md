@@ -1,4 +1,4 @@
-# `@incremental.design/input-event-listeners`
+# `@incremental.design/device-input-event-handlers`
 
 <!--
 Add a banner image and badges
