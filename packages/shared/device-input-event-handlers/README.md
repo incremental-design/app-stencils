@@ -553,7 +553,7 @@ export default {
 
 <!-- might need to go back in and provide a couple examples of how to open up and use an object in the watch function to get the event type ... but not important right now -->
 
-### How `@incremental.design/device-input-event-listeners` works:
+### How `@incremental.design/device-input-event-handlers` works:
 
 If you peel back the surface of a modern web browser, there are a _lot_ of events firing [all of the time](https://www.youtube.com/watch?v=cCOL7MC4Pl0). As you scroll this webpage, hundreds of events are firing every second! But, listening to all of those events is a lot of work for the browser. If it had to describe everything that was happening in a given second, it would run out of memory in a matter of a few minutes! That's why browser have event listeners. When you use a `v-on` directive, or call `addEventListener` on an object in the browser's API, you're telling it _what_ to listen for and _when_ to alert you. Depending on what you listen for, you might receive just a few events, or you might receive a continuous stream. That's where this package's handlers shine.
 
@@ -567,6 +567,6 @@ If you've been using `handle(...)` function, rather than its more specific count
 
 See [Roadmap](../../../README.md#roadmap)
 
-## Contribute to `@incremental.design/input-event-listeners`:
+## Contribute to `@incremental.design/device-input-event-handlers`:
 
 See [Contribute to App Stencils](../../../CONTRIBUTE.md)
