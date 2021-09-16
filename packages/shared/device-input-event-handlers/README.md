@@ -639,6 +639,8 @@ The `handle(...)` function can bind to any of the following event listeners:
 
 The `handle(...)` function returns one of TBD, <a href="./src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
 
+If you want to slim your project's final bundle size, and you don't need to handle all of the above events, consider importing and using the `handleDevice(...)` or `handleGamepad(...)` functions, instead of the `handle(...)` function.
+
 The `handleDevice(...)` function returns a TBD object, and can only bind to the following event listeners:
 
 <table>
