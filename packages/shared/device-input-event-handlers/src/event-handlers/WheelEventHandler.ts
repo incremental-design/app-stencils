@@ -1,4 +1,4 @@
-import { stopAndPrevent, Handler } from './handler-utils';
+import { Handler } from './handler-utils';
 
 // make passive true?? https://stackoverflow.com/questions/37721782/what-are-passive-event-listeners
 
@@ -7,14 +7,7 @@ import { stopAndPrevent, Handler } from './handler-utils';
  * WheelListener
  */
 
-export const WheelListener: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
+export const WheelHandler: Handler<void> = (e, p) => {};
 
 // shim scroll even through this event. refer to note "don't confuse wheel event with scroll event ..." in: https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event
 

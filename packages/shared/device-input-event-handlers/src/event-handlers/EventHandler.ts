@@ -1,18 +1,11 @@
-import { stopAndPrevent, Handler } from './handler-utils/';
+import { Handler } from './handler-utils/';
 
 // !ScrollListener
 /**
  * ScrollListener
  */
 
-export const ScrollHandler: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
+export const ScrollHandler: Handler<void> = (e, p) => {};
 
 // how support mic and webcam?
 

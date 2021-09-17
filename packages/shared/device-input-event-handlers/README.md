@@ -53,7 +53,7 @@ Use the handlers in this package to:
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handle( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be a union of all the possible specific objects i.e. pointerCoordinates | ... --> )</code>
+<code class="lang-typescript">handle( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <!-- needs to be a union of all the possible specific objects i.e. pointerCoordinates | ... --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -68,7 +68,7 @@ import handle from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleDevice( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that represents a device --> )</code>
+<code class="lang-typescript">handleDevice( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <!-- needs to be an object that represents a device --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -83,7 +83,7 @@ import { handleDevice } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleDrag( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that contains both pointercoordinates and a drag payload --> )</code>
+<code class="lang-typescript">handleDrag( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <!-- needs to be an object that contains both pointercoordinates and a drag payload --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -98,7 +98,7 @@ import { handleDrag } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleFocus( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that contains info about focus --> )</code>
+<code class="lang-typescript">handleFocus( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <!-- needs to be an object that contains info about focus --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -113,7 +113,7 @@ import { handleFocus } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleGamepad( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that contains info about gamepad --> )</code>
+<code class="lang-typescript">handleGamepad( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <!-- needs to be an object that contains info about gamepad --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -128,7 +128,7 @@ import { handleGamepad } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleKeyboard( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that contains info about keyboard --> )</code>
+<code class="lang-typescript">handleKeyboard( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <!-- needs to be an object that contains info about keyboard --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -143,7 +143,7 @@ import { handleKeyboard } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleMouse( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, stop: boolean, preventDefault: boolean, previous: <a href="./src/README.md#pointercoordinates">PointerCoordinates</a> )</code>
+<code class="lang-typescript">handleMouse( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/README.md#pointercoordinates">PointerCoordinates</a> )</code>
 </pre>
 </td>
 <td align="left">
@@ -158,7 +158,7 @@ import { handleMouse } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleTouch( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, stop: boolean, preventDefault: boolean, previous: <a href="./src/README.md#pointercoordinates">PointerCoordinates</a> )</code>
+<code class="lang-typescript">handleTouch( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/README.md#pointercoordinates">PointerCoordinates</a> )</code>
 </pre>
 </td>
 <td align="left">
@@ -173,7 +173,7 @@ import { handleTouch } from '@incremental.design/device-input-event-handlers'
 <tr>
 <td align="left">
 <pre>
-<code class="lang-typescript">handleWheel( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, stop: boolean, preventDefault: boolean, previous: <!-- needs to be an object that contains info about scroll position and wheel --> )</code>
+<code class="lang-typescript">handleWheel( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <!-- needs to be an object that contains info about scroll position and wheel --> )</code>
 </pre>
 </td>
 <td align="left">
@@ -251,19 +251,15 @@ export default {
 </script>
 ```
 
-The `handle(...)` function takes four arguments:
+The `handle(...)` function takes two arguments:
 
 <table>
 <tr>
 <td><code class="lang-typescript">event: Event</code></td>
-<td><code class="lang-typescript">stop: boolean</code></td>
-<td><code class="lang-typescript">preventDefault: boolean</code></td>
 <td><code class="lang-typescript">previous: Object</code></td>
 </tr>
 <tr>
 <td>The event you want to handle</td>
-<td>Whether the event should have its `.stop()` method called</td>
-<td>Whether the event should have its `.preventDefault()` method called</td>
 <td>The object that this handler returned the last time it was called.</td>
 </tr>
 </table>
@@ -570,7 +566,7 @@ export default {
   methods: {
 
     handleDeviceMotion(e: Event){
-      this.eventInfo = handle(event, false, false, this.eventInfo);
+      this.eventInfo = handle(event, this.eventInfo);
     }
 
   },
@@ -601,40 +597,40 @@ The `handle(...)` function can bind to any of the following event listeners:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
-<tr><td rowspan="7"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drag_event" target="_blank">'drag'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous) }</code></pre></td><td rowspan="7"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragend_event" target="_blank">'dragend'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragenter_event" target="_blank">'dragenter'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragleave_event" target="_blank">'dragleave'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragover_event" target="_blank">'dragover'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragstart_event" target="_blank">'dragstart'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drop_event" target="_blank">'drop'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/devicemotion_event" target="_blank">'devicemotion'</a></code></pre></td><td><pre><code>(e: DeviceMotionEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">'deviceorientation'</a></code></pre></td><td><pre><code>(e: DeviceOrientationEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">DeviceOrientationEvent</a></code></td></tr>
-<tr><td rowspan="1"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event" target="_blank">'scroll'</a></code></pre></td><td><pre><code>(e: Event) =>  this.previous = handle(e, false, false, previous).}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a></code></td></tr>
-<tr><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event" target="_blank">'blur'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event" target="_blank">'focus'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event" target="_blank">'focusin'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event" target="_blank">'focusout'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'gamepadconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td rowspan="3"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="" target="_blank">'keydown'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="3"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keypress_event" target="_blank">'keypress'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">'keyup'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
+<tr><td rowspan="7"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drag_event" target="_blank">'drag'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous) }</code></pre></td><td rowspan="7"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragend_event" target="_blank">'dragend'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragenter_event" target="_blank">'dragenter'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragleave_event" target="_blank">'dragleave'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragover_event" target="_blank">'dragover'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragstart_event" target="_blank">'dragstart'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drop_event" target="_blank">'drop'</a></code></pre></td><td><pre><code>(e: DragEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/devicemotion_event" target="_blank">'devicemotion'</a></code></pre></td><td><pre><code>(e: DeviceMotionEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">'deviceorientation'</a></code></pre></td><td><pre><code>(e: DeviceOrientationEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">DeviceOrientationEvent</a></code></td></tr>
+<tr><td rowspan="1"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event" target="_blank">'scroll'</a></code></pre></td><td><pre><code>(e: Event) =>  this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a></code></td></tr>
+<tr><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event" target="_blank">'blur'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event" target="_blank">'focus'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event" target="_blank">'focusin'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event" target="_blank">'focusout'</a></code></pre></td><td><pre><code>(e: FocusEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'gamepadconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td rowspan="3"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="" target="_blank">'keydown'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="3"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keypress_event" target="_blank">'keypress'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">'keyup'</a></code></pre></td><td><pre><code>(e: KeyboardEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
 <tr><td rowspan="11"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/auxclick_event" target="_blank">'auxclick'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="10"><code><a href="" target="_blank">MouseEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event" target="_blank">'click'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event" target="_blank">'contextmenu'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event" target="_blank">'dblclick'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event" target="_blank">'mousedown'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event" target="_blank">'mouseenter'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event" target="_blank">'mouseleave'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event" target="_blank">'mouseout'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event" target="_blank">'mouseover'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event" target="_blank">'mouseup'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event" target="_blank">'touchcancel'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a></code></td></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchend_event" target="_blank">'touchend'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchmove_event" target="_blank">'touchmove'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event" target="_blank">'touchstart'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">'wheel'</a></code></pre></td><td><pre><code>(e: WheelEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event" target="_blank">'click'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event" target="_blank">'contextmenu'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event" target="_blank">'dblclick'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event" target="_blank">'mousedown'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event" target="_blank">'mouseenter'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event" target="_blank">'mouseleave'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event" target="_blank">'mouseout'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event" target="_blank">'mouseover'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event" target="_blank">'mouseup'</a></code></pre></td><td><pre><code>(e: MouseEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event" target="_blank">'touchcancel'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="4"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a></code></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document" target="_blank">document</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchend_event" target="_blank">'touchend'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchmove_event" target="_blank">'touchmove'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event" target="_blank">'touchstart'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">'wheel'</a></code></pre></td><td><pre><code>(e: WheelEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a></code></td></tr>
 </table>
 
 The `handle(...)` function returns one of TBD, <a href="./src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
@@ -645,16 +641,16 @@ The `handleDevice(...)` function returns a TBD object, and can only bind to the 
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/devicemotion_event" target="_blank">'devicemotion'</a></code></pre></td><td><pre><code>(e: DeviceMotionEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">'deviceorientation'</a></code></pre></td><td><pre><code>(e: DeviceOrientationEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">DeviceOrientationEvent</a></code></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/devicemotion_event" target="_blank">'devicemotion'</a></code></pre></td><td><pre><code>(e: DeviceMotionEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">'deviceorientation'</a></code></pre></td><td><pre><code>(e: DeviceOrientationEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">DeviceOrientationEvent</a></code></td></tr>
 </table>
 
 The `handleGamepad(...)` function returns a TBD object, and can only bind to the following event listeners:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
-<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'gamepadconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a></code></td></tr>
-<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, false, false, previous)}</code></pre></td></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'gamepadconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a></code></td></tr>
+<tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
 </table>
 
 <!-- might need to go back in and provide a couple examples of how to open up and use an object in the watch function to get the event type ... but not important right now -->

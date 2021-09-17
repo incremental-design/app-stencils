@@ -2,21 +2,14 @@ export default {};
 
 // blur, focus, focusin, focusout
 
-import { stopAndPrevent, Handler } from './handler-utils/';
+import { Handler } from './handler-utils/';
 
 // !FocusEventHandler
 /**
  * FocusEventHandler
  */
 
-export const FocusEventHandler: Handler<void> = (
-  e,
-  stopPropogation,
-  preventDefault,
-  p
-) => {
-  stopAndPrevent(e, stopPropogation, preventDefault);
-};
+export const FocusEventHandler: Handler<void> = (e, p) => {};
 
 // // !SelectHandler
 // /**
