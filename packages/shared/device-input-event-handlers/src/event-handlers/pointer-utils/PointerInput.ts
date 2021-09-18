@@ -29,6 +29,7 @@
 export declare type PointerInput = MouseInput & TouchAdditionalInput;
 
 type MouseInput = {
+  readonly type: 'PointerInput' /* this is here to speed up 'handle' function*/;
   event: MouseEvent | TouchEvent;
   relative: {
     x: number;
@@ -42,6 +43,7 @@ type MouseInput = {
     dx?: number;
     dy?: number;
   };
+  // need to add a duration property that tracks the duration from the start of a mouse or touch event lifecycle all the way to the end. maybe when 'touchend', 'touchcancel' or 'mouseleave' occur, then duration resets to zero?
 };
 
 type TouchAdditionalInput = {
@@ -101,6 +103,7 @@ export function getPointerInput(
     mouse: (e: MouseEvent): PointerInput => {
       // first, we get the required properties of the PointerCoordinates type
       const Coordinates: PointerInput = {
+        type: 'PointerInput',
         event: e,
         relative: {
           x: e.offsetX,
@@ -416,6 +419,7 @@ export function getPointerInput(
 
         // Finally, we populate and return the coordinates object
         const Coordinates: PointerInput = {
+          type: 'PointerInput',
           event: e,
           relative: relative
             ? { x: relative.x, y: relative.y }
@@ -480,6 +484,7 @@ export function getPointerInput(
       } else {
         if (P) {
           const Coordinates: PointerInput = {
+            type: 'PointerInput',
             event: e,
             relative: {
               x: P.relative.x,

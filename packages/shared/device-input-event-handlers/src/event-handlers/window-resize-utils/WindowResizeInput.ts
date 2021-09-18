@@ -2,7 +2,11 @@ export function getWindowResizeInput(
   event: UIEvent,
   previous?: WindowResizeInput
 ): WindowResizeInput {
-  return {};
+  return {
+    type: 'WindowResizeInput',
+  };
 }
 
-export interface WindowResizeInput {}
+export interface WindowResizeInput {
+  readonly type: 'WindowResizeInput' /* this is here to speed up 'handle' function */;
+}
