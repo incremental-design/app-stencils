@@ -184,6 +184,21 @@ import { handleWheel } from '@incremental.design/device-input-event-handlers'
 </pre>
 </td>
 </tr>
+<!-- !import handleWindowResize -->
+<tr>
+<td align="left">
+<pre>
+<code class="lang-typescript"><a href="./src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+</pre>
+</td>
+<td align="left">
+<pre>
+<code>
+import { handleWindowResize } from '@incremental.design/device-input-event-handlers'
+</code>
+</pre>
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -208,9 +223,9 @@ Once you import the handler, you only need to write a few lines of code, rather 
 
 There are three ways to add a handler to a Vue component:
 
-1. [Call the [`handle(...)`](./src/README.md#handle) function from within any supported <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive.](#call-the-handle-function-from-within-any-supported-v-on-directive)
-2. [Call the `handleDrag(...)`, `handleFocus(...)`, `handleKeyboard(...)` `handleMouse(...)`, `handleTouch(...)`, or `handleWheel(...)` functions from their corresponding <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners](#call-the-handledrag-handlefocus-handlekeyboard-handlemouse-handletouch-or-handlewheel-functions-from-their-corresponding-v-on-listeners)
-3. [Call the [`handle(...)`](./src/README.md#handle), `handleDevice(...)`, or `handleGamepad(...)` functions from within your Vue component's `<script>` block.](#call-the-handle-handledevice-or-handlegamepad-functions-from-within-your-vue-components-script-block)
+1. [Call the `handle(...)` function from within any supported `v-on` directive.](#call-the-handle-function-from-within-any-supported-v-on-directive)
+2. [Call the `handleDrag(...)`, `handleFocus(...)`, `handleKeyboard(...)` `handleMouse(...)`, `handleTouch(...)`, or `handleWheel(...)` functions from their corresponding `v-on` listeners.](#call-the-handledrag-handlefocus-handlekeyboard-handlemouse-handletouch-or-handlewheel-functions-from-their-corresponding-v-on-listeners)
+3. [Call the `handle(...)`, `handleDevice(...)`, `handleGamepad(...)`, `handleWindowResize(...)` functions from within your Vue component's `<script>` block.](#call-the-handle-handledevice-handlegamepad-or-handlewindowresize-functions-from-within-your-vue-components-script-block)
 
 #### Call the [`handle(...)`](./src/README.md#handle) function from within any supported <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive:
 
@@ -539,9 +554,7 @@ The [`handleWheel(...)`](./src/README.md#handlewheel) function returns a [`Scrol
 
 Like the [`handle(...)`](./src/README.md#handle) function, none of these handlers support custom Vue events.
 
-#### Call the [`handle(...)`](./src/README.md#handle), [`handleDevice(...)`](./src/README.md#handledevice), or [`handleGamepad(...)`](./src/README.md#handlegamepad) functions from within your Vue component's `<script>` block.
-
-<!-- dont't forget to add mic, webcam and geolocation events!! -->
+#### Call the [`handle(...)`](./src/README.md#handle), [`handleDevice(...)`](./src/README.md#handledevice), [`handleGamepad(...)`](./src/README.md#handlegamepad), or [`handleWindowResize(...)`](./src/README.md#handlewindowresize) functions from within your Vue component's `<script>` block.
 
 Unlike [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)s, [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)s, [`WheelEvent`](https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent)s and [`TouchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent)s, [`DeviceMotionEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent)s, [`DeviceOrientationEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent)s, and [`GamepadEvent`](https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent/gamepad)s, aren't emitted from DOM elements. They are emitted from the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) itself. So, there's no <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listener that can hear them. To use [`handle(...)`](./src/README.md#handle) to handle these events, you need to:
 
@@ -631,6 +644,7 @@ The [`handle(...)`](./src/README.md#handle) function can bind to any of the foll
 <tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchmove_event" target="_blank">'touchmove'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
 <tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element" target="_blank">element</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event" target="_blank">'touchstart'</a></code></pre></td><td><pre><code>(e: TouchEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
 <tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">'wheel'</a></code></pre></td><td><pre><code>(e: WheelEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a></code></td></tr>
+<tr><td rowspan="1"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">'resize'</a></code></pre></td><td><pre><code>(e: UIEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">UIEvent</a></code></td></tr>
 </table>
 
 The [`handle(...)`](./src/README.md#handle) function returns one of TBD, <a href="./src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
@@ -651,6 +665,13 @@ The [`handleGamepad(...)`](./src/README.md#handlegamepad) function returns a [`G
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
 <tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'gamepadconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a></code></td></tr>
 <tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
+</table>
+
+The [`handleWindowResize(...)`](./src/README.md#handlewindowresize) function returns a [`WindowResizeInput`](./src/README.md#windowresizeinput) object, and can only bind to the following event listener:
+
+<table>
+<tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
+<tr><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepadconnected_event" target="_blank">'resize'</a></code></pre></td><td><pre><code>(e: UIEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">UIEvent</a></code></td></tr>
 </table>
 
 <!-- might need to go back in and provide a couple examples of how to open up and use an object in the watch function to get the event type ... but not important right now -->
