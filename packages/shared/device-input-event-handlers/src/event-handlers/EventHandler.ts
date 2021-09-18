@@ -1,13 +1,14 @@
-import { Handler } from './handler-utils/';
+import { Handler, mergeWithEventInfo } from './handler-utils/';
+import { ScrollInput, getScrollInput } from './scroll-utils/';
 
-// !ScrollListener
-/**
- * ScrollListener
- */
+export const handleScroll: Handler<Event | WheelEvent, ScrollInput> = (
+  event,
+  previous
+) => {
+  return mergeWithEventInfo(event, getScrollInput(event, previous));
+};
 
-export const ScrollHandler: Handler<void> = (e, p) => {};
-
-// how support mic and webcam?
+// don't support mic and webcam, because those use webrtc api.
 
 // html dialog element - don't support these
 

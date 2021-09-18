@@ -1,3 +1,14 @@
-export default {};
+import { Handler, mergeWithEventInfo } from './handler-utils/';
+import { DeviceInput, getDeviceInput } from './device-utils/';
 
-// device motion event, device orientation event
+declare type DeviceEvent = DeviceMotionEvent | DeviceOrientationEvent;
+
+export const handleDevice: Handler<DeviceEvent, DeviceInput> = (
+  event,
+  previous
+) => {
+  return mergeWithEventInfo<DeviceInput>(
+    event,
+    getDeviceInput(event, previous)
+  );
+};

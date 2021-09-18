@@ -1,3 +1,17 @@
-export default {};
+import { Handler, mergeWithEventInfo } from './handler-utils/';
+import {
+  WindowResizeInput,
+  getWindowResizeInput,
+} from './window-resize-utils/';
 
-// resize - need to handle this in a window event plugin thingy
+// resize
+
+export const handleWindowResize: Handler<UIEvent, WindowResizeInput> = (
+  event,
+  previous
+) => {
+  return mergeWithEventInfo<WindowResizeInput>(
+    event,
+    getWindowResizeInput(event, previous)
+  );
+};

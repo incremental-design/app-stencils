@@ -1,12 +1,9 @@
-import { PointerCoordinates, getPointerCoordinates } from './pointer-utils';
+import { Handler, mergeWithEventInfo } from './handler-utils/';
+import { PointerInput, getPointerInput } from './pointer-utils';
 
-import { Handler } from './handler-utils';
-
-// !MouseEventHandler
-/**
- * MouseEventHandler
- */
-
-export const MouseEventHandler: Handler<PointerCoordinates> = (e, p) => {
-  return getPointerCoordinates(e, p);
+export const handleMouse: Handler<MouseEvent, PointerInput> = (
+  event,
+  previous
+) => {
+  return mergeWithEventInfo(event, getPointerInput(event, previous));
 };

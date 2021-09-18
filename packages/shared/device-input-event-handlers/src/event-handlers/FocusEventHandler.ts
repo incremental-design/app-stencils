@@ -1,26 +1,13 @@
-export default {};
+import { Handler, mergeWithEventInfo } from './handler-utils/';
+import { FocusInput, getFocusInput } from './focus-utils/';
 
-// blur, focus, focusin, focusout
+// blur, focus, focusin, focusout, select??
 
-import { Handler } from './handler-utils/';
+export const handleFocus: Handler<FocusEvent, FocusInput> = (
+  event,
+  previous
+) => {
+  return mergeWithEventInfo<FocusInput>(event, getFocusInput(event, previous));
+};
 
-// !FocusEventHandler
-/**
- * FocusEventHandler
- */
-
-export const FocusEventHandler: Handler<void> = (e, p) => {};
-
-// // !SelectHandler
-// /**
-//  * SelectHandler
-//  */
-//
-// export const SelectHandler: Handler<void> = (
-//   e,
-//   stopPropogation,
-//   preventDefault,
-//   p
-// ) => {
-//   stopAndPrevent(e, stopPropogation, preventDefault);
-// };
+// even through select is a window event, it has some overlaps with focus, because selected text is focused if the interface itself is focus driven. It might be useful to handle it

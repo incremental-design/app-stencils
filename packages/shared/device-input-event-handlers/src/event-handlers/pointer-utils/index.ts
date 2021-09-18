@@ -1,1 +1,2 @@
-export * from './PointerCoordinates';
+export * from './PointerInput';
+export * from './DragInput';

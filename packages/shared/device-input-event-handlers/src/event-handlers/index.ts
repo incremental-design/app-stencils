@@ -1,5 +1,6 @@
 export * from './DeviceEventHandler';
 export * from './DragEventHandler';
+export * from './EventHandler';
 export * from './FocusEventHandler';
 export * from './GamepadEventHandler';
 export * from './KeyboardEventHandler';

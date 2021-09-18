@@ -1,17 +1,13 @@
 /**
- * Handlers are functions that receive events, optionally modify them, and extract relevant information. Use listeners to filter the useful information out of an event before discarding it.
- * @param event - the event you want to listen to
- * @typeParam Returns - the type of information that the listener will return from the event
- * @param previous - any previous event you want to compare the event to.
- * @returns Returns - the type of information the listener will return from the event.
- *
- * To use the listener in your Vue components, you need to wrap it in a callback, and bind it to the name of the event you want to listen to:
- *
- * @example
- * <div @click="(event) => { ClickListener(event, true, true) }"></div>
- *
+ * Handlers are functions that receive events and extract relevant information. Use handlers to filter the useful information out of an event before discarding it.
+ * @param event - the event you want to filter.
+ * @typeParam Input - the type of information that the listener will return from the event
+ * @param previous - any information of type {@link Input} that was previously returned from this handler.
+ * @returns EventInfo<Input> - contains the type of event, its timestamp, and all information that was filtered out of the event.
  */
-export declare type Handler<Returns> = (
-  event: Event,
-  previous?: Returns | false
-) => Returns;
+import { EventInfo } from './';
+
+export declare type Handler<EventType extends Event, Input> = (
+  event: EventType,
+  previous?: Input
+) => EventInfo<Input>;
