@@ -1,7 +1,7 @@
 {
   "name": "@incremental.design/vue3-component-base",
   "version": "0.0.0",
-  "description": "base component that every other `@incremental.design/vue3-component-*` extends.",
+  "description": "base component that every other `@incremental.design/vue3-component-*` uses.",
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "license": "MIT",
   "main": "dist/component-base.common.js",
