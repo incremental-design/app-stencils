@@ -692,10 +692,10 @@ You've probably noticed that every handler in this package shares roughly the sa
 
 If you've been using [`handle(...)`](./src/README.md#handle) function, rather than its more specific counterparts, it turns out that you've actually been using the specific counterparts the entire time! That's because all the [`handle(...)`](./src/README.md#handle) function does is check the type of event it received and the type listener that sent it, and route the event to the function that knows how to handle that event. Of course, this means that the [`handle(...)`](./src/README.md#handle) function has to wrap all of the other functions it calls, increasing the final bundle size of your project. But, it's a small tradeoff for the convenience.
 
-## Roadmap:
+## Package Folder Structure
 
-See [Roadmap](../../../README.md#roadmap)
-
-## Contribute to `@incremental.design/device-input-event-handlers`:
-
-See [Contribute to App Stencils](../../../CONTRIBUTE.md)
+| File or Folder             | What it does:                                                                                    |
+| :------------------------- | :----------------------------------------------------------------------------------------------- |
+| [`src/*`](./src/README.md) | Exports all of the methods in this package.                                                      |
+| `package.json`             | Lists this package's dependencies, scripts, and exports.                                         |
+| tsconfig.json              | Configures [Typescript](https://www.typescriptlang.org/tsconfig), which builds the code in `src` |
