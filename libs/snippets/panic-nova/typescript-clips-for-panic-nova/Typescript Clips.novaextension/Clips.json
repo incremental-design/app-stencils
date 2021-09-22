@@ -22,7 +22,7 @@
           "trigger": "/class"
         },
         {
-          "content": "/**\n * ${0:What does this method or function do?} \n *\n ${1:* @param }${1:name}${1: - description}\n *\n ${2:* @returns}${2:type and meaning of return value}\n *\n * ${10:@alpha} ${11:@beta} ${12:@eventProperty} ${13:@experimental} ${14:@internal} ${15:@override} ${16:@packageDocumentation} ${17:@public} ${18:@readonly} ${19:@sealed} ${20:@virtual}\n */",
+          "content": "/**\n * ${0:What does this method or function do?} \n *\n ${1:* @param }${1:name} - ${1:description}\n *\n ${2:* @returns} ${2:type and meaning of return value}\n *\n * ${10:@alpha} ${11:@beta} ${12:@eventProperty} ${13:@experimental} ${14:@internal} ${15:@override} ${16:@packageDocumentation} ${17:@public} ${18:@readonly} ${19:@sealed} ${20:@virtual}\n */",
           "name": "TSdoc Method Section",
           "scope": "editor",
           "syntax": "typescript",
