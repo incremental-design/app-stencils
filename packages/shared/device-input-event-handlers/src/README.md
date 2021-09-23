@@ -115,70 +115,70 @@
 <tr>
 <td><pre><code>event-handlers/DeviceEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handledevice">handleDevice</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous?: <a href="#deviceinput">DeviceInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handledevice">handleDevice</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous?: <a href="#deviceinput">DeviceInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/DragEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/DragEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handledrag">handleDrag</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous?: <a href="#draginput">DragInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handledrag">handleDrag</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous?: <a href="#draginput">DragInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/EventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/EventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlescroll">handleScroll</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event" target="_blank">Event</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a>, previous?: <a href="#scrollinput">ScrollInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlescroll">handleScroll</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event" target="_blank">Event</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a>, previous?: <a href="#scrollinput">ScrollInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/FocusEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/FocusEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlefocus">handleFocus</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous?: <a href="#focusinput">FocusInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlefocus">handleFocus</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous?: <a href="#focusinput">FocusInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/GamepadEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/GamepadEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlegamepad">handleGamepad</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous?: <a href="#gamepadinput">GamepadInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlegamepad">handleGamepad</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous?: <a href="#gamepadinput">GamepadInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/KeyboardEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/KeyboardEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlekeyboard">handleKeyboard</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous?: <a href="#keyboardinput">KeyboardInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlekeyboard">handleKeyboard</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous?: <a href="#keyboardinput">KeyboardInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/MouseEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/MouseEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlemouse">handleMouse</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank">MouseEvent</a>, previous?: <a href="#pointerinput">PointerInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlemouse">handleMouse</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank">MouseEvent</a>, previous?: <a href="#pointerinput">PointerInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/TouchEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/TouchEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handletouch">handleTouch</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous?: <a href="#pointerinput">PointerInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handletouch">handleTouch</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous?: <a href="#pointerinput">PointerInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/UIEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/UIEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlewindowresize">handleWindowResize</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous?: <a href="#windowresizeinput">WindowResizeInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlewindowresize">handleWindowResize</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous?: <a href="#windowresizeinput">WindowResizeInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !event-handlers/WheelEventHandler.ts -->
 <tr>
 <td><pre><code>event-handlers/WheelEventHandlers.ts</code></pre></td>
 <td>
- <pre>function <code><a href="#handlewheel">handleWheel</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event" target="_blank">Event</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a> , previous?: <a href="#scrollinput">ScrollInput</a> )</code></pre>
+ <ul><li><pre>function <code><a href="#handlewheel">handleWheel</a>(event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event" target="_blank">Event</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a> , previous?: <a href="#scrollinput">ScrollInput</a> )</code></pre></li></ul>
 </td>
 </tr>
 <!-- !DeviceInputEventHandlers.ts -->
