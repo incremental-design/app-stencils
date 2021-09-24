@@ -647,7 +647,7 @@ This starts an instance of the Jest unit test framework for each package that co
 
 ### Make Typescript packages with `tsc`:
 
-The more vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript modules, regardless of where it is located, relative to your module. Without strict organization, what starts as just a handful of imports can quickly grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps all of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
+The more vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript module, regardless of where it is located relative to your module. Without strict organization, what starts as just a handful of imports _will_ grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps the rest of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
 
 <table>
 <thead>
@@ -819,15 +819,15 @@ The more vue components you write, the more you will find yourself rewriting the
 
 11. Tell Typescript where to put compiled code.
 
-    You need to tell Typescript where it should put the code it compiles, or it will dump it directly into `packages/shared/<name-of-package>`. Since your package's `package.json` `main` field already points to `dist/`, you need to make sure Typescript does as well. Go to your `tsconfig.json`, Uncomment `outDir` and set it to `dist/`.
+    You need to tell Typescript where it should put the code it compiles, or it will dump it directly into `packages/shared/<name-of-package>`. Since your package's `package.json` `main` field already points to `dist/`, you need to make sure Typescript does as well. Go to your `tsconfig.json`, Uncomment `outDir` and set it to `./dist/`.
 
     ![Set `outDir`](./.readme/tsconfig-outdir.gif)
 
 12. Tell Typescript which types it needs to import.
 
-    If you want Typescript to type-check any Browser, Node or Jest API calls you make, you need to tell it to import the type declarations for those APIs:
+    If you want Typescript to type-check any browser, Node or Jest API calls you make, you need to tell it to import the type declarations for those APIs:
 
-- Uncomment `types` and set it to `[" webpack-env","jest","node"]`
+- Uncomment `types` and set it to `["webpack-env","jest","node"]`
 - Add the `lib` field to the `compilerOptions` field and set it to `["esnext", "dom", "dom.iterable", "scripthost"]`
 
   ![set `types` and `lib` fields](./.readme/ts-types-lib.gif)
@@ -892,7 +892,7 @@ The more vue components you write, the more you will find yourself rewriting the
 
 16. Convert the contents of your package's `src` to typescript.
 
-    Typescript only pays attention to the `.ts`, `.tsx`, `.d.ts` files in your package's `src` folder. It will ignore any `.js` and `.jsx` files. This is a problem, because your package currently contains a single `.js` file: in `src/<name-of-package>.js`. If you ask Typescript to build your code, it won't find anything to build, and it will error instead. To fix this, change the `.js` extension in `src/<name-of-package>.js` to `.ts` (i.e. `src/<name-of-package>.ts`). Once you make this change, Typescript will notice and compile the file.
+    Typescript only pays attention to the `.ts`, `.tsx`, `.d.ts` files in your package's `src` folder. It will ignore any `.js` and `.jsx` files. This is a problem, because your package currently contains a single `.js` file: in `src/<name-of-package>.js`. If you ask Typescript to build your code, it won't find anything to build, and it will error instead. To fix this, change the `.js` extension in `src/<name-of-package>.js` to `.ts` (i.e. `src/<name-of-package>.ts`). Once you make this change, Typescript will be able to notice and compile the file.
 
     ![Convert `.js` files to `.ts`](./.readme/tsconfig-js-to-ts.gif)
 
