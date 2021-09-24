@@ -50,7 +50,7 @@ Use the handlers in this package to:
     </tr>
     <tr>
     <td><code>package.json</code></td>
-      <td><code>'@incremental.design/device-input-event-handlers'</code></td>
+      <td><code>npm install '@incremental.design/device-input-event-handlers'</code></td>
     </tr>
     </table>
 
