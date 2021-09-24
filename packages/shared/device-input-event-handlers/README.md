@@ -39,168 +39,185 @@ Use the handlers in this package to:
 
 ## Installation:
 
-`@incremental.design/device-input-event-handlers` exports a default [`handle(...)`](./src/README.md#handle) function. It also exports several named functions; one for each of the events that it handles:
+1.  Add the `@incremental.design/device-input-event-handlers` package to your project:
 
-<table>
-<thead>
-<tr>
-<th align="left">Handler</th>
-<th align="left">How to import:</th>
-</tr>
-</thead>
-<tbody>
-<!-- !import handle -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handle">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> | <a href="./src/README.md#focusinput">FocusInput</a> | <a href="./src/README.md#gamepadinput">GamepadInput</a> | <a href="./src/README.md#keyboardinput">KeyboardInput</a> | <a href="./src/README.md#pointerinput">PointerInput</a> | <a href="./src/README.md#draginput">DragInput</a> | <a href="./src/README.md#scrollinput">ScrollInput</a> | <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import handle from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleDevice -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handledevice">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleDevice } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleDrag -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handledrag">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./src/README.md#draginput">DragInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleDrag } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleFocus -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handlefocus">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./src/README.md#focusinput">FocusInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleFocus } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleGamepad -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handlegamepad">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./src/README.md#gamepadinput">GamepadInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleGamepad } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleKeyboard -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handlekeyboard">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./src/README.md#keyboardinput">KeyboardInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleKeyboard } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleMouse -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#handlemouse">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleMouse } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleTouch -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleTouch } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleWheel -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#scrollinput">ScrollInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleWheel } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-<!-- !import handleWindowResize -->
-<tr>
-<td align="left">
-<pre>
-<code class="lang-typescript"><a href="./src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
-</pre>
-</td>
-<td align="left">
-<pre>
-<code>
-import { handleWindowResize } from '@incremental.design/device-input-event-handlers'
-</code>
-</pre>
-</td>
-</tr>
-</tbody>
-</table>
+    <table>
+    <tr>
+    <td rowspan="2">If your project has a ...</td>
+    <td><code>yarn.lock</code></td>
+    <td rowspan="2">then you should run...</td>
+    <td><code>yarn add '@incremental.design/device-input-event-handlers'</code></td>
+    </tr>
+    <tr>
+    <td><code>package.json</code></td>
+      <td><code>'@incremental.design/device-input-event-handlers'</code></td>
+    </tr>
+    </table>
+
+2.  Import the handlers you need into your project's code:
+
+    `@incremental.design/device-input-event-handlers` exports a default [`handle(...)`](./src/README.md#handle) function. It also exports several named functions; one for each of the events that it handles:
+
+    <table>
+    <thead>
+    <tr>
+    <th align="left">Handler</th>
+    <th align="left">How to import:</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- !import handle -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handle">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> | <a href="./src/README.md#focusinput">FocusInput</a> | <a href="./src/README.md#gamepadinput">GamepadInput</a> | <a href="./src/README.md#keyboardinput">KeyboardInput</a> | <a href="./src/README.md#pointerinput">PointerInput</a> | <a href="./src/README.md#draginput">DragInput</a> | <a href="./src/README.md#scrollinput">ScrollInput</a> | <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import handle from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleDevice -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handledevice">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleDevice } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleDrag -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handledrag">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./src/README.md#draginput">DragInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleDrag } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleFocus -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handlefocus">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./src/README.md#focusinput">FocusInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleFocus } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleGamepad -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handlegamepad">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./src/README.md#gamepadinput">GamepadInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleGamepad } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleKeyboard -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handlekeyboard">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./src/README.md#keyboardinput">KeyboardInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleKeyboard } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleMouse -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#handlemouse">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleMouse } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleTouch -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleTouch } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleWheel -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#scrollinput">ScrollInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleWheel } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    <!-- !import handleWindowResize -->
+    <tr>
+    <td align="left">
+    <pre>
+    <code class="lang-typescript"><a href="./src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    </pre>
+    </td>
+    <td align="left">
+    <pre>
+    <code>
+    import { handleWindowResize } from '@incremental.design/device-input-event-handlers'
+    </code>
+    </pre>
+    </td>
+    </tr>
+    </tbody>
+    </table>
 
 ## Usage:
 
