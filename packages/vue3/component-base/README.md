@@ -28,9 +28,9 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Use the functions in the `Theme` slot prop to style your component's markup](../../../.readme/diagram-vue3-component-base-theme-your-component.png)
 
-  The base component's [`Theme`](#style–your–component–with-the-base-components-theme-slot-prop) slot prop contains all of the CSS you need to style your component. All you need to do reach into it, grab the styles you need, and bind them to your markup's `:style` attributes. The Theme() function will even update your component's appearance in response to user interactions - no `:hover` or `:active` selectors required!
+  The base component's [`Theme`](#style–your–component–with-the-base-components-theme-slot-prop) slot prop contains all of the CSS you need to style your component. All you need to do reach into it, grab the styles you need, and bind them to your markup's `:style` attributes. It will even update your component's appearance in response to user interactions - no `:hover` or `:active` selectors required!
 
-- **Customize the base component's theme with a single string**
+- **Customize the base component's theme with a single string.**
 
   <!-- need a storybook that cycles a component through different styles, and a gif that links to it -->
 
@@ -83,7 +83,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
 3.  Add `BaseComponent` to your Vue 3 component's template:
 
-    <pre><code class="language-vue">&lt;template&gt;
+    <pre><code class="language-html">&lt;template&gt;
       &lt;BaseComponent 
         &lt;!-- use the following props to add affordances to your component --&gt;
         isHoverable 
@@ -136,11 +136,11 @@ Unlike a website, a web app demands a high level of interactivity. You can't jus
 
 - A state is a set of rules that determine how user interaction affects your markup.
 
-> For example, if your markup is in a 'not pressed' state, then any mouse click or fingertip tap will transition your markup into a 'pressed' state. On the other hand, if your markup is in a 'pressed' state, then the same clicks and taps will have no effect.
+  For example, if your markup is in a 'not pressed' state, then any mouse click or fingertip tap will transition your markup into a 'pressed' state. On the other hand, if your markup is in a 'pressed' state, then the same clicks and taps will have no effect.
 
 - Appearance is a visual indication of state. When state changes, appearance changes accordingly.
 
-> For example, if your markup transitions from a 'not pressed' state to a 'pressed' state, its fill, border, shadow and text color will change accordingly.
+  For example, if your markup transitions from a 'not pressed' state to a 'pressed' state, its fill, border, shadow and text color will change accordingly.
 
 All UI components need to have at least a few states in order to respond to user interaction. Without the base component, you would not only have to write the code that handles user interactions, but also the code that translates them into states and appearances.
 
@@ -338,7 +338,7 @@ For the most part, any UI component can have some, or all of the following affor
 
 Notice that most of these affordances depend on the 'Pressable' affordance, and all of them depend on the 'Hoverable' affordance. You can't make UI component selectable if it isn't pressable. You can't make it pressable if it isn't hoverable.
 
-![All affordances depend on the `Hoverable` affordance, and most depend on the `Pressable` affordance](../../../../.readme/diagram-vue3-component-base-affordance-dependencies.png)
+![All affordances depend on the `Hoverable` affordance, and most depend on the `Pressable` affordance](../../../.readme/diagram-vue3-component-base-affordance-dependencies.png)
 
 If you're thinking "ok, all of this is super, but which affordances do _I_ need for _my component_?", here are a few examples:
 
@@ -509,15 +509,15 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
 
 Even though most affordances depend on others, you have to manually specify each the affordances you want to add to your markup. For example:
 
-> Even though the 'Focusable' affordance necessitates the 'Pressable' and 'Hoverable' affordances, adding the `isFocusable` prop do the base component won't automatically add the `isPressable` and `isHoverable` props.
+- Even though the 'Focusable' affordance necessitates the 'Pressable' and 'Hoverable' affordances, adding the `isFocusable` prop do the base component won't automatically add the `isPressable` and `isHoverable` props.
 
-> Even though the 'Snappable' affordance necessitates the 'Draggable', 'Pressable' and 'Hoverable' affordances, adding the `isSnappable` prop to the base component won't automatically add the `isDraggable`, `isPressable` or `isHoverable` props.
+- Even though the 'Snappable' affordance necessitates the 'Draggable', 'Pressable' and 'Hoverable' affordances, adding the `isSnappable` prop to the base component won't automatically add the `isDraggable`, `isPressable` or `isHoverable` props.
 
 This is by design. Each prop is a flag. Its presence enables the corresponding affordance. Its absence disables it. If you omit a dependent affordance, the base component will still handle its corresponding user interactions. It just won't update the your markup's state or appearance in response. While this isn't usually the behavior you want, sometimes it can be very useful. For example:
 
-> You want to make a component that doesn't change its appearance when you hover on or press it, but does follow your mouse cursor when you drag it.
+- You want to make a component that doesn't change its appearance when you hover on or press it, but does follow your mouse cursor when you drag it.
 
-> You want to make a component that can be selected, even though it doesn't change its appearance when you depress it with a fingertip or mouse.
+- You want to make a component that can be selected, even though it doesn't change its appearance when you depress it with a fingertip or mouse.
 
 ### Wrap your component's template in the base component's default slot:
 
@@ -554,7 +554,7 @@ turn design system into code how?
 
 Once you choose the affordances you want your UI component to have, it's up to the base component to apply them. It can't do that until you supply it with your component's markup. To do this, you need to place your markup in the base component's default slot. Then, you need to insert the base component's **slot props** into your markup.
 
-![The base component receives props and user interactions, and returns slot props.](../../../../.readme/diagram-vue3-component-base-receives-returns.png)
+![The base component receives props and user interactions, and returns slot props.](../../../.readme/diagram-vue3-component-base-receives-returns.png)
 
 The base component uses slot props to apply affordances to your markup. Each slot prop is a value that updates whenever the base component handles a user interaction. The base component supplies you with several of these values:
 
