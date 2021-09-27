@@ -1,7 +1,7 @@
 {
   "name": "@incremental.design/vue3-component-base",
   "version": "0.0.0",
-  "description": "base component that every other `@incremental.design/vue3-component-*` uses.",
+  "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "license": "MIT",
   "main": "dist/component-base.common.js",
