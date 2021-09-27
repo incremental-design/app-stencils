@@ -31,9 +31,8 @@ Once you've chosen your packages, you'll need to import their contents. Every pa
 <table>
 <thead>
 <tr>
-<th align="left">Type</th>
-<th align="left">Name and Description</th>
-<th align="left">How to Install</th>
+	<th align="left">Type</th>
+	<th align="left">Name and Description</th>
 </tr>
 </thead>
 <tbody>
@@ -41,258 +40,46 @@ Once you've chosen your packages, you'll need to import their contents. Every pa
 <!-- !Vue SFC Packages -->
 <!-- !vue3-component-base -->
 <tr valign=top>
-<td align="left" rowspan="4">Vue 3 Single File Component</td>
+<td align="left" rowspan="1">Vue 3 Single File Component</td>
 <td align="left"><a href="./packages/vue3/component-base/README.md">
 <code>@incremental.design/vue3-component-base</code>
 </a>
 <br>
 <!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
 <br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
-</tr>
-
-<!-- !Foo -->
-<tr valign="top">
-<td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
-</a>
-<br>
-<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
+A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other <code>@incremental.design/vue3-component-*</code>s.
 <br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
-</tr>
-
-<!-- !Bar -->
-<tr valign="top">
-<td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
-</a>
-<br>
-<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
-<br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
-</tr>
-
-<!-- !Fizz -->
-<tr valign="top">
-<td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
-</a>
-<br>
-<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
-<br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
 </td>
 </tr>
 
 <!-- !Vue 3 Plugin -->
 <!-- !Baz -->
 <tr valign="top">
-<td align="left" rowspan="2">Vue 3 Plugin</td>
-<td align="left"><a href="./packages/vue3/component-base/README.md">
+<td align="left" rowspan="1">Vue 3 Plugin</td>
+<!-- <td align="left"><a href="./packages/vue3/component-base/README.md">
 <code>@incremental.design/vue3-component-base</code>
 </a>
-<br>
+<br> -->
 <!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
-<br/>
+<!-- <br/>
 Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
+</td> -->
 </tr>
-
-<!-- !Buzz -->
-<tr valign="top">
-<td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
-</a>
-<br>
-<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
-<br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
-</tr>
-<tr>
 
 <!-- !Framework-Agnostic Typescript Module -->
 <!-- !Baz -->
 <tr valign="top">
-<td align="left" rowspan="2">Framework-Agnostic Typescript Modules</td>
+<td align="left" rowspan="1">Framework-Agnostic Typescript Modules</td>
 <td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
+<code>@incremental.design/device-input-event-handlers</code>
 </a>
 <br>
 <!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
 <br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
+Handlers for <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" target="_blank">GamepadEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank">MouseEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a></code> and <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a></code>. These handlers normalize and filter event details to make them easier to interpret.
 </td>
 </tr>
 
-<!-- !Buzz -->
-<tr valign="top">
-<td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
-</a>
-<br>
-<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
-<br/>
-Handle multitouch, sensor, mouse, keyboard and gamepad inputs.
-</td>
-<td align="left">
-<ol>
-<li>
-If your package's root folder contains a:
-<ul>
-<li><code>yarn.lock</code> file, run <code>yarn add @incremental.design/vue3-component-base</code></li>
-<li><code>package-lock.json</code> file, run <code>npm install @incremental.design/vue3-component-base</code></li>
-</ul>
-</li>
-<li>
-Add the following import to any <code>.vue</code>, <code>.ts</code>, or <code>.js</code> file
-<pre>
-<code class="language-typescript">
-import BaseComponent from '@incremental.design/vue3-component-base'
-</code>
-</pre>
-</li>
-</ol>
-</td>
-</tr>
-<tr>
 </tbody>
 </table>
 
@@ -318,6 +105,8 @@ import BaseComponent from '@incremental.design/vue3-component-base'
 each vue component contains a default appearance, a prop that accepts style configuration data (from the seamlss-vue style plugin), a default slot, and a suspense slot. If you don't use these slots, the component will show a default appearance. If you do, you can change the appearance with just a single string argument 'ios' 'android' 'macos' 'windows' 'gtk' 'blueprint', or you can initialize the seamlss-vue plugin and pass a reference to that
 
 the default slot and suspense slot always contain the same scoped props
+
+slots let you swap out the template, without swapping out the script: change the appearance, keep the behavior
 
 in addition, some components have other named slots, each of which contain their own scoped props.
 
