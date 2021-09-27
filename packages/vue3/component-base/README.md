@@ -83,7 +83,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
 3.  Add `BaseComponent` to your Vue 3 component's template:
 
-    <pre><code class="language-html">&lt;template&gt;
+    <pre><code class="language-vue">&lt;template&gt;
       &lt;BaseComponent 
         &lt;!-- use the following props to add affordances to your component --&gt;
         isHoverable 
@@ -404,7 +404,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'peekable' affordance to your component</td>
   <td align="left"><code>isHoverable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isPeekable</strong> isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -419,7 +419,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'pressable' affordance to your component</td>
   <td align="left"><code>isHoverable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isPressable</strong> isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -434,7 +434,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'toggleable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isToggleable</strong> isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -449,7 +449,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'draggable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isDraggable</strong> isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -464,7 +464,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'snappable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code><code>isDraggable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isSnappable</strong> isDraggable isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -479,7 +479,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'selectable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code></td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isSelectable</strong> isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -494,7 +494,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <td align="left">Adds the 'focusable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code</td>
   <td><pre>
-  <code>
+  <code class="language-vue">
   &lt;template&gt;
     &lt;BaseComponent <strong>isFocusable</strong> isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
@@ -574,7 +574,7 @@ The base component uses slot props to apply affordances to your markup. Each slo
 <td align="left">Your component's current <a href="#pass-the-state-slot-prop-into-your-component-to-receive-state-changes-from-the-base-component">state</a>.</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>State</strong>}"&gt;<br/>
@@ -590,7 +590,7 @@ In your component's template:
 <td align="left">The <a href="#pass-the-pointerinput-slot-prop-into-your-component-to-receive-pointerinputs-from-the-base-component">location, interaction and movement</a> of the mouse cursor or fingertip.</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>PointerInput</strong>}"&gt;<br/>
@@ -606,7 +606,7 @@ In your component's template:
 <td align="left">The <a href="#pass-the-focusinput-slot-prop-into-your-component-to-receive-focusinputs-from-the-base-component">modifications</a> to the text, images, or other content in your component</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>FocusInput</strong>}"&gt;<br/>
@@ -622,7 +622,7 @@ In your component's template:
 <td align="left">The <a href="#pass-the-keyboard-input-slot-prop-into-your-component-to-receive-keyboardinputs-from-the-base-component">keys and duration</a> of the keypress.</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>KeyboardInput</strong>}"&gt;<br/>
@@ -638,7 +638,7 @@ In your component's template:
 <td align="left">The <a href="#pass-the-draginput-slot-prop-into-your-component-to-receive-draginputs-from-the-base-component">location, interaction, movement and payload</a> of the drag session.</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>DragInput</strong>}"&gt;<br/>
@@ -654,7 +654,7 @@ In your component's template:
 <td align="left"><a href="#pass-the-scrollinput-slot-prop-into-your-component-to-receive-scrollinputs-from-the-base-component">The location, interaction and movement</a> of the scroll.</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>ScrollInput</strong>}"&gt;<br/>
@@ -670,7 +670,7 @@ In your component's template:
 <td align="left"><a href="#style-your-component-with-the-base-components-theme-slot-prop">CSS styles</a> for your component's text and fill</td>
 <td align="left">
 In your component's template:
-<pre><code>
+<pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
     &lt;template v-slot:default="{<strong>Theme</strong>}"&gt;<br/>
