@@ -30,6 +30,10 @@
  * - by default, no text should be selectable (because you can't select the text on a button) (user-select === none)
  */
 
+// how to define the states enum as a 'BaseComponent.state' readonly??
+
+// how to wrap the device input event handler return types in a BaseComponent.input readonly??
+
 import {
   defineComponent,
   reactive,

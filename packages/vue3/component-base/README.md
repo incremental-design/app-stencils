@@ -20,7 +20,9 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Insert your component's markup into the base component's default slot to access its slot props.](../../../.readme/diagram-vue3-component-base-respond-to-user-interactions.png)
 
-  Use the base component's props to add [affordances](toggle-the-base-components-affordances) to your component's markup. Whenever you click, tap, press, or otherwise interact with your component, the base component will update its [`State`](#pass-the-state-slot-prop-into-your-component-to-receive-state-changes-from-the-base-component) slot prop according to the props you supplied. All you need to do wrap your component's markup in the base component's [default slot](#wrap-your-components-template-in-the-base-components-default-slot) and insert the [`State`](#pass-the-state-slot-prop-into-your-component-to-receive-state-changes-from-the-base-component) slot prop into your component's markup to respond to user interaction.
+  Use the base component's props to add [affordances](toggle-the-base-components-affordances) to your component's markup.
+
+  Whenever you click, tap, press, or otherwise interact with your component, the base component will emit a [`stateChange` custom event](#use-the-statechange=custom-event-to-run-methods-when-your-components-state-changes) according to the props you supplied. All you need to do wrap your component's markup in the base component's [default slot](#wrap-your-components-template-in-the-base-components-default-slot) and use `@stateChange` to run your component's methods.
 
 - **Theme your component, without writing a single CSS selector, by adding the base component's styles to your component.**
 
@@ -44,7 +46,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Use the `<template v-slot:"fallback">` to customize your component's placeholder](../../../.readme/diagram-vue3-component-base-fallback-slot.png)
 
-  The base component implements the Vue 3 [suspense](https://v3.vuejs.org/guide/migration/suspense.html#suspense) API, so you don't have to. If your component loads asynchronously, the base component will automatically show a [blockframe](https://medium.com/ux-power-tools/blockframing-and-31-free-sketch-ready-layouts-using-auto-layout-by-anima-app-1be039007ecf) while it's loading. If you'd like to customize the blockframe, all you need to do is [insert your own markup](#display-a-custom-placeholder-while-your-component-is-loading) into the base component's `<template v-slot:fallback/>` slot. Best of all, the fallback slot has the same slot props as the default slot, so your component can respond to user interaction even if it hasn't been loaded.
+  The base component implements the Vue 3 [suspense](https://v3.vuejs.org/guide/migration/suspense.html#suspense) API, so you don't have to. If your component loads asynchronously, the base component will automatically show a [blockframe](https://medium.com/ux-power-tools/blockframing-and-31-free-sketch-ready-layouts-using-auto-layout-by-anima-app-1be039007ecf) while it's loading. If you'd like to customize the blockframe, all you need to do is [insert your own markup](#display-a-custom-placeholder-while-your-component-is-loading) into the base component's fallback slot.
 
 <!-- list any codebases, websites, apps, platforms or other products that use your code -->
 
@@ -111,9 +113,19 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
             * 'web', 
             * or any <a href="../../shared/theme/README.md#make-a-theme-object">Theme object</a>. 
           --&gt;
+          
+        &lt;!-- use the following events to run your component's methods --&gt;
+          
+          @stateChange=""
+          @pointerInput=""
+          @focusInput=""
+          @keyboardInput=""
+          @dragInput=""
+          @scrollInput=""
+        
       &gt;
       
-        &lt;v-slot:default="{State, PointerInput, FocusInput, KeyboardInput, DragInput, ScrollInput, Theme}"&gt;
+        &lt;v-slot:default="{ State }"&gt;
           
             &lt;-- place your component's HTML here --&gt;
           
@@ -136,37 +148,17 @@ Unlike a website, a web app demands a high level of interactivity. You can't jus
 
 - A state is a set of rules that determine how user interaction affects your markup.
 
-  For example, if your markup is in a 'not pressed' state, then any mouse click or fingertip tap will transition your markup into a 'pressed' state. On the other hand, if your markup is in a 'pressed' state, then the same clicks and taps will have no effect.
+  For example, if your markup is in a 'not pressed' state, then any click or tap will transition it into a 'pressed' state. On the other hand, if your markup is already in a 'pressed' state, then the same clicks and taps will have no effect.
 
 - Appearance is a visual indication of state. When state changes, appearance changes accordingly.
 
-  For example, if your markup transitions from a 'not pressed' state to a 'pressed' state, its fill, border, shadow and text color will change accordingly.
+  For example, if your markup transitions from a 'not pressed' state to a 'pressed' state, then its fill, border, shadow and text color will change.
 
-All UI components need to have at least a few states in order to respond to user interaction. Without the base component, you would not only have to write the code that handles user interactions, but also the code that translates them into states and appearances.
+All UI components need to have at least a few states in order to respond to user interaction. Without the base component, you would have to write the code that turns this user interaction into states and appearances by yourself.
 
 ### Toggle the base component's affordances:
 
-<!-- * why?
-   * desired outcome
-
-   choose the affordances to respond to
-
-   * underlying problem
-
-   there are several different affordances, and some affordances necessitate the others
-
-   * action
-
-   need to understand what each affordance is
-
-   Use
-
-   * compare action to doing nothing
-
-
--->
-
-What's the difference between a button, a switch and a field? If you answered, "their affordances", you're right! The UI components in your library almost certainly differ in their affordances. It's up to you to choose the right ones for each of them. This can get complicated, because affordances are dependent: it's impossible to have certain affordances without others. For example, a UI component can't be pressed if it can't be hovered and it can't be selected if it can't be pressed. Before you can choose affordances for your component, you have to learn what they do, and how they depend on each other.
+What's the difference between a button, a switch and a field? If you answered, "their affordances", you're right! The UI components in your library almost certainly differ in their affordances. It's up to you to choose the right ones for each of them. This can get complicated, because affordances are dependent: it's impossible to have certain affordances without others. For example, a UI component can't be pressed if it can't be hovered and it can't be toggled if it can't be pressed. Before you can choose affordances for your component, you have to learn what they do, and how they depend on each other.
 
 For the most part, any UI component can have some, or all of the following affordances:
 
@@ -296,7 +288,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tr>
   <!-- !Selectable -->
   <tr>
-    <td align="left" rowspan="4">Selectable <!-- need to add gif, or svg animation of the affordance --></td>
+    <td align="left" rowspan="4">Selectable<!-- need to add gif, or svg animation of the affordance --><br/><br/>Note that 'selectable' is distinct from 'toggleable'. If a component is selectable, then its <em>contents</em> can be copied to a clipboard when it is selected. If a component is toggleable, its contents cannot be copied to a clipboard when it is toggled.</td>
     <td align="left">Mouse cursor presses and releases UI component:</td>
     <td rowspan="2">Pressed, Not Selected</td>
     <td rowspan="2">→</td>
@@ -336,7 +328,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tbody>
   </table>
 
-Notice that most of these affordances depend on the 'Pressable' affordance, and all of them depend on the 'Hoverable' affordance. You can't make UI component selectable if it isn't pressable. You can't make it pressable if it isn't hoverable.
+Notice that most of these affordances depend on the 'Pressable' affordance, and all of them depend on the 'Hoverable' affordance. You can't make a UI component toggleable if it isn't pressable. You can't make it pressable if it isn't hoverable.
 
 ![All affordances depend on the `Hoverable` affordance, and most depend on the `Pressable` affordance](../../../.readme/diagram-vue3-component-base-affordance-dependencies.png)
 
@@ -372,7 +364,7 @@ If you're thinking "ok, all of this is super, but which affordances do _I_ need 
 </tbody>
 </table>
 
-Use the following [props](https://v3.vuejs.org/guide/component-props.html) to tell the base component what affordances it should add to your component's markup:
+Use the following [props](https://v3.vuejs.org/guide/component-props.html) to tell the base component what affordances it should add to your UI component:
 
 <table>
 <thead>
@@ -387,7 +379,7 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   <tr>
   <td align="left"><code>isHoverable</code></td>
   <td align="left">Adds the 'hoverable' affordance to your component</td>
-  <td align="left"><code></code></td>
+  <td align="left">Nothing</td>
   <td><pre>
   <code>
   &lt;template&gt;
@@ -507,19 +499,634 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
 </tbody>
 </table>
 
-Even though most affordances depend on others, you have to manually specify each the affordances you want to add to your markup. For example:
+Although most affordances depend on others, you have to manually specify each affordance you want to add to your UI component. For example:
 
-- Even though the 'Focusable' affordance necessitates the 'Pressable' and 'Hoverable' affordances, adding the `isFocusable` prop do the base component won't automatically add the `isPressable` and `isHoverable` props.
+- If you want to make your UI component focusable, you not only need to add the `isFocusable` prop, but also the `isPressable` and `isHoverable` prop to the base component.
 
-- Even though the 'Snappable' affordance necessitates the 'Draggable', 'Pressable' and 'Hoverable' affordances, adding the `isSnappable` prop to the base component won't automatically add the `isDraggable`, `isPressable` or `isHoverable` props.
+- If you want to make your UI component snappable, you not only need to add the `isSnappable` prop, but also the `isDraggable`, `isPressable` and `isHoverable` props to the base component.
 
-This is by design. Each prop is a flag. Its presence enables the corresponding affordance. Its absence disables it. If you omit a dependent affordance, the base component will still handle its corresponding user interactions. It just won't update the your markup's state or appearance in response. While this isn't usually the behavior you want, sometimes it can be very useful. For example:
+This is by design. Each prop is a flag: its presence enables the corresponding affordance. Its absence disables it. If you omit a dependent affordance, the base component will still handle its corresponding user interactions. It just won't update your markup's state or appearance in response. While this isn't usually the behavior you want, sometimes it can be very useful. For example:
 
-- You want to make a component that doesn't change its appearance when you hover on or press it, but does follow your mouse cursor when you drag it.
+- You add the `isDraggable` prop to the base component, but omit the `isPressable` and `isHoverable` props, because you want your UI component to follow your mouse or fingertip when you press it, without changing its appearance when it is hovered or pressed.
 
-- You want to make a component that can be selected, even though it doesn't change its appearance when you depress it with a fingertip or mouse.
+- You add the `isToggleable` prop to the base component, but omit the `isPressable` and `isHoverable` props, because you want your UI component to change its appearance when you toggle it, even as it maintains the same appearance when you hover on or press it.
 
 ### Wrap your component's template in the base component's default slot:
+
+Once you choose the affordances you want your UI component to have, it's up to the base component to apply them. It can't do that until you insert your component's markup into the base component's default slot. If you haven't used Vue slots, think of them as a way to swap out the base component's markup, without swapping out its script. In other words, you're changing the way the base component _looks_, without changing what it actually does.
+
+![The base component receives props and user interactions, and returns slot props.](../../../.readme/diagram-vue3-component-base-receives-returns.png)
+
+The base component uses [Vue custom events](https://v3.vuejs.org/guide/component-custom-events.html#custom-events) and [slot props](https://v3.vuejs.org/guide/component-slots.html#abbreviated-syntax-for-lone-default-slots) to apply affordances to your markup. It supplies you with several of these values, each of which change whenever the base component handles a user interaction.
+
+<table>
+<thead>
+<tr>
+<th align="left">Custom Event</th>
+<th align="left">When it emits:</th>
+<th align="left">What it contains:</th>
+<th align="left">How to access it:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>stateChange</code></td>
+<td align="left">whenever a user interaction changes your UI component's state.</td>
+<td align="left">Your component's previous and current <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">state</a>.</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@stateChange=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+<tr>
+<td align="left"><code>pointerInput</code></td>
+<td align="left">whenever a mouse cursor or fingertip interacts with your UI component.</td>
+<td align="left">The <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">location, interaction and movement</a> of the mouse cursor or fingertip.</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@pointerInput=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+<tr>
+<td align="left"><code>focusInput</code></td>
+<td align="left">whenever the text, images, or other content in your component are manipulated. <!-- is this totally accurate?? --></td>
+<td align="left">The <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">modifications</a> to the text, images, or other content in your component</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@focusInput=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+<tr>
+<td align="left"><code>keyboardInput</code></td>
+<td align="left">whenever a keypress interacts with your UI component.</td>
+<td align="left">The <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">keys and duration</a> of the keypress.</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@keyboardInput=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+<tr>
+<td align="left"><code>dragInput</code></td>
+<td align="left">whenever a mouse or fingertip pulls your component.</td>
+<td align="left">The <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">location, interaction, movement and payload</a> of the drag session.</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@dragInput=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+<tr>
+<td align="left"><code>scrollInput</code></td>
+<td align="left">whenever a mouse or fingertip scrolls your component.</td>
+<td align="left"><a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">The location, interaction and movement</a> of the scroll.</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@scrollInput=""</strong>&gt;
+    &lt;template&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+</tbody>
+</table>
+<br/>
+<table>
+<thead>
+<tr>
+<th align="left">Slot Prop</th>
+<th align="left">When it updates:</th>
+<th align="left">What it contains:</th>
+<th align="left">How to access it:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>Theme</code></td>
+<td align="left">whenever the base component emits a <code>stateChange</code> event.</td>
+<td align="left"><a href="#style-your-component-with-the-base-components-theme-slot-prop">CSS styles</a> for your component's text and fill</td>
+<td align="left">
+In your component's template:
+<pre><code class="language-vue">
+&lt;template&gt;
+  &lt;BaseComponent&gt;
+    &lt;template v-slot:default="{<strong>Theme</strong>}"&gt;<br/>
+      &lt;!-- <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank">Destructure</a> the styles you want from <strong>Theme</strong> and pass them as a <a href="https://v3.vuejs.org/guide/component-props.html#props" target="_blank">prop</a> in your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;
+</code></pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+#### Use the `stateChange` custom event to run methods when your component's state changes.
+
+You probably want your components to affect your app. For example, when a it transitions from a 'not pressed' to a 'pressed' state, you probably want it to _do_ something. Maybe you want it to show or hide a menu, apply a setting, or submit user input. Although the base component will update your component's state and appearance, it won't handle any business logic. That's up to you. To make your component useful, you need to run your business logic when your component's state changes. To do this, wrap your logic in a method, and use the base component's [`stateChange`]() <!-- need to link to the typescript def --> event to trigger it:
+
+<table>
+<tr>
+<td align="left" valign="top"><ol><li value="1">
+Define the method you want to run each time the base component emits a <code>stateChange</code> event. In this example, that's the <code>doSomething</code> method.
+<ul>
+  <li>Make sure your method accepts the following arguments:</li><br/>
+  <table>
+  <thead>
+  <tr>
+  <th>Argument</th><th>What it contains:</th><th>Example:</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td><code>newState</code></td>
+    <td rowspan="">Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned into.</td>
+    <td><code>['pressed', 'selected']<code></td></tr>
+  <tr>
+    <td><code>oldState</code></td>
+    <td>Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned out of.</td>
+    <td><code>['hovered']</code></td></tr>
+  <tr>
+    <td><code>input</code></td>
+    <td>An array of zero or more user interactions that caused the transition. User interactions are of type <code><a href="">BaseComponent.input</a></code>.</td>
+    <td>
+  <pre>
+  <code>
+  [{
+    type: 'mousedown',
+    timestamp: 5376,
+    eventInfo: {
+      relative:{
+        x: 100.86220352,
+        y: 225.23209234,
+        xPercent: .48230237204,
+        yPercent: .55220027620,
+        dxPercent: .120347603476,
+        dyPercent: .052037453407,
+      },
+      viewport:{
+        dx: .06222352352,
+        dy: .03242502735,
+      }
+    }
+  }]
+  </code>
+  </pre>
+  </td></tr>
+  </tbody>
+  </table>
+</ul>
+</li></ol></td>
+<td>
+<pre>
+<code class="language-typescript">
+&lt;template&gt;
+  &lt;BaseComponent isHoverable isPressable&gt;
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { DefineComponent } from 'vue'
+import BaseComponent from '@incremental.design/vue3-component-base'<br>
+export default defineComponent({<br/>
+  methods:{
+    <strong>doSomething({
+      newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+      oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+      input: Array&lt;<a href="">BaseComponent.input</a>&gt;
+      })</strong> 
+    {<br/>
+     /* your method goes here */<br/>
+    }
+  }<br/>
+});
+&lt;/script&gt;<br/>
+</code>
+</pre>
+</td>
+<tr>
+<!--  -->
+<tr>
+<td align="left" valign="top"><ol><li value="2">
+Bind the <code>stateChange</code> event to the method you just defined. 
+<ul>
+<li>Whenever the base component emits a <code>stateChange</code> event, it will pass the <code>newState</code>, <code>oldState</code> and <code>input</code> to your method.
+</ul>
+</li></ol></td>
+<td>
+<pre>
+<code class="language-typescript">
+&lt;template&gt;
+  &lt;BaseComponent <strong>@stateChange="doSomething"</strong> isHoverable isPressable&gt;
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { DefineComponent } from 'vue'
+import BaseComponent from '@incremental.design/vue3-component-base'<br>
+export default defineComponent({<br/>
+  methods:{
+    doSomething({
+      newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+      oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+      input: Array&lt;<a href="">BaseComponent.input</a>&gt;
+      })
+    {<br/>
+     /* your method goes here */<br/>
+    }
+  }<br/>
+});
+&lt;/script&gt;<br/>
+</code>
+</pre>
+</td>
+<tr>
+</table>
+
+Once you set up this method, you can conditionally execute business logic, depending on the value of `currentState`, `oldState` and `input`. Most of the time, you'll only need `currentState`, but for more advanced behaviors, you might want the `oldState` and `input` as well. Keep in mind that all of these arguments are _arrays_. This is by design. It makes **compound** states and inputs - states that are a union of two or more states, and inputs that are a union of two or more inputs, respectively - easy to parse. For example:
+
+| Compound State       | How it's represented in the `currentState` and `previousState` arrays: |
+| :------------------- | :--------------------------------------------------------------------- |
+| Pressed and Selected | `['pressed', 'selected']`                                              |
+| Hovered and Peeked   | `['hovered', 'peeked']`                                                |
+
+<br/>
+
+<table>
+<thead>
+<tr>
+<th align="left">Compound Interaction</th>
+<th align="left">How it's represented in the <code>input</code> array:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">Mousedown and Alt-Key Keydown</td>
+<td align="left">
+<pre>
+<code>
+[{
+  type: 'mousedown',
+  timestamp: 5376,
+  eventInfo: {
+    relative:{
+      x: 100.86220352,
+      y: 225.23209234,
+      xPercent: .48230237204,
+      yPercent: .55220027620,
+      dxPercent: .120347603476,
+      dyPercent: .052037453407,
+    },
+    viewport:{
+      dx: .06222352352,
+      dy: .03242502735,
+    }
+  }
+},
+{
+type: 'keydown',
+timestamp: 5376,
+eventInfo: {
+    TBD <!-- need to define -->
+}
+}]
+</code>
+</pre>
+</td>
+</tr>
+<tr>
+<td align="left">Ctrl-Key Keydown and Alt-Key Keydown</td>
+<td align="left">
+<pre>
+<code>
+[{
+type: 'keydown',
+timestamp: 5376,
+eventInfo: {
+  TBD  <!-- need to define -->
+}
+},
+{
+type: 'keydown',
+timestamp: 5376,
+eventInfo: {
+  TBD  <!-- need to define -->
+}
+}]
+</code>
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+These arguments can also be _empty_ arrays. Once again, this is by design. The presence of a <code><a href="">BaseComponent.state</a></code> <!-- need to add link! --> indicates that the component is in that state. The absence indicates that the component is _not_ in that state. For example:
+
+| State                                  | `newState` or `oldState` array: |
+| :------------------------------------- | :------------------------------ |
+| Not Hovered, Pressed, Selected         | `['pressed', 'selected']`       |
+| Hovered, Not Pressed, Not Selected     | `['hovered']`                   |
+| Not Hovered, Not Pressed, Not Selected | `[]`                            |
+
+There is exactly _one_ <code><a href="">BaseComponent.state</a></code> <!-- need to add link! --> for each affordance. Of these, your component can only have the ones that correspond to the affordances you chose for it. In other words, a state can only appear in the `newState` and `oldState` arrays if you specifically add the prop for the corresponding affordance to the base component:
+
+| Affordance | Prop           | Corresponding `BaseComponent.state`: |
+| :--------- | :------------- | :----------------------------------- |
+| Hoverable  | `isHoverable`  | `hovered`                            |
+| Peekable   | `isPeekable`   | `peeked`                             |
+| Pressable  | `isPressable`  | `pressed`                            |
+| Toggleable | `isToggleable` | `toggled`                            |
+| Draggable  | `isDraggable`  | `dragging`                           |
+| Snappable  | `isSnappable`  | `snapped`                            |
+| Selectable | `isSelectable` | `selected`                           |
+| Focusable  | `isFocusable`  | `focused`                            |
+
+To conditionally execute your business logic, all you need to do is add a `switch()` statement to the method you bound to the base component's `stateChange` event. This switch statement should contain a case for each of your component's possible `BaseComponent.state`s.
+
+The possible values of `baseComponent.input` are similarly limited. Although they are objects with nested properties, rather than strings, they all conform to the [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) type. This means that they contain a `type`, `timestamp`, and `input` property. The `input` property will always be an object of type [`DragInput`](../../shared/device-input-event-handlers/src/README.md#draginput), [`DeviceInput`](../../shared/device-input-event-handlers/src/README.md#deviceinput), [`GamepadInput`](../../shared/device-input-event-handlers/src/README.md#gamepadinput), [`ScrollInput`](../../shared/device-input-event-handlers/src/README.md#scrollinput), [`FocusInput`](../../shared/device-input-event-handlers/src/README.md#focusinput), [`KeyboardInput`](../../shared/device-input-event-handlers/src/README.md#keyboardinput), or [`PointerInput`](../../shared/device-input-event-handlers/src/README.md#pointerinput). Each of these types contains all sorts of useful information about the user interaction that triggered the state change. While you don't _need_ to use the values of `input` to trigger your component's business logic, you can increase your component's level of interactivity by incorporating them into it.
+
+#### Use the `pointerInput`, `focusInput`, `keyboardInput`, `dragInput`, and `scrollInput` custom events to respond to every user interaction, all the time.
+
+<!-- * why?
+ * desired outcome
+
+    higher level of interactivity, you want components that go beyond simple clicks, taps and presses. you want to make components that respond to even the most minute movements (show gif of fluent design)
+
+ * underlying problem
+
+    it turns out that most user interaction is continuous. it's not enough to listen to discrete state changes. you have to listen to everything a user is doing.
+
+ * action
+
+    hook into the
+
+ * compare action to doing nothing -->
+
+If you want to take your UI components to the next level, you can't just trigger business logic on state changes. That's because most user interaction is continuous - not discrete. And although the base component reduces continuous interaction into discrete state changes, your components need to show users that they're _always_ listening. They need to respond to _everything_ a user does - every mouse movement, every touch, every scroll, every keypress - regardless of whether it triggers a state change. The base component makes this trivial. It already handles every user interaction your component receives. Even better, it translates each of them into an [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) object. Just like the [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) objects contained within the `stateChange` event's `input` array, these objects contain a `type`, `timestamp`, and `input` field:
+
+<Table>
+<thead>
+<tr><th colspan="3"><code><a href="../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts">EventInfo</a></code> Object</th></tr>
+<tr><th><code>type</code></th><th><code>timestamp</code></th><th><code>input</code></th></tr>
+</thead>
+<tbody>
+<tr>
+<td>String that is one of: <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/auxclick_event" target="_blank">auxclick</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event" target="_blank">click</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event" target="_blank">contextmenu</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event" target="_blank">dblclick</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event" target="_blank">mousedown</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event" target="_blank">mouseenter</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event" target="_blank">mouseleave</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event" target="_blank">mouseout</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event" target="_blank">mouseover</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event" target="_blank">mouseup</a></code>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchcancel_event"><code>touchcancel</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchend_event"><code>touchend</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/touchmove_event"><code>touchmove</code></a>, <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event"><code>touchstart</code></a></td>
+<td rowspan="5">number of milliseconds since page load</td>
+<td><code><a href="../../shared/device-input-event-handlers/src/README.md#pointerinput">PointerInput</a></code> object</td>
+</tr>
+<tr>
+<td>String that is one of: <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event" target="_blank">blur</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event" target="_blank">focus</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event" target="_blank">blur</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event" target="_blank">focusout</a></code></td>
+<td><code><a href="../../shared/device-input-event-handlers/src/README.md#focusinput">FocusInput</a></code> object</td>
+</tr>
+<tr>
+<td>String that is one of: <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event" target="_blank">keydown</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">keyup</a></code></td>
+<td><code><a href="../../shared/device-input-event-handlers/src/README.md#keyboardinput">KeyboardInput</a></code> object</td>
+</tr>
+<tr>
+<td>String that is one of: <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drag_event" target="_blank">drag</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragend_event" target="_blank">dragend</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragenter_event" target="_blank">dragenter</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragleave_event" target="_blank">dragleave</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragover_event" target="_blank">dragover</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragstart_event" target="_blank">dragstart</a></code>,  <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drop_event" target="_blank">drop</a></code></td>
+<td><code><a href="../../shared/device-input-event-handlers/src/README.md#draginput">DragInput</a></code> object</td>
+</tr>
+<tr>
+<td>String that is one of: <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event" target="_blank">scroll</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">wheel</a></code></td>
+<td><code><a href="../../shared/device-input-event-handlers/src/README.md#scrollinput">ScrollInput</a></code> object</td>
+</tr>
+</tbody>
+</Table>
+
+The base component emits five distinct custom events: one for each type of `input`. This makes it effortless to filter the interactions that matter to you. If you only want to respond to keyboard interactions, just bind a method to the `keyboardInput` event. If you only want to respond to mouse and touch events, just bind a method to the `pointerInput` event. Each of the following five events passes a single [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) object into the method you bind to them.
+
+<table>
+<thead>
+<tr>
+<th>Custom Event</th><th>How to use it:</th>
+</tr>
+</thead>
+<tbody>
+<!--  -->
+<tr>
+<td><code>pointerInput</code></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>@pointerInput="doSomething"</strong>&gt;
+    &lt;template v-slot:default&gt;
+     &lt;!-- your markup here --&gt;
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+export default defineComponent({<br/>
+  methods:{<br/>
+    doSomething({type: string, timestamp: number, input: <a href="../../shared/device-input-event-handlers/src/README.md#pointerinput">PointerInput</a>}){<br/>
+      // your logic here<br/>
+    }
+  }
+})
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><code>focusInput</code></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>@focusInput="doSomething"</strong>&gt;
+    &lt;template v-slot:default&gt;
+     &lt;!-- your markup here --&gt;
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+export default defineComponent({<br/>
+  methods:{<br/>
+    doSomething({type: string, timestamp: number, input: <a href="../../shared/device-input-event-handlers/src/README.md#focusinput">FocusInput</a>}){<br/>
+      // your logic here<br/>
+    }
+  }
+})
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><code>keyboardInput</code></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>@keyboardInput="doSomething"</strong>&gt;
+    &lt;template v-slot:default&gt;
+     &lt;!-- your markup here --&gt;
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+export default defineComponent({<br/>
+  methods:{<br/>
+    doSomething({type: string, timestamp: number, input: <a href="../../shared/device-input-event-handlers/src/README.md#keyboardinput">KeyboardInput</a>}){<br/>
+      // your logic here<br/>
+    }
+  }
+})
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><code>dragInput</code></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>@dragInput="doSomething"</strong>&gt;
+    &lt;template v-slot:default&gt;
+     &lt;!-- your markup here --&gt;
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+export default defineComponent({<br/>
+  methods:{<br/>
+    doSomething({type: string, timestamp: number, input: <a href="../../shared/device-input-event-handlers/src/README.md#draginput">DragInput</a>}){<br/>
+      // your logic here<br/>
+    }
+  }
+})
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><code>scrollInput</code></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>@scrollInput="doSomething"</strong>&gt;
+    &lt;template v-slot:default&gt;
+     &lt;!-- your markup here --&gt;
+    &lt;/template&gt;
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script lang="ts"&gt;<br/>
+import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+export default defineComponent({<br/>
+  methods:{<br/>
+    doSomething({type: string, timestamp: number, input: <a href="../../shared/device-input-event-handlers/src/README.md#scrollinput">ScrollInput</a>}){<br/>
+      // your logic here<br/>
+    }
+  }
+})
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+You can, of course, listen to any combination, or all of these events if you'd like. When you listen to any of these custom events, you don't have to listen to the native events they replace:
+
+<table>
+<thead>
+<tr>
+<th align="left">Custom event</th>
+<th align="left">Native events it replaces:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>pointerInput</code></td>
+<td align="left"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/auxclick_event" target="_blank">auxclick</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/click_event" target="_blank">click</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/contextmenu_event" target="_blank">contextmenu</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/dblclick_event" target="_blank">dblclick</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mousedown_event" target="_blank">mousedown</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseenter_event" target="_blank">mouseenter</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseleave_event" target="_blank">mouseleave</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseout_event" target="_blank">mouseout</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseover_event" target="_blank">mouseover</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event" target="_blank">mouseup</a></code></td>
+</tr>
+<tr>
+<td align="left"><code>focusInput</code></td>
+<td align="left"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event" target="_blank">blur</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focus_event" target="_blank">focus</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusin_event" target="_blank">blur</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event" target="_blank">focusout</a></code></td>
+</tr>
+<tr>
+<td align="left"><code>keyboardInput</code></td>
+<td align="left"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event" target="_blank">keydown</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">keyup</a></code></td>
+</tr>
+<tr>
+<td align="left"><code>dragInput</code></td>
+<td align="left"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drag_event" target="_blank">drag</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragend_event" target="_blank">dragend</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragenter_event" target="_blank">dragenter</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragleave_event" target="_blank">dragleave</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragover_event" target="_blank">dragover</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/dragstart_event" target="_blank">dragstart</a></code>,  <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drop_event" target="_blank">drop</a></code></td>
+</tr>
+<tr>
+<td align="left"><code>scrollInput</code></td>
+<td align="left"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/scroll_event" target="_blank">scroll</a></code>, <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">wheel</a></code></td>
+</tr>
+</tbody>
+</table>
+
+### Style your component with the base component's `Theme` slot prop:
 
 <!-- * why?
  * desired outcome
@@ -531,227 +1138,14 @@ This is by design. Each prop is a flag. Its presence enables the corresponding a
 
 <!--
 
-turn design system into code how?
-  - use base component to handle appearance and interactivity
-    - how does it do that?
-      - update CSS in response to user interactions?
-        - but what does that mean? what CSS, what user interactions?
+- need to explain that slot prop does more than just deliver state and event inputs,
+  need to explain that in the same way that base component breaks affordances into states, it breaks theme into styles
 
-  - what is a default slot? how do you 'wrap' your component in it? Why does this help respond to user interactions?
-    - need to explain that base component receives props and returns slot props. You tell it what affordances it has, and it automatically wires up the necessary event listeners and updates the state
-      - need to explain what 'state' is and how it relates to 'affordances' first
+- follow explanation of theme/style with string or Theme object for theme
 
-    -
-
-  - need to explain that slot prop does more than just deliver state and event inputs,
-    need to explain that in the same way that base component breaks affordances into states, it breaks theme into styles
-
-  - follow explanation of theme/style with string or Theme object for theme
-
-  - finally need to explain that sometimes the data in a component takes time to load. the base component can wait, and show a placeholder during that time. You can customize the placeholder, and even hook into all of the same slot props you encountered earlier
+- finally need to explain that sometimes the data in a component takes time to load. the base component can wait, and show a placeholder during that time. You can customize the placeholder, and even hook into all of the same slot props you encountered earlier
 
 -->
-
-Once you choose the affordances you want your UI component to have, it's up to the base component to apply them. It can't do that until you supply it with your component's markup. To do this, you need to place your markup in the base component's default slot. Then, you need to insert the base component's **slot props** into your markup.
-
-![The base component receives props and user interactions, and returns slot props.](../../../.readme/diagram-vue3-component-base-receives-returns.png)
-
-The base component uses slot props to apply affordances to your markup. Each slot prop is a value that updates whenever the base component handles a user interaction. The base component supplies you with several of these values:
-
-<table>
-<thead>
-<tr>
-<th align="left">Slot prop</th>
-<th align="left">When it updates:</th>
-<th align="left">What it contains:</th>
-<th align="left">How to access it:</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>State</code></td>
-<td align="left">whenever a user interaction changes your UI component's state.</td>
-<td align="left">Your component's current <a href="#pass-the-state-slot-prop-into-your-component-to-receive-state-changes-from-the-base-component">state</a>.</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>State</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>PointerInput</code></td>
-<td align="left">whenever a mouse cursor or fingertip interacts with your UI component.</td>
-<td align="left">The <a href="#pass-the-pointerinput-slot-prop-into-your-component-to-receive-pointerinputs-from-the-base-component">location, interaction and movement</a> of the mouse cursor or fingertip.</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>PointerInput</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>FocusInput</code></td>
-<td align="left">whenever the text, images, or other content in your component are manipulated. <!-- is this totally accurate?? --></td>
-<td align="left">The <a href="#pass-the-focusinput-slot-prop-into-your-component-to-receive-focusinputs-from-the-base-component">modifications</a> to the text, images, or other content in your component</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>FocusInput</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>KeyboardInput</code></td>
-<td align="left">whenever a keypress interacts with your UI component.</td>
-<td align="left">The <a href="#pass-the-keyboard-input-slot-prop-into-your-component-to-receive-keyboardinputs-from-the-base-component">keys and duration</a> of the keypress.</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>KeyboardInput</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>DragInput</code></td>
-<td align="left">whenever a mouse or fingertip pulls your component.</td>
-<td align="left">The <a href="#pass-the-draginput-slot-prop-into-your-component-to-receive-draginputs-from-the-base-component">location, interaction, movement and payload</a> of the drag session.</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>DragInput</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>ScrollInput</code></td>
-<td align="left">whenever a mouse or fingertip scrolls your component.</td>
-<td align="left"><a href="#pass-the-scrollinput-slot-prop-into-your-component-to-receive-scrollinputs-from-the-base-component">The location, interaction and movement</a> of the scroll.</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>ScrollInput</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-<tr>
-<td align="left"><code>Theme</code></td>
-<td align="left">whenever the <code>State</code> slot prop changes</td>
-<td align="left"><a href="#style-your-component-with-the-base-components-theme-slot-prop">CSS styles</a> for your component's text and fill</td>
-<td align="left">
-In your component's template:
-<pre><code class="language-vue">
-&lt;template&gt;
-  &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>Theme</strong>}"&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;
-</code></pre>
-</td>
-</tr>
-</tbody>
-</table>
-
-#### Pass the `State` slot prop into your component to receive state changes from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-#### Pass the `PointerInput` slot prop into your component to receive [PointerInput](../../shared/device-input-event-handlers/src/README.md#pointerinput)s from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-#### Pass the `FocusInput` slot prop into your component to receive [FocusInput](../../shared/device-input-event-handlers/src/README.md#focusinput)s from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-#### Pass the `KeyboardInput` slot prop into your component to receive [KeyboardInput](../../shared/device-input-event-handlers/src/README.md#keyboardinput)s from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-#### Pass the `DragInput` slot prop into your component to receive [DragInput](../../shared/device-input-event-handlers/src/README.md#draginput)s from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-#### Pass the `ScrollInput` slot prop into your component to receive [ScrollInput](../../shared/device-input-event-handlers/src/README.md#scrollinput)s from the base component:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-### Style your component with the base component's `Theme` slot prop:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
 
 ### Customize the base component's theme with the `theme` prop:
 
