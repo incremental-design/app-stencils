@@ -9,3 +9,7 @@ export const handleMouse: Handler<MouseEvent, PointerInput> = (
 };
 
 // todo: support auxclick, contextmenu, webkitmouseforcewillbegin, webkitmouseforcedown, webkitmouseforcechanged, webkitmouseforceup
+
+// this is how vue handles mod keys on mouse events: https://v3.vuejs.org/guide/events.html#system-modifier-keys
+
+// this is how vue handles left, middle, right on mouse events: https://v3.vuejs.org/guide/events.html#mouse-button-modifiers

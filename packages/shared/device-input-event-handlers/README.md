@@ -515,7 +515,6 @@ The [`handleKeyboard(...)`](./src/README.md#handlekeyboard) function returns a [
 </tr>
 <!-- handleKeyboard -->
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keydown_event" target="_blank">:keydown</a></code></td><td rowspan="3">KeyboardEvent</td></tr>
-<tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keypress_event" target="_blank">:keypress</a></code></td></tr>
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">:keyup</a></code></td></tr>
 </table>
 
@@ -715,4 +714,4 @@ If you've been using [`handle(...)`](./src/README.md#handle) function, rather th
 | :------------------------- | :----------------------------------------------------------------------------------------------- |
 | [`src/*`](./src/README.md) | Exports all of the methods in this package.                                                      |
 | `package.json`             | Lists this package's dependencies, scripts, and exports.                                         |
-| tsconfig.json              | Configures [Typescript](https://www.typescriptlang.org/tsconfig), which builds the code in `src` |
+| `tsconfig.json`            | Configures [Typescript](https://www.typescriptlang.org/tsconfig), which builds the code in `src` |
