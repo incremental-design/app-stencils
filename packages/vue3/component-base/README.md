@@ -24,6 +24,14 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   Whenever you click, tap, press, or otherwise interact with your component, the base component will emit a [`stateChange` custom event](#use-the-statechange=custom-event-to-run-methods-when-your-components-state-changes) according to the props you supplied. All you need to do wrap your component's markup in the base component's [default slot](#wrap-your-components-template-in-the-base-components-default-slot) and use `@stateChange` to run your component's methods.
 
+- **Customize the base component's theme with a single string.**
+
+  <!-- need a storybook that cycles a component through different styles, and a gif that links to it -->
+
+  ![Use the `:theme` prop to customize the styles contained in the default slot's `Theme` slot prop](../../../.readme/diagram-vue3-component-base-customize-theme.png)
+
+  Pass a [string](#set-the-base-components-theme-with-the-theme-prop) or [`Theme`]("../../shared/theme/README.md#make-a-theme-object") object into the base component's [`:theme`](#set-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
+
 - **Theme your component, without writing a single CSS selector, by adding the base component's styles to your component.**
 
   <!-- need a storybook that shows base component style properties, with gif that links to it  -->
@@ -31,14 +39,6 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
   ![Use the functions in the `Theme` slot prop to style your component's markup](../../../.readme/diagram-vue3-component-base-theme-your-component.png)
 
   The base component's [`Theme`](#style–your–component–with-the-base-components-theme-slot-prop) slot prop contains all of the CSS you need to style your component. All you need to do reach into it, grab the styles you need, and bind them to your markup's `:style` attributes. It will even update your component's appearance in response to user interactions - no `:hover` or `:active` selectors required!
-
-- **Customize the base component's theme with a single string.**
-
-  <!-- need a storybook that cycles a component through different styles, and a gif that links to it -->
-
-  ![Use the `:theme` prop to customize the styles contained in the default slot's `Theme` slot prop](../../../.readme/diagram-vue3-component-base-customize-theme.png)
-
-  Pass a [string](#customize-the-base-components-theme-with-the-theme-prop) or [`Theme`]("../../shared/theme/README.md#make-a-theme-object") object into the base component's [`:theme`](#customize-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
 
 - **Show a placeholder while your component loads, without writing a single line of code.**
 
@@ -1126,6 +1126,172 @@ You can, of course, listen to any combination, or all of these events if you'd l
 </tbody>
 </table>
 
+### Set the base component's theme with the `theme` prop:
+
+Your app's design system likely prescribes a theme: a set of styles all of your components adopt. Part of making UI components is turning those styles into code. If CSS is your native language, this might sound easy enough. But keep in mind that UI components have to respond to _every_ user interaction. CSS alone won't cut it. You need to drive your CSS with Vue. The base component takes care of this for you. You tell it what kind of theme you want to apply, and it drives ALL of the styles your component needs. Without the base component, you would have to co-mingle your presentation logic with your business logic to affect both your component's styles and your app. The base component moves the presentation logic out of your component.
+
+The base component ships with six preset themes, each of which you can set using the `theme` prop:
+
+<table>
+<thead>
+<tr>
+  <th>Theme</th><th>How to set it</th>
+</tr>
+</thead>
+<tbody>
+<!--  -->
+<tr>
+<td><a href="https://developer.apple.com/design/human-interface-guidelines/ios/overview/themes/" target="_blank"><code>ios</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="ios"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><a href="https://developer.apple.com/design/human-interface-guidelines/macos/overview/themes/" target="_blank"><code>macos</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="macos"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><a href="https://developer.apple.com/design/human-interface-guidelines/tvos/overview/themes/" target="_blank"><code>tvos</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="tvos"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><a href="https://developer.android.com/design" target="_blank"><code>android</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="android"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><a href="https://www.gtk.org/" target="_blank"><code>gtk</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="gtk"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+<!--  -->
+<tr>
+<td><a href="https://www.microsoft.com/design/fluent/#/" target="_blank"><code>windows</code></a></td>
+<td>
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent <strong>:theme="windows"</strong>&gt;<br/>
+    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
+</td>
+</tr>
+</tbody>
+</table>
+
+Keep in mind that props are reactive: changing the value of the prop changes the theme on the fly. This can come in handy when you want to demonstrate the same component with different themes applied to it. In fact, this is the strongest use case for the base component.
+
+If none of the six preset themes fit your design system, you can easily define your own themes using the [`new Theme(...)` constructor](../../shared/theme/README.md). This constructor makes it easy to specify all of the styles that make up your theme: the sizes, shapes, fonts, colors, and elevations. It does all the hard work of turning those styles into CSS for you.
+
+if you don't specify the theme prop, then the base component won't calculate styles for you. This is a great option if you've already written code for your app's theme, and you just want to use the base component's states. In fact, if you don't supply a theme prop, you will actually get a [slight performance boost](#how-incrementaldesign-vue3-component-base), because the base component won't calculate any of the theme's styles.
+
 ### Style your component with the base component's `Theme` slot prop:
 
 <!-- * why?
@@ -1143,33 +1309,9 @@ You can, of course, listen to any combination, or all of these events if you'd l
 
 - follow explanation of theme/style with string or Theme object for theme
 
-- finally need to explain that sometimes the data in a component takes time to load. the base component can wait, and show a placeholder during that time. You can customize the placeholder, and even hook into all of the same slot props you encountered earlier
+
 
 -->
-
-### Customize the base component's theme with the `theme` prop:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-`ios`, `macos`, `tvos`, `android`, `gtk`, `windows`
-
-if you don't specify the theme prop, then the base component will be entirely headless
-
-#### Pass a `Theme` object into the `themeConfig` prop to customize every aspect of the base component's theme:
-
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
 
 ### Display a custom placeholder while your component is loading:
 
@@ -1179,6 +1321,8 @@ if you don't specify the theme prop, then the base component will be entirely he
  * action
  * compare action to doing nothing -->
 
+<!-- - finally need to explain that sometimes the data in a component takes time to load. the base component can wait, and show a placeholder during that time. You can customize the placeholder, and even hook into all of the same slot props you encountered earlier -->
+
 <!-- * how tell if succeeded? -->
 
 ### How `incremental.design/vue3-component-base` works:
@@ -1186,6 +1330,8 @@ if you don't specify the theme prop, then the base component will be entirely he
 ![The base component listens for HTML events, updates state, and sends the state into the scope of both the default slot and the suspense slot](../../../.readme/vue3-component-base/vue3-component-base-how-it-works.png)
 
 [ ] Explain how execution works. What is the entry point for your code? Which files correspond to which functionality? What is the lifecycle of your project? Are there any singletons, side effects or shared state among instances of your project? Take extra care to explain design decisions. After all, you wrote an ENTIRE codebase around your opinions. Make sure that the people using it understand them.
+
+<!-- need to discuss the performance cost of listening to events and calculating theme. explain that any time you don't listen to an event or destructure the theme slot prop, the base component actually does less work, so you can optimize by making it headless -->
 
 #### Repository Structure:
 
