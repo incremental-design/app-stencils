@@ -1294,24 +1294,58 @@ if you don't specify the theme prop, then the base component won't calculate sty
 
 ### Style your component with the base component's `Theme` slot prop:
 
-<!-- * why?
- * desired outcome
- * underlying problem
- * action
- * compare action to doing nothing -->
+You just set the base component's `:theme`, and ... nothing changes. Your component's appearance hasn't updated to reflect the theme. This is a feature, not a bug. Although the base component calculates and updates the styles in a theme, you have to manually apply the styles you need to your markup. That's because the base component provides you with several variations on the same theme. It's up to you to apply the one that fits your component. To do this, you need to grab the `Theme` slot prop from the base component's default slot, and reference the specific style you need in your markup. For example, if you want make a UI component that functions as a button, you could do so as follows:
 
-<!-- * how tell if succeeded? -->
+<pre>
+<code>
+&lt;template&gt;
+  &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+    &lt;template v-slot:default="{ <strong>Theme</strong> }"&gt;<br/>
+      &lt;div <strong>:style="Theme.layoutSmall.fill.foreground.primary()"</strong>&gt;
+        &lt;p <strong>:style="Theme.layoutSmall.text.body()"</strong>&gt;Button&lt;/p&gt;
+      &lt;/div&gt;<br/>
+    &lt;/template&gt;<br/>
+  &lt;/BaseComponent&gt;
+&lt;/template&gt;<br/>
+&lt;script&gt;<br/>
+  import { defineComponent } from 'vue';
+  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+  export default defineComponent({<br/>
+    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+  })<br/>
+&lt;/script&gt;
+</code>
+</pre>
 
-<!--
+The `Theme` slot prop's styles, `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` not only give your component their styles, but also update in accordance with the `isPressable` and `isHoverable` props. This means that when you hover on or press your component, the `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` will automatically update to match.
 
-- need to explain that slot prop does more than just deliver state and event inputs,
-  need to explain that in the same way that base component breaks affordances into states, it breaks theme into styles
+Notice that `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` are functions. Every style in the `Theme` slot prop is a function that can accept the following optional arguments:
 
-- follow explanation of theme/style with string or Theme object for theme
+<table>
+<thead>
+<tr>
+<th align="left">Argument</th>
+<th align="left">Accepted values:</th>
+<th align="left">What it does:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>tint</code></td>
+<td align="left">string that is one of <code>active</code>, <code>progress</code>, <code>success</code>, <code>warn</code>, <code>fail</code></td>
+<td align="left">Varies the colors in the style.</td>
+</tr>
+<tr>
+<td align="left"><code>dark</code></td>
+<td align="left">boolean.</td>
+<td align="left">If set to 'true' it forces the style to adopt a 'dark' appearance. If set to 'false', it forces the style to adopt a 'light' appearance. If not set, the style adopts whatever appearance the browser <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">specifies</a>.</td>
+</tr>
+</tbody>
+</table>
 
+Of course, the theme provides more than just the `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` styles. It provides dozens of styles, categorized by size classes. Each size class contains two sets of styles: one for text and another for fill. That's because _almost every_ UI component you will ever write will contain both text and a fill. Each of these sets contains a handful of styles, so you can differentiate components from one another. For a complete list of all of the `Theme`'s styles, and an explanation of how and when to apply them, see the [README](../../shared/theme/README.md) for the `Theme` package.
 
-
--->
+Keep in mind that you can use some or all of the styles provided by `Theme`. If your component contains markup that doesn't quite fit the styles that theme provides, you can always use the base component's events to drive your own custom CSS. You can even intermingle the `Theme`'s styles with your own, for the ultimate flexibility.
 
 ### Display a custom placeholder while your component is loading:
 
