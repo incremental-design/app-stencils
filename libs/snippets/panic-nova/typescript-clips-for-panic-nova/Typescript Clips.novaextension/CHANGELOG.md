@@ -9,3 +9,7 @@ fixed typo in `@see` TSdoc clip.
 ## Version 0.1.2
 
 Adjusted formatting in `/method` TSdoc clip.
+
+## Version 0.1.3
+
+Changed comment in `/class` Typescript clip.
