@@ -647,7 +647,7 @@ This starts an instance of the Jest unit test framework for each package that co
 
 ### Make Typescript packages with `tsc`:
 
-The more vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript module, regardless of where it is located relative to your module. Without strict organization, what starts as just a handful of imports _will_ grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps the rest of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
+The more Vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic in a Typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript module, regardless of where it is located relative to your module. Without strict organization, what starts as just a handful of imports _will_ grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps the rest of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
 
 <table>
 <thead>
@@ -829,6 +829,7 @@ The more vue components you write, the more you will find yourself rewriting the
 
 - Uncomment `types` and set it to `["webpack-env","jest","node"]`
 - Add the `lib` field to the `compilerOptions` field and set it to `["esnext", "dom", "dom.iterable", "scripthost"]`
+- run `lerna add --dev @types/webpack-env --scope '@incremental.design/<name-of-package>' && lerna add --dev @types/jest --scope '@incremental.design/<name-of-package>' && lerna add --dev @types/node --scope '@incremental.design/<name-of-package>'`
 
   ![set `types` and `lib` fields](./.readme/ts-types-lib.gif)
 
