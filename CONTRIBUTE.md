@@ -13,13 +13,13 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 
 ## Setup:
 
-1. Navigate to the root of this repository.
-2. Run `lerna bootstrap`.
+1. Navigate to the root of this monorepo.
+2. Run `yarn`. This installs the tooling for this monorepo.
+3. Run `lerna bootstrap`. This installs the dependencies for each of the packages in this monorepo.
 
    ![`lerna bootstrap`](./.readme/lerna-bootstrap.gif)
 
-- 🤔 `lerna bootstrap` replaces `yarn install`.
-- 🛑 Do NOT run `yarn install` in any of these repositories.
+- 🛑 Do NOT run `yarn` inside *any* of the packages in this monorepo.
 
 ## Repository Structure:
 
@@ -43,7 +43,7 @@ Most code is located inside the `packages` folder. App stencils splits the code 
 
 ![All packages are inside the `packages` folder.](.readme/diagram-repo-structure-code.png)
 
-App Stencils groups packages according to their contents. Each package contains exactly ONE of the following four types of content:
+App Stencils groups packages according to their contents. Each package contains exactly ONE of the following types of content:
 
 <table>
 <thead>
@@ -54,15 +54,11 @@ App Stencils groups packages according to their contents. Each package contains 
 </thead>
 <tbody>
 <tr>
-<td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/single-file-component.html">Single File Component</a></td>
-<td align="left"><code>packages/vue3/component-&lt;name of component&gt;</code></td>
+<td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/single-file-component.html">Component</a></td>
+<td align="left"><code>packages/vue3/component-&lt;name-of-component&gt;</code></td>
 </tr>
 <tr>
-<td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/plugins.html#plugins">Plugin</a></td>
-<td align="left"><code>packages/vue3/plugin-&lt;name of plugin&gt;</code></td>
-</tr>
-<tr>
-<td align="left">Typescript Presentation Logic</td>
+<td align="left">Typescript Module</td>
 <td align="left"><code>packages/shared/&lt;name-of-package&gt;</code></td>
 </tr>
 </tbody>
@@ -88,7 +84,7 @@ Each level of documentation focuses on a different aspect of App Stencils.
 
 As you modify the code in this repository, update every level of documentation. This helps the rest of us understand what you changed.
 
-When most of us read an unfamiliar piece of code, several questions flash through our minds: "what does this code do?", "what happens if I change it?", "who wrote it?", "why?", and "what were they thinking?". To understand the code, we have to understand the **context** in which it was written. Context is the intersection between the person who wrote the code, the problem they were trying to solve, and the information available to them at the time. Unfortunately, code itself doesn't communicate context. To fix this, we need to write **documentation**. Documentation explains what the code does, why you should use it, how it works, and how you can modify it. Documentation saves us the hours of detective work and the tedium of testing the code to learn what it does. Without it, most of us will literally ignore the code, rendering it useless. When documentation is successful, we take the time to read it. We don't skip over it, because we know that it will save us the time we would otherwise spend testing the code.
+When most of us read an unfamiliar piece of code, several questions flash through our minds: "what does this code do?", "what happens if I change it?", "who wrote it?", "why?", and "what were they thinking?". To understand the code, we have to understand the **context** in which it was written. Context is the intersection between the person who wrote the code, the problem they were trying to solve, and the information available to them at the time. Unfortunately, code itself doesn't communicate context. To fix this, you need to write **documentation**. Documentation explains what the code does, why you should use it, how it works, and how you can modify it. Documentation saves us the hours of detective work and the tedium of testing the code to learn what it does. Without it, most of us will literally ignore the code, rendering it useless. When documentation is successful, we take the time to read it. We don't skip over it, because we know that it will save us the time we would otherwise spend testing the code.
 
 When you make changes to the code, include the following details in each level of documentation:
 
@@ -123,11 +119,11 @@ App Stencils also contains a **Storybook** - a set of interactive demos of each 
 
 ![`lerna run storybook:serve`](.readme/storybook-serve.gif)
 
-Whenever you add Vue components to App Stencils, make sure you [demo it with Storybook](#use-storybook-to-demo-your-vue-components).
+Whenever you add Vue components to App Stencils, make sure you [demo it with Storybook](#demo-user-interface-components-with-storybook).
 
 The best Vue components are easy to customize, and easy to understand. Without Storybook, it's really hard to make a component that's both. That's because the more customizable a component is, the harder it is to predict its appearance and behavior. When you use Storybook, it helps the rest of us _see the component for ourselves_. That's because unlike inline documentation, Storybook actually runs the component, exposing all of its configuration details. It lets us reconfigure the component, and observe how it changes, so that we can learn by _doing_ rather than by _guessing_. When you demo components with Storybook, you maximize customizability, without maximizing confusion.
 
-To learn how to add a component to Storybook, see: ["Use Storybook to demo your vue components"](#use-storybook-to-demo-your-vue-components).
+To learn how to add a component to Storybook, see: ["Use Storybook to demo your vue components"](#demo-user-interface-components-with-storybook).
 
 ## Develop:
 
@@ -182,11 +178,11 @@ You have to build, test, document and package your code before the rest of us ca
 <td>Stores all of the images and videos used in the documentation separately from the rest of the repository.</td>
 </tr>
 <tr>
-<td><a href="#Make-vue-3-packages-with-vue-CLI">Vue CLI</a></td>
+<td><a href="#make-vue-3-packages-with-vue-cli">Vue CLI</a></td>
 <td>Stubs out Vue 3 Packages.</td>
 </tr>
 <tr>
-<td><a href="#Make-typescript-packages-with-tsc">tsc</a></td>
+<td><a href="#make-typescript-packages-with-tsc">tsc</a></td>
 <td>Stubs out Typescript Packages.</td>
 </tr>
 </tbody>
@@ -239,14 +235,26 @@ Use the following Lerna commands to run tasks in App Stencils:
 <td><code>rm -rf ./node_modules</code></td>
 </tr>
 <tr>
-<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies">dependency</a> to a package's <code>package.json</code></td>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies">dependency</a> to all packages' <code>package.json</code></td>
 <td><code>lerna add &lt;package&gt;</code></td>
 <td><code>yarn add &lt;package&gt;</code></td>
 <td><code>npm install &lt;package&gt;</code></td>
 </tr>
 <tr>
-<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies">dev dependency</a> to a package's <code>package.json</code></td>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#dependencies">dependency</a> to a specific package's <code>package.json</code></td>
+<td><code>lerna add &lt;package&gt; --scope '@incremental.design/&lt;name-of-package&gt;'</code></td>
+<td><code>yarn add &lt;package&gt;</code></td>
+<td><code>npm install &lt;package&gt;</code></td>
+</tr>
+<tr>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies">dev dependency</a> to all packages' <code>package.json</code></td>
 <td><code>lerna add --dev &lt;package&gt;</code></td>
+<td><code>yarn add --dev &lt;package&gt;</code></td>
+<td><code>npm install --save-dev &lt;package&gt;</code></td>
+</tr>
+<tr>
+<td>Add a <a href="https://docs.npmjs.com/cli/v7/configuring-npm/package-json#devdependencies">dev dependency</a> to a specific package's <code>package.json</code></td>
+<td><code>lerna add --dev &lt;package&gt; --scope '@incremental.design/&lt;name-of-package&gt;'</code></td>
 <td><code>yarn add --dev &lt;package&gt;</code></td>
 <td><code>npm install --save-dev &lt;package&gt;</code></td>
 </tr>
