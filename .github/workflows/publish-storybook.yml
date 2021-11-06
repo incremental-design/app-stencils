@@ -35,6 +35,8 @@ jobs:
       - name: build storybook
         run: |
           lerna bootstrap
+          lerna run build
+          lerna bootstrap
           lerna run storybook:build
           
       - name: Publish to Github Pages
