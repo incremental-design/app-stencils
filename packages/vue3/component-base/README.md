@@ -20,7 +20,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Insert your component's markup into the base component's default slot to access its slot props.](../../../.readme/diagram-vue3-component-base-respond-to-user-interactions.png)
 
-  Use the base component's props to add [affordances](toggle-the-base-components-affordances) to your component's markup.
+  Use the base component's props to add [affordances](#toggle-the-base-components-affordances) to your component's markup.
 
   Whenever you click, tap, press, or otherwise interact with your component, the base component will emit a [`stateChange` custom event](#use-the-statechange=custom-event-to-run-methods-when-your-components-state-changes) according to the props you supplied. All you need to do wrap your component's markup in the base component's [default slot](#wrap-your-components-template-in-the-base-components-default-slot) and use `@stateChange` to run your component's methods.
 
