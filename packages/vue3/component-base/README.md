@@ -30,7 +30,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Use the `:theme` prop to customize the styles contained in the default slot's `Theme` slot prop](../../../.readme/diagram-vue3-component-base-customize-theme.png)
 
-  Pass a [string](#set-the-base-components-theme-with-the-theme-prop) or [`Theme`]("../../shared/theme/README.md#make-a-theme-object") object into the base component's [`:theme`](#set-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
+  Pass a [string](#set-the-base-components-theme-with-the-theme-prop) or [`Theme`]("/packages/shared/theme#make-a-theme-object") object into the base component's [`:theme`](#set-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
 
 - **Theme your component, without writing a single CSS selector, by adding the base component's styles to your component.**
 
