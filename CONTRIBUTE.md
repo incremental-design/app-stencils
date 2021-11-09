@@ -482,9 +482,13 @@ When the rest of us read your code, we need to be able to guess the meaning of e
 
 ### Make user interfaces with Vue 3:
 
-Every user interface component you write needs to be **irreducible** and **configurable**. A component is irreducible when the code that describes it cannot be split into separate modules without duplicating logic. A component is configurable when its code furnishes parameters that affect its appearance and behavior. There are dozens of frameworks for making user interface components. We use Vue because it occupies a special goldilocks zone in the world of app development: it is as versatile and powerful as it is familiar to programmers of different backgrounds. Whether you primarily code in Javascript, Typescript, PHP, or even Java or .net, Vue's single-file-component format functions as a lingua franca that you can pick up over time. like react and angular, Vue's single-file-components enhance HTML and CSS with reactive logic and declarative paradigm. Unlike React, it doesn't make you interleave your HTML inside javascript, and unlike Angular, it doesn't make you learn Typescript before you can get started. Best of all, Vue is [really popular](https://www.techrepublic.com/article/considering-vue-js-here-are-5-reasons-youll-love-it/), so every Vue component you write can reach a wide audience.
+Every user interface component you write needs to be **irreducible** and **configurable**. A component is irreducible when the code that describes it cannot be split into separate modules without duplicating logic. A component is configurable when its code furnishes parameters that affect its appearance and behavior. There are dozens of frameworks for making user interface components. We use Vue because it occupies a special goldilocks zone in the world of app development: it is as versatile and powerful as it is familiar to programmers of different backgrounds. Whether you primarily code in Javascript, Typescript, PHP, or even Java or .net, Vue's single-file-component format functions as a lingua franca that you can pick up over time. like React and Angular, Vue's single-file-components enhance HTML and CSS with reactive logic and declarative paradigm. Unlike React, it doesn't make you interleave your HTML inside javascript, and unlike Angular, it doesn't make you learn Typescript before you can get started. Best of all, Vue is [really popular](https://www.techrepublic.com/article/considering-vue-js-here-are-5-reasons-youll-love-it/), so every Vue component you write can reach a wide audience.
 
 <!-- maybe mention that there is a rich pre-existing vue component open source packages, so no need to start from scratch. Instead, just wrap the components in basecomponent -->
+
+<!-- need to explain how to install vetur/volar and which one to use -->
+
+<!-- todo: make a root-level vetur.config.js (?) and  -->
 
 #### Follow Vue naming conventions:
 
@@ -580,13 +584,86 @@ This starts an instance of the Jest unit test framework for each package that co
 
 ### Make Vue 3 packages with Vue CLI:
 
+You probably want your Vue Components to load fast. The best way to do that is to package each of them separately. However, making packages is hard. It's much simpler to stick all of your Vue components into a single folder and package them together - bundle size be damned. Vue CLI fixes this problem. It makes Vue packages for you. Without it, you would have to manually configure every Vue package.
+
+#### Stub out a Vue package:
+
+1. `cd` into `packages/vue3`
+  
+    ![`cd packages/vue3`](.readme/vue-cli-cd.gif)
+2. run `vue create <name-of-package>`, and answer the following prompts:
+
+    ![`vue create component-tabs`](.readme/vue-cli-create.gif)
+
+    <table>
+      <thead>
+        <th>Prompt</th>
+        <th>Answer</th>
+      </thead>
+      <tr>
+        <td>Please pick a preset</td>
+        <td>Manually Select Features</td>
+      </tr>
+      <tr>
+        <td>Check the features needed for your project</td>
+        <td><ul><li>Choose Vue Version</li><li>Babel</li><li>TypeScript</li><li>CSS Preprocessor</li></ul></td>
+      </tr>
+      <tr>
+        <td>Use class-style component syntax?</td>
+        <td><code>N</code></td>
+      </tr>
+      <tr>
+        <td>Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)?</td>
+        <td><code>Y</code></td>
+      </tr>
+      <tr>
+        <td>Pick a CSS pre-processor (PostCSS, Autoprefixer, and CSS Modules are supported by default):</td>
+        <td>Less</td>
+      </tr>
+      <tr>
+        <td>Where do you prefer placing config for Babel, ESLint, etc.?</td>
+        <td>In dedicated config files</td>
+      </tr>
+      <tr>
+        <td>Save this as a preset for future projects?</td>
+        <td><code>N</code></td>
+      </tr>
+    </table>
+
+3. Navigate to `packages/vue3/<name-of-package>` and delete the `src/assets`, `src/components` and `public` folders.
+
+    ![Delete `packages/vue3/<name-of-package>/src/assets`, `packages/vue3/<name-of-package>/src/components` and `packages/vue3/<name-of-package>/public`](.readme/vue-cli-delete-folders.gif)
+
+4. Navigate to `packages/vue3/<name-of-package>/src` and delete the `main.ts` file.
+
+    ![Delete `packages/vue3/<name-of-package>/src/main.ts`](.readme/vue-cli-delete-main.gif)
+
+5. In `packages/vue3/<name-of-package>/src`, rename `App.vue` to `<NameOfComponent>.vue`. E.g. if `<name-of-package>` is `component-tabs`, then `<NameOfComponent>` should be `TabsComponent`. Make sure you PascalCase the name of this file.
+
+    ![Rename `packages/vue3/<name-of-package>/src/App.vue](.readme/vue-cli-rename-app.gif)
+
+6. Navigate to `packages/vue3/<name-of-package>`, open `package.json`, and change the `scripts.build` command to `vue-cli-service build --target lib --name <name-of-package> src/<NameOfComponent>.vue`
+
+    ![Change `scripts.build` command in `packages/vue3/<name-of-package>/package.json`](.readme/vue-cli-package-json.gif)
+
+7. Navigate to `packages/vue3/<name-of-package>/src` and open `<NameOfComponent>.vue`. Then delete all references to the `HelloWorld` component from it.
+
+    ![Delete all references to `HelloWorld.vue` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-hello-world.gif)
+
+8. In `packages/vue3/<name-of-package>/src/<NameOfComponent.vue`, delete all references to the `./assets` folder.
+
+    ![Delete references to `./assets` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-assets.gif)
+
+8. Run `lerna clean && lerna bootstrap && lerna run build` to reinstall all of the dependencies in `packages/vue3/<name-of-package>` and then build the package.
+
+    ![Run `lerna clean && lerna boostrap && lerna run build`](.readme/vue-cli-lerna-bootstrap.gif)
+
 <!-- Whenever you add a file or folder to a Vue package, name it as follows:
 
 | Type:  | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
 | ------ | ------------------------------- | --------------- | --------------- | --------------------------- |
 | folder | anything                        | kebab-case      | Subject         | `event-listeners`           | -->
 
-<!-- put each vue component in its own package -->
 
 <!-- need to explain /setup-function-members folder -->
 
