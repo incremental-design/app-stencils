@@ -1,16 +1,6 @@
 # `@incremental.design/device-input-event-handlers`
 
-<!--
-Add a banner image and badges
-
-see: https://towardsdatascience.com/how-to-write-an-awesome-readme-68bf4be91f8b
-
-For bonus points, make the banner animated with html, css and svg
-
-maybe some cool retro image with a bunch of input ports and cords?
-
-see: https://github.com/sindresorhus/css-in-readme-like-wat
- -->
+<img src="../../.readme/illustration-device-input-event-handlers-banner.svg">
 
 **Handle _every_ device input, without the boilerplate.**
 
