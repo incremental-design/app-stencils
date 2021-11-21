@@ -371,9 +371,9 @@ Git clients, such as [Tower](https://www.git-tower.com/mac?gclid=CjwKCAjwt8uGBhB
 
 If Lerna is installed in your home directory, your git client probably won't be able to find it, and will error when you try to commit.
 
-1. To find out if Lerna is installed in your home directory, run `which lerna`. If the terminal responds with `~/.npm-global/bin/lerna`, then Lerna is installed in your home directory. If it responds `/usr/local/bin/lerna` then it isn't.
+1. To find out if Lerna is installed in your home directory, run `which lerna`. If the terminal responds with `~/.npm-global/bin/lerna`, then Lerna is installed in your home directory. If it responds `/usr/local/bin/lerna` or `/opt/homebrew/lerna` then it isn't.
 2. To fix this, uninstall Lerna with `npm uninstall -g lerna`. Pay attention to the `-g` flag. It tells NPM to delete Lerna from `~/.npm-global/bin/`
-3. Reinstall Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`, or `/opt/local/bin`, depending on your operating system and platform.
+3. Reinstall Lerna with `brew install lerna`. Brew will take care of installing Lerna in `/usr/local/bin`, or `/opt/homebrew/bin/lerna`, depending on your operating system and platform.
 
 ### Write your code in Typescript:
 
