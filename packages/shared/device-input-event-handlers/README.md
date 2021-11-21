@@ -1,6 +1,6 @@
 # `@incremental.design/device-input-event-handlers`
 
-<img src="../../.readme/illustration-device-input-event-handlers-banner.svg">
+<img src="../../../.readme/illustration-device-input-event-handlers-banner.svg">
 
 **Handle _every_ device input, without the boilerplate.**
 
@@ -10,11 +10,10 @@ Use the handlers in this package to:
 
 - **Filter the useful information out of device input events, with just five lines of code:**
 
+  <!-- this is really confusing because it's showing the code you need to write, without first showing the concept of 'filtering the useful information'. What if the reader isn't aware that events have information? or what if they dont understand the premise that events can be filtered? or that there is useless information in an event?? -->
+
   Feed an event into its corresponding handler in `device-input-event-handler` and get an object with just the values you _actually_ need to handle the event. For example:
-
-  ![It takes as few as 5 lines of code to add a handler to a Vue component.](../../../.readme/diagram-filter-events-5-lines.png)
-
-  ![Handlers filter all the useful information out of an event, and toss the extraneous stuff.](../../../.readme/diagram-filter-events.png)
+  ![It takes as few as 5 lines of code to add a handler to a Vue component.](../../../.readme/diagram-filter-events-5-lines.gif)
 
 - **Calculate changes between occurrences of device input events, with a single argument:**
 
