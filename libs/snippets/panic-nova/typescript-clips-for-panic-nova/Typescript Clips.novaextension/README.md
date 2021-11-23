@@ -2,20 +2,10 @@
 
 ## Typescript Clips
 
-<!-- * what you want the reader to do -->
+You just decided to switch to Typescript. You installed Cameron Little's [Typescript](nova://extension/?id=apexskier.typescript&name=TypeScript) extension for Nova, and opened up a blank `.ts` file. Now what?
 
-<!-- * why?
-   * desired outcome
-   * underlying problem
-   * action
-   * compare action to doing nothing -->
-
-<!-- * how tell if succeeded? -->
-
-Use the `typescript class` clip to stub out a Typescript class:
-![](.readme/clip-typescript-class.gif)
-
-This clip
+The best way to take advantage of Typescript is to organize your code into classes. But classes are intricate: they have static methods, private variables, private methods, instance methods, accessors and constructors. If you're new to Typescript development, it can be hard to remember these pieces when you're staring at a blank document. Lucky for you, the `typescript class` clip keeps track of these pieces for you. Use it to to stub out a Typescript class. Once you do, you can focus on what your class does, rather than how it's formatted.
+![typescript-class clip](.readme/clip-typescript-class.gif)
 
 ## TSdoc Clips
 
