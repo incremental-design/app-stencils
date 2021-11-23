@@ -2,7 +2,20 @@
 
 ## Typescript Clips
 
-<!-- need to reread the typescript notes, and then list best practices and how the clips help you follow them -->
+<!-- * what you want the reader to do -->
+
+<!-- * why?
+   * desired outcome
+   * underlying problem
+   * action
+   * compare action to doing nothing -->
+
+<!-- * how tell if succeeded? -->
+
+Use the `typescript class` clip to stub out a Typescript class:
+![](.readme/clip-typescript-class.gif)
+
+This clip
 
 ## TSdoc Clips
 
@@ -155,7 +168,9 @@ The list of modifiers contains tags separated by spaces, none of which are follo
 
 If all of this is a lot to remember, don't worry, I've made a few clips that make it a LOT easier:
 
-#### Use the `/class` clip to document a class. It expands to:
+#### Use the `class` clip to document a class. It expands to:
+
+![TSdoc class clip](.readme/clip-tsdoc-section-class.gif)
 
 ````typescript
 /**
@@ -179,7 +194,9 @@ If all of this is a lot to remember, don't worry, I've made a few clips that mak
  */
 ````
 
-#### Use the `/method` clip to document a method or function. It expands to:
+#### Use the `method` clip to document a method or function. It expands to:
+
+![](.readme/clip-tsdoc-section-method.gif)
 
 ```typescript
 /**
@@ -193,7 +210,9 @@ If all of this is a lot to remember, don't worry, I've made a few clips that mak
  */
 ```
 
-#### Use the `/const` clip to document a variable. It expands to:
+#### Use the `const` clip to document a variable. It expands to:
+
+![](.readme/clip-tsdoc-section-variable.gif)
 
 ```typescript
 /**
@@ -211,44 +230,87 @@ Remember how I mentioned that every TSdoc section has a summary, blocks, and a l
 
 #### Tags that describe blocks:
 
-| Tag                                                             | Clip              | What it does:                                                                                                                                                        |
-| :-------------------------------------------------------------- | :---------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@decorator](https://tsdoc.org/pages/tags/decorator/)           | `@decorator`      | Quotes an [ES6 decorator](https://www.typescriptlang.org/docs/handbook/decorators.html) expression.                                                                  |
-| [@deprecated](https://tsdoc.org/pages/tags/deprecated/)         | `@deprecated`     | Deprecates the code it documents, and recommends an up-to-date alternative.                                                                                          |
-| [@defaultValue](https://tsdoc.org/pages/tags/defaultvalue/)     | `@defaultValue`   | Lists value that a property of a class or interface will have if it isn't set.                                                                                       |
-| [@example](https://tsdoc.org/pages/tags/example/)               | `@example`        | Demonstrates how to use the code it documents.                                                                                                                       |
-| [@param](https://tsdoc.org/pages/tags/param/)                   | `@param`          | Describes an argument of a method or function.                                                                                                                       |
-| [@privateRemarks](https://tsdoc.org/pages/tags/privateremarks/) | `@privateRemarks` | Contains documentation that should be omitted from any auto-generated documentation site.                                                                            |
-| [@remarks](https://tsdoc.org/pages/tags/remarks/)               | `@remarks`        | Contains an explanation of the implementation details, reasoning, or any other long-form contextual information about the code it documents.                         |
-| [@returns](https://tsdoc.org/pages/tags/returns/)               | `@returns`        | Describes what returns from a method or function.                                                                                                                    |
-| [@see](https://tsdoc.org/pages/tags/see/)                       | `@see`            | Lists links to other sections of the documentation or websites.                                                                                                      |
-| [@throws](https://tsdoc.org/pages/tags/throws/)                 | `@throws`         | Lists any errors that a method or function throws.                                                                                                                   |
-| [@typeParam](https://tsdoc.org/pages/tags/typeparam/)           | `@typeParam`      | Describes the types you can insert into the type argument of a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) function, interface or class. |
+| Tag                                                             | Trigger                                                                                                  | What it does:                                                                                                                                                        |
+| :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@decorator](https://tsdoc.org/pages/tags/decorator/)           | `decorator`<br/><img src=".readme/clip-tsdoc-tag-decorator.gif" alt="trigger decorator"/>                | Quotes an [ES6 decorator](https://www.typescriptlang.org/docs/handbook/decorators.html) expression.                                                                  |
+| [@deprecated](https://tsdoc.org/pages/tags/deprecated/)         | `deprecated`<br/><img src=".readme/clip-tsdoc-tag-deprecated.gif" alt="trigger deprecated"/>             | Deprecates the code it documents, and recommends an up-to-date alternative.                                                                                          |
+| [@defaultValue](https://tsdoc.org/pages/tags/defaultvalue/)     | `defaultValue`<br/><img src=".readme/clip-tsdoc-tag-defaultValue.gif" alt="trigger defaultValue"/>       | Lists value that a property of a class or interface will have if it isn't set.                                                                                       |
+| [@example](https://tsdoc.org/pages/tags/example/)               | `example`<br/><img src=".readme/clip-tsdoc-tag-example.gif" alt="trigger example"/>                      | Demonstrates how to use the code it documents.                                                                                                                       |
+| [@param](https://tsdoc.org/pages/tags/param/)                   | `param`<br/><img src=".readme/clip-tsdoc-tag-param.gif" alt="trigger param"/>                            | Describes an argument of a method or function.                                                                                                                       |
+| [@privateRemarks](https://tsdoc.org/pages/tags/privateremarks/) | `privateRemarks`<br/><img src=".readme/clip-tsdoc-tag-privateRemarks.gif" alt="trigger privateRemarks"/> | Contains documentation that should be omitted from any auto-generated documentation site.                                                                            |
+| [@remarks](https://tsdoc.org/pages/tags/remarks/)               | `remarks`<br/><img src=".readme/clip-tsdoc-tag-remarks.gif" alt="trigger remarks"/>                      | Contains an explanation of the implementation details, reasoning, or any other long-form contextual information about the code it documents.                         |
+| [@returns](https://tsdoc.org/pages/tags/returns/)               | `returns`<br/><img src=".readme/clip-tsdoc-tag-returns.gif" alt="trigger returns"/>                      | Describes what returns from a method or function.                                                                                                                    |
+| [@see](https://tsdoc.org/pages/tags/see/)                       | `see`<br/><img src=".readme/clip-tsdoc-tag-see.gif" alt="trigger see"/>                                  | Lists links to other sections of the documentation or websites.                                                                                                      |
+| [@throws](https://tsdoc.org/pages/tags/throws/)                 | `throws`<br/><img src=".readme/clip-tsdoc-tag-throws.gif" alt="trigger throws"/>                         | Lists any errors that a method or function throws.                                                                                                                   |
+| [@typeParam](https://tsdoc.org/pages/tags/typeparam/)           | `typeParam`<br/><img src=".readme/clip-tsdoc-tag-typeParam.gif" alt="trigger typeParam"/>                | Describes the types you can insert into the type argument of a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) function, interface or class. |
 
 #### Tags that describe phrases within blocks (also known as inline tags):
 
-| Tag                                                     | Clip          | What it does:                                                                                  |
-| :------------------------------------------------------ | :------------ | :--------------------------------------------------------------------------------------------- |
-| [@inheritDoc](https://tsdoc.org/pages/tags/inheritdoc/) | `@inheritDoc` | Copies the `@remarks` `@params` `@typeParam` from another section into the current section.    |
-| [@label](https://tsdoc.org/pages/tags/label/)           | `@label`      | Adds an arbitrary label to the block that contains it, so that the block can be referenced it. |
-| [@link](https://tsdoc.org/pages/tags/link/)             | `@link`       | Links to another section, or a website.                                                        |
+| Tag                                                     | Trigger                                                                                      | What it does:                                                                                  |
+| :------------------------------------------------------ | :------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------- |
+| [@inheritDoc](https://tsdoc.org/pages/tags/inheritdoc/) | `inheritDoc`<br/><img src=".readme/clip-tsdoc-tag-inheritdoc.gif" alt="trigger inheritDoc"/> | Copies the `@remarks` `@params` `@typeParam` from another section into the current section.    |
+| [@label](https://tsdoc.org/pages/tags/label/)           | `label`<br/><img src=".readme/clip-tsdoc-tag-label.gif" alt="trigger label"/>                | Adds an arbitrary label to the block that contains it, so that the block can be referenced it. |
+| [@link](https://tsdoc.org/pages/tags/link/)             | `link`<br/><img src=".readme/clip-tsdoc-tag-link.gif" alt="trigger link"/>                   | Links to another section, or a website.                                                        |
 
 #### Tags that describe modifiers
 
 Note that the `@mod` clip expands to: `@alpha @beta @eventProperty @experimental @internal @override @packageDocumentation @public @readonly @sealed @virtual`. This includes all of the available modifier clips, each of which occupies its own tab stop. This makes it east to choose the ones you want. Keep in mind that you **must** place these modifiers on the [LAST](https://tsdoc.org/pages/spec/tag_kinds/) line of the TSdoc comment.
 
-| Tag                                                                         | Clip   | What it does:                                                                                                                                                            |
-| :-------------------------------------------------------------------------- | :----- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [@alpha](https://tsdoc.org/pages/tags/alpha/)                               | `@mod` | Marks code as an 'alpha' release.                                                                                                                                        |
-| [@beta](https://tsdoc.org/pages/tags/beta/)                                 | `@mod` | Marks code as a 'beta' release.                                                                                                                                          |
-| [@eventProperty](https://tsdoc.org/pages/tags/eventproperty/)               | `@mod` | Indicates that a method returns a [Browser Event](https://developer.mozilla.org/en-US/docs/Web/API/Event) or [Node Event](https://nodejs.org/api/events.html).           |
-| [@experimental](https://tsdoc.org/pages/tags/experimental/)                 | `@mod` | Marks code as 'experimental' release.                                                                                                                                    |
-| [@internal](https://tsdoc.org/pages/tags/internal/)                         | `@mod` | Excludes code from a public API.                                                                                                                                         |
-| [@override](https://tsdoc.org/pages/tags/override/)                         | `@mod` | Marks a class as overriding the class from which it inherits.                                                                                                            |
-| [@packageDocumentation](https://tsdoc.org/pages/tags/packagedocumentation/) | `@mod` | Indicates that a section describes an entire package - not just the code it immediately precedes. **This should only ever be used in the package's entry `.d.ts file.`** |
-| [@public](https://tsdoc.org/pages/tags/public/)                             | `@mod` | Marks code as a stable, 'public' release. This code shouldn't change.                                                                                                    |
-| [@readonly](https://tsdoc.org/pages/tags/readonly/)                         | `@mod` | Marks a variable or property as being read-only.                                                                                                                         |
-| [@sealed](https://tsdoc.org/pages/tags/sealed/)                             | `@mod` | Indicates that a class should never be extended.                                                                                                                         |
-| [@virtual](https://tsdoc.org/pages/tags/virtual/)                           | `@mod` | Indicates that a class can not only be extended, but can also be overridden without consequence.                                                                         |
+<table>
+<thead>
+<tr>
+<th align="left">Tag</th>
+<th align="left">Trigger</th>
+<th align="left">What it does:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/alpha/">@alpha</a></td>
+<td align="left" rowspan="11" valign="top"><code>mod</code><br/><img src=".readme/clip-tsdoc-tag-modifiers.gif" alt="mod trigger"/></td>
+<td align="left">Marks code as an 'alpha' release.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/beta/">@beta</a></td>
+<td align="left">Marks code as a 'beta' release.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/eventproperty/">@eventProperty</a></td>
+<td align="left">Indicates that a method returns a <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event">Browser Event</a> or <a href="https://nodejs.org/api/events.html">Node Event</a>.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/experimental/">@experimental</a></td>
+<td align="left">Marks code as 'experimental' release.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/internal/">@internal</a></td>
+<td align="left">Excludes code from a public API.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/override/">@override</a></td>
+<td align="left">Marks a class as overriding the class from which it inherits.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/packagedocumentation/">@packageDocumentation</a></td>
+<td align="left">Indicates that a section describes an entire package - not just the code it immediately precedes. <strong>This should only ever be used in the package's entry <code>.d.ts file.</code></strong></td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/public/">@public</a></td>
+<td align="left">Marks code as a stable, 'public' release. This code shouldn't change.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/readonly/">@readonly</a></td>
+<td align="left">Marks a variable or property as being read-only.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/sealed/">@sealed</a></td>
+<td align="left">Indicates that a class should never be extended.</td>
+</tr>
+<tr>
+<td align="left"><a href="https://tsdoc.org/pages/tags/virtual/">@virtual</a></td>
+<td align="left">Indicates that a class can not only be extended, but can also be overridden without consequence.</td>
+</tr>
+</tbody>
+</table>
 
 When you use any of the above clips within a TSdoc section, it will automatically add in the tag name, and a placeholder for any additional text that follows the tag.
