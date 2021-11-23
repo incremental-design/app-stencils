@@ -7,7 +7,7 @@
           "name": "Typescript Class",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "/class"
+          "trigger": "typescript class"
         }
       ],
       "name": "Typescript"
@@ -19,19 +19,19 @@
           "name": "TSdoc Class Section",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "/class"
+          "trigger": "class"
         },
         {
           "content": "/**\n * ${0:What does this method or function do?} \n *\n ${1:* @param }${1:name} - ${1:description}\n *\n ${2:* @returns} ${2:type and meaning of return value}\n *\n * ${10:@alpha} ${11:@beta} ${12:@eventProperty} ${13:@experimental} ${14:@internal} ${15:@override} ${16:@packageDocumentation} ${17:@public} ${18:@readonly} ${19:@sealed} ${20:@virtual}\n */",
           "name": "TSdoc Method Section",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "/method"
+          "trigger": "method"
         },
         {
           "content": "/**\n * ${0:Summary}\n *\n * ${1:Block Tags}\n *\n * ${10:@alpha} ${11:@beta} ${12:@eventProperty} ${13:@experimental} ${14:@internal} ${15:@override} ${16:@packageDocumentation} ${17:@public} ${18:@readonly} ${19:@sealed} ${20:@virtual}\n */",
           "name": "TSdoc Variable Section",
-          "trigger": "/const"
+          "trigger": "const"
         }
       ],
       "name": "TSdoc Sections"
@@ -43,105 +43,105 @@
           "name": "TSdoc Decorator Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@decorator"
+          "trigger": "decorator"
         },
         {
           "content": "\n* @deprecated Use {@link ${:API item}} instead.\n*\n",
           "name": "TSdoc Deprecated Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@deprecated"
+          "trigger": "deprecated"
         },
         {
           "content": "\n* @defaultValue `${:the default value}`\n*",
           "name": "TSdoc Default Value Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@defaultValue"
+          "trigger": "defaultValue"
         },
         {
           "content": "\n* @example\n* ```typescript\n*\n*\t${:// place your example code here}\n*\n* ```\n*",
           "name": "TSdoc Example Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@example"
+          "trigger": "example"
         },
         {
           "content": "{@inheritDoc ${:section}}",
           "name": "TSdoc Inherit Doc Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@inheritDoc"
+          "trigger": "inheritDoc"
         },
         {
           "content": "{@label ${:LABEL}}",
           "name": "TSdoc Label Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@label"
+          "trigger": "label"
         },
         {
           "content": "{@link ${0:API Item or URL} | ${1:Description Text}}",
           "name": "TSdoc Link Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@link"
+          "trigger": "link"
         },
         {
           "content": "\n* @param ${0:parameterName} - ${1:Describe what the parameter affects, and what it defaults to.}\n*",
           "name": "TSdoc Param Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@param"
+          "trigger": "param"
         },
         {
           "content": "\n* @privateRemarks\n* ${:Documentation that you want to omit from any auto-generated documentation site.}\n*",
           "name": "TSdoc Private Remarks Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@privateRemarks"
+          "trigger": "privateRemarks"
         },
         {
           "content": "\n* @remarks\n* ${:Any explanation of implementation details, reasoning or other long-form contextual information.}\n*",
           "name": "TSdoc Remarks Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@remarks"
+          "trigger": "remarks"
         },
         {
           "content": "\n* @returns ${0:Description of values you can expect from this function.}\n*",
           "name": "TSdoc Returns Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@returns"
+          "trigger": "returns"
         },
         {
           "content": "\n* @see {@link ${0:URL} | ${1:Description}} \n*",
           "name": "TSdoc See Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@see"
+          "trigger": "see"
         },
         {
           "content": "\n* @throws {@link ${:errorName}}\n* ${:Explain why this error is thrown.}\n*",
           "name": "TSdoc Throws Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@throws"
+          "trigger": "throws"
         },
         {
           "content": "\n* @typeParam ${1:name of type parameter} - ${:List of types the the type parameter should take}\n*",
           "name": "TSdoc Type Parameter Tag",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@typeParam"
+          "trigger": "typeParam"
         },
         {
           "content": "${10:@alpha} ${11:@beta} ${12:@eventProperty} ${13:@experimental} ${14:@internal} ${15:@override} ${16:@packageDocumentation} ${17:@public} ${18:@readonly} ${19:@sealed} ${20:@virtual}",
           "name": "TSdoc Modifier Tags",
           "scope": "editor",
           "syntax": "typescript",
-          "trigger": "@mod"
+          "trigger": "mod"
         }
       ],
       "name": "TSdoc Tags"
