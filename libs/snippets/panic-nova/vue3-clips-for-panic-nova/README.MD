@@ -6,19 +6,19 @@ This Nova extension contains clips for Vue 3 projects.
 
 1. Open the Panic Nova Extension Library
 
-    ![Go to Extensions > Extensions Library](./.readme/install-extension-1.gif)
+   ![Go to Extensions > Extensions Library](./.readme/install-extension-1.gif)
 
 2. Search for `Vue 3 Clips Incremental Design`.
 
-    ![Go to Extensions > Extensions Library](./.readme/install-extension-2.gif)
+   ![Go to Extensions > Extensions Library](./.readme/install-extension-2.gif)
 
 3. Install `Vue 3 Clips`.
 
-    ![Go to Extensions > Extensions Library](./.readme/install-extension-3.gif)
+   ![Go to Extensions > Extensions Library](./.readme/install-extension-3.gif)
 
 4. Go to the clips section of the sidebar, click the 'Extensions' tab, and then expand `Vue 3 Clips`
 
-    ![Go to Extensions > Extensions Library](./.readme/install-extension-4.gif)
+   ![Go to Extensions > Extensions Library](./.readme/install-extension-4.gif)
 
 # Usage:
 
@@ -104,15 +104,17 @@ To add or change clips, you need to install a copy of Panic Nova, and you also n
 
 1. Locate the `libs/snippets/panic-nova/vue3-clips-for-panic-nova` folder in the `app-stencils` repository. Then, open it in Finder.
 
-    ![Go to Extensions > Extensions Library](./.readme/open-extension-1.gif)
+   ![Go to Extensions > Extensions Library](./.readme/open-extension-1.gif)
 
-2. Open the `Vue 3 Snippets.novaextension` package with Panic Nova. Then, select "open for editing".
+2. Open the `Vue 3 Clips.novaextension` package with Panic Nova. Then, select "open for editing".
 
-    ![Go to Extensions > Extensions Library](./.readme/open-extension-2.gif)
+   <!-- this gif is out of date ... it should say 'Vue 3 Clips, but instead it says 'Vue 3 Snippets' -->
+
+   ![Go to Extensions > Extensions Library](./.readme/open-extension-2.gif)
 
 3. Go to `Extensions > Activate Project as Extension`. Then, go to the clips section of your sidebar, switch to the `extensions` tab, and find the clips in this extension.
 
-    ![Go to Extensions > Extensions Library](./.readme/open-extension-3.gif)
+   ![Go to Extensions > Extensions Library](./.readme/open-extension-3.gif)
 
 ### Document:
 
