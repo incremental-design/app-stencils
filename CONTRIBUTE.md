@@ -19,7 +19,7 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 
    ![`lerna bootstrap`](./.readme/lerna-bootstrap.gif)
 
-- 🛑 Do NOT run `yarn` inside *any* of the packages in this monorepo.
+- 🛑 Do NOT run `yarn` inside _any_ of the packages in this monorepo.
 
 ## Repository Structure:
 
@@ -80,7 +80,7 @@ Each level of documentation focuses on a different aspect of App Stencils.
 - The folder-level documentation focuses on both using and adding to the functionality of the files within a folder.
 - The file-level documentation focuses on the details of the code within a file.
 
-![Levels of Documentation](.readme/diagram-levels-of-documentation.png)
+![Levels of Documentation](.readme/diagram-levels-of-documentation.svg)
 
 As you modify the code in this repository, update every level of documentation. This helps the rest of us understand what you changed.
 
@@ -589,81 +589,81 @@ You probably want your Vue Components to load fast. The best way to do that is t
 #### Stub out a Vue package:
 
 1. `cd` into `packages/vue3`
-  
-    ![`cd packages/vue3`](.readme/vue-cli-cd.gif)
+
+   ![`cd packages/vue3`](.readme/vue-cli-cd.gif)
+
 2. run `vue create <name-of-package>`, and answer the following prompts:
 
-    ![`vue create component-tabs`](.readme/vue-cli-create.gif)
+   ![`vue create component-tabs`](.readme/vue-cli-create.gif)
 
-    <table>
-      <thead>
-        <th>Prompt</th>
-        <th>Answer</th>
-      </thead>
-      <tr>
-        <td>Please pick a preset</td>
-        <td>Manually Select Features</td>
-      </tr>
-      <tr>
-        <td>Check the features needed for your project</td>
-        <td><ul><li>Choose Vue Version</li><li>Babel</li><li>TypeScript</li><li>CSS Preprocessor</li></ul></td>
-      </tr>
-      <tr>
-        <td>Use class-style component syntax?</td>
-        <td><code>N</code></td>
-      </tr>
-      <tr>
-        <td>Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)?</td>
-        <td><code>Y</code></td>
-      </tr>
-      <tr>
-        <td>Pick a CSS pre-processor (PostCSS, Autoprefixer, and CSS Modules are supported by default):</td>
-        <td>Less</td>
-      </tr>
-      <tr>
-        <td>Where do you prefer placing config for Babel, ESLint, etc.?</td>
-        <td>In dedicated config files</td>
-      </tr>
-      <tr>
-        <td>Save this as a preset for future projects?</td>
-        <td><code>N</code></td>
-      </tr>
-    </table>
+   <table>
+     <thead>
+       <th>Prompt</th>
+       <th>Answer</th>
+     </thead>
+     <tr>
+       <td>Please pick a preset</td>
+       <td>Manually Select Features</td>
+     </tr>
+     <tr>
+       <td>Check the features needed for your project</td>
+       <td><ul><li>Choose Vue Version</li><li>Babel</li><li>TypeScript</li><li>CSS Preprocessor</li></ul></td>
+     </tr>
+     <tr>
+       <td>Use class-style component syntax?</td>
+       <td><code>N</code></td>
+     </tr>
+     <tr>
+       <td>Use Babel alongside TypeScript (required for modern mode, auto-detected polyfills, transpiling JSX)?</td>
+       <td><code>Y</code></td>
+     </tr>
+     <tr>
+       <td>Pick a CSS pre-processor (PostCSS, Autoprefixer, and CSS Modules are supported by default):</td>
+       <td>Less</td>
+     </tr>
+     <tr>
+       <td>Where do you prefer placing config for Babel, ESLint, etc.?</td>
+       <td>In dedicated config files</td>
+     </tr>
+     <tr>
+       <td>Save this as a preset for future projects?</td>
+       <td><code>N</code></td>
+     </tr>
+   </table>
 
 3. Navigate to `packages/vue3/<name-of-package>` and delete the `src/assets`, `src/components` and `public` folders.
 
-    ![Delete `packages/vue3/<name-of-package>/src/assets`, `packages/vue3/<name-of-package>/src/components` and `packages/vue3/<name-of-package>/public`](.readme/vue-cli-delete-folders.gif)
+   ![Delete `packages/vue3/<name-of-package>/src/assets`, `packages/vue3/<name-of-package>/src/components` and `packages/vue3/<name-of-package>/public`](.readme/vue-cli-delete-folders.gif)
 
 4. Navigate to `packages/vue3/<name-of-package>/src` and delete the `main.ts` file.
 
-    ![Delete `packages/vue3/<name-of-package>/src/main.ts`](.readme/vue-cli-delete-main.gif)
+   ![Delete `packages/vue3/<name-of-package>/src/main.ts`](.readme/vue-cli-delete-main.gif)
 
 5. In `packages/vue3/<name-of-package>/src`, rename `App.vue` to `<NameOfComponent>.vue`. E.g. if `<name-of-package>` is `component-tabs`, then `<NameOfComponent>` should be `TabsComponent`. Make sure you PascalCase the name of this file.
 
-    ![Rename `packages/vue3/<name-of-package>/src/App.vue](.readme/vue-cli-rename-app.gif)
+   ![Rename `packages/vue3/<name-of-package>/src/App.vue](.readme/vue-cli-rename-app.gif)
 
 6. Navigate to `packages/vue3/<name-of-package>`, open `package.json`, and change the `scripts.build` command to `vue-cli-service build --target lib --name <name-of-package> src/<NameOfComponent>.vue`
 
-    ![Change `scripts.build` command in `packages/vue3/<name-of-package>/package.json`](.readme/vue-cli-package-json.gif)
+   ![Change `scripts.build` command in `packages/vue3/<name-of-package>/package.json`](.readme/vue-cli-package-json.gif)
 
 7. Navigate to `packages/vue3/<name-of-package>/src` and open `<NameOfComponent>.vue`. Then delete all references to the `HelloWorld` component from it.
 
-    ![Delete all references to `HelloWorld.vue` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-hello-world.gif)
+   ![Delete all references to `HelloWorld.vue` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-hello-world.gif)
 
 8. In `packages/vue3/<name-of-package>/src/<NameOfComponent.vue`, delete all references to the `./assets` folder.
 
-    ![Delete references to `./assets` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-assets.gif)
+   ![Delete references to `./assets` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-assets.gif)
 
-8. Run `lerna clean && lerna bootstrap && lerna run build` to reinstall all of the dependencies in `packages/vue3/<name-of-package>` and then build the package.
+9. Run `lerna clean && lerna bootstrap && lerna run build` to reinstall all of the dependencies in `packages/vue3/<name-of-package>` and then build the package.
 
-    ![Run `lerna clean && lerna boostrap && lerna run build`](.readme/vue-cli-lerna-bootstrap.gif)
+   ![Run `lerna clean && lerna boostrap && lerna run build`](.readme/vue-cli-lerna-bootstrap.gif)
 
 <!-- Whenever you add a file or folder to a Vue package, name it as follows:
 
 | Type:  | Contents:                       | Capitalization: | Part of Speech: | Example:                    |
 | ------ | ------------------------------- | --------------- | --------------- | --------------------------- |
 | folder | anything                        | kebab-case      | Subject         | `event-listeners`           | -->
-
 
 <!-- need to explain /setup-function-members folder -->
 
