@@ -8,21 +8,21 @@ If you look closely, you'll notice that most of your favorite NPM packages aren'
 
 - **Stub Typescript classes with the `typescript-class` snippet**
 
-      <!-- need to add gif -->
+  ![typescript-class snippet](.readme/clip-typescript-class.gif)
 
-      Write `typescript-class` in any `.ts` file, and select the 'Typescript Class' snippet from VScode's intellisense menu. VScode will stub out an empty class, with tab stops for all of the fields that you need to fill out to customize your class.
+  Write `typescript-class` in any `.ts` file, and select the 'Typescript Class' snippet from VScode's intellisense menu. VScode will stub out an empty class, with tab stops for all of the fields that you need to fill out to customize your class.
 
 - **Stub [TSdoc](https://tsdoc.org) sections with the `class`, `method`, and `const` snippets**
 
-      <!-- need to add gif -->
+  ![TSdoc class section](.readme/clip-tsdoc-section-class.gif)
 
-      Write `class` in any `.ts` file and select the `TSdoc Class` snippet from VSCode's intellisense menu. VScode will stub out a TSdoc block with tab stops for all of the fields you need to customize to document your class.
+  Write `class` in any `.ts` file and select the `TSdoc Class` snippet from VSCode's intellisense menu. VScode will stub out a TSdoc block with tab stops for all of the fields you need to customize to document your class.
 
-- **Add TSdoc tags to TSdoc sections with the `decorator`, `deprecated`, `defaultValue`, `example`, `param`, `privateRemarks`, `remarks`, `returns`, `see`, `throws`, and `typeParam` snippets**
+- **Add TSdoc tags to TSdoc sections with the `decorator`, `deprecated`, `defaultValue`, `example`, `param`, `privateRemarks`, `remarks`, `returns`, `see`, `throws`, `typeParam` and `mod` snippets**
 
-      <!-- need to add gif -->
+  ![TSdoc modifiers snippet.](.readme/clip-tsdoc-tag-modifiers.gif)
 
-      Write `decorator`, `deprecated`, `defaultValue`, `example`, `param`, `privateRemarks`, `remarks`, `returns`, `see`, `throws` or `typeParam` in any TSdoc block, and vscode will add the corresponding [tag](https://tsdoc.org/pages/spec/tag_kinds/) to the block, along with tab stops for the tag's fields.
+  Write `decorator`, `deprecated`, `defaultValue`, `example`, `param`, `privateRemarks`, `remarks`, `returns`, `see`, `throws` or `typeParam` in any TSdoc block, and vscode will add the corresponding [tag](https://tsdoc.org/pages/spec/tag_kinds/) to the block, along with tab stops for the tag's fields.
 
 <!-- list any codebases, websites, apps, platforms or other products that use your code -->
 
@@ -248,15 +248,15 @@ Remember how I mentioned that every TSdoc section has a summary, blocks, and a l
 | :-------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [@decorator](https://tsdoc.org/pages/tags/decorator/)           | `decorator`<br/><img src=".readme/clip-tsdoc-tag-decorator.gif" alt="trigger decorator"/>                | Quotes an [ES6 decorator](https://www.typescriptlang.org/docs/handbook/decorators.html) expression.                                                                  |
 | [@deprecated](https://tsdoc.org/pages/tags/deprecated/)         | `deprecated`<br/><img src=".readme/clip-tsdoc-tag-deprecated.gif" alt="trigger deprecated"/>             | Deprecates the code it documents, and recommends an up-to-date alternative.                                                                                          |
-| [@defaultValue](https://tsdoc.org/pages/tags/defaultvalue/)     | `defaultValue`<br/><img src=".readme/clip-tsdoc-tag-defaultValue.gif" alt="trigger defaultValue"/>       | Lists value that a property of a class or interface will have if it isn't set.                                                                                       |
+| [@defaultValue](https://tsdoc.org/pages/tags/defaultvalue/)     | `defaultValue`<br/><img src=".readme/clip-tsdoc-tag-defaultvalue.gif" alt="trigger defaultValue"/>       | Lists value that a property of a class or interface will have if it isn't set.                                                                                       |
 | [@example](https://tsdoc.org/pages/tags/example/)               | `example`<br/><img src=".readme/clip-tsdoc-tag-example.gif" alt="trigger example"/>                      | Demonstrates how to use the code it documents.                                                                                                                       |
 | [@param](https://tsdoc.org/pages/tags/param/)                   | `param`<br/><img src=".readme/clip-tsdoc-tag-param.gif" alt="trigger param"/>                            | Describes an argument of a method or function.                                                                                                                       |
-| [@privateRemarks](https://tsdoc.org/pages/tags/privateremarks/) | `privateRemarks`<br/><img src=".readme/clip-tsdoc-tag-privateRemarks.gif" alt="trigger privateRemarks"/> | Contains documentation that should be omitted from any auto-generated documentation site.                                                                            |
+| [@privateRemarks](https://tsdoc.org/pages/tags/privateremarks/) | `privateRemarks`<br/><img src=".readme/clip-tsdoc-tag-privateremarks.gif" alt="trigger privateRemarks"/> | Contains documentation that should be omitted from any auto-generated documentation site.                                                                            |
 | [@remarks](https://tsdoc.org/pages/tags/remarks/)               | `remarks`<br/><img src=".readme/clip-tsdoc-tag-remarks.gif" alt="trigger remarks"/>                      | Contains an explanation of the implementation details, reasoning, or any other long-form contextual information about the code it documents.                         |
 | [@returns](https://tsdoc.org/pages/tags/returns/)               | `returns`<br/><img src=".readme/clip-tsdoc-tag-returns.gif" alt="trigger returns"/>                      | Describes what returns from a method or function.                                                                                                                    |
 | [@see](https://tsdoc.org/pages/tags/see/)                       | `see`<br/><img src=".readme/clip-tsdoc-tag-see.gif" alt="trigger see"/>                                  | Lists links to other sections of the documentation or websites.                                                                                                      |
 | [@throws](https://tsdoc.org/pages/tags/throws/)                 | `throws`<br/><img src=".readme/clip-tsdoc-tag-throws.gif" alt="trigger throws"/>                         | Lists any errors that a method or function throws.                                                                                                                   |
-| [@typeParam](https://tsdoc.org/pages/tags/typeparam/)           | `typeParam`<br/><img src=".readme/clip-tsdoc-tag-typeParam.gif" alt="trigger typeParam"/>                | Describes the types you can insert into the type argument of a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) function, interface or class. |
+| [@typeParam](https://tsdoc.org/pages/tags/typeparam/)           | `typeParam`<br/><img src=".readme/clip-tsdoc-tag-typeparam.gif" alt="trigger typeParam"/>                | Describes the types you can insert into the type argument of a [generic](https://www.typescriptlang.org/docs/handbook/2/generics.html) function, interface or class. |
 
 #### Tags that describe phrases within blocks (also known as inline tags):
 
@@ -364,19 +364,20 @@ See [Visual Studio Code ➝ Create your own snippets](https://code.visualstudio.
 
 1. Open the `libs/snippets/vscode/typescript-snippets-for-vscode` folder in the current VScode window.
 
-   ![Open the extension folder in the current window](.readme/test-extension-1.gif)
+   ![Open the extension folder in the current window.](.readme/test-extension-1.gif)
 
 2. Hit [`F5`]() to load the snippets in a new VScode window.
 
-    ![](.readme/test-extension-2.gif)
+   ![Load snippets in a new VScode window.](.readme/test-extension-2.gif)
+
 3. Create a new Typescript file, or open an existing one.
 
-    ![](.readme/test-extension-3.gif)
+   ![Create a new file and set syntax to Typescript.](.readme/test-extension-3.gif)
+
 4. Test the snippets you just made.
 
-    ![](.readme/test-extension-4.gif)
+   ![Test the `typescript-class` snippet.](.readme/test-extension-4.gif)
+
 5. Whenever you save changes to the snippets, hit the 'reload' button in the debugger tray to send the changes to the VScode window.
 
-    ![](.readme/test-extension-5.gif)
-
-<!-- need to add gifs -->
+   ![Press the reload button.](.readme/test-extension-5.gif)
