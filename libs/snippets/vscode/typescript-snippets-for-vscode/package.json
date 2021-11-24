@@ -17,9 +17,8 @@
       }
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/incremental-design/app-stencils/tree/ajay-dev/libs/snippets/vscode/typescript-snippets-for-vscode/typescript-snippets"
+  "scripts": {
+    "publish-extension": "vsce publish --baseContentUrl https://raw.githubusercontent.com/incremental-design/app-stencils/ajay-dev/libs/snippets/vscode/typescript-snippets-for-vscode --baseImagesUrl https://raw.githubusercontent.com/incremental-design/app-stencils/ajay-dev/libs/snippets/vscode/typescript-snippets-for-vscode"
   },
   "publisher": "designbyajay"
 }
