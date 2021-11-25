@@ -1,6 +1,6 @@
 # `@incremental.design/device-input-event-handlers`
 
-<img src="../../../.readme/illustration-device-input-event-handlers-banner.svg">
+<img src="../../../.readme/illustration-device-input-event-handlers-banner.svg" alt="wheel, keybaord, accelerometer, window, mouse, gamepad, focus and touch input icons"/>
 
 **Handle _every_ device input, without the boilerplate.**
 
