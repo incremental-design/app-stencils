@@ -381,3 +381,15 @@ See [Visual Studio Code ➝ Create your own snippets](https://code.visualstudio.
 5. Whenever you save changes to the snippets, hit the 'reload' button in the debugger tray to send the changes to the VScode window.
 
    ![Press the reload button.](.readme/test-extension-5.gif)
+
+<!--
+  to publish:
+
+  go to https://dev.azure.com/<publisher-name>/_usersSettings/tokens where <publisher-name> is the user account under which this extension is published
+
+  get a personal access token (see: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#get-a-personal-access-token )
+
+  then `vsce login <publisher-name>` and supply the personal access token you just got.
+
+  then increment the version number in `package.json`, add an entry for that vesion number ot `CHANGELOG.md` and finally `yarn publish-extension`.
+ -->
