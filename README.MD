@@ -4,9 +4,9 @@
 
 Use Vue 3 components to prototype native apps on iOS, Android, MacOS and Windows.
 
- User interfaces are **native** when they adhere to a platform's **design conventions**. A design convention is a rule that characterizes the apps on the platform. For example, on iPhones and iPads, native user interfaces generally contain navigation links on the top left and right corners of an app. On Android phones and tablets, these same buttons generally appear on the bottom left and right corners. And on both Macs and PCs, these buttons are generally absent, because most apps open new windows or tabs when you navigate through them. Every platform has hundreds of design conventions, just like this one. The best way to make your app easy to learn is to follow these conventions.
+User interfaces are **native** when they adhere to a platform's **design conventions**. A design convention is a rule that characterizes the apps on the platform. For example, on iPhones and iPads, native user interfaces generally contain navigation links on the top left and right corners of an app. On Android phones and tablets, these same buttons generally appear on the bottom left and right corners. And on both Macs and PCs, these buttons are generally absent, because most apps open new windows or tabs when you navigate through them. Every platform has hundreds of design conventions, just like this one. The best way to make your app easy to learn is to follow these conventions.
 
-If you are prototyping an app, You probably want it to look and feel native on iOS, Android, MacOS and Windows. But, you probably *don't* want to write platform-specific code for each. It turns out that web browsers make this possible, but they don't make it easy. Although they make user interfaces endlessly themable, it's still up to you to implement each platform's design conventions. With App Stencils, you don't have to start from scratch. It contains UI components that have the appearance and behaviors their native counterparts. Even better, each component works independently of the others. Just import the ones you need and start saving time. Web browsers makes it possible to mimic native UIs. App Stencils makes it easy.
+If you are prototyping an app, You probably want it to look and feel native on iOS, Android, MacOS and Windows. But, you probably _don't_ want to write platform-specific code for each. It turns out that web browsers make this possible, but they don't make it easy. Although they make user interfaces endlessly themable, it's still up to you to implement each platform's design conventions. With App Stencils, you don't have to start from scratch. It contains UI components that have the appearance and behaviors their native counterparts. Even better, each component works independently of the others. Just import the ones you need and start saving time. Web browsers makes it possible to mimic native UIs. App Stencils makes it easy.
 
 ## How to Install App Stencils:
 
@@ -16,19 +16,32 @@ App Stencils contains several packages. While all of them are super helpful, eac
 
 There are two types of packages in app stencils:
 
-- Vue 3 [components](https://v3.vuejs.org/guide/single-file-component.html#single-file-components).
-	
+<table>
+<tr>
+<th>Vue 3 Components</th>
+<th>Typescript Modules</th>
+</tr>
+<tr>
+<td valign="top" width="50%">
 	These are the building blocks of your app's user interface. They include:
-	* buttons
-	* segmented controls
-	* media players
-	<!-- need more/better examples -->
-<!-- - Vue 3 [plugins](https://v3.vuejs.org/guide/plugins.html#plugins)
-	
-	These are ... -->
-- Typescript modules. 
-	
-	These are the pieces of logic that make each Vue 3 component interactive. They can be used in _any_ web app, regardless of whether the app is built using Vue, [another framework](https://www.youtube.com/watch?v=cuHDQhDhvPE), or no framework at all.
+		<ul>
+			<li>Buttons</li>
+			<li>Segmented Controls</li>
+			<li>Sliders</li>
+			<li>Dropdown Menus</li>
+			<li>Date Pickers</li>
+			<li>Media Players</li>
+			<li>Graphs</li>
+			<li>Charts</li>
+			<li>Fields</li>
+			<li>Text Editors</li>
+		</ul>
+</td>
+<td valign="top" width="50%">
+	These are the pieces of logic that make each Vue 3 component interactive. They can be used in <em>any</em> web app, regardless of whether the app is built using Vue, <a href="https://www.youtube.com/watch?v=cuHDQhDhvPE">another framework</a>, or no framework at all.
+</td>
+</tr>
+</table>
 
  <!-- !List of Packages -->
 <table>
@@ -43,7 +56,7 @@ There are two types of packages in app stencils:
 <!-- !Vue SFC Packages -->
 <!-- !vue3-component-base -->
 <tr valign=top>
-<td align="left" rowspan="1">Vue 3 Single File Component</td>
+<td align="left" rowspan="1">Vue 3 Component</td>
 <td align="left"><a href="./packages/vue3/component-base/README.md">
 <code>@incremental.design/vue3-component-base</code>
 </a>
@@ -57,8 +70,8 @@ A starting point for your own components. The base component provides your compo
 <!-- !Framework-Agnostic Typescript Module -->
 <!-- !Baz -->
 <tr valign="top">
-<td align="left" rowspan="1">Typescript Modules</td>
-<td align="left"><a href="./packages/vue3/component-base/README.md">
+<td align="left" rowspan="1">Typescript Module</td>
+<td align="left"><a href="./packages/shared/device-input-event-handlers/README.md">
 <code>@incremental.design/device-input-event-handlers</code>
 </a>
 <br>
