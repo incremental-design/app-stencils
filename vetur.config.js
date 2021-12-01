@@ -8,6 +8,11 @@ module.exports = {
       root: "./packages/vue3/component-base",
       package: './package.json',
       tsconfig: './tsconfig.json',
+    },
+    {
+      root: "./packages/vue3/component-tabs",
+      package: './package.json',
+      tsconfig: './tsconfig.json',
     }
   ]
 }
