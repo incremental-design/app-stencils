@@ -56,3 +56,7 @@ Fix another typo in `@event` vue docgen tag.
 ### Version 0.1.13
 
 Fix typo in `@see` vue docgen tag.
+
+### Version 0.1.14
+
+Update icon.
