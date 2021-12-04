@@ -18,20 +18,24 @@ Changed comment in `/class` Typescript clip.
 
 Changed the following triggers:
 
-`/class` 			→	`class`
-`/method` 			→	`method`
-`/const` 			→	`const`
-`@decorator` 		→ 	`decorator`
-`@deprecated`		→ 	`deprecated`
-`@defaultValue`		→ 	`defaultValue`
-`@example`			→ 	`example`
-`@inheritDoc`		→ 	`inheritDoc`
-`@label`			→ 	`label`
-`@param`			→ 	`param`
-`@privateRemarks`	→ 	`privateRemarks`
-`@remarks`			→ 	`remarks`
-`@returns`			→ 	`returns`
-`@see`				→ 	`see`
-`@throws`			→ 	`throws`
-`@typeParam`		→ 	`typeParam`
-`@mod`				→ 	`mod`
+`/class` → `class`
+`/method` → `method`
+`/const` → `const`
+`@decorator` → `decorator`
+`@deprecated` → `deprecated`
+`@defaultValue` → `defaultValue`
+`@example` → `example`
+`@inheritDoc` → `inheritDoc`
+`@label` → `label`
+`@param` → `param`
+`@privateRemarks` → `privateRemarks`
+`@remarks` → `remarks`
+`@returns` → `returns`
+`@see` → `see`
+`@throws` → `throws`
+`@typeParam` → `typeParam`
+`@mod` → `mod`
+
+## Version 0.1.5
+
+Updated the icon.
