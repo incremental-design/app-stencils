@@ -55,11 +55,11 @@ App Stencils groups packages according to their contents. Each package contains 
 <tbody>
 <tr>
 <td align="left">Vue 3 <a href="https://v3.vuejs.org/guide/single-file-component.html">Component</a></td>
-<td align="left"><code>packages/vue3/component-&lt;name-of-component&gt;</code></td>
+<td align="left"><code><a href="./packages/vue3/">packages/vue3/</a>component-&lt;name-of-component&gt;</code></td>
 </tr>
 <tr>
 <td align="left">Typescript Module</td>
-<td align="left"><code>packages/shared/&lt;name-of-package&gt;</code></td>
+<td align="left"><code><a href="./packages/shared/">packages/shared/</a>&lt;name-of-package&gt;</code></td>
 </tr>
 </tbody>
 </table>
@@ -120,10 +120,6 @@ App Stencils also contains a **Storybook** - a set of interactive demos of each 
 ![`lerna run storybook:serve`](.readme/storybook-serve.gif)
 
 Whenever you add Vue components to App Stencils, make sure you [demo it with Storybook](#demo-user-interface-components-with-storybook).
-
-The best Vue components are easy to customize, and easy to understand. Without Storybook, it's really hard to make a component that's both. That's because the more customizable a component is, the harder it is to predict its appearance and behavior. When you use Storybook, it helps the rest of us _see the component for ourselves_. That's because unlike inline documentation, Storybook actually runs the component, exposing all of its configuration details. It lets us reconfigure the component, and observe how it changes, so that we can learn by _doing_ rather than by _guessing_. When you demo components with Storybook, you maximize customizability, without maximizing confusion.
-
-To learn how to add a component to Storybook, see: ["Use Storybook to demo your vue components"](#demo-user-interface-components-with-storybook).
 
 ## Develop:
 
@@ -610,6 +606,10 @@ You probably want your Vue Components to load fast. The best way to do that is t
         <td><ul><li>Choose Vue Version</li><li>Babel</li><li>TypeScript</li><li>CSS Preprocessor</li></ul></td>
       </tr>
       <tr>
+        <td>Choose a version of Vue.js that you want to start the project with</td>
+        <td><code>3.x (Preview)</code></td>
+      </tr>
+      <tr>
         <td>Use class-style component syntax?</td>
         <td><code>N</code></td>
       </tr>
@@ -643,23 +643,78 @@ You probably want your Vue Components to load fast. The best way to do that is t
 
     ![Rename `packages/vue3/<name-of-package>/src/App.vue](.readme/vue-cli-rename-app.gif)
 
-6.  Navigate to `packages/vue3/<name-of-package>`, open `package.json`, and change the `scripts.build` command to `vue-cli-service build --target lib --name <name-of-package> src/<NameOfComponent>.vue`
+6.  Navigate to `packages/vue3/<name-of-package>`, open `package.json`, and change the `scripts.build` command to `vue-cli-service build --target lib --modern --name <name-of-package> src/<NameOfComponent>.vue && rm -rf ./node_modules/.cache`
 
     ![Change `scripts.build` command in `packages/vue3/<name-of-package>/package.json`](.readme/vue-cli-package-json.gif)
 
-7.  Navigate to `packages/vue3/<name-of-package>/src` and open `<NameOfComponent>.vue`. Then delete all references to the `HelloWorld` component from it.
+7.  In `packages/vue3/<name-of-package>/package.json`, prepend `@incremental.design/` to the `name` field. This will scope the package to the `@incremental.design` namespace on [npmjs.org](npmjs.org).
+
+    ![Scope the `name` field in `packages/vue3/<name-of-package>/package.json` to `@incremental.design/`](.readme/vue-cli-package-json-name.gif)
+
+8.  In `packages/vue3/<name-of-package>/package.json`, add a:
+
+- `main` field, and set it to `dist/<name-of-package>.common.js`
+- `module` field, and set it to `src/<NameOfComponent>.vue`
+- `types` field, and set it to `dist/types/<NameOfComponent>.vue.d.ts`
+- `sideEffects` field, and set it to `true`.
+
+  ![Add `main`, `module`, `types`, and `sideEffects` fields](.readme/vue-cli-package-json-fields.gif)
+
+9. In `packges/vue3/<name-of-package>/package.json`, change the `private` field to `false`.
+
+   ![Change `private` field](.readme/vue-cli-package-json-private.gif)
+
+10. Navigate to `packages/vue3/<name-of-package>/tsconfig.json` and add a:
+
+- `declaration` field, and set it to `true`,
+- `declarationDir` field, and set it to `./dist/types`
+- `declarationMap` field, and set it to `true`
+
+  ![Add `declaration`, `declarationDir`, `declarationMap` fields to `tsconfig.json`](.readme/vue-cli-tsconfig.gif)
+
+11. Navigate to `packages/vue3/<name-of-package>/src` and open `<NameOfComponent>.vue`. Then delete all references to the `HelloWorld` component from it.
 
     ![Delete all references to `HelloWorld.vue` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-hello-world.gif)
 
-8.  In `packages/vue3/<name-of-package>/src/<NameOfComponent.vue`, delete all references to the `./assets` folder.
+12. In `packages/vue3/<name-of-package>/src/<NameOfComponent.vue`, delete all references to the `./assets` folder.
 
     ![Delete references to `./assets` from `packages/vue3/<name-of-package>/src/<NameOfComponent>.vue`](.readme/vue-cli-delete-assets.gif)
 
-9.  Run `lerna clean && lerna bootstrap && lerna run build` to reinstall all of the dependencies in `packages/vue3/<name-of-package>` and then build the package.
+13. In `package/vue3/<name-of-package>/src/<NameOfComponent.vue>`, delete the `name` field from the options object, and delete everything from the `<styles>` section.
+
+    ![Delete `name` and contents of `<styles>`](.readme/vue-cli-remove-name.gif)
+
+14. Navigate to `package/vue3/<name-of-package>` and create a `vue.config.js` file. Then, add the following to it:
+
+    ```js
+    + module.exports = {
+    +    parallel: false,
+    +    chainWebpack: (config) => {
+    +      config.module
+    +        .rule('ts')
+    +        .use('ts-loader')
+    +        .tap((options) => {
+    +          options.transpileOnly = false;
+    +          return options;
+    +        });
+    +      config.module
+    +        .rule('tsx')
+    +        .use('ts-loader')
+    +        .tap((options) => {
+    +          options.transpileOnly = false;
+    +          return options;
+    +        });
+    +    },
+    + };
+    ```
+
+    ![Make `vue.config.js`](.readme/vue-cli-vue-config-js.gif)
+
+15. Run `lerna clean && lerna bootstrap && lerna run build` to reinstall all of the dependencies in `packages/vue3/<name-of-package>` and then build the package.
 
     ![Run `lerna clean && lerna boostrap && lerna run build`](.readme/vue-cli-lerna-bootstrap.gif)
 
-10. Navigate to `vetur.config.js` and [register your package with Vetur](https://vuejs.github.io/vetur/guide/setup.html#advanced) by adding thefollowing object to the `projects` array:
+16. Navigate to `vetur.config.js` and [register your package with Vetur](https://vuejs.github.io/vetur/guide/setup.html#advanced) by adding thefollowing object to the `projects` array:
 
     ```js
       module.exports = {
