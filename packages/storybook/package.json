@@ -7,7 +7,7 @@
     "storybook:serve": "vue-cli-service storybook:serve -p 6006 -c config/storybook"
   },
   "dependencies": {
-    "@incremental.design/vue3-component-base": "^0.0.0",
+    "@incremental.design/component-base": "^0.0.0",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0"
