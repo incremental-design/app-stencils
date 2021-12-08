@@ -1,10 +1,14 @@
 {
-  "name": "component-tabs",
+  "name": "@incremental.design/component-tabs",
   "version": "0.1.0",
-  "private": true,
+  "main": "dist/component-tabs.common.js",
+  "module": "src/TabsComponent.vue",
+  "types": "dist/types/TabsComponent.vue.d.ts",
+  "sideEffects": true,
+  "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name component-tabs src/TabsComponent.vue"
+    "build": "vue-cli-service build --target lib --modern --name component-tabs src/TabsComponent.vue && rm -rf ./node_modules/.cache"
   },
   "dependencies": {
     "core-js": "^3.6.5",
