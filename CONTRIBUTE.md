@@ -574,6 +574,63 @@ This starts an instance of the Jest unit test framework for each package that co
 
 ### Demo user interface components with Storybook:
 
+The best Vue components are easy to customize, and easy to understand. Without Storybook, it's really hard to make a component that's both. That's because the more customizable a component is, the harder it is to predict its appearance and behavior. When you use Storybook, it helps the rest of us _see the component for ourselves_. That's because unlike inline documentation, Storybook actually runs the component, exposing all of its configuration details. It lets us reconfigure the component, and observe how it changes, so that we can learn by _doing_ rather than by _guessing_. When you demo components with Storybook, you maximize customizability, without maximizing confusion.
+
+#### Add your component to Storybook:
+
+1. Navigate to <a href="./packages/storybook/src/stories"><code>packages/storybook/src/stories</code></a> and make a new file `<NameOfComponent>.stories.ts`.
+
+   ![Create `<NameOfComoponent>.stories.ts`](.readme/storybook-add-file.gif)
+
+2. Run `lerna add '@incremental.design/<name-of-package>' --scope '@incremental.design/storybook'`
+
+   ![](.readme/storybook-add-package.gif)
+
+3. Import your component into the file:
+
+   ```typescript
+   + import <name-of-package> from '@incremental.design/<name-of-package>'
+   ```
+
+   ![Import your component into the file.](.readme/storybook-import-component.gif)
+
+4. Add a section to the storybook, as follows:
+
+   ```typescript
+     import <name-of-package> from '@incremental.design/<name-of-package>'
+   +
+   + export default {
+   + title '<Name of Component>'
+   + }
+   ```
+
+   ![Add a story section to the file.](.readme/storybook-add-section.gif)
+
+5. Add a story to the storybook, as follows:
+
+   ```typescript
+     import <NameOfComponent> from '@incremental.design/<name-of-package>'
+
+     export default {
+     title '<Name of Component>'
+     }
+   +
+   + export const MyStory = ({
+   +   components: {<NameOfComponent>},
+   +   template: '<name-of-component></name-of-component>'
+   + })
+   ```
+
+   ![Add a story to the section.](.readme/storybook-add-story.gif)
+
+   The story initializes your component, with the `template` you provide.
+
+   - You can add as many stories as you want. Each needs to contain `components` and a `template`. Consider writing a story for each of the configurations of your component. For more information on how to write stories, see [Storybook JS | What's a story?](https://storybook.js.org/docs/react/get-started/whats-a-story)
+
+6. `Lerna boostrap && lerna run storybook:serve` to view your storybook.
+
+   ![Serve the storybook.](.readme/storybook-serve-component.gif)
+
 ### Document your code with TSdoc:
 
 ### Version images with Git LFS:
