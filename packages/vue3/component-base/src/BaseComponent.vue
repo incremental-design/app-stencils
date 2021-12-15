@@ -61,6 +61,8 @@ import {
 
 import { PointerCoordinates } from './use/Seamlss/DOMEventListeners/Utils';
 
+import handle from '@incremental.design/device-input-event-handlers';
+
 import { ButtonStates } from './use';
 
 export default defineComponent({
