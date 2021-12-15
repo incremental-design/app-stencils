@@ -5,12 +5,11 @@
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "license": "MIT",
   "main": "dist/component-base.common.js",
-  "module": "src/BaseComponent.vue",
-  "types": "./dist/types/BaseComponent.vue.d.ts",
+  "types": "dist/types/BaseComponent.vue.d.ts",
   "sideEffects": true,
   "private": false,
   "scripts": {
-    "build": "vue-cli-service build --target lib --modern --name component-base src/BaseComponent.vue && rm -rf ./node_modules/.cache"
+    "build": "vue-cli-service build --target lib --name component-base src/BaseComponent.vue && rm -rf ./node_modules/.cache"
   },
   "dependencies": {
     "@incremental.design/device-input-event-handlers": "^0.0.0",
