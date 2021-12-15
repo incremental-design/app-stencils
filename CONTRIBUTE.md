@@ -711,7 +711,7 @@ You probably want your Vue Components to load fast. The best way to do that is t
 8.  In `packages/vue3/<name-of-package>/package.json`, add a:
 
 - `main` field, and set it to `dist/<name-of-package>.common.js`
-- `module` field, and set it to `src/<NameOfComponent>.vue`
+<!-- - `module` field, and set it to `src/<NameOfComponent>.vue` -->
 - `types` field, and set it to `dist/types/<NameOfComponent>.vue.d.ts`
 - `sideEffects` field, and set it to `true`.
 
