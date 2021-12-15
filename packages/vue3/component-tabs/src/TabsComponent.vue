@@ -2,6 +2,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import BaseComponent from '@incremental.design/component-base';
 
 export default defineComponent({
   components: {},
