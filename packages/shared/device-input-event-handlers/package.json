@@ -6,11 +6,9 @@
   "homepage": "https://github.com/incremental-design/app-stencils/packages/shared/input-event-handlers/#readme",
   "license": "MIT",
   "main": "dist/DeviceInputEventHandlers.js",
-  "module": "src/DeviceInputEventHandlers.ts",
-  "types": "dist/types",
+  "types": "dist/types/DeviceInputEventHandlers.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
