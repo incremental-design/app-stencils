@@ -711,7 +711,6 @@ You probably want your Vue Components to load fast. The best way to do that is t
 8.  In `packages/vue3/<name-of-package>/package.json`, add a:
 
 - `main` field, and set it to `dist/<name-of-package>.common.js`
-<!-- - `module` field, and set it to `src/<NameOfComponent>.vue` -->
 - `types` field, and set it to `dist/types/<NameOfComponent>.vue.d.ts`
 - `sideEffects` field, and set it to `true`.
 
@@ -986,13 +985,13 @@ The more Vue components you write, the more you will find yourself rewriting the
 
 4. Add typescript to the package.
 
-   Before you can write Typescript code, you have to install Typescript. `cd` to `packages/shared/<name-of-package>` and run `lerna add --dev typescript`. Lerna will add `typescript` to your `package.json`'s `devDependencies`, create a `node_modules` folder, and install the `typescript` package, and its dependencies, within it.
+   Before you can write Typescript code, you have to install Typescript. Run `lerna add --dev typescript --scope '@incremental.design/<name-of-package>'`. Lerna will add `typescript` to your `package.json`'s `devDependencies`, create a `node_modules` folder, and install the `typescript` package, and its dependencies, within it.
 
    ![`lerna add --dev typescript`](./.readme/lerna-add-typescript.gif)
 
 5. Stub out a typescript configuration file.
 
-   Run `npx tsc --init` inside the `packages/shared/<name-of-package>` directory. This command will create a `tsconfig.json` file within it.
+   `cd packages/shared/<name-of-package>` and then run `npx tsc --init`. This command will create a `tsconfig.json` file within it.
 
 6. Set the Typescript target and module to `esnext`.
 
@@ -1023,9 +1022,9 @@ The more Vue components you write, the more you will find yourself rewriting the
      - uncomment `declarationMap: true`
      - uncomment `declarationDir` and set it to `./dist/types`
    - go to your `package.json` and
-     - add a `types` field, and set it to `./dist/types`
+     - add a `types` field, and set it to `dist/types/<NameOfPackage>.d.ts`
 
-   This tells typescript to generate a declaration file every time it builds your code, and it in `packages/shared/<name-of-package>/dist/types`. It also tells typescript to look for type annotations in the `./dist/types` folder whenever it imports your code into another project.
+   This tells typescript to generate a `<NameOfPackage>.d.ts` every time it builds your code, and it in `packages/shared/<name-of-package>/dist/types`. It also tells typescript to look for type annotations in the `./dist/types` folder whenever it imports your code into another project. **Make sure that you PascalCase `NameOfPackage` (e.g. 'my-fancy-new-package' would become 'MyFancyNewPackage'), or this step will fail.**
 
    ![Enable declaration generation](./.readme/tsconfig-declaration.gif)
 
@@ -1076,7 +1075,7 @@ The more Vue components you write, the more you will find yourself rewriting the
           "jest",
           "node"
         ] /* Specify type package names to be included without being referenced in a source file. */,
-        "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+        "lib": ["ESNext", "DOM", "DOM.Iterable", "ScriptHost"],
 
         /* JavaScript Support */
 
@@ -1123,9 +1122,12 @@ The more Vue components you write, the more you will find yourself rewriting the
     - change your package's `package.json`'s
 
       - `main` field from `dist/<name-of-package>.js` to `dist/<NameOfPackage>.js`
-      - `module` field from `src/<name-of-package>.ts` to `src/<NameOfPackage>.ts`
 
-      ![](.readme/tsconfig-pascalcase.gif)
+      ![Change to PascalCase](.readme/tsconfig-pascalcase.gif)
+
+18. Delete the `module` field from your `package.json`.
+
+    The `module` field can interfere with the build output of other packages in this repository.
 
     Once you're done, your package.json should look something like this:
 
@@ -1138,7 +1140,6 @@ The more Vue components you write, the more you will find yourself rewriting the
     "homepage": "https://github.com/incremental-design/app-stencils#readme",
     "license": "MIT",
     "main": "dist/<NameOfPackage>.js",
-    "module": "src/<NameOfPackage>.ts",
     "types": "dist/types<NameOfPackage>.d.ts",
     "files": [
       "dist",
@@ -1157,7 +1158,10 @@ The more Vue components you write, the more you will find yourself rewriting the
       "url": "https://github.com/incremental-design/app-stencils/issues"
     },
     "devDependencies": {
-      "typescript": "^4.4.2"
+      "@types/jest": "^27.0.3",
+      "@types/node": "^17.0.0",
+      "@types/webpack-env": "^1.16.3",
+      "typescript": "^4.5.4"
     }
     }
     ```
