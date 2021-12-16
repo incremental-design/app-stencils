@@ -50,11 +50,70 @@ type AllDeviceInputs =
  *
  * @param event - Any {@link DeviceMotionEvent}, {@link DeviceOrientationEvent}, {@link FocusEvent}, {@link GamepadEvent}, {@link KeyboardEvent}, {@link DragEvent}, {@link MouseEvent}, {@link TouchEvent}, {@link Event} where {@link Event.type} is 'scroll', {@link UIEvent}, or {@link WheelEvent}
  *
- * @returns an {@link EventInfo } object.
+ * @param previous - the object that was previously returned from this function.
+ *
+ *
+ * @returns a {@link DeviceInput}, {@link DragInput}, {@link ScrollInput}, {@link FocusInput}, {@link GamepadInput}, {@link KeyboardInput}, {@link PointerInput}, or {@link WindowResizeInput} object, depending on what kind of event was passed into it.
  *
  * @example
- * ```typescript
- *    //example of how to use this class here
+ * ```vue
+ * <template>
+ *  <div @="Handlers">
+ *    <!-- ... -->
+ *  </div>
+ * </template>
+ *
+ * <script lang="ts">
+ *  import { defineComponent, reactive } from 'vue';
+ *
+ *  import handle from '@incremental.design/device-input-event-handlers';
+ *
+ *  export default defineComponent({
+ *    setup(){
+ *
+ *      const DataAndComputed: any = reactive({
+ *       previous: false,
+ *      });
+ *
+ *      const H = (e: Event) => handle(e, DataAndComputed.previous);
+ *
+ *      const Handlers = {
+ *        drag: H,
+ *        dragend: H,
+ *        dragenter: H,
+ *        dragleave: H,
+ *        dragover: H,
+ *        dragstart: H,
+ *        drop: H,
+ *        scroll: H,
+ *        blur: H,
+ *        focus: H,
+ *        focusin: H,
+ *        focusout: H,
+ *        keydown: H,
+ *        keypress: H,
+ *        keyup: H,
+ *        auxclick: H,
+ *        click: H,
+ *        contextmenu: H,
+ *        dblclick: H,
+ *        mousedown: H,
+ *        mouseenter: H,
+ *        mouseleave: H,
+ *        mouseout: H,
+ *        mouseover: H,
+ *        mouseout: H,
+ *        touchcancel: H,
+ *        touchend: H,
+ *        touchmove: H,
+ *        touchstart: H,
+ *        wheel: H
+ *      };
+ *
+ *      return { TouchEventHandlers, DataAndComputed };
+ *    }
+ *  });
+ * </script>
  * ```
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent

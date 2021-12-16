@@ -1,6 +1,57 @@
 import { Handler, mergeWithEventInfo } from './handler-utils/';
 import { PointerInput, getPointerInput } from './pointer-utils';
 
+/**
+ * HandleMouse extracts the useful information from a sequence of mouse events.
+ *
+ * @param event - Any {@link MouseEvent}
+ *
+ * @param previous - The previous {@link PointerInput} object that was returned from this function. This parameter is optional. If you supply it, it will diff the event with the previous event and include the result in the returned {@link PointerInput} object.
+ *
+ * @returns a {@link PointerInput} object
+ *
+ * @example
+ * ```vue
+ * <template>
+ *  <div @="MouseEventHandlers">
+ *    <!-- ... -->
+ *  </div>
+ * </template>
+ *
+ * <script lang="ts">
+ *  import { defineComponent, reactive } from 'vue';
+ *
+ *  import { handleMouse } from '@incremental.design/device-input-event-handlers';
+ *
+ *  export default defineComponent({
+ *    setup(){
+ *
+ *      const DataAndComputed: any = reactive({
+ *       previous: false,
+ *      });
+ *
+ *      const H = (e: Event) => { DataAndComputed.previous = handleMouse(e, DataAndComputed.previous) };
+ *
+ *      const MouseEventHandlers = {
+ *        auxclick: H,
+ *        click: H,
+ *        contextmenu: H,
+ *        dblclick: H,
+ *        mousedown: H,
+ *        mouseenter: H,
+ *        mouseleave: H,
+ *        mosueout: H,
+ *        mouseover: H,
+ *        mouseup: H,
+ *      };
+ *
+ *      return { MouseEventHandlers, DataAndComputed };
+ *    }
+ *  });
+ * </script>
+ * ```
+ *
+ */
 export const handleMouse: Handler<MouseEvent, PointerInput> = (
   event,
   previous
