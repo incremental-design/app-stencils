@@ -45,7 +45,7 @@ Use the handlers in this package to:
 
 2.  Import the handlers you need into your project's code:
 
-    `@incremental.design/device-input-event-handlers` exports a default [`handle(...)`](./src/README.md#handle) function. It also exports several named functions; one for each of the events that it handles:
+    `@incremental.design/device-input-event-handlers` exports a default [`handle(...)`](./src/DeviceInputEventHandlers.ts) function. It also exports several named functions; one for each of the events that it handles:
 
     <table>
     <thead>
@@ -59,7 +59,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handle">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> | <a href="./src/README.md#focusinput">FocusInput</a> | <a href="./src/README.md#gamepadinput">GamepadInput</a> | <a href="./src/README.md#keyboardinput">KeyboardInput</a> | <a href="./src/README.md#pointerinput">PointerInput</a> | <a href="./src/README.md#draginput">DragInput</a> | <a href="./src/README.md#scrollinput">ScrollInput</a> | <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/DeviceInputEventHandlers.ts">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/event-handlers/device-utils/DeviceInput.ts">DeviceInput</a> | <a href="./src/event-handlers/focus-utils/FocusInput.ts">FocusInput</a> | <a href="./src/event-handlers/gamepad-utils/GamepadInput.ts">GamepadInput</a> | <a href="./src/event-handlers/keyboard-utils/KeyboardInput.ts">KeyboardInput</a> | <a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a> | <a href="./src/event-handlers/pointer-utils/DragInput.ts">DragInput</a> | <a href="./src/event-handlers/scroll-utils/ScrollInput.ts">ScrollInput</a> | <a href="./src/event-handlers/window-resize-utils/WindowResizeInput.ts">WindowResizeInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -74,7 +74,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handledevice">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/DeviceEventHandler.ts">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./src/event-handlers/device-utils/DeviceInput.ts">DeviceInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -89,7 +89,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handledrag">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./src/README.md#draginput">DragInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/DragEventHandler.ts">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./src/event-handlers/pointer-utils/DragInput.ts">DragInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -104,7 +104,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlefocus">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./src/README.md#focusinput">FocusInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/FocusEventHandler.ts">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./src/event-handlers/focus-utils/FocusInput.ts">FocusInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -119,7 +119,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlegamepad">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./src/README.md#gamepadinput">GamepadInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/GamepadEventHandler.ts">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./src/event-handlers/gamepad-utils/GamepadInput.ts">GamepadInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -134,7 +134,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlekeyboard">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./src/README.md#keyboardinput">KeyboardInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/KeyboardEventHandler.ts">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./src/event-handlers/keyboard-utils/KeyboardInput.ts">KeyboardInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -149,7 +149,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlemouse">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/MouseEventHandler.ts">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -164,7 +164,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/TouchEventHandler.ts">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -179,7 +179,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#scrollinput">ScrollInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/WheelEventHandler.ts">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/event-handlers/scroll-utils/ScrollInput.ts">ScrollInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -194,7 +194,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    <code class="lang-typescript"><a href="./src/event-handlers/UIEventHandler.ts">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/event-handlers/window-resize-utils/WindowResizeInput.ts">WindowResizeInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -233,7 +233,7 @@ There are three ways to add a handler to a Vue component:
 2. [Call the `handleDrag(...)`, `handleFocus(...)`, `handleKeyboard(...)` `handleMouse(...)`, `handleTouch(...)`, or `handleWheel(...)` functions from their corresponding `v-on` listeners.](#call-the-handledrag-handlefocus-handlekeyboard-handlemouse-handletouch-or-handlewheel-functions-from-their-corresponding-v-on-listeners)
 3. [Call the `handle(...)`, `handleDevice(...)`, `handleGamepad(...)`, `handleWindowResize(...)` functions from within your Vue component's `<script>` block.](#call-the-handle-handledevice-handlegamepad-or-handlewindowresize-functions-from-within-your-vue-components-script-block)
 
-#### Call the [`handle(...)`](./src/README.md#handle) function from within any supported <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive:
+#### Call the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function from within any supported <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive:
 
 ```vue
 <template>
@@ -272,7 +272,7 @@ export default {
 </script>
 ```
 
-The [`handle(...)`](./src/README.md#handle) function takes two arguments:
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function takes two arguments:
 
 <table>
 <tr>
@@ -285,7 +285,7 @@ The [`handle(...)`](./src/README.md#handle) function takes two arguments:
 </tr>
 </table>
 
-The [`handle(...)`](./src/README.md#handle) function returns one of the following objects, depending on the type of event that was passed into it:
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function returns one of the following objects, depending on the type of event that was passed into it:
 
 <table>
 <thead>
@@ -297,42 +297,42 @@ The [`handle(...)`](./src/README.md#handle) function returns one of the followin
 <tbody>
 <tr>
 <td align="left">DragEvent</td>
-<td align="left"><a href="./src/README.md#draginput">DragInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/DragInput.ts">DragInput</a></td>
 </tr>
 <tr>
 <td align="left">DeviceMotionEvent or DeviceOrientationEvent</td>
-<td align="left"><a href="./src/README.md#deviceinput">DeviceInput</a></td>
+<td align="left"><a href="./src/event-handlers/device-utils/DeviceInput.ts">DeviceInput</a></td>
 </tr>
 <tr>
 <td align="left">GamepadEvent</td>
-<td align="left"><a href="./src/README.md#gamepadinput">GamepadInput</a></td>
+<td align="left"><a href="./src/event-handlers/gamepad-utils/GamepadInput.ts">GamepadInput</a></td>
 </tr>
 <tr>
 <td align="left">Event where <code>&lt;Event&gt;.type = scroll</code> or WheelEvent</td>
-<td align="left"><a href="./src/README.md#scrollinput">ScrollInput</a></td>
+<td align="left"><a href="./src/event-handlers/scroll-utils/ScrollInput.ts">ScrollInput</a></td>
 </tr>
 <tr>
 <td align="left">FocusEvent</td>
-<td align="left"><a href="./src/README.md#focusinput">FocusInput</a></td>
+<td align="left"><a href="./src/event-handlers/focus-utils/FocusInput.ts">FocusInput</a></td>
 </tr>
 <tr>
 <td align="left">KeyboardEvent</td>
-<td align="left"><a href="./src/README.md#keyboardinput">KeyboardInput</a></td>
+<td align="left"><a href="./src/event-handlers/keyboard-utils/KeyboardInput.ts">KeyboardInput</a></td>
 </tr>
 <tr>
 <td align="left">MouseEvent</td>
-<td align="left"><a href="./src/README.md#pointerinput">PointerInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a></td>
 </tr>
 <tr>
 <td align="left">TouchEvent</td>
-<td align="left"><a href="./src/README.md#pointerinput">PointerInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a></td>
 </tr>
 </tbody>
 </table>
 
 <!-- need to link to the folder readme for more details on the arguments -->
 
-The [`handle(...)`](./src/README.md#handle) function _only_ supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function _only_ supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -379,7 +379,7 @@ The [`handle(...)`](./src/README.md#handle) function _only_ supports the followi
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">:wheel</a></code></td><td>WheelEvent</td></tr>
 </table>
 
-The [`handle(...)`](./src/README.md#handle) function does _not_ support the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners, because these listeners do not hear events that are triggered by device inputs. If you try to pass an event from one of these to the [`handle(...)`](./src/README.md#handle) function, it will error. <!-- plug a ui-stencils packages that does support these inputs ... maybe a media-event-handlers package?? -->
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function does _not_ support the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners, because these listeners do not hear events that are triggered by device inputs. If you try to pass an event from one of these to the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it will error. <!-- plug a ui-stencils packages that does support these inputs ... maybe a media-event-handlers package?? -->
 
 <table>
 <tr>
@@ -419,9 +419,9 @@ The [`handle(...)`](./src/README.md#handle) function does _not_ support the foll
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event" target="_blank">:submit</a></code></td></tr>
 </table>
 
-The [`handle(...)`](./src/README.md#handle) does not support [custom Vue events](https://v3.vuejs.org/guide/component-basics.html#passing-data-to-child-components-with-props), because they aren't [browser events](https://developer.mozilla.org/en-US/docs/Web/API/Event). <!-- is this true?? --> If you try to pass a custom event to this function, it will error.
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) does not support [custom Vue events](https://v3.vuejs.org/guide/component-basics.html#passing-data-to-child-components-with-props), because they aren't [browser events](https://developer.mozilla.org/en-US/docs/Web/API/Event). <!-- is this true?? --> If you try to pass a custom event to this function, it will error.
 
-- Keep in mind that <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listens for [browser events](https://developer.mozilla.org/en-US/docs/Web/API/Event) when you add it to [HTML Elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element), such as `<div>`, `<p>`, or `<span>`, and [custom events](https://v3.vuejs.org/guide/component-custom-events.html#defining-custom-events) when you add it to vue components. Therefore, if you use [`handle(...)`](./src/README.md#handle) in <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive on a vue component, it will always fail.
+- Keep in mind that <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listens for [browser events](https://developer.mozilla.org/en-US/docs/Web/API/Event) when you add it to [HTML Elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element), such as `<div>`, `<p>`, or `<span>`, and [custom events](https://v3.vuejs.org/guide/component-custom-events.html#defining-custom-events) when you add it to vue components. Therefore, if you use [`handle(...)`](./src/DeviceInputEventHandlers.ts) in <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> directive on a vue component, it will always fail.
 
     <table>
     <tr><th align="left">Do this:</th><th align="left">Don't do this:</th></tr>
@@ -451,17 +451,17 @@ The [`handle(...)`](./src/README.md#handle) does not support [custom Vue events]
     </tr>
     </table>
 
-#### Call the [`handleDrag(...)`](./src/README.md#handledrag), [`handleFocus(...)`](./src/README.md#handlefocus), [`handleKeyboard(...)`](./src/README.md#handlekeyboard) [`handleMouse(...)`](./src/README.md#handlemouse), [`handleTouch(...)`](./src/README.md#handletouch), or [`handleWheel(...)`](./src/README.md#handlewheel) functions from their corresponding <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners.
+#### Call the [`handleDrag(...)`](./src/event-handlers/DragEventHandler.ts), [`handleFocus(...)`](./src/event-handlers/FocusEventHandler.ts), [`handleKeyboard(...)`](./src/event-handlers/KeyboardEventHandler.ts) [`handleMouse(...)`](./src/event-handlers/MouseEventHandler.ts), [`handleTouch(...)`](./src/DeviceInputEventHandlers.tstouch), or [`handleWheel(...)`](./src/DeviceInputEventHandlers.tswheel) functions from their corresponding <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners.
 
-If you want minimize your project's final bundle size, consider importing just a few of the above handler functions. They are smaller than the generic [`handle(...)`](./src/README.md#handle) function, because they don't implement all of the logic needed to handle every single input device event. Just like their generic counterpart, all of these handler functions:
+If you want minimize your project's final bundle size, consider importing just a few of the above handler functions. They are smaller than the generic [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, because they don't implement all of the logic needed to handle every single input device event. Just like their generic counterpart, all of these handler functions:
 
 - can be called from within <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code>
 - take roughly the same arguments.
 - return an object with information about the event they received.
 
-If none of this makes sense to you, that's OK. Just use the [`handle(...)`](./src/README.md#handle) function. But if you're still following, keep reading to find out the differences between the specific handlers and their generic counterpart.
+If none of this makes sense to you, that's OK. Just use the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function. But if you're still following, keep reading to find out the differences between the specific handlers and their generic counterpart.
 
-The [`handleDrag(...)`](./src/README.md#handledrag) function returns a [`DragInput`](./src/README.md#draginput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleDrag(...)`](./src/event-handlers/DragEventHandler.ts) function returns a [`DragInput`](./src/event-handlers/pointer-utils/DragInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -479,7 +479,7 @@ The [`handleDrag(...)`](./src/README.md#handledrag) function returns a [`DragInp
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/drop_event" target="_blank">:drop</a></code></td></tr>
 </table>
 
-The [`handleFocus(...)`](./src/README.md#handlefocus) function returns a [`FocusInput`](./src/README.md#focusinput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleFocus(...)`](./src/event-handlers/FocusEventHandler.ts) function returns a [`FocusInput`](./src/event-handlers/focus-utils/FocusInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -494,7 +494,7 @@ The [`handleFocus(...)`](./src/README.md#handlefocus) function returns a [`Focus
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/focusout_event" target="_blank">:focusout</a></code></td></tr>
 </table>
 
-The [`handleKeyboard(...)`](./src/README.md#handlekeyboard) function returns a [`KeyboardInput`](./src/README.md#keyboardinput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleKeyboard(...)`](./src/event-handlers/KeyboardEventHandler.ts) function returns a [`KeyboardInput`](./src/event-handlers/keyboard-utils/KeyboardInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -507,7 +507,7 @@ The [`handleKeyboard(...)`](./src/README.md#handlekeyboard) function returns a [
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Document/keyup_event" target="_blank">:keyup</a></code></td></tr>
 </table>
 
-The [`handleMouse(...)`](./src/README.md#handlemouse) function returns a [`PointerInput`](./src/README.md#pointerinput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleMouse(...)`](./src/event-handlers/MouseEventHandler.ts) function returns a [`PointerInput`](./src/event-handlers/pointer-utils/PointerInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -528,7 +528,7 @@ The [`handleMouse(...)`](./src/README.md#handlemouse) function returns a [`Point
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/mouseup_event" target="_blank">:mouseup</a></code></td></tr>
 </table>
 
-The [`handleTouch(...)`](./src/README.md#handletouch) function returns a [`PointerInput`](./src/README.md#pointerinput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleTouch(...)`](./src/DeviceInputEventHandlers.tstouch) function returns a [`PointerInput`](./src/event-handlers/pointer-utils/PointerInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -543,7 +543,7 @@ The [`handleTouch(...)`](./src/README.md#handletouch) function returns a [`Point
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/touchstart_event" target="_blank">:touchstart</a></code></td></tr>
 </table>
 
-The [`handleWheel(...)`](./src/README.md#handlewheel) function returns a [`ScrollInput`](./src/README.md#scrollinput) object. Unlike the [`handle(...)`](./src/README.md#handle) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
+The [`handleWheel(...)`](./src/DeviceInputEventHandlers.tswheel) function returns a [`ScrollInput`](./src/event-handlers/scroll-utils/ScrollInput.ts) object. Unlike the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, it only supports the following <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listeners:
 
 <table>
 <tr>
@@ -557,11 +557,11 @@ The [`handleWheel(...)`](./src/README.md#handlewheel) function returns a [`Scrol
 <tr><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">:wheel</a></code></td><td>WheelEvent</td></tr>
 </table>
 
-Like the [`handle(...)`](./src/README.md#handle) function, none of these handlers support custom Vue events.
+Like the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, none of these handlers support custom Vue events.
 
-#### Call the [`handle(...)`](./src/README.md#handle), [`handleDevice(...)`](./src/README.md#handledevice), [`handleGamepad(...)`](./src/README.md#handlegamepad), or [`handleWindowResize(...)`](./src/README.md#handlewindowresize) functions from within your Vue component's `<script>` block.
+#### Call the [`handle(...)`](./src/DeviceInputEventHandlers.ts), [`handleDevice(...)`](./src/event-handlers/DeviceEventHandler.ts), [`handleGamepad(...)`](./src/event-handlers/GamepadEventHandler.ts), or [`handleWindowResize(...)`](./src/DeviceInputEventHandlers.tswindowresize) functions from within your Vue component's `<script>` block.
 
-Unlike [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)s, [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)s, [`WheelEvent`](https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent)s and [`TouchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent)s, [`DeviceMotionEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent)s, [`DeviceOrientationEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent)s, and [`GamepadEvent`](https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent/gamepad)s, aren't emitted from DOM elements. They are emitted from the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) itself. So, there's no <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listener that can hear them. To use [`handle(...)`](./src/README.md#handle) to handle these events, you need to:
+Unlike [`MouseEvent`](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)s, [`KeyboardEvent`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent)s, [`WheelEvent`](https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent)s and [`TouchEvent`](https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent)s, [`DeviceMotionEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent)s, [`DeviceOrientationEvent`](https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent)s, and [`GamepadEvent`](https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent/gamepad)s, aren't emitted from DOM elements. They are emitted from the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) itself. So, there's no <code><a href="https://v3.vuejs.org/api/directives.html#v-on" target="_blank">v-on</a></code> listener that can hear them. To use [`handle(...)`](./src/DeviceInputEventHandlers.ts) to handle these events, you need to:
 
 1. Call it from within a method in the [`methods`](https://v3.vuejs.org/api/options-data.html#methods) option of your Vue component.
 2. Feed it into a <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window#methods_implemented_from_elsewhere" target="_blank">window</a><a href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener" target="_blank">.addEventListener(...)</a></code> function call in the [`mounted`](https://v3.vuejs.org/api/options-lifecycle-hooks.html#mounted) hook of your Vue component.
@@ -611,7 +611,7 @@ export default {
 
 <!-- need to at least list the listeners that these events can listen to -->
 
-The [`handle(...)`](./src/README.md#handle) function can bind to any of the following event listeners:
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function can bind to any of the following event listeners:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
@@ -652,11 +652,11 @@ The [`handle(...)`](./src/README.md#handle) function can bind to any of the foll
 <tr><td rowspan="1"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">'resize'</a></code></pre></td><td><pre><code>(e: UIEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">UIEvent</a></code></td></tr>
 </table>
 
-The [`handle(...)`](./src/README.md#handle) function returns one of TBD, <a href="./src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
+The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function returns one of [`DeviceInput`](./src/event-handlers/device-utils/DeviceInput.ts), [`FocusInput`](./src/event-handlers/focus-utils/FocusInput.ts), [`GamepadInput`](./src/event-handlers/gamepad-utils/GamepadInput.ts), [`KeyboardInput`](./src/event-handlers/keyboard-utils/KeyboardInput.ts), [`DragInput`](./src/event-handlers/pointer-utils/DragInput.ts), [`PointerInput`](./src/event-handlers/pointer-utils/PointerInput.ts), [`ScrollInput`](./src/event-handlers/scroll-utils/ScrollInput.ts), [`WindowResizeInput`](./src/event-handlers/window-resize-utils/WindowResizeInput.ts), depending on the type of event passed into it.
 
-If you want to slim your project's final bundle size, and you don't need to handle all of the above events, consider importing and using the [`handleDevice(...)`](./src/README.md#handledevice) or [`handleGamepad(...)`](./src/README.md#handlegamepad) functions, instead of the [`handle(...)`](./src/README.md#handle) function.
+If you want to slim your project's final bundle size, and you don't need to handle all of the above events, consider importing and using the [`handleDevice(...)`](./src/event-handlers/DeviceEventHandler.ts) or [`handleGamepad(...)`](./src/event-handlers/GamepadEventHandler.ts) functions, instead of the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function.
 
-The [`handleDevice(...)`](./src/README.md#handledevice) function returns a [`DeviceInput`](./src/README.md#deviceinput) object, and can only bind to the following event listeners:
+The [`handleDevice(...)`](./src/event-handlers/DeviceEventHandler.ts) function returns a [`DeviceInput`](./src/event-handlers/device-utils/DeviceInput.ts) object, and can only bind to the following event listeners:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
@@ -664,7 +664,7 @@ The [`handleDevice(...)`](./src/README.md#handledevice) function returns a [`Dev
 <tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">'deviceorientation'</a></code></pre></td><td><pre><code>(e: DeviceOrientationEvent) => { this.previous = handle(e, previous)}</code></pre></td><td><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/deviceorientation_event" target="_blank">DeviceOrientationEvent</a></code></td></tr>
 </table>
 
-The [`handleGamepad(...)`](./src/README.md#handlegamepad) function returns a [`GamepadInput`](./src/README.md#gamepadinput) object, and can only bind to the following event listeners:
+The [`handleGamepad(...)`](./src/event-handlers/GamepadEventHandler.ts) function returns a [`GamepadInput`](./src/event-handlers/gamepad-utils/GamepadInput.ts) object, and can only bind to the following event listeners:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
@@ -672,7 +672,7 @@ The [`handleGamepad(...)`](./src/README.md#handlegamepad) function returns a [`G
 <tr><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/gamepaddisconnected_event" target="_blank">'gamepaddisconnected'</a></code></pre></td><td><pre><code>(e: GamepadEvent) => { this.previous = handle(e, previous)}</code></pre></td></tr>
 </table>
 
-The [`handleWindowResize(...)`](./src/README.md#handlewindowresize) function returns a [`WindowResizeInput`](./src/README.md#windowresizeinput) object, and can only bind to the following event listener:
+The [`handleWindowResize(...)`](./src/DeviceInputEventHandlers.tswindowresize) function returns a [`WindowResizeInput`](./src/event-handlers/window-resize-utils/WindowResizeInput.ts) object, and can only bind to the following event listener:
 
 <table>
 <tr><th>Target</th><th rowspan="40"><code>.addEventListener(</code></th><th>Listener</th><th rowspan="40"><code>,</code></th><th>Callback</th><th rowspan="40"><code>)</code></th><th>Event Type</th></tr>
@@ -695,7 +695,7 @@ Most user input is continuous. When you scroll on a webpage, anywhere from sixty
 
 You've probably noticed that every handler in this package shares roughly the same method signature, and all return an object that contain common members, such as the `eventType` field. That's because every handler in this package extends the same, [generic function](./src/event-handlers/handler-utils/Handler.ts), and every returned object extends the same [generic returned object](./src/event-handlers/handler-utils/EventInfo.ts). This makes it easy to get a 'feel' for the functions in this package. Once you understand how one of them works, it's not a stretch to understand them all.
 
-If you've been using [`handle(...)`](./src/README.md#handle) function, rather than its more specific counterparts, it turns out that you've actually been using the specific counterparts the entire time! That's because all the [`handle(...)`](./src/README.md#handle) function does is check the type of event it received and the type listener that sent it, and route the event to the function that knows how to handle that event. Of course, this means that the [`handle(...)`](./src/README.md#handle) function has to wrap all of the other functions it calls, increasing the final bundle size of your project. But, it's a small tradeoff for the convenience.
+If you've been using [`handle(...)`](./src/DeviceInputEventHandlers.ts) function, rather than its more specific counterparts, it turns out that you've actually been using the specific counterparts the entire time! That's because all the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function does is check the type of event it received and the type listener that sent it, and route the event to the function that knows how to handle that event. Of course, this means that the [`handle(...)`](./src/DeviceInputEventHandlers.ts) function has to wrap all of the other functions it calls, increasing the final bundle size of your project. But, it's a small tradeoff for the convenience.
 
 ## Package Folder Structure
 
