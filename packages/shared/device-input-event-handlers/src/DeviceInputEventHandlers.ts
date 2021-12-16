@@ -48,8 +48,36 @@ type AllDeviceInputs =
 /**
  * handle is a wrapper for every other event handler in this package. When you insert an event into it, it runs {@link handleDevice}, {@link handleDrag}, {@link handleScroll}, {@link handleFocus}, {@link handleGamepad}, {@link handleKeyboard}, {@link handleMouse}, {@link handleTouch}, or {@link handleWindowResize}, depending on the event you insert into it. If you insert an unsupported event, it errors.
  *
- * @param event -  Any {@link https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent | DeviceMotionEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent | DeviceOrientationEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent | FocusEvent},  {@link https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent | GamepadEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent | KeyboardEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/DragEvent | DragEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent | MouseEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent | TouchEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/UIEvent | UIEvent}, {@link https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event | Event} with `<event>.type` 'scroll', or {@link https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent | WheelEvent}
- * @returns an {@link ./event-handlers/handler-utils/EventInfo.ts | EventInfo } object.
+ * @param event - Any {@link DeviceMotionEvent}, {@link DeviceOrientationEvent}, {@link FocusEvent}, {@link GamepadEvent}, {@link KeyboardEvent}, {@link DragEvent}, {@link MouseEvent}, {@link TouchEvent}, {@link Event} where {@link Event.type} is 'scroll', {@link UIEvent}, or {@link WheelEvent}
+ *
+ * @returns an {@link EventInfo } object.
+ *
+ * @example
+ * ```typescript
+ *    //example of how to use this class here
+ * ```
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/DragEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/UIEvent
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Element/scroll_event
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent
  */
 const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
   // since instanceof is slow, we are going to switch based on the `event.type` property:
