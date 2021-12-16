@@ -2,15 +2,13 @@
   "name": "@incremental.design/theme",
   "version": "0.0.0",
   "description": "Theme class constructor and utility functions. This class creates a JSON object that specifies ALL of the colors, shapes, sizes, type treatments, elevations, and states that comprise a user interface theme.",
-  "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
+  "author": "Ajay Ganapathy <ajay@incremental.design>",
   "homepage": "https://github.com/incremental-design/app-stencils#readme",
   "license": "MIT",
   "main": "dist/Theme.js",
-  "module": "src/Theme.ts",
-  "types": "./dist/types",
+  "types": "dist/types/Theme.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -26,9 +24,9 @@
     "url": "https://github.com/incremental-design/app-stencils/issues"
   },
   "devDependencies": {
-    "@types/jest": "^27.0.2",
-    "@types/node": "^16.11.6",
+    "@types/jest": "^27.0.3",
+    "@types/node": "^17.0.0",
     "@types/webpack-env": "^1.16.3",
-    "typescript": "^4.4.3"
+    "typescript": "^4.5.4"
   }
 }
