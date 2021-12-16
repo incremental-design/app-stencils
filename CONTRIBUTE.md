@@ -73,12 +73,20 @@ App Stencils contains four levels of documentation.
 3. Folder-Level Documentation
 4. File-Level Documentation
 
-Each level of documentation focuses on a different aspect of App Stencils.
+<table>
+<th align="left">Level</th><th>What it does:</th>
+<tr><td>Monorepo</td><td>Explains why this monorepo exists, what kinds of packages it contains, and how to contribute to it.</td></tr>
+<tr><td>Package</td><td>abde</td>Explains how to install and use a the package</tr>
+<tr><td>Folder</td><td>abde</td></tr>
+<tr><td>File</td><td>abde</td></tr>
+</table>
+
+<!-- Each level of documentation focuses on a different aspect of App Stencils.
 
 - The repository-level documentation focuses on installing and contributing to this project.
 - The package-level documentation focuses on installing and using packages in your own projects.
 - The folder-level documentation focuses on both using and adding to the functionality of the files within a folder.
-- The file-level documentation focuses on the details of the code within a file.
+- The file-level documentation focuses on the details of the code within a file. -->
 
 ![Levels of Documentation](.readme/diagram-levels-of-documentation.svg)
 
