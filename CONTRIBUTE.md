@@ -1,5 +1,29 @@
 # Contribute to App Stencils:
 
+**Table of Contents**
+
+- [Setup](./CONTRIBUTE.md#Setup)
+- [Repository Structure](./CONTRIBUTE.md#repository-structure)
+  - [Configuration](./CONTRIBUTE.md#configuration)
+  - [Code](./CONTRIBUTE.md#code)
+  - [Documentation](./CONTRIBUTE.md#documentation)
+- [Develop](./CONTRIBUTE.md#develop)
+  - [Run Tools with Lerna:](./CONTRIBUTE.md#run-tools-with-lerna)
+  - [Format your commits with Commitlint:](./CONTRIBUTE.md#format-your-commits-with-commitlint)
+  - [Write your code in Typescript:](./CONTRIBUTE.md#write-your-code-in-typescript)
+  - [Check your code with ESlint:](./CONTRIBUTE.md#check-your-code-with-eslint)
+  - [Format your code with Prettier:](./CONTRIBUTE.md#format-your-code-with-prettier)
+  - [Make user interfaces with Vue 3:](./CONTRIBUTE.md#make-user-interfaces-with-vue-3)
+  - [Test your code with Jest:](./CONTRIBUTE.md#test-your-code-with-jest)
+  - [Demo user interface components with Storybook:](./CONTRIBUTE.md#demo-user-interface-components-with-storybook)
+  - [Document your code with TSdoc:](./CONTRIBUTE.md#document-your-code-with-tsdoc)
+  - [Version images with Git LFS:](./CONTRIBUTE.md#version-images-with-git-lfs)
+  - [Make Vue 3 Packages with Vue CLI:](./CONTRIBUTE.md#make-vue-3-packages-with-vue-cli)
+  - [Make Typescript packages with `tsc`:](./CONTRIBUTE.md#make-typescript-packages-with-tsc)
+- [Publish](./CONTRIBUTE.md#Publish)
+
+## Setup
+
 Before you can contribute to app stencils, you need to install [Lerna](lerna.js.org).
 
 You've probably used `npm` or `yarn` to manage your Vue projects. However, you can't use either of them in App Stencils, because this repository is managed by Lerna, which effectively replaces both of them. Much like `npm` and `yarn`, Lerna is a command line utility that you have to install globally.
@@ -9,9 +33,7 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 
   ![`lerna -v`](./.readme/lerna-v.gif)
 
-<!-- ![install brew.sh, and then `brew install lerna`]() -->
-
-## Setup:
+### Installation
 
 1. Navigate to the root of this monorepo.
 2. Run `yarn`. This installs the tooling for this monorepo.
@@ -21,7 +43,7 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 
 - 🛑 Do NOT run `yarn` inside _any_ of the packages in this monorepo.
 
-## Repository Structure:
+## Repository Structure
 
 There are three types of files in App Stencils: configuration, code, and documentation.
 
@@ -68,25 +90,13 @@ App Stencils groups packages according to their contents. Each package contains 
 
 App Stencils contains four levels of documentation.
 
-1. Repository-Level Documentation
-2. Package-Level Documentation
-3. Folder-Level Documentation
-4. File-Level Documentation
-
 <table>
 <th align="left">Level</th><th>What it does:</th>
-<tr><td>Monorepo</td><td>Explains why this monorepo exists, what kinds of packages it contains, and how to contribute to it.</td></tr>
-<tr><td>Package</td><td>abde</td>Explains how to install and use a the package</tr>
-<tr><td>Folder</td><td>abde</td></tr>
-<tr><td>File</td><td>abde</td></tr>
+<tr><td>Monorepo</td><td>Explains why this monorepo exists, what kinds of packages it contains, and how you can contribute.</td></tr>
+<tr><td>Package</td><td>Explains how to add and use a package in your own projects.</td></tr>
+<tr><td>Folder</td><td>Lists the contents of each file within the folder.</td></tr>
+<tr><td>File</td><td>Explains what each piece of code inputs and outputs.</td></tr>
 </table>
-
-<!-- Each level of documentation focuses on a different aspect of App Stencils.
-
-- The repository-level documentation focuses on installing and contributing to this project.
-- The package-level documentation focuses on installing and using packages in your own projects.
-- The folder-level documentation focuses on both using and adding to the functionality of the files within a folder.
-- The file-level documentation focuses on the details of the code within a file. -->
 
 ![Levels of Documentation](.readme/diagram-levels-of-documentation.svg)
 
@@ -129,7 +139,7 @@ App Stencils also contains a **Storybook** - a set of interactive demos of each 
 
 Whenever you add Vue components to App Stencils, make sure you [demo it with Storybook](#demo-user-interface-components-with-storybook).
 
-## Develop:
+## Develop
 
 You have to build, test, document and package your code before the rest of us can use it. App Stencils’ tooling not only simplifies all of these tasks, but also makes it easy to collaborate with the rest of us. That’s because each of the following tools standardizes your code. Without them, it would be difficult for the rest of us to read and edit what you wrote.
 
@@ -196,7 +206,7 @@ You have to build, test, document and package your code before the rest of us ca
 
 <!-- ### Use Lerna to run the other tools: -->
 
-### Run tools with Lerna
+### Run tools with Lerna:
 
 Use `lerna <command>` to run tools in each of App stencils’ packages. Do not use `yarn <command>` or `npm <command>`.
 
@@ -277,7 +287,7 @@ Use the following Lerna commands to run tasks in App Stencils:
 </tbody>
 </table>
 
-### Format your commits with Commitlint
+### Format your commits with Commitlint:
 
 Your commit messages are only as useful as they are easy to read. When you write your commit messages according to Commitlint’s format, it helps us understand _why_ you made the commit in the first place. That’s because Commitlint’s format forces every commit message to carry the same types of information. This makes it easy for the rest of us to compare your commits to each other and follow your train of thought.
 
