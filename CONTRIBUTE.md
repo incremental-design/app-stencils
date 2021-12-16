@@ -24,6 +24,8 @@
 
 ## Setup
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 Before you can contribute to app stencils, you need to install [Lerna](lerna.js.org).
 
 You've probably used `npm` or `yarn` to manage your Vue projects. However, you can't use either of them in App Stencils, because this repository is managed by Lerna, which effectively replaces both of them. Much like `npm` and `yarn`, Lerna is a command line utility that you have to install globally.
@@ -45,6 +47,8 @@ You've probably used `npm` or `yarn` to manage your Vue projects. However, you c
 
 ## Repository Structure
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 There are three types of files in App Stencils: configuration, code, and documentation.
 
 - [Configuration](#configuration) files set up this repository's **toolchain** - the programs that run, build, test, and publish the code files.
@@ -53,6 +57,8 @@ There are three types of files in App Stencils: configuration, code, and documen
 
 ### Configuration
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 App stencils contains several [tools](#develop) that help you turn source code into bundles that can be published to `npmjs.com`. Some of these tools run automatically, and others run on command. All of them follow the directives in their respective configuration files.
 
 Most configuration files are located in the repository root.
@@ -60,6 +66,8 @@ Most configuration files are located in the repository root.
 As a general rule, you should NOT edit any of the configuration files, because doing so will either break your copy of the repository, or worse, introduce breaking changes into this repository’s published packages.
 
 ### Code
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 Most code is located inside the `packages` folder. App stencils splits the code in this folder into distinct packages, each of which can be used independently from the others.
 
@@ -87,6 +95,8 @@ App Stencils groups packages according to their contents. Each package contains 
 </table>
 
 ### Documentation
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 App Stencils contains four levels of documentation.
 
@@ -140,6 +150,8 @@ App Stencils also contains a **Storybook** - a set of interactive demos of each 
 Whenever you add Vue components to App Stencils, make sure you [demo it with Storybook](#demo-user-interface-components-with-storybook).
 
 ## Develop
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 You have to build, test, document and package your code before the rest of us can use it. App Stencils’ tooling not only simplifies all of these tasks, but also makes it easy to collaborate with the rest of us. That’s because each of the following tools standardizes your code. Without them, it would be difficult for the rest of us to read and edit what you wrote.
 
@@ -207,6 +219,8 @@ You have to build, test, document and package your code before the rest of us ca
 <!-- ### Use Lerna to run the other tools: -->
 
 ### Run tools with Lerna:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 Use `lerna <command>` to run tools in each of App stencils’ packages. Do not use `yarn <command>` or `npm <command>`.
 
@@ -288,6 +302,8 @@ Use the following Lerna commands to run tasks in App Stencils:
 </table>
 
 ### Format your commits with Commitlint:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 Your commit messages are only as useful as they are easy to read. When you write your commit messages according to Commitlint’s format, it helps us understand _why_ you made the commit in the first place. That’s because Commitlint’s format forces every commit message to carry the same types of information. This makes it easy for the rest of us to compare your commits to each other and follow your train of thought.
 
@@ -391,6 +407,8 @@ If Lerna is installed in your home directory, your git client probably won't be 
 
 ### Write your code in Typescript:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 Before you write any code, make sure you install the Typescript extension for your editor.
 
 <table>
@@ -490,11 +508,17 @@ When the rest of us read your code, we need to be able to guess the meaning of e
 
 ### Check your code with ESlint:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 <!-- have to explain how eslint is different from typescript -->
 
 ### Format your code with Prettier:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 ### Make user interfaces with Vue 3:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 Every user interface component you write needs to be **irreducible** and **configurable**. A component is irreducible when the code that describes it cannot be split into separate modules without duplicating logic. A component is configurable when its code furnishes parameters that affect its appearance and behavior. There are dozens of frameworks for making user interface components. We use Vue because it occupies a special goldilocks zone in the world of app development: it is as versatile and powerful as it is familiar to programmers of different backgrounds. Whether you primarily code in Javascript, Typescript, PHP, or even Java or .net, Vue's single-file-component format functions as a lingua franca that you can pick up over time. like React and Angular, Vue's single-file-components enhance HTML and CSS with reactive logic and declarative paradigm. Unlike React, it doesn't make you interleave your HTML inside javascript, and unlike Angular, it doesn't make you learn Typescript before you can get started. Best of all, Vue is [really popular](https://www.techrepublic.com/article/considering-vue-js-here-are-5-reasons-youll-love-it/), so every Vue component you write can reach a wide audience.
 
@@ -584,6 +608,8 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 
 ### Test your code with Jest:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 <!-- there should be ONE test file per folder within a package. The test file should inventory and test everything in the folder -->
 
 <!-- To test every package at once, `lerna run test:unit`.
@@ -591,6 +617,8 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 This starts an instance of the Jest unit test framework for each package that contains unit tests. So, if your computer's fans start to sound like a jet engine at idle 🛩 ... this is why. -->
 
 ### Demo user interface components with Storybook:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 The best Vue components are easy to customize, and easy to understand. Without Storybook, it's really hard to make a component that's both. That's because the more customizable a component is, the harder it is to predict its appearance and behavior. When you use Storybook, it helps the rest of us _see the component for ourselves_. That's because unlike inline documentation, Storybook actually runs the component, exposing all of its configuration details. It lets us reconfigure the component, and observe how it changes, so that we can learn by _doing_ rather than by _guessing_. When you demo components with Storybook, you maximize customizability, without maximizing confusion.
 
@@ -651,9 +679,15 @@ The best Vue components are easy to customize, and easy to understand. Without S
 
 ### Document your code with TSdoc:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 ### Version images with Git LFS:
 
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
+
 ### Make Vue 3 packages with Vue CLI:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 You probably want your Vue Components to load fast. The best way to do that is to package each of them separately. However, making packages is hard. It's much simpler to stick all of your Vue components into a single folder and package them together - bundle size be damned. Vue CLI fixes this problem. It makes Vue packages for you. Without it, you would have to manually configure every Vue package.
 
@@ -881,6 +915,8 @@ You probably want your Vue Components to load fast. The best way to do that is t
  -->
 
 ### Make Typescript packages with `tsc`:
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 The more Vue components you write, the more you will find yourself rewriting the same logic in each of them. Eventually, you'll wrap this logic in a Typescript module, and import it into each of your components. While this is always preferable to rewriting the same code over and over again, it can lead to dependency management issues. That's because _anything_ can import your typescript module, regardless of where it is located relative to your module. Without strict organization, what starts as just a handful of imports _will_ grow into a tangled mess. To prevent this, you need to place all of the typescript modules you want to reuse into packages that are located in the `packages/shared` folder. This helps the rest of us find and reuse the code you wrote, without getting lost in a maze of crisscrossing dependencies.
 
@@ -1324,6 +1360,8 @@ export default { rubChumble, pushDinglebop, repurposeSchleem, shavePlubis, cutFl
 The more named exports your package contains, the more the rest of us have to learn before we can use any of them. That's because each export relates to the others, and we need to make sure we use the right export. The best way to reduce the number of named exports in your package, without reducing the functionality that you export is to [overload](https://www.typescriptlang.org/docs/handbook/2/functions.html#function-overloads) each of your module's functions, methods, classes, and class constructors, so that the same named export can be instantiated with more than one set of arguments. It's easier for the rest of us to figure out how to instantiate a single, overloaded function with just the right arguments than it is for us to choose the right export, when several of them seem to do the same thing.
 
 ## Publish
+
+[↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
 <!-- need to briefly go over how commits are cherry-picked into feature branches, and then squashed into the main branch -->
 
