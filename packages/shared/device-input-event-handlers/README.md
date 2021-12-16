@@ -59,7 +59,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handle">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> | <a href="./src/README.md#focusinput">FocusInput</a> | <a href="./src/README.md#gamepadinput">GamepadInput</a> | <a href="./src/README.md#keyboardinput">KeyboardInput</a> | <a href="./src/README.md#pointerinput">PointerInput</a> | <a href="./src/README.md#draginput">DragInput</a> | <a href="./src/README.md#scrollinput">ScrollInput</a> | <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handle">handle</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./device-input-event-handlers/src/README.md#deviceinput">DeviceInput</a> | <a href="./device-input-event-handlers/src/README.md#focusinput">FocusInput</a> | <a href="./device-input-event-handlers/src/README.md#gamepadinput">GamepadInput</a> | <a href="./device-input-event-handlers/src/README.md#keyboardinput">KeyboardInput</a> | <a href="./device-input-event-handlers/src/README.md#pointerinput">PointerInput</a> | <a href="./device-input-event-handlers/src/README.md#draginput">DragInput</a> | <a href="./device-input-event-handlers/src/README.md#scrollinput">ScrollInput</a> | <a href="./device-input-event-handlers/src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -74,7 +74,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handledevice">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./src/README.md#deviceinput">DeviceInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handledevice">handleDevice</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#deviceinput">DeviceInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -89,7 +89,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handledrag">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./src/README.md#draginput">DragInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handledrag">handleDrag</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#draginput">DragInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -104,7 +104,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlefocus">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./src/README.md#focusinput">FocusInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handlefocus">handleFocus</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#focusinput">FocusInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -119,7 +119,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlegamepad">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./src/README.md#gamepadinput">GamepadInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handlegamepad">handleGamepad</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/GamepadEvent" target="_blank">GamepadEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#gamepadinput">GamepadInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -134,7 +134,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlekeyboard">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./src/README.md#keyboardinput">KeyboardInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handlekeyboard">handleKeyboard</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#keyboardinput">KeyboardInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -149,7 +149,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#handlemouse">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#handlemouse">handleMouse</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">MouseEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#pointerinput">PointerInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -164,7 +164,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./src/README.md#pointerinput">PointerInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#">handleTouch</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#pointerinput">PointerInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -179,7 +179,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./src/README.md#scrollinput">ScrollInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#">handleWheel</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/wheel_event" target="_blank">WheelEvent</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/API/Event" target="_blank">Event</a>, previous: <a href="./device-input-event-handlers/src/README.md#scrollinput">ScrollInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -194,7 +194,7 @@ Use the handlers in this package to:
     <tr>
     <td align="left">
     <pre>
-    <code class="lang-typescript"><a href="./src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
+    <code class="lang-typescript"><a href="./device-input-event-handlers/src/README.md#">handleWindowResize</a>( event: <a href="https://developer.mozilla.org/en-US/docs/Web/API/UIEvent" target="_blank">UIEvent</a>, previous: <a href="./device-input-event-handlers/src/README.md#windowresizeinput">WindowResizeInput</a> )</code>
     </pre>
     </td>
     <td align="left">
@@ -297,35 +297,35 @@ The [`handle(...)`](./src/README.md#handle) function returns one of the followin
 <tbody>
 <tr>
 <td align="left">DragEvent</td>
-<td align="left"><a href="./src/README.md#draginput">DragInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#draginput">DragInput</a></td>
 </tr>
 <tr>
 <td align="left">DeviceMotionEvent or DeviceOrientationEvent</td>
-<td align="left"><a href="./src/README.md#deviceinput">DeviceInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#deviceinput">DeviceInput</a></td>
 </tr>
 <tr>
 <td align="left">GamepadEvent</td>
-<td align="left"><a href="./src/README.md#gamepadinput">GamepadInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#gamepadinput">GamepadInput</a></td>
 </tr>
 <tr>
 <td align="left">Event where <code>&lt;Event&gt;.type = scroll</code> or WheelEvent</td>
-<td align="left"><a href="./src/README.md#scrollinput">ScrollInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#scrollinput">ScrollInput</a></td>
 </tr>
 <tr>
 <td align="left">FocusEvent</td>
-<td align="left"><a href="./src/README.md#focusinput">FocusInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#focusinput">FocusInput</a></td>
 </tr>
 <tr>
 <td align="left">KeyboardEvent</td>
-<td align="left"><a href="./src/README.md#keyboardinput">KeyboardInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#keyboardinput">KeyboardInput</a></td>
 </tr>
 <tr>
 <td align="left">MouseEvent</td>
-<td align="left"><a href="./src/README.md#pointerinput">PointerInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#pointerinput">PointerInput</a></td>
 </tr>
 <tr>
 <td align="left">TouchEvent</td>
-<td align="left"><a href="./src/README.md#pointerinput">PointerInput</a></td>
+<td align="left"><a href="./device-input-event-handlers/src/README.md#pointerinput">PointerInput</a></td>
 </tr>
 </tbody>
 </table>
@@ -652,7 +652,7 @@ The [`handle(...)`](./src/README.md#handle) function can bind to any of the foll
 <tr><td rowspan="1"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window" target="_blank">window</a></code></td><td><pre><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">'resize'</a></code></pre></td><td><pre><code>(e: UIEvent) => { this.previous = handle(e, previous)}</code></pre></td><td rowspan="2"><code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/resize_event" target="_blank">UIEvent</a></code></td></tr>
 </table>
 
-The [`handle(...)`](./src/README.md#handle) function returns one of TBD, <a href="./src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
+The [`handle(...)`](./src/README.md#handle) function returns one of TBD, <a href="./device-input-event-handlers/src/README.md#pointercoordinates"><code>PointerCoordinates</code></a>, depending on the type of event passed into it.
 
 If you want to slim your project's final bundle size, and you don't need to handle all of the above events, consider importing and using the [`handleDevice(...)`](./src/README.md#handledevice) or [`handleGamepad(...)`](./src/README.md#handlegamepad) functions, instead of the [`handle(...)`](./src/README.md#handle) function.
 
