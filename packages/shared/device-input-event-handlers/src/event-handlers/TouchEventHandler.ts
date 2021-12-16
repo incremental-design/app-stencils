@@ -50,5 +50,10 @@ export const handleTouch: Handler<TouchEvent, PointerInput> = (
   event,
   previous
 ) => {
-  return mergeWithEventInfo(event, getPointerInput(event, previous));
+  return mergeWithEventInfo(
+    event,
+    previous && previous.type === 'PointerInput'
+      ? getPointerInput(event, previous)
+      : getPointerInput(event)
+  );
 };

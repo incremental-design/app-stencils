@@ -5,7 +5,12 @@ export const handleScroll: Handler<Event | WheelEvent, ScrollInput> = (
   event,
   previous
 ) => {
-  return mergeWithEventInfo(event, getScrollInput(event, previous));
+  return mergeWithEventInfo(
+    event,
+    previous && previous.type === 'ScrollInput'
+      ? getScrollInput(event, previous)
+      : getScrollInput(event)
+  );
 };
 
 // don't support mic and webcam, because those use webrtc api.

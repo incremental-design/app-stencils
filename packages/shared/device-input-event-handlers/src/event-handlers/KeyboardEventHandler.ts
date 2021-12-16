@@ -7,6 +7,8 @@ export const handleKeyboard: Handler<KeyboardEvent, KeyboardInput> = (
 ) => {
   return mergeWithEventInfo<KeyboardInput>(
     event,
-    getKeyboardInput(event, previous)
+    previous && previous.type === 'KeyboardInput'
+      ? getKeyboardInput(event, previous)
+      : getKeyboardInput(event)
   );
 };

@@ -1,4 +1,4 @@
-# `@incremental.design/device-input-event-handlers`
+<code>#</code> `@incremental.design/device-input-event-handlers`
 
 <img src="../../../.readme/illustration-device-input-event-handlers-banner.svg" alt="wheel, keybaord, accelerometer, window, mouse, gamepad, focus and touch input icons" style="width: 100%"/>
 
@@ -297,35 +297,35 @@ The [`handle(...)`](./src/DeviceInputEventHandlers.ts) function returns one of t
 <tbody>
 <tr>
 <td align="left">DragEvent</td>
-<td align="left"><a href="./src/event-handlers/pointer-utils/DragInput.ts">DragInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/DragInput.ts"><code>DragInput</code></a></td>
 </tr>
 <tr>
 <td align="left">DeviceMotionEvent or DeviceOrientationEvent</td>
-<td align="left"><a href="./src/event-handlers/device-utils/DeviceInput.ts">DeviceInput</a></td>
+<td align="left"><a href="./src/event-handlers/device-utils/DeviceInput.ts"><code>DeviceInput</code></a></td>
 </tr>
 <tr>
 <td align="left">GamepadEvent</td>
-<td align="left"><a href="./src/event-handlers/gamepad-utils/GamepadInput.ts">GamepadInput</a></td>
+<td align="left"><a href="./src/event-handlers/gamepad-utils/GamepadInput.ts"><code>GamepadInput</code></a></td>
 </tr>
 <tr>
 <td align="left">Event where <code>&lt;Event&gt;.type = scroll</code> or WheelEvent</td>
-<td align="left"><a href="./src/event-handlers/scroll-utils/ScrollInput.ts">ScrollInput</a></td>
+<td align="left"><a href="./src/event-handlers/scroll-utils/ScrollInput.ts"><code>ScrollInput</code></a></td>
 </tr>
 <tr>
 <td align="left">FocusEvent</td>
-<td align="left"><a href="./src/event-handlers/focus-utils/FocusInput.ts">FocusInput</a></td>
+<td align="left"><a href="./src/event-handlers/focus-utils/FocusInput.ts"><code>FocusInput</code></a></td>
 </tr>
 <tr>
 <td align="left">KeyboardEvent</td>
-<td align="left"><a href="./src/event-handlers/keyboard-utils/KeyboardInput.ts">KeyboardInput</a></td>
+<td align="left"><a href="./src/event-handlers/keyboard-utils/KeyboardInput.ts"><code>KeyboardInput</code></a></td>
 </tr>
 <tr>
 <td align="left">MouseEvent</td>
-<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts"><code>PointerInput</code></a></td>
 </tr>
 <tr>
 <td align="left">TouchEvent</td>
-<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts">PointerInput</a></td>
+<td align="left"><a href="./src/event-handlers/pointer-utils/PointerInput.ts"><code>PointerInput</code></a></td>
 </tr>
 </tbody>
 </table>

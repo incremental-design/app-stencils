@@ -144,12 +144,11 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
   const T = event.type;
   switch (T) {
     case 'devicemotion' || 'deviceorientation':
-      return previous && previous.type === 'DeviceInput'
-        ? handleDevice(
-            <DeviceMotionEvent | DeviceOrientationEvent>event,
-            previous
-          )
-        : handleDevice(<DeviceMotionEvent | DeviceOrientationEvent>event);
+      return handleDevice(
+        <DeviceMotionEvent | DeviceOrientationEvent>event,
+        previous as DeviceInput
+      );
+
     case 'drag' ||
       'dragstart' ||
       'dragend' ||
@@ -157,25 +156,17 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
       'dragover' ||
       'dragleave' ||
       'drop':
-      return previous && previous.type === 'DragInput'
-        ? handleDrag(<DragEvent>event, previous)
-        : handleDrag(<DragEvent>event);
+      return handleDrag(<DragEvent>event, previous as DragInput);
+
     case 'wheel' || 'scroll':
-      return previous && previous.type === 'ScrollInput'
-        ? handleScroll(<Event | WheelEvent>event, previous)
-        : handleScroll(<Event | WheelEvent>event);
+      return handleScroll(<Event | WheelEvent>event, previous as ScrollInput);
+
     case 'focusin' || 'focus' || 'focusout' || 'blur':
-      return previous && previous.type === 'FocusInput'
-        ? handleFocus(<FocusEvent>event, previous)
-        : handleFocus(<FocusEvent>event);
+      return handleFocus(<FocusEvent>event, previous as FocusInput);
     case 'gamepadconnected' || 'gamepaddisconnected':
-      return previous && previous.type === 'GamepadInput'
-        ? handleGamepad(<GamepadEvent>event, previous)
-        : handleGamepad(<GamepadEvent>event);
+      return handleGamepad(<GamepadEvent>event, previous as GamepadInput);
     case 'keydown' || 'keyup':
-      return previous && previous.type === 'KeyboardInput'
-        ? handleKeyboard(<KeyboardEvent>event, previous)
-        : handleKeyboard(<KeyboardEvent>event);
+      return handleKeyboard(<KeyboardEvent>event, previous as KeyboardInput);
     case 'auxclick' ||
       'contextmenu' ||
       'webkitmouseforcewillbegin' ||
@@ -192,17 +183,11 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
       'mousemove' ||
       'mouseout' ||
       'mouseleave':
-      return previous && previous.type === 'PointerInput'
-        ? handleMouse(<MouseEvent>event, previous)
-        : handleMouse(<MouseEvent>event);
+      return handleMouse(<MouseEvent>event, previous as PointerInput);
     case 'touchstart' || 'touchmove' || 'touchend' || 'touchcancel':
-      return previous && previous.type === 'PointerInput'
-        ? handleTouch(<TouchEvent>event, previous)
-        : handleTouch(<TouchEvent>event);
+      return handleTouch(<TouchEvent>event, previous as PointerInput);
     case 'resize':
-      return previous && previous.type === 'WindowResizeInput'
-        ? handleWindowResize(<UIEvent>event, previous)
-        : handleWindowResize(<UIEvent>event);
+      return handleWindowResize(<UIEvent>event, previous as WindowResizeInput);
     default:
       throw new Error(`${T} is not supported.`);
   }

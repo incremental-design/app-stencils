@@ -6,5 +6,10 @@ import { Handler, mergeWithEventInfo } from './handler-utils/';
 import { DragInput, getDragInput } from './pointer-utils/';
 
 export const handleDrag: Handler<DragEvent, DragInput> = (event, previous) => {
-  return mergeWithEventInfo<DragInput>(event, getDragInput(event, previous));
+  return mergeWithEventInfo<DragInput>(
+    event,
+    previous && previous.type === 'DragInput'
+      ? getDragInput(event, previous)
+      : getDragInput(event)
+  );
 };

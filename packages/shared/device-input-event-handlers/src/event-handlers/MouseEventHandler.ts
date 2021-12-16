@@ -56,7 +56,12 @@ export const handleMouse: Handler<MouseEvent, PointerInput> = (
   event,
   previous
 ) => {
-  return mergeWithEventInfo(event, getPointerInput(event, previous));
+  return mergeWithEventInfo(
+    event,
+    previous && previous.type === 'PointerInput'
+      ? getPointerInput(event, previous)
+      : getPointerInput(event)
+  );
 };
 
 // todo: support auxclick, contextmenu, webkitmouseforcewillbegin, webkitmouseforcedown, webkitmouseforcechanged, webkitmouseforceup

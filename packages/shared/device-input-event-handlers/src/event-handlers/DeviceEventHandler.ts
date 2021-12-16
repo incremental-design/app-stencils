@@ -9,6 +9,8 @@ export const handleDevice: Handler<DeviceEvent, DeviceInput> = (
 ) => {
   return mergeWithEventInfo<DeviceInput>(
     event,
-    getDeviceInput(event, previous)
+    previous && previous.type === 'DeviceInput'
+      ? getDeviceInput(event, previous)
+      : getDeviceInput(event)
   );
 };
