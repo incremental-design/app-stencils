@@ -95,10 +95,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
         isDraggable 
         isSnappable 
         isSelectable 
-        isCopyable 
-        isPasteable 
-        isReplicable 
-        isEditable
+        isFocusable
       
         &lt;!-- use the `theme` prop to set the base component's theme --&gt;
         :theme="'ios'"

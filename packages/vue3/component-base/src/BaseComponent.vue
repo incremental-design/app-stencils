@@ -1,38 +1,28 @@
 <template>
   <div @="EventHandlers">
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
-    <!-- <div> -->
     <!--
       @slot Default Content
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot :Pointer="DataAndComputed.pointer" :State="DataAndComputed.state">
-      isPressed: {{ DataAndComputed.state.isPressed }}
-      <br />
-      isFocused: {{ DataAndComputed.state.isFocused }}
-      <br />
-      coordinates {{ DataAndComputed.pointer.coordinates }}
+    <slot :Pointer="DataAndComputed.pointerInput">
+      isPressed: {{ DataAndComputed.pointerInput }}
     </slot>
   </div>
   <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
 
 <script lang="ts">
-/**
- * Base Component
- *
- * - native event handlers -> seamlss state changes + seamlss event emitters
- * - touch, tap and focus friendly
- * - animations for seamlss state changes
- * - optional 'spatial awareness' (ie the component can figure out where it is on screen, where it is relative to its containing dom node, where it is relative to its siblings)
- * - a11y and i18n friendly
- * - by default, no text should be selectable (because you can't select the text on a button) (user-select === none)
- */
+// make sure user select === none so that by default nothing can be selected (unless isEditable)
 
-// how to define the states enum as a 'BaseComponent.state' readonly??
+// needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
-// how to wrap the device input event handler return types in a BaseComponent.input readonly??
+// needs a default slot and a fallback (ie suspense) slot
+
+// needs to accept following props: isHoverable isPeekable isPressable isToggleable isDraggable isSnappable isSelectable isCopyable isPasteable isReplicable isEditable theme
+
+// fallback slot should have all the same props as regular slot
 
 import {
   defineComponent,
@@ -43,27 +33,23 @@ import {
 } from 'vue';
 
 import {
-  ClickListener,
-  // DblclickListener,
-  MousedownListener,
-  MouseenterListener,
-  MouseleaveListener,
-  MousemoveListener,
-  MouseoutListener,
-  MouseoverListener,
-  MouseupListener,
-  // WebkitmouseforcedownListener,
-  TouchstartListener,
-  TouchmoveListener,
-  TouchendListener,
-  TouchcancelListener,
-} from './use/Seamlss/DOMEventListeners/';
-
-import { PointerCoordinates } from './use/Seamlss/DOMEventListeners/Utils';
-
-import handle from '@incremental.design/device-input-event-handlers';
-
-import { ButtonStates } from './use';
+  // handleDrag,
+  // DragInput,
+  // handleScroll,
+  // ScrollInput,
+  // handleFocus,
+  // FocusInput,
+  // handleGamepad,
+  // GamepadInput,
+  // handleKeyboard,
+  // KeyboardInput,
+  handleMouse,
+  handleTouch,
+  // PointerInput,
+  // handleWindowResize,
+  // WindowResizeInput,
+  /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
+} from '@incremental.design/device-input-event-handlers'; // need to use setup function to only wire up the events for which affordances are toggled true ... so need event solver code
 
 export default defineComponent({
   components: {
@@ -72,8 +58,190 @@ export default defineComponent({
   },
 
   props: {
-    // see: https://v3.vuejs.org/api/options-data.html#props
-    // prop
+    /**
+     * isHoverable - whether the component's appearance should change when a mouse cursor occludes it.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isHoverable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isHoverable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isPeekable - whether the component should increase in size and reveal its contents when it is hovered.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isPeekable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isPeekable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isPressable - whether the component's appearance should change when it is clicked or tapped.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isPeekable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isPressable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isToggleable - whether the component should maintain its appearance when it is pressed and the mouse cursor or touch point is released.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isToggleable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isToggleable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isDraggable - whether the component contains a handle that follows the mouse cursor or touch point when the component is pressed.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isDraggable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isDraggable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isSnappable - whether the component should maintain its appearance when it is pressed and the mouse cursor or touch point is released.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isSnappable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isSnappable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isSelectable - whether the component's contents can be copied to the clipboard.
+     *
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isSelectable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isSelectable: {
+      type: Boolean,
+      default: false,
+    },
+
+    /**
+     * isFocusable - whether the component's contents can be edited with a keyboard, mouse, or touch.
+     * @values true | false
+     *
+     * @example
+     * ```vue
+     *
+     * <template>
+     *  <base-component isToggleable>
+     *    <template v-slot:default>
+     *     <!-- ... -->
+     *    </template>
+     *  </base-component>
+     * </template>
+     *
+     * ```
+     */
+    isFocusable: {
+      type: Boolean,
+      default: false,
+    },
+
+    // todo: add theme
   },
 
   emits: {
@@ -82,151 +250,70 @@ export default defineComponent({
   },
 
   setup(props, { attrs, slots, emit }) {
-    // !Subroutines
-
-    // Use any valid typescript to process the arguments of the setup function.
-
-    // !Data and Computed Properties
-
-    // Populate the DataAndComputed object by calling the subroutines defined above.
-
     const DataAndComputed: any = reactive({
-      // computedPropertyName:// computed()
-      pointer: {
-        isDown: false,
-        downSince: false,
-        coordinates: false,
-      },
-      state: new ButtonStates(),
+      pointerInput: false,
     });
 
     // !Methods
 
     // !Event Handlers
-    const EventHandlers = {
-      mousedown: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = MousedownListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince = e.timeStamp;
-      },
-
-      mouseenter: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = MouseenterListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-      },
-
-      mouseleave: (e: Event) => {
-        DataAndComputed.state.isFocused = false;
-
-        DataAndComputed.pointer.coordinates = MouseleaveListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = false;
-        DataAndComputed.pointer.downSince = false;
-      },
-
-      mousemove: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = MousemoveListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-      },
-
-      mouseup: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = MouseupListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = false;
-        DataAndComputed.pointer.downSince = false;
-      },
-      // webkitmouseforcedown: (e) => {
-      //   DataAndComputed.previousEvent = e;
-      // },
-      touchstart: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = TouchstartListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = true;
-        DataAndComputed.pointer.downSince = e.timeStamp;
-      },
-      touchmove: (e: Event) => {
-        DataAndComputed.state.isFocused = true;
-
-        DataAndComputed.pointer.coordinates = TouchmoveListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = true;
-      },
-      touchend: (e: Event) => {
-        DataAndComputed.state.isFocused = false;
-
-        DataAndComputed.pointer.coordinates = TouchendListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = false;
-        DataAndComputed.pointer.downSince = false;
-      },
-      touchcancel: (e: Event) => {
-        DataAndComputed.state.isFocused = false;
-
-        DataAndComputed.pointer.coordinates = TouchcancelListener(
-          e,
-          true,
-          true,
-          DataAndComputed.pointer.coordinates
-        );
-
-        DataAndComputed.pointer.isDown = false;
-        DataAndComputed.pointer.downSince = false;
-      },
+    const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
+      DataAndComputed.pointerInput = handleMouse(
+        E,
+        DataAndComputed.pointerInput
+      );
     };
-    // !Watchers
 
-    watchEffect(() => {
-      DataAndComputed.state.isPressed = DataAndComputed.pointer.isDown;
-    });
+    const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
+      DataAndComputed.pointerInput = handleTouch(
+        E,
+        DataAndComputed.pointerInput
+      );
+    };
+
+    // const HD /* (H)andle (D)rag */
+
+    // const HS /* (H)andle (S)croll */
+
+    // const HF /* (H)andle (F)ocus */
+
+    // const HK /* (H)andle (K)eyboard */
+
+    // const HW /* (H)andle (W)heel */
+
+    const EventHandlers = {
+      // drag: HD,
+      // dragend: HD,
+      // dragenter: HD,
+      // dragleave: HD,
+      // dragover: HD,
+      // dragstart: HD,
+      // drop: HD,
+      // scroll: HS,
+      // blur: HF,
+      // focus: HF,
+      // focusin: HF,
+      // focusout: HF,
+      // keydown: HK,
+      // keypress: HK,
+      // keyup: HK,
+      // auxclick: HM,
+      // click: HM,
+      // contextmenu: HM,
+      // dblclick: HM,
+      mousedown: HM,
+      mouseenter: HM,
+      mouseleave: HM,
+      mousemove: HM,
+      mouseout: HM,
+      mouseover: HM,
+      mouseup: HM,
+      touchcancel: HT,
+      touchend: HT,
+      touchmove: HT,
+      touchstart: HT,
+      // wheel: HW,
+    };
 
     // !Lifecycle Hooks
 
