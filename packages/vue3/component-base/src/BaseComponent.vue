@@ -1,5 +1,5 @@
 <template>
-  <div @="EventHandlers">
+  <div v-on="EventHandlers">
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!--
       @slot Default Content
@@ -50,6 +50,7 @@ import {
   // WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
 } from '@incremental.design/device-input-event-handlers'; // need to use setup function to only wire up the events for which affordances are toggled true ... so need event solver code
+import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
 
 export default defineComponent({
   components: {
@@ -384,39 +385,75 @@ export default defineComponent({
 
     // const HW /* (H)andle (W)heel */
 
-    const EventHandlers = {
-      // drag: HD,
-      // dragend: HD,
-      // dragenter: HD,
-      // dragleave: HD,
-      // dragover: HD,
-      // dragstart: HD,
-      // drop: HD,
-      // scroll: HS,
-      // blur: HF,
-      // focus: HF,
-      // focusin: HF,
-      // focusout: HF,
-      // keydown: HK,
-      // keypress: HK,
-      // keyup: HK,
-      // auxclick: HM,
-      // click: HM,
-      // contextmenu: HM,
-      // dblclick: HM,
-      mousedown: HM,
-      mouseenter: HM,
-      mouseleave: HM,
-      mousemove: HM,
-      mouseout: HM,
-      mouseover: HM,
-      mouseup: HM,
-      touchcancel: HT,
-      touchend: HT,
-      touchmove: HT,
-      touchstart: HT,
-      // wheel: HW,
+    const makeEventHandlers = () => {
+      let EH: /* (E)vent (H)andler */ {
+        [eventType: string]:
+          | ((E: MouseEvent) => void)
+          | ((E: TouchEvent) => void)
+          | ((E: DragEvent) => void)
+          | ((E: Event) => void)
+          | ((E: FocusEvent) => void)
+          | ((E: KeyboardEvent) => void)
+          | ((E: WheelEvent) => void);
+      } = {};
+
+      const listenForHover = (): void => {
+        if (EH.mouseover) return;
+        EH.mouseover = HM;
+      };
+      const listenForPeek = (): void => {
+        listenForHover();
+        if (EH.touchstart) return;
+        EH.touchstart = HT;
+        if (EH.touchend) return;
+        EH.touchend = HT;
+      };
+      const listenForPress = (): void => {
+        listenForHover();
+        if (EH.mousedown) return;
+        EH.mousedown = HM;
+        if (EH.mouseup) return;
+        EH.mouseup = HM;
+        if (EH.mouseleave) return;
+        EH.mouseleave = HM; /* mousedown -> mouseup is equivalent to mousedown -> mouseleave */
+        if (EH.touchstart) return;
+        EH.touchstart = HT;
+        if (EH.touchend) return;
+        EH.touchend = HT;
+      };
+      const listenForToggle = (): void => {
+        listenForPress();
+      };
+      const listenForDrag = (): void => {
+        listenForPress();
+        if (EH.mousemove) return;
+        EH.mousemove = HM;
+        if (EH.touchmove) return;
+        EH.touchmove = HT;
+      };
+      const listenForSnap = (): void => {
+        listenForDrag();
+      };
+      const listenForSelect = (): void => {
+        listenForPress();
+      };
+      const listenForFocus = (): void => {
+        listenForPress();
+      };
+
+      if (isHoverable) listenForHover();
+      if (isPeekable) listenForPeek();
+      if (isPressable) listenForPress();
+      if (isToggleable) listenForToggle();
+      if (isDraggable) listenForDrag();
+      if (isSnappable) listenForSnap();
+      if (isSelectable) listenForSelect();
+      if (isFocusable) listenForFocus();
+
+      return EH;
     };
+
+    const EventHandlers = makeEventHandlers();
 
     // !Lifecycle Hooks
 

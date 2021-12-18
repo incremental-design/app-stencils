@@ -6,5 +6,5 @@ export default {
 
 export const MyStory = () => ({
   components: { BaseComponent },
-  template: '<base-component></base-component>',
+  template: '<base-component isHoverable isPressable></base-component>',
 });
