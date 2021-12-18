@@ -1,4 +1,4 @@
-import { Handler, mergeWithEventInfo } from './handler-utils/';
+import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils/';
 import {
   WindowResizeInput,
   getWindowResizeInput,
@@ -13,7 +13,7 @@ export const handleWindowResize: Handler<UIEvent, WindowResizeInput> = (
   return mergeWithEventInfo<WindowResizeInput>(
     event,
     previous && previous.type === 'WindowResizeInput'
-      ? getWindowResizeInput(event, previous)
+      ? getWindowResizeInput(event, previous.input)
       : getWindowResizeInput(event)
   );
 };

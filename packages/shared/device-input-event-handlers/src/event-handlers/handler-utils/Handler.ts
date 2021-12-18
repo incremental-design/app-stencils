@@ -9,5 +9,5 @@ import { EventInfo } from './';
 
 export declare type Handler<EventType extends Event, Input> = (
   event: EventType,
-  previous?: Input
+  previous?: EventInfo<Input>
 ) => EventInfo<Input>;

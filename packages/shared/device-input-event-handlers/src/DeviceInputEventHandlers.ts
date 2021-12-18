@@ -20,7 +20,7 @@ import {
   WindowResizeInput,
 } from './event-handlers/';
 
-import { Handler } from './event-handlers/handler-utils/';
+import { Handler, EventInfo } from './event-handlers/handler-utils/';
 
 type AllDeviceEvents =
   | DeviceMotionEvent
@@ -146,7 +146,7 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
     case 'devicemotion' || 'deviceorientation':
       return handleDevice(
         <DeviceMotionEvent | DeviceOrientationEvent>event,
-        previous as DeviceInput
+        previous as EventInfo<DeviceInput>
       );
 
     case 'drag' ||
@@ -156,17 +156,26 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
       'dragover' ||
       'dragleave' ||
       'drop':
-      return handleDrag(<DragEvent>event, previous as DragInput);
+      return handleDrag(<DragEvent>event, previous as EventInfo<DragInput>);
 
     case 'wheel' || 'scroll':
-      return handleScroll(<Event | WheelEvent>event, previous as ScrollInput);
+      return handleScroll(
+        <Event | WheelEvent>event,
+        previous as EventInfo<ScrollInput>
+      );
 
     case 'focusin' || 'focus' || 'focusout' || 'blur':
-      return handleFocus(<FocusEvent>event, previous as FocusInput);
+      return handleFocus(<FocusEvent>event, previous as EventInfo<FocusInput>);
     case 'gamepadconnected' || 'gamepaddisconnected':
-      return handleGamepad(<GamepadEvent>event, previous as GamepadInput);
+      return handleGamepad(
+        <GamepadEvent>event,
+        previous as EventInfo<GamepadInput>
+      );
     case 'keydown' || 'keyup':
-      return handleKeyboard(<KeyboardEvent>event, previous as KeyboardInput);
+      return handleKeyboard(
+        <KeyboardEvent>event,
+        previous as EventInfo<KeyboardInput>
+      );
     case 'auxclick' ||
       'contextmenu' ||
       'webkitmouseforcewillbegin' ||
@@ -183,11 +192,20 @@ const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
       'mousemove' ||
       'mouseout' ||
       'mouseleave':
-      return handleMouse(<MouseEvent>event, previous as PointerInput);
+      return handleMouse(
+        <MouseEvent>event,
+        previous as EventInfo<PointerInput>
+      );
     case 'touchstart' || 'touchmove' || 'touchend' || 'touchcancel':
-      return handleTouch(<TouchEvent>event, previous as PointerInput);
+      return handleTouch(
+        <TouchEvent>event,
+        previous as EventInfo<PointerInput>
+      );
     case 'resize':
-      return handleWindowResize(<UIEvent>event, previous as WindowResizeInput);
+      return handleWindowResize(
+        <UIEvent>event,
+        previous as EventInfo<WindowResizeInput>
+      );
     default:
       throw new Error(`${T} is not supported.`);
   }

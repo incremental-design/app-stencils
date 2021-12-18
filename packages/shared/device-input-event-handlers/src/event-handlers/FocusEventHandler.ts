@@ -10,7 +10,7 @@ export const handleFocus: Handler<FocusEvent, FocusInput> = (
   return mergeWithEventInfo<FocusInput>(
     event,
     previous && previous.type === 'FocusInput'
-      ? getFocusInput(event, previous)
+      ? getFocusInput(event, previous.input)
       : getFocusInput(event)
   );
 };

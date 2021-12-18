@@ -9,7 +9,7 @@ export const handleDrag: Handler<DragEvent, DragInput> = (event, previous) => {
   return mergeWithEventInfo<DragInput>(
     event,
     previous && previous.type === 'DragInput'
-      ? getDragInput(event, previous)
+      ? getDragInput(event, previous.input)
       : getDragInput(event)
   );
 };
