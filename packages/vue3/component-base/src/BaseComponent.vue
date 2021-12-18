@@ -254,6 +254,109 @@ export default defineComponent({
       pointerInput: false,
     });
 
+    const {
+      isHoverable,
+      isPeekable,
+      isPressable,
+      isToggleable,
+      isDraggable,
+      isSnappable,
+      isSelectable,
+      isFocusable,
+    } = props;
+
+    const FSM /* (F)inite (S)tate (M)achine */ = reactive({
+      /**
+       * hovered - whether a mouse cursor is currently occluding the component
+       */
+      hovered: false,
+      _peeked: false,
+      /**
+       * peeked - whether the component is growing in size to reveal its contents
+       */
+      peeked: computed({
+        get: (): boolean => {
+          return FSM.hovered && FSM._peeked;
+        },
+        set: (value: boolean) => {
+          FSM._peeked = value;
+        },
+      }),
+      _pressed: false,
+      /**
+       * pressed - whether a mouse cursor or touch point is currently depressing the component
+       */
+      pressed: computed({
+        get: (): boolean => {
+          return FSM.hovered && FSM._pressed;
+        },
+        set: (value: boolean) => {
+          FSM._pressed = value;
+          FSM.toggled = !FSM.toggled;
+        },
+      }),
+      _toggled: false,
+      /**
+       * toggled - whether the component appears to be depressed after it has been pressed and released
+       */
+      toggled: computed({
+        get: (): boolean => {
+          return FSM._toggled;
+        },
+        set: (value: boolean) => {
+          FSM._toggled = value;
+        },
+      }),
+      _dragged: false,
+      /**
+       * dragged - whether the component's handle is currently following the mouse cursor or touch point
+       */
+      dragged: computed({
+        get: (): boolean => {
+          return FSM.pressed && FSM._dragged;
+        },
+        set: (value: boolean) => {
+          FSM._dragged = value;
+        },
+      }),
+      _snapped: false,
+      /**
+       * snapped - whether the component's handle has stuck to a point as it is being dragged
+       */
+      snapped: computed({
+        get: (): boolean => {
+          return FSM.dragged && FSM._snapped;
+        },
+        set: (value: boolean) => {
+          FSM._snapped = value;
+        },
+      }),
+      _selected: false,
+      /**
+       * selected - whether some or all of the component's contents have been highlighted with a cursor, and can be copied to the clipboard.
+       */
+      selected: computed({
+        get: (): boolean => {
+          return FSM.pressed && FSM._selected;
+        },
+        set: (value: boolean) => {
+          FSM._selected = value;
+        },
+      }),
+      _focused: false,
+      /**
+       * focused - whether the component's content are being modified with a keyboard, mouse, or touch
+       */
+      focused: computed({
+        get: (): boolean => {
+          return FSM.pressed && FSM._focused;
+        },
+        set: (value: boolean) => {
+          FSM._focused = value;
+        },
+      }),
+    });
+
     // !Methods
 
     // !Event Handlers
