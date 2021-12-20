@@ -9,7 +9,7 @@ export const handleGamepad: Handler<GamepadEvent, GamepadInput> = (
 ) => {
   return mergeWithEventInfo<GamepadInput>(
     event,
-    previous && previous.type === 'GamepadInput'
+    previous && previous.input.type === 'GamepadInput'
       ? getGamepadInput(event, previous.input)
       : getGamepadInput(event)
   );

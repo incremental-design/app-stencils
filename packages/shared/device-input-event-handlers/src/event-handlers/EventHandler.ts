@@ -7,7 +7,7 @@ export const handleScroll: Handler<Event | WheelEvent, ScrollInput> = (
 ) => {
   return mergeWithEventInfo(
     event,
-    previous && previous.type === 'ScrollInput'
+    previous && previous.input.type === 'ScrollInput'
       ? getScrollInput(event, previous.input)
       : getScrollInput(event)
   );

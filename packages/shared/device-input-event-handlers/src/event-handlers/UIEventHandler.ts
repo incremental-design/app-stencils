@@ -12,7 +12,7 @@ export const handleWindowResize: Handler<UIEvent, WindowResizeInput> = (
 ) => {
   return mergeWithEventInfo<WindowResizeInput>(
     event,
-    previous && previous.type === 'WindowResizeInput'
+    previous && previous.input.type === 'WindowResizeInput'
       ? getWindowResizeInput(event, previous.input)
       : getWindowResizeInput(event)
   );

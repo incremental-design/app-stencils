@@ -8,7 +8,7 @@ import { DragInput, getDragInput } from './pointer-utils/';
 export const handleDrag: Handler<DragEvent, DragInput> = (event, previous) => {
   return mergeWithEventInfo<DragInput>(
     event,
-    previous && previous.type === 'DragInput'
+    previous && previous.input.type === 'DragInput'
       ? getDragInput(event, previous.input)
       : getDragInput(event)
   );
