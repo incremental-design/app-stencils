@@ -29,25 +29,24 @@ import {
   watch,
   watchEffect,
   toRefs,
+  unref,
 } from 'vue';
 
 import {
   // handleDrag,
-  // DragInput,
+  DragInput,
   // handleScroll,
-  // ScrollInput,
+  ScrollInput,
   // handleFocus,
-  // FocusInput,
-  // handleGamepad,
-  // GamepadInput,
+  FocusInput,
   // handleKeyboard,
-  // KeyboardInput,
+  KeyboardInput,
   handleMouse,
   handleTouch,
   PointerInput,
   // PointerInput,
   // handleWindowResize,
-  // WindowResizeInput,
+  WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
 } from '@incremental.design/device-input-event-handlers';
 import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
@@ -295,18 +294,10 @@ export default defineComponent({
        * hovered - whether a mouse cursor is currently occluding the component
        */
       hovered: false,
-      _peeked: false,
       /**
        * peeked - whether the component is growing in size to reveal its contents
        */
-      peeked: computed({
-        get: (): boolean => {
-          return FSM.hovered && FSM._peeked;
-        },
-        set: (value: boolean) => {
-          FSM._peeked = value;
-        },
-      }),
+      peeked: false,
       _pressed: false,
       /**
        * pressed - whether a mouse cursor or touch point is currently depressing the component
@@ -384,7 +375,6 @@ export default defineComponent({
 
     // !Methods
 
-    // !Event Handlers
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
         ? handleMouse(E, DataAndComputed.pointerInput)
@@ -431,6 +421,8 @@ export default defineComponent({
       const listenForHover = (): void => {
         if (EH.mouseover) return;
         EH.mouseover = HM;
+        if (EH.mouseleave) return;
+        EH.mouseleave = HM;
       };
       const listenForPeek = (): void => {
         listenForHover();
@@ -438,6 +430,8 @@ export default defineComponent({
         EH.touchstart = HT;
         if (EH.touchend) return;
         EH.touchend = HT;
+        if (EH.touchcancel) return;
+        EH.touchcancel = HT;
       };
       const listenForPress = (): void => {
         listenForHover();
@@ -490,16 +484,72 @@ export default defineComponent({
         if (!DataAndComputed.pointerInput) return;
         const P = DataAndComputed.pointerInput;
 
+        console.log(P.type);
+
         // do something with P
 
-        const updateHovered = () => {};
-        const updatePeeked = () => {};
+        const updateHovered = () => {
+          switch (P.type) {
+            case 'mouseover':
+              FSM.hovered = true;
+              break;
+            case 'mouseleave':
+              FSM.hovered = false;
+              break;
+          }
+        };
+        const updatePeeked = () => {
+          switch (P.type) {
+            case 'mouseover':
+              FSM.peeked = true;
+              break;
+            case 'mouseleave':
+              FSM.peeked = false;
+              break;
+            case 'touchstart':
+              FSM.peeked = true;
+              break;
+            case 'touchend':
+              FSM.peeked = false;
+              break;
+            case 'touchcancel':
+              FSM.peeked = false;
+              break;
+          }
+        };
         const updatePressed = () => {};
         const updateToggled = () => {};
         const updateDragged = () => {};
         const updateSnapped = () => {};
         const updateSelected = () => {};
         const updateFocused = () => {};
+
+        if (
+          props.isHoverable ||
+          props.isPeekable ||
+          props.isPressable ||
+          props.isToggleable ||
+          props.isDraggable ||
+          props.isSnappable ||
+          props.isSelectable ||
+          props.isFocusable
+        )
+          updateHovered();
+        if (props.isPeekable) updatePeeked();
+        if (
+          props.isPressable ||
+          props.isToggleable ||
+          props.isDraggable ||
+          props.isSnappable ||
+          props.isSelectable ||
+          props.isFocusable
+        )
+          updatePressed();
+        if (props.isToggleable) updateToggled();
+        if (props.isDraggable || props.isSnappable) updateDragged();
+        if (props.isSnappable) updateSnapped();
+        if (props.isSelectable) updateSelected();
+        if (props.isFocusable) updateFocused();
       },
       {
         deep: true,
@@ -509,7 +559,7 @@ export default defineComponent({
 
     // !Lifecycle Hooks
 
-    return { ...toRefs(DataAndComputed) };
+    return { ...toRefs(DataAndComputed), FSM };
   },
 });
 </script>

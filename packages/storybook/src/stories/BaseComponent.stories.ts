@@ -46,4 +46,14 @@ const Template = (args: BaseComponentArgs) => ({
     '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isDraggable="args.isDraggable" :isSnappable="args.isSnappable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable"></base-component>',
 });
 
-export const ExampleStory = Template.bind({});
+export const Empty = Template.bind({});
+Empty.args = {
+  isHoverable: true,
+  isPeekable: false,
+  isPressable: false,
+  isToggleable: false,
+  isDraggable: false,
+  isSnappable: false,
+  isSelectable: false,
+  isFocusable: false,
+} as BaseComponentArgs;
