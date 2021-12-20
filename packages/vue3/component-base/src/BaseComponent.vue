@@ -484,48 +484,28 @@ export default defineComponent({
       return EH;
     };
 
-    // const stopWatchingAffordanceProps = watch(
-    //   props,
-    //   (c, p) => {
-    //     if (
-    //       c.isHoverable === p?.isHoverable &&
-    //       c.isPeekable === p?.isPeekable &&
-    //       c.isPressable === p?.isPressable &&
-    //       c.isToggleable === p?.isToggleable &&
-    //       c.isDraggable === p?.isDraggable &&
-    //       c.isSnappable === p?.isSnappable &&
-    //       c.isSelectable === p?.isSelectable &&
-    //       c.isFocusable === p?.isFocusable
-    //     )
-    //       return;
-    //     console.log('triggered');
-    //     DataAndComputed.eventHandlers = makeEventHandlers();
-    //   },
-    //   {
-    //     deep: true,
-    //     immediate: true,
-    //   }
-    // );
+    watch(
+      DataAndComputed /* we have to watch ALL of DataAndComputed because if we jsut watch pointerInput, Vue complains that it can't be watched if its value is 'false' */,
+      (current, previous) => {
+        if (!DataAndComputed.pointerInput) return;
+        const P = DataAndComputed.pointerInput;
 
-    // watch(
-    //   [DataAndComputed.pointerInput],
-    //   (current, previous) => {
-    //     if (!current) return;
+        // do something with P
 
-    //     const updateHovered = () => {};
-    //     const updatePeeked = () => {};
-    //     const updatePressed = () => {};
-    //     const updateToggled = () => {};
-    //     const updateDragged = () => {};
-    //     const updateSnapped = () => {};
-    //     const updateSelected = () => {};
-    //     const updateFocused = () => {};
-    //   },
-    //   {
-    //     deep: true,
-    //     immediate: false,
-    //   }
-    // );
+        const updateHovered = () => {};
+        const updatePeeked = () => {};
+        const updatePressed = () => {};
+        const updateToggled = () => {};
+        const updateDragged = () => {};
+        const updateSnapped = () => {};
+        const updateSelected = () => {};
+        const updateFocused = () => {};
+      },
+      {
+        deep: true,
+        immediate: false,
+      }
+    );
 
     // !Lifecycle Hooks
 
