@@ -1,14 +1,12 @@
 <template>
-  <div v-on="EventHandlers">
+  <div v-on="eventHandlers">
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!--
       @slot Default Content
         @binding BoundAttributes
         @binding BoundEventHandlers
     -->
-    <slot :Pointer="DataAndComputed.pointerInput">
-      isPressed: {{ DataAndComputed.pointerInput }}
-    </slot>
+    <slot :Pointer="pointerInput"> isPressed: {{ pointerInput }} </slot>
   </div>
   <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
@@ -28,8 +26,9 @@ import {
   defineComponent,
   reactive,
   computed,
+  watch,
   watchEffect,
-  UnwrapRef,
+  toRefs,
 } from 'vue';
 
 import {
@@ -45,11 +44,12 @@ import {
   // KeyboardInput,
   handleMouse,
   handleTouch,
+  PointerInput,
   // PointerInput,
   // handleWindowResize,
   // WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
-} from '@incremental.design/device-input-event-handlers'; // need to use setup function to only wire up the events for which affordances are toggled true ... so need event solver code
+} from '@incremental.design/device-input-event-handlers';
 import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
 
 export default defineComponent({
@@ -251,20 +251,44 @@ export default defineComponent({
   },
 
   setup(props, { attrs, slots, emit }) {
-    const DataAndComputed: any = reactive({
+    const DataAndComputed: {
+      pointerInput: false | EventInfo<PointerInput>;
+      eventHandlers: {
+        [eventType: string]:
+          | ((E: MouseEvent) => void)
+          | ((E: TouchEvent) => void)
+          | ((E: DragEvent) => void)
+          | ((E: Event) => void)
+          | ((E: FocusEvent) => void)
+          | ((E: KeyboardEvent) => void)
+          | ((E: WheelEvent) => void);
+      };
+    } = reactive({
       pointerInput: false,
+      /**
+       * eventHandlers - object that binds events to handler functions.
+       */
+      eventHandlers: computed(() => {
+        const isHoverable = props.isHoverable;
+        const isPeekable = props.isPeekable;
+        const isPressable = props.isPressable;
+        const isToggleable = props.isToggleable;
+        const isDraggable = props.isDraggable;
+        const isSnappable = props.isSnappable;
+        const isSelectable = props.isSelectable;
+        const isFocusable = props.isFocusable;
+        return makeEventHandlers(
+          isHoverable,
+          isPeekable,
+          isPressable,
+          isToggleable,
+          isDraggable,
+          isSnappable,
+          isSelectable,
+          isFocusable
+        );
+      }),
     });
-
-    const {
-      isHoverable,
-      isPeekable,
-      isPressable,
-      isToggleable,
-      isDraggable,
-      isSnappable,
-      isSelectable,
-      isFocusable,
-    } = props;
 
     const FSM /* (F)inite (S)tate (M)achine */ = reactive({
       /**
@@ -362,17 +386,15 @@ export default defineComponent({
 
     // !Event Handlers
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
-      DataAndComputed.pointerInput = handleMouse(
-        E,
-        DataAndComputed.pointerInput
-      );
+      DataAndComputed.pointerInput = DataAndComputed.pointerInput
+        ? handleMouse(E, DataAndComputed.pointerInput)
+        : handleMouse(E);
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      DataAndComputed.pointerInput = handleTouch(
-        E,
-        DataAndComputed.pointerInput
-      );
+      DataAndComputed.pointerInput = DataAndComputed.pointerInput
+        ? handleTouch(E, DataAndComputed.pointerInput)
+        : handleTouch(E);
     };
 
     // const HD /* (H)andle (D)rag */
@@ -385,7 +407,16 @@ export default defineComponent({
 
     // const HW /* (H)andle (W)heel */
 
-    const makeEventHandlers = () => {
+    const makeEventHandlers = (
+      isHoverable: boolean,
+      isPeekable: boolean,
+      isPressable: boolean,
+      isToggleable: boolean,
+      isDraggable: boolean,
+      isSnappable: boolean,
+      isSelectable: boolean,
+      isFocusable: boolean
+    ) => {
       let EH: /* (E)vent (H)andler */ {
         [eventType: string]:
           | ((E: MouseEvent) => void)
@@ -453,11 +484,52 @@ export default defineComponent({
       return EH;
     };
 
-    const EventHandlers = makeEventHandlers();
+    // const stopWatchingAffordanceProps = watch(
+    //   props,
+    //   (c, p) => {
+    //     if (
+    //       c.isHoverable === p?.isHoverable &&
+    //       c.isPeekable === p?.isPeekable &&
+    //       c.isPressable === p?.isPressable &&
+    //       c.isToggleable === p?.isToggleable &&
+    //       c.isDraggable === p?.isDraggable &&
+    //       c.isSnappable === p?.isSnappable &&
+    //       c.isSelectable === p?.isSelectable &&
+    //       c.isFocusable === p?.isFocusable
+    //     )
+    //       return;
+    //     console.log('triggered');
+    //     DataAndComputed.eventHandlers = makeEventHandlers();
+    //   },
+    //   {
+    //     deep: true,
+    //     immediate: true,
+    //   }
+    // );
+
+    // watch(
+    //   [DataAndComputed.pointerInput],
+    //   (current, previous) => {
+    //     if (!current) return;
+
+    //     const updateHovered = () => {};
+    //     const updatePeeked = () => {};
+    //     const updatePressed = () => {};
+    //     const updateToggled = () => {};
+    //     const updateDragged = () => {};
+    //     const updateSnapped = () => {};
+    //     const updateSelected = () => {};
+    //     const updateFocused = () => {};
+    //   },
+    //   {
+    //     deep: true,
+    //     immediate: false,
+    //   }
+    // );
 
     // !Lifecycle Hooks
 
-    return { DataAndComputed, EventHandlers };
+    return { ...toRefs(DataAndComputed) };
   },
 });
 </script>

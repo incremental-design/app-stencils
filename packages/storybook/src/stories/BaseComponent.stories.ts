@@ -43,7 +43,7 @@ const Template = (args: BaseComponentArgs) => ({
     };
   },
   template:
-    '<base-component isHoverable="args.isHoverable" isPeekable="args.isPeekable" isPressable="args.isPressable" isToggleable="args.isToggleable" isDraggable="args.isDraggable" isSnappable="args.isSnappable" isSelectable="args.isSelectable" isFocusable="args.isFocusable"></base-component>',
+    '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isDraggable="args.isDraggable" :isSnappable="args.isSnappable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable"></base-component>',
 });
 
 export const ExampleStory = Template.bind({});
