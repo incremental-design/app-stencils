@@ -13,6 +13,16 @@ export default {
     isSelectable: { control: 'boolean' },
     isFocusable: { control: 'boolean' },
   },
+  args: {
+    isHoverable: true,
+    isPeekable: true,
+    isPressable: true,
+    isToggleable: true,
+    isDraggable: true,
+    isSnappable: true,
+    isSelectable: true,
+    isFocusable: true,
+  },
 };
 
 type BaseComponentArgs = {
@@ -25,39 +35,15 @@ type BaseComponentArgs = {
   isSelectable: boolean;
   isFocusable: boolean;
 };
-
-const makeAffordanceString = (A: BaseComponentArgs) =>
-  `${A.isHoverable ? 'isHoverable' : ''}${A.isPeekable ? ' isPeekable' : ''}${
-    A.isPressable ? ' isPressable' : ''
-  }${A.isToggleable ? ' isToggleable' : ''}${
-    A.isDraggable ? ' isDraggable' : ''
-  } ${A.isSnappable ? ' isSnappable' : ''}${
-    A.isSelectable ? ' isSelectable' : ''
-  }${A.isFocusable ? ' isFocusable' : ''}`;
-
-const Template = (args: BaseComponentArgs) => {
-  const AffordanceString = makeAffordanceString(args);
-  return {
-    components: { BaseComponent },
-    setup() {
-      return {
-        args: {
-          AffordanceString,
-        },
-      };
-    },
-    template: '<base-component AffordanceString></base-component>',
-  };
-};
+const Template = (args: BaseComponentArgs) => ({
+  components: { BaseComponent },
+  setup() {
+    return {
+      args,
+    };
+  },
+  template:
+    '<base-component isHoverable="args.isHoverable" isPeekable="args.isPeekable" isPressable="args.isPressable" isToggleable="args.isToggleable" isDraggable="args.isDraggable" isSnappable="args.isSnappable" isSelectable="args.isSelectable" isFocusable="args.isFocusable"></base-component>',
+});
 
 export const ExampleStory = Template.bind({});
-ExampleStory.args = {
-  isHoverable: true,
-  isPeekable: false,
-  isPressable: false,
-  isToggleable: false,
-  isDraggable: false,
-  isSnappable: false,
-  isSelectable: false,
-  isFocusable: false,
-};
