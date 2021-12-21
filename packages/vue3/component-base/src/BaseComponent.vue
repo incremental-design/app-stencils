@@ -174,29 +174,6 @@ export default defineComponent({
     },
 
     /**
-     * isSnappable - whether the component should maintain its appearance when it is pressed and the mouse cursor or touch point is released.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isSnappable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isSnappable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
      * isSelectable - whether the component's contents can be copied to the clipboard.
      *
      * @values true | false
@@ -276,7 +253,6 @@ export default defineComponent({
         const isPressable = props.isPressable;
         const isToggleable = props.isToggleable;
         const isDraggable = props.isDraggable;
-        const isSnappable = props.isSnappable;
         const isSelectable = props.isSelectable;
         const isFocusable = props.isFocusable;
         return makeEventHandlers(
@@ -285,7 +261,6 @@ export default defineComponent({
           isPressable,
           isToggleable,
           isDraggable,
-          isSnappable,
           isSelectable,
           isFocusable
         );
@@ -450,7 +425,6 @@ export default defineComponent({
       isPressable: boolean,
       isToggleable: boolean,
       isDraggable: boolean,
-      isSnappable: boolean,
       isSelectable: boolean,
       isFocusable: boolean
     ) => {
@@ -492,9 +466,6 @@ export default defineComponent({
         listenForPress();
         if (!EH.touchmove) EH.touchmove = HT;
       };
-      const listenForSnap = (): void => {
-        listenForDrag();
-      };
       const listenForSelect = (): void => {
         listenForPress();
       };
@@ -511,7 +482,6 @@ export default defineComponent({
       if (isPressable) listenForPress();
       if (isToggleable) listenForToggle();
       if (isDraggable) listenForDrag();
-      if (isSnappable) listenForSnap();
       if (isSelectable) listenForSelect();
       if (isFocusable) listenForFocus();
       if (!isSelectable) disableContextMenu();
@@ -615,7 +585,6 @@ export default defineComponent({
               break;
           }
         };
-        const updateSnapped = () => {};
         const updateSelected = () => {};
         const updateFocused = () => {};
 
@@ -625,7 +594,6 @@ export default defineComponent({
           props.isPressable ||
           props.isToggleable ||
           props.isDraggable ||
-          props.isSnappable ||
           props.isSelectable ||
           props.isFocusable
         )
@@ -635,14 +603,12 @@ export default defineComponent({
           props.isPressable ||
           props.isToggleable ||
           props.isDraggable ||
-          props.isSnappable ||
           props.isSelectable ||
           props.isFocusable
         )
           updatePressed();
         if (props.isToggleable) updateToggled();
-        if (props.isDraggable || props.isSnappable) updateDragged();
-        if (props.isSnappable) updateSnapped();
+        if (props.isDraggable) updateDragged();
         if (props.isSelectable) updateSelected();
         if (props.isFocusable) updateFocused();
       },
