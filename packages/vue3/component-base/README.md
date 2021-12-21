@@ -92,8 +92,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
         isPeekable 
         isPressable 
         isToggleable 
-        isDraggable 
-        isSnappable 
+        isSlideable 
         isSelectable 
         isFocusable
       
@@ -244,44 +243,26 @@ For the most part, any UI component can have some, or all of the following affor
     <td>Fingertip releases UI component:</td>
     <td>Not Toggled</td>
   </tr>
-  <!-- !Draggable -->
+  <!-- !Slideable -->
   <tr>
-    <td align="left" rowspan="4">Draggable <!-- need to add gif, or svg animation of the affordance --></td>
-    <td align="left">Mouse cursor presses and pulls UI component:</td>
-    <td rowspan="1">Hovered, Not Dragging</td>
+    <td align="left" rowspan="4">Slideable <!-- need to add gif, or svg animation of the affordance --><br/><br/>A component is slideable when pulling on it moves something within it, such as a handle or knob. <strong>It is NOT when pulling on the component moves the entire component itself.</strong></td>
+    <td align="left">Mouse cursor presses and pulls a handle on the UI component:</td>
+    <td rowspan="1">Hovered, Not Sliding</td>
     <td rowspan="2">→</td>
-    <td rowspan="4">Dragging</td>
+    <td rowspan="4">Sliding</td>
   </tr>
   <tr>
-    <td>Fingertip presses and pulls UI component:</td>
-    <td>Not Dragging</td>
+    <td>Fingertip presses and pulls a handle on the UI component:</td>
+    <td>Not Sliding</td>
   </tr>
   <tr>
-    <td>Mouse cursor releases UI component:</td>
-    <td>Hovered, Not Dragging</td>
+    <td>Mouse cursor releases handle on the UI component:</td>
+    <td>Hovered, Not Sliding</td>
     <td rowspan="2">←</td>
   </tr>
   <tr>
-    <td>Fingertip releases UI component:</td>
-    <td>Not Dragging</td>
-  </tr>
-  <!-- !Snappable -->
-  <tr>
-    <td align="left" rowspan="4">Snappable <!-- need to add gif, or svg animation of the affordance --></td>
-    <td align="left">Mouse cursor presses and pulls UI component:</td>
-    <td rowspan="4">Dragging</td>
-    <td rowspan="2">→</td>
-    <td rowspan="4">Snapped</td>
-  </tr>
-  <tr>
-    <td>Fingertip presses and pulls UI component:</td>
-  </tr>
-  <tr>
-    <td>Mouse cursor releases UI component:</td>
-    <td rowspan="2">←</td>
-  </tr>
-  <tr>
-    <td>Fingertip releases UI component:</td>
+    <td>Fingertip releases handle on the UI component:</td>
+    <td>Not Sliding</td>
   </tr>
   <!-- !Selectable -->
   <tr>
@@ -434,28 +415,13 @@ Use the following [props](https://v3.vuejs.org/guide/component-props.html) to te
   </pre></td>
   </tr>
   <tr>
-  <td align="left"><code>isDraggable</code></td>
-  <td align="left">Adds the 'draggable' affordance to your component</td>
+  <td align="left"><code>isSlideable</code></td>
+  <td align="left">Adds the 'slideable' affordance to your component</td>
   <td align="left"><code>isHoverable</code><code>isPressable</code></td>
   <td><pre>
   <code class="language-vue">
   &lt;template&gt;
-    &lt;BaseComponent <strong>isDraggable</strong> isPressable isHoverable&gt;<br/>
-      &lt;template v-slot:default="{State}"&gt;<br/>
-      &lt;template&gt;<br/>
-    &lt;/BaseComponent&gt;
-  &lt;/template&gt;
-  </code>
-  </pre></td>
-  </tr>
-  <tr>
-  <td align="left"><code>isSnappable</code></td>
-  <td align="left">Adds the 'snappable' affordance to your component</td>
-  <td align="left"><code>isHoverable</code><code>isPressable</code><code>isDraggable</code></td>
-  <td><pre>
-  <code class="language-vue">
-  &lt;template&gt;
-    &lt;BaseComponent <strong>isSnappable</strong> isDraggable isPressable isHoverable&gt;<br/>
+    &lt;BaseComponent <strong>isSlideable</strong> isPressable isHoverable&gt;<br/>
       &lt;template v-slot:default="{State}"&gt;<br/>
       &lt;template&gt;<br/>
     &lt;/BaseComponent&gt;
@@ -500,11 +466,9 @@ Although most affordances depend on others, you have to manually specify each af
 
 - If you want to make your UI component focusable, you not only need to add the `isFocusable` prop, but also the `isPressable` and `isHoverable` prop to the base component.
 
-- If you want to make your UI component snappable, you not only need to add the `isSnappable` prop, but also the `isDraggable`, `isPressable` and `isHoverable` props to the base component.
-
 This is by design. Each prop is a flag: its presence enables the corresponding affordance. Its absence disables it. If you omit a dependent affordance, the base component will still handle its corresponding user interactions. It just won't update your markup's state or appearance in response. While this isn't usually the behavior you want, sometimes it can be very useful. For example:
 
-- You add the `isDraggable` prop to the base component, but omit the `isPressable` and `isHoverable` props, because you want your UI component to follow your mouse or fingertip when you press it, without changing its appearance when it is hovered or pressed.
+- You add the `isSlideable` prop to the base component, but omit the `isPressable` and `isHoverable` props, because you want the contents of your UI component to follow your mouse or fingertip when you press it, but you don't want the UI component to change its appearance when it is hovered or pressed.
 
 - You add the `isToggleable` prop to the base component, but omit the `isPressable` and `isHoverable` props, because you want your UI component to change its appearance when you toggle it, even as it maintains the same appearance when you hover on or press it.
 
@@ -596,7 +560,7 @@ In your component's template:
 </tr>
 <tr>
 <td align="left"><code>dragInput</code></td>
-<td align="left">whenever a mouse or fingertip pulls your component.</td>
+<td align="left">whenever a mouse or fingertip pulls your component.<br/><br/><strong>Note that this event only fires when the entire component follows a mouse or fingertip. Setting 'isSlideable' does not trigger this event.</strong></td>
 <td align="left">The <a href="#use-the-pointerinput-focusinput-keyboardinput-draginput-and-scrollinput-custom-events-to-respond-to-every-user-interaction-all-the-time">location, interaction, movement and payload</a> of the drag session.</td>
 <td align="left">
 In your component's template:
@@ -880,8 +844,7 @@ There is exactly _one_ <code><a href="">BaseComponent.state</a></code> <!-- need
 | Peekable   | `isPeekable`   | `peeked`                             |
 | Pressable  | `isPressable`  | `pressed`                            |
 | Toggleable | `isToggleable` | `toggled`                            |
-| Draggable  | `isDraggable`  | `dragging`                           |
-| Snappable  | `isSnappable`  | `snapped`                            |
+| Slideable  | `isSlideable`  | `sliding`                            |
 | Selectable | `isSelectable` | `selected`                           |
 | Focusable  | `isFocusable`  | `focused`                            |
 

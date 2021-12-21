@@ -18,7 +18,7 @@
 
 // needs a default slot and a fallback (ie suspense) slot
 
-// needs to accept following props: isHoverable isPeekable isPressable isToggleable isDraggable isSnappable isSelectable isCopyable isPasteable isReplicable isEditable theme
+// needs to accept following props: isHoverable isPeekable isPressable isToggleable isSlideable isSnappable isSelectable isCopyable isPasteable isReplicable isEditable theme
 
 // fallback slot should have all the same props as regular slot
 
@@ -151,7 +151,7 @@ export default defineComponent({
     },
 
     /**
-     * isDraggable - whether the component contains a handle that follows the mouse cursor or touch point when the component is pressed.
+     * isSlideable - whether the component contains a handle that follows the mouse cursor or touch point when the component is pressed.
      *
      * @values true | false
      *
@@ -159,7 +159,7 @@ export default defineComponent({
      * ```vue
      *
      * <template>
-     *  <base-component isDraggable>
+     *  <base-component isSlideable>
      *    <template v-slot:default>
      *     <!-- ... -->
      *    </template>
@@ -168,7 +168,7 @@ export default defineComponent({
      *
      * ```
      */
-    isDraggable: {
+    isSlideable: {
       type: Boolean,
       default: false,
     },
@@ -252,7 +252,7 @@ export default defineComponent({
         const isPeekable = props.isPeekable;
         const isPressable = props.isPressable;
         const isToggleable = props.isToggleable;
-        const isDraggable = props.isDraggable;
+        const isSlideable = props.isSlideable;
         const isSelectable = props.isSelectable;
         const isFocusable = props.isFocusable;
         return makeEventHandlers(
@@ -260,7 +260,7 @@ export default defineComponent({
           isPeekable,
           isPressable,
           isToggleable,
-          isDraggable,
+          isSlideable,
           isSelectable,
           isFocusable
         );
@@ -320,28 +320,16 @@ export default defineComponent({
           FSM._toggled = value;
         },
       }),
-      _dragged: false,
+      _sliding: false,
       /**
        * dragged - whether the component's handle is currently following the mouse cursor or touch point
        */
-      dragged: computed({
+      sliding: computed({
         get: (): boolean => {
-          return FSM.pressed && FSM._dragged;
+          return FSM.pressed && FSM._sliding;
         },
         set: (value: boolean) => {
-          FSM._dragged = value;
-        },
-      }),
-      _snapped: false,
-      /**
-       * snapped - whether the component's handle has stuck to a point as it is being dragged
-       */
-      snapped: computed({
-        get: (): boolean => {
-          return FSM.dragged && FSM._snapped;
-        },
-        set: (value: boolean) => {
-          FSM._snapped = value;
+          FSM._sliding = value;
         },
       }),
       _selected: false,
@@ -424,7 +412,7 @@ export default defineComponent({
       isPeekable: boolean,
       isPressable: boolean,
       isToggleable: boolean,
-      isDraggable: boolean,
+      isSlideable: boolean,
       isSelectable: boolean,
       isFocusable: boolean
     ) => {
@@ -462,7 +450,7 @@ export default defineComponent({
       const listenForToggle = (): void => {
         listenForPress();
       };
-      const listenForDrag = (): void => {
+      const listenForSlide = (): void => {
         listenForPress();
         if (!EH.touchmove) EH.touchmove = HT;
       };
@@ -481,7 +469,7 @@ export default defineComponent({
       if (isPeekable) listenForPeek();
       if (isPressable) listenForPress();
       if (isToggleable) listenForToggle();
-      if (isDraggable) listenForDrag();
+      if (isSlideable) listenForSlide();
       if (isSelectable) listenForSelect();
       if (isFocusable) listenForFocus();
       if (!isSelectable) disableContextMenu();
@@ -566,22 +554,22 @@ export default defineComponent({
               break;
           }
         };
-        const updateDragged = () => {
+        const updateSliding = () => {
           switch (P.type) {
             case 'mousemove':
-              FSM.dragged = true;
+              FSM.sliding = true;
               break;
             case 'touchmove':
-              FSM.dragged = !XPOutOfBounds && !YPOutOfBounds;
+              FSM.sliding = !XPOutOfBounds && !YPOutOfBounds;
               break;
             case 'touchend':
-              FSM.dragged = false;
+              FSM.sliding = false;
               break;
             case 'mouseleave':
-              FSM.dragged = false;
+              FSM.sliding = false;
               break;
             case 'mouseup':
-              FSM.dragged = false;
+              FSM.sliding = false;
               break;
           }
         };
@@ -593,7 +581,7 @@ export default defineComponent({
           props.isPeekable ||
           props.isPressable ||
           props.isToggleable ||
-          props.isDraggable ||
+          props.isSlideable ||
           props.isSelectable ||
           props.isFocusable
         )
@@ -602,13 +590,13 @@ export default defineComponent({
         if (
           props.isPressable ||
           props.isToggleable ||
-          props.isDraggable ||
+          props.isSlideable ||
           props.isSelectable ||
           props.isFocusable
         )
           updatePressed();
         if (props.isToggleable) updateToggled();
-        if (props.isDraggable) updateDragged();
+        if (props.isSlideable) updateSliding();
         if (props.isSelectable) updateSelected();
         if (props.isFocusable) updateFocused();
       },
