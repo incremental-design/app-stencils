@@ -1,5 +1,5 @@
 <template>
-  <div v-on="eventHandlers">
+  <div v-on="eventHandlers" :style="componentStyles">
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!--
       @slot Default Content
@@ -262,6 +262,9 @@ export default defineComponent({
           | ((E: KeyboardEvent) => void)
           | ((E: WheelEvent) => void);
       };
+      componentStyles: {
+        [styleName: string]: string;
+      };
     } = reactive({
       pointerInput: false,
       /**
@@ -287,6 +290,26 @@ export default defineComponent({
           isFocusable
         );
       }),
+      /**
+       * componentStyles - styles that have to be applied to the root of the component to make it work.
+       */
+      componentStyles: computed(() => {
+        return props.isSelectable || props.isFocusable
+          ? {
+              userSelect: 'text',
+              WebkitUserSelect: 'text',
+              MozUserSelect: 'text',
+              MsUserSelect: 'text',
+              webkitTouchCallout: 'none',
+            }
+          : {
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
+              MozUserSelect: 'none',
+              MsUserSelect: 'none',
+              webkitTouchCallout: 'none',
+            };
+      }),
     });
 
     const FSM /* (F)inite (S)tate (M)achine */ = reactive({
@@ -304,11 +327,10 @@ export default defineComponent({
        */
       pressed: computed({
         get: (): boolean => {
-          return FSM.hovered && FSM._pressed;
+          return FSM._pressed;
         },
         set: (value: boolean) => {
           FSM._pressed = value;
-          FSM.toggled = !FSM.toggled;
         },
       }),
       _toggled: false,
@@ -382,9 +404,14 @@ export default defineComponent({
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
+      E.preventDefault(); /* this stops the browser from 'helpfully' interpreting touch events as mouse events */
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
         ? handleTouch(E, DataAndComputed.pointerInput)
         : handleTouch(E);
+    };
+
+    const DCM /* (D)isable (C)ontext (M)enu */ = (E: Event) => {
+      E.preventDefault();
     };
 
     // const HD /* (H)andle (D)rag */
@@ -419,42 +446,34 @@ export default defineComponent({
       } = {};
 
       const listenForHover = (): void => {
-        if (EH.mouseover) return;
-        EH.mouseover = HM;
-        if (EH.mouseleave) return;
-        EH.mouseleave = HM;
+        if (!EH.mouseover) EH.mouseover = HM;
+        if (!EH.mouseleave) EH.mouseleave = HM;
       };
       const listenForPeek = (): void => {
         listenForHover();
-        if (EH.touchstart) return;
-        EH.touchstart = HT;
-        if (EH.touchend) return;
-        EH.touchend = HT;
-        if (EH.touchcancel) return;
-        EH.touchcancel = HT;
+        if (!EH.touchstart) EH.touchstart = HT;
+        if (!EH.touchmove) EH.touchmove = HT;
+        if (!EH.touchend) EH.touchend = HT;
+        if (!EH.touchcancel) EH.touchcancel = HT;
       };
       const listenForPress = (): void => {
         listenForHover();
-        if (EH.mousedown) return;
-        EH.mousedown = HM;
-        if (EH.mouseup) return;
-        EH.mouseup = HM;
-        if (EH.mouseleave) return;
-        EH.mouseleave = HM; /* mousedown -> mouseup is equivalent to mousedown -> mouseleave */
-        if (EH.touchstart) return;
-        EH.touchstart = HT;
-        if (EH.touchend) return;
-        EH.touchend = HT;
+        if (!EH.mousedown) EH.mousedown = HM;
+        if (!EH.mouseup) EH.mouseup = HM;
+        if (!EH.mouseleave)
+          EH.mouseleave = HM; /* mousedown -> mouseup is equivalent to mousedown -> mouseleave */
+        if (!EH.touchstart) EH.touchstart = HT;
+        if (!EH.touchmove) EH.touchmove = HT;
+        if (!EH.touchend) EH.touchend = HT;
+        if (!EH.touchcancel) EH.touchcancel = HT;
       };
       const listenForToggle = (): void => {
         listenForPress();
       };
       const listenForDrag = (): void => {
         listenForPress();
-        if (EH.mousemove) return;
-        EH.mousemove = HM;
-        if (EH.touchmove) return;
-        EH.touchmove = HT;
+        if (!EH.mousemove) EH.mousemove = HM;
+        if (!EH.touchmove) EH.touchmove = HT;
       };
       const listenForSnap = (): void => {
         listenForDrag();
@@ -466,6 +485,10 @@ export default defineComponent({
         listenForPress();
       };
 
+      const disableContextMenu = (): void => {
+        if (!EH.contextmenu) EH.contextmenu = DCM;
+      };
+
       if (isHoverable) listenForHover();
       if (isPeekable) listenForPeek();
       if (isPressable) listenForPress();
@@ -474,6 +497,7 @@ export default defineComponent({
       if (isSnappable) listenForSnap();
       if (isSelectable) listenForSelect();
       if (isFocusable) listenForFocus();
+      if (!isSelectable) disableContextMenu();
 
       return EH;
     };
@@ -483,8 +507,10 @@ export default defineComponent({
       (current, previous) => {
         if (!DataAndComputed.pointerInput) return;
         const P = DataAndComputed.pointerInput;
-
-        console.log(P.type);
+        const XP = P.input.relative.xPercent;
+        const YP = P.input.relative.yPercent;
+        const XPOutOfBounds = XP ? XP < 0 || XP > 1 : false;
+        const YPOutOfBounds = YP ? YP < 0 || YP > 1 : false;
 
         // do something with P
 
@@ -517,8 +543,44 @@ export default defineComponent({
               break;
           }
         };
-        const updatePressed = () => {};
-        const updateToggled = () => {};
+        const updatePressed = () => {
+          switch (P.type) {
+            case 'mousedown':
+              FSM.pressed = true;
+              break;
+            case 'touchstart':
+              FSM.pressed = true;
+              break;
+            case 'mouseup':
+              FSM.pressed = false;
+              break;
+            case 'mouseleave':
+              FSM.pressed = false;
+              break;
+            case 'touchcancel':
+              FSM.pressed = false;
+              break;
+            case 'touchend':
+              FSM.pressed = false;
+              break;
+            case 'touchmove':
+              if (XPOutOfBounds)
+                FSM.pressed = false; /* if the xPercent or of the touch has moved outside the bounds of the component, then assume the user has tried to 'scroll out' of the touch */
+              if (YPOutOfBounds)
+                FSM.pressed = false; /* if the yPercent of the touch has moved outside the bounds of the component, then assume the user has tried to 'scroll out' of the touch */
+              break;
+          }
+        };
+        const updateToggled = () => {
+          switch (P.type) {
+            case 'mouseup':
+              FSM.toggled = !FSM.toggled;
+              break;
+            case 'touchend':
+              if (!XPOutOfBounds && !YPOutOfBounds) FSM.toggled = !FSM.toggled;
+              break;
+          }
+        };
         const updateDragged = () => {};
         const updateSnapped = () => {};
         const updateSelected = () => {};
