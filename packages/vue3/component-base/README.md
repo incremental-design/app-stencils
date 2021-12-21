@@ -629,127 +629,113 @@ In your component's template:
 
 You probably want your components to affect your app. For example, when a it transitions from a 'not pressed' to a 'pressed' state, you probably want it to _do_ something. Maybe you want it to show or hide a menu, apply a setting, or submit user input. Although the base component will update your component's state and appearance, it won't handle any business logic. That's up to you. To make your component useful, you need to run your business logic when your component's state changes. To do this, wrap your logic in a method, and use the base component's [`stateChange`]() <!-- need to link to the typescript def --> event to trigger it:
 
-<table>
-<tr>
-<td align="left" valign="top"><ol><li value="1">
-Define the method you want to run each time the base component emits a <code>stateChange</code> event. In this example, that's the <code>doSomething</code> method.
-<ul>
-  <li>Make sure your method accepts the following arguments:</li><br/>
-  <table>
-  <thead>
-  <tr>
-  <th>Argument</th><th>What it contains:</th><th>Example:</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td><code>newState</code></td>
-    <td rowspan="">Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned into.</td>
-    <td><code>['pressed', 'selected']<code></td></tr>
-  <tr>
-    <td><code>oldState</code></td>
-    <td>Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned out of.</td>
-    <td><code>['hovered']</code></td></tr>
-  <tr>
-    <td><code>input</code></td>
-    <td>An array of zero or more user interactions that caused the transition. User interactions are of type <code><a href="">BaseComponent.input</a></code>.</td>
-    <td>
-  <pre>
-  <code>
-  [{
-    type: 'mousedown',
-    timestamp: 5376,
-    eventInfo: {
-      relative:{
-        x: 100.86220352,
-        y: 225.23209234,
-        xPercent: .48230237204,
-        yPercent: .55220027620,
-        dxPercent: .120347603476,
-        dyPercent: .052037453407,
-      },
-      viewport:{
-        dx: .06222352352,
-        dy: .03242502735,
-      }
-    }
-  }]
-  </code>
-  </pre>
-  </td></tr>
-  </tbody>
-  </table>
-</ul>
-</li></ol></td>
-<td>
-<pre>
-<code class="language-typescript">
-&lt;template&gt;
-  &lt;BaseComponent isHoverable isPressable&gt;
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
-      &lt;!-- your markup here --&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;<br/>
-&lt;script lang="ts"&gt;<br/>
-import { DefineComponent } from 'vue'
-import BaseComponent from '@incremental.design/vue3-component-base'<br>
-export default defineComponent({<br/>
-  methods:{
-    <strong>doSomething({
-      newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-      oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-      input: Array&lt;<a href="">BaseComponent.input</a>&gt;
-      })</strong> 
-    {<br/>
-     /* your method goes here */<br/>
-    }
-  }<br/>
-});
-&lt;/script&gt;<br/>
-</code>
-</pre>
-</td>
-<tr>
-<!--  -->
-<tr>
-<td align="left" valign="top"><ol><li value="2">
-Bind the <code>stateChange</code> event to the method you just defined. 
-<ul>
-<li>Whenever the base component emits a <code>stateChange</code> event, it will pass the <code>newState</code>, <code>oldState</code> and <code>input</code> to your method.
-</ul>
-</li></ol></td>
-<td>
-<pre>
-<code class="language-typescript">
-&lt;template&gt;
-  &lt;BaseComponent <strong>@stateChange="doSomething"</strong> isHoverable isPressable&gt;
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
-      &lt;!-- your markup here --&gt;<br/>
-    &lt;/template&gt;
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;<br/>
-&lt;script lang="ts"&gt;<br/>
-import { DefineComponent } from 'vue'
-import BaseComponent from '@incremental.design/vue3-component-base'<br>
-export default defineComponent({<br/>
-  methods:{
-    doSomething({
-      newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-      oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-      input: Array&lt;<a href="">BaseComponent.input</a>&gt;
-      })
-    {<br/>
-     /* your method goes here */<br/>
-    }
-  }<br/>
-});
-&lt;/script&gt;<br/>
-</code>
-</pre>
-</td>
-<tr>
-</table>
+1. Define the method you want to run each time the base component emits a `stateChange` event. In this example, that's the `doSomething` method:
+
+   <pre>
+   <code class="language-typescript">
+   &lt;template&gt;
+     &lt;BaseComponent isHoverable isPressable&gt;
+       &lt;template v-slot:default="{ Theme }"&gt;<br/>
+         &lt;!-- your markup here --&gt;<br/>
+       &lt;/template&gt;
+     &lt;/BaseComponent&gt;
+   &lt;/template&gt;<br/>
+   &lt;script lang="ts"&gt;<br/>
+   import { DefineComponent } from 'vue'
+   import BaseComponent from '@incremental.design/vue3-component-base'<br>
+   export default defineComponent({<br/>
+     methods:{
+       <strong>doSomething({
+         newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+         oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+         input: Array&lt;<a href="">BaseComponent.input</a>&gt;
+         })</strong> 
+       {<br/>
+       /* your method goes here */<br/>
+       }
+     }<br/>
+   });
+   &lt;/script&gt;<br/>
+   </code>
+   </pre>
+
+   Make sure your method accepts the following arguments:
+   <table>
+   <thead>
+   <tr>
+   <th>Argument</th><th>What it contains:</th><th>Example:</th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr>
+     <td><code>newState</code></td>
+     <td rowspan="">Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned into.</td>
+     <td><code>['pressed', 'selected']<code></td></tr>
+   <tr>
+     <td><code>oldState</code></td>
+     <td>Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned out of.</td>
+     <td><code>['hovered']</code></td></tr>
+   <tr>
+     <td><code>input</code></td>
+     <td>An array of zero or more user interactions that caused the transition. User interactions are of type <code><a href="">BaseComponent.input</a></code>.</td>
+     <td>
+   <pre>
+   <code>
+   [{
+     type: 'mousedown',
+     timestamp: 5376,
+     eventInfo: {
+       relative:{
+         x: 100.86220352,
+         y: 225.23209234,
+         xPercent: .48230237204,
+         yPercent: .55220027620,
+         dxPercent: .120347603476,
+         dyPercent: .052037453407,
+       },
+       viewport:{
+         dx: .06222352352,
+         dy: .03242502735,
+       }
+     }
+   }]
+   </code>
+   </pre>
+   </td></tr>
+   </tbody>
+   </table>
+
+2. Bind the `stateChange` event to the method you just defined.
+
+   Whenever the base component emits a <code>stateChange</code> event, it will pass the <code>newState</code>, <code>oldState</code> and <code>input</code> to your method.
+
+   <pre>
+   <code class="language-typescript">
+   &lt;template&gt;
+     &lt;BaseComponent <strong>@stateChange="doSomething"</strong> isHoverable isPressable&gt;
+       &lt;template v-slot:default="{ Theme }"&gt;<br/>
+         &lt;!-- your markup here --&gt;<br/>
+       &lt;/template&gt;
+     &lt;/BaseComponent&gt;
+   &lt;/template&gt;<br/>
+   &lt;script lang="ts"&gt;<br/>
+   import { DefineComponent } from 'vue'
+   import BaseComponent from '@incremental.design/vue3-component-base'<br>
+   export default defineComponent({<br/>
+     methods:{
+       doSomething({
+         newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+         oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
+         input: Array&lt;<a href="">BaseComponent.input</a>&gt;
+         })
+       {<br/>
+       /* your method goes here */<br/>
+       }
+     }<br/>
+   });
+   &lt;/script&gt;<br/>
+   </code>
+   </pre>
 
 Once you set up this method, you can conditionally execute business logic, depending on the value of `currentState`, `oldState` and `input`. Most of the time, you'll only need `currentState`, but for more advanced behaviors, you might want the `oldState` and `input` as well. Keep in mind that all of these arguments are _arrays_. This is by design. It makes **compound** states and inputs - states that are a union of two or more states, and inputs that are a union of two or more inputs, respectively - easy to parse. For example:
 
