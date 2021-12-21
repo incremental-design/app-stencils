@@ -396,38 +396,65 @@ export default defineComponent({
     });
 
     // !Methods
-    const shouldThrottleEvent = (
-      eventType: string,
-      E: Event,
-      P: false | EventInfo<unknown>,
-      minTimeMs = 100
-    ): boolean => {
-      if (
-        E.type === eventType &&
-        P &&
-        P.type === eventType &&
-        E.timeStamp - P.timestamp < minTimeMs
-      )
-        return true;
-      return false;
-    };
+    // const shouldThrottleEvent = (
+    //   eventType: string,
+    //   E: Event,
+    //   P: false | EventInfo<unknown>,
+    //   minTimeMs = 33
+    // ): boolean => {
+    //   if (
+    //     E.type === eventType &&
+    //     P &&
+    //     P.type === eventType &&
+    //     E.timeStamp - P.timestamp < minTimeMs
+    //   )
+    //     return true;
+    //   return false;
+    // };
+
+    let DropMouseMove: boolean = false;
+    let DropTouchMove: boolean = false;
 
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
       /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
-      if (shouldThrottleEvent('mousemove', E, DataAndComputed.pointerInput))
-        return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleMouse(E, DataAndComputed.pointerInput)
-        : handleMouse(E);
+      // if (shouldThrottleEvent('mousemove', E, DataAndComputed.pointerInput))
+      //   return;
+      const ProcessEvent = (EP: MouseEvent /* (E)vent to (P)rocess */) => {
+        DataAndComputed.pointerInput = DataAndComputed.pointerInput
+          ? handleMouse(EP, DataAndComputed.pointerInput)
+          : handleMouse(EP);
+      };
+
+      if (E.type === 'mousemove' && !DropMouseMove) {
+        DropMouseMove = true;
+        window.requestAnimationFrame(() => {
+          /* this throttles the number of mousemove events that Vue will process so that only ONE mousemove event will be processed per animation frame */
+          ProcessEvent(E);
+          DropMouseMove = false;
+        });
+      } else {
+        ProcessEvent(E);
+      }
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
       E.preventDefault(); /* this stops the browser from 'helpfully' interpreting touch events as mouse events */
-      if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
-        return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleTouch(E, DataAndComputed.pointerInput)
-        : handleTouch(E);
+      // if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
+      //   return;
+      const ProcessEvent = (EP: TouchEvent /* (E)vent to (P)rocess */) => {
+        DataAndComputed.pointerInput = DataAndComputed.pointerInput
+          ? handleTouch(EP, DataAndComputed.pointerInput)
+          : handleTouch(EP);
+      };
+
+      if (E.type === 'touchmove' && !DropTouchMove) {
+        DropTouchMove = true;
+        window.requestAnimationFrame(() => {
+          /* this throttles the number of touchmove events that Vue will process so that only ONE touchmove event will be processed per animation frame */
+          ProcessEvent(E);
+          DropTouchMove = false;
+        });
+      }
     };
 
     const DCM /* (D)isable (C)ontext (M)enu */ = (E: Event) => {
