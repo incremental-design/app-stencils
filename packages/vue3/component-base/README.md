@@ -245,7 +245,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tr>
   <!-- !Slideable -->
   <tr>
-    <td align="left" rowspan="4">Slideable <!-- need to add gif, or svg animation of the affordance --><br/><br/>A component is slideable when pulling on it moves something within it, such as a handle or knob. <strong>It is NOT when pulling on the component moves the entire component itself.</strong></td>
+    <td align="left" rowspan="4">Slideable <!-- need to add gif, or svg animation of the affordance --><br/><br/><ul><li>A component is slideable when pulling on it moves something within it, such as a handle or knob. <strong>It is NOT when pulling on the component moves the entire component itself.</strong></li></ul></td>
     <td align="left">Mouse cursor presses and pulls a handle on the UI component:</td>
     <td rowspan="1">Hovered, Not Sliding</td>
     <td rowspan="2">→</td>
@@ -266,7 +266,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tr>
   <!-- !Selectable -->
   <tr>
-    <td align="left" rowspan="4">Selectable<!-- need to add gif, or svg animation of the affordance --><br/><br/>Note that 'selectable' is distinct from 'toggleable'. If a component is selectable, then its <em>contents</em> can be copied to a clipboard when it is selected. If a component is toggleable, its contents cannot be copied to a clipboard when it is toggled.</td>
+    <td align="left" rowspan="4">Selectable<!-- need to add gif, or svg animation of the affordance --><br/><br/><ul><li>'selectable' is distinct from 'toggleable'. If a component is selectable, then it can be copied to the clipboard, or even <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#the_basics">dragged-and-dropped</a>. If a component is toggleable, it cannot be copied, or dragged-and-dropped</li></ul><ul><li>If you add the 'selectable' affordance to a component, you necessarily disable the 'slideable' affordance. That's because pressing and dragging a selectable component drags the entire component itself, rather than the content within the component.</li></ul></td>
     <td align="left">Mouse cursor presses and releases UI component:</td>
     <td rowspan="2">Pressed, Not Selected</td>
     <td rowspan="2">→</td>

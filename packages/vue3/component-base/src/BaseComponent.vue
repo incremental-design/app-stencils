@@ -1,5 +1,5 @@
 <template>
-  <div v-on="eventHandlers" :style="componentStyles">
+  <div v-on="eventHandlers" :style="componentStyles" ref="BCR">
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!--
       @slot Default Content
@@ -28,8 +28,12 @@ import {
   computed,
   watch,
   watchEffect,
+  ref,
+  Ref,
   toRefs,
   unref,
+  VNode,
+  onMounted,
 } from 'vue';
 
 import {
@@ -227,6 +231,8 @@ export default defineComponent({
   },
 
   setup(props, { attrs, slots, emit }) {
+    const BCR: Ref<null | Node> /*(B)ase (C)omponent (R)oot */ = ref(null);
+
     const DataAndComputed: {
       pointerInput: false | EventInfo<PointerInput>;
       eventHandlers: {
@@ -269,21 +275,29 @@ export default defineComponent({
        * componentStyles - styles that have to be applied to the root of the component to make it work.
        */
       componentStyles: computed(() => {
-        return props.isSelectable || props.isFocusable
-          ? {
-              userSelect: 'text',
-              WebkitUserSelect: 'text',
-              MozUserSelect: 'text',
-              MsUserSelect: 'text',
-              webkitTouchCallout: 'none',
-            }
-          : {
-              userSelect: 'none',
-              WebkitUserSelect: 'none',
-              MozUserSelect: 'none',
-              MsUserSelect: 'none',
-              webkitTouchCallout: 'none',
-            };
+        // need to add touch-action: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
+
+        const S: /* (S)tyles */ { [cssRule: string]: string } = {
+          // 'touch-action': 'manipulation',
+        };
+        if (props.isSelectable || props.isFocusable) {
+          Object.assign(S, {
+            userSelect: 'all',
+            WebkitUserSelect: 'all',
+            MozUserSelect: 'all',
+            MsUserSelect: 'all',
+            webkitTouchCallout: 'none',
+          });
+        } else {
+          Object.assign(S, {
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            MozUserSelect: 'none',
+            MsUserSelect: 'none',
+            webkitTouchCallout: 'none',
+          });
+        }
+        return S;
       }),
     });
 
@@ -334,11 +348,11 @@ export default defineComponent({
       }),
       _selected: false,
       /**
-       * selected - whether some or all of the component's contents have been highlighted with a cursor, and can be copied to the clipboard.
+       * selected - whether all of the component's contents have been highlighted with a cursor, and can be copied to the clipboard.
        */
       selected: computed({
         get: (): boolean => {
-          return FSM.pressed && FSM._selected;
+          return FSM._selected;
         },
         set: (value: boolean) => {
           FSM._selected = value;
@@ -359,6 +373,21 @@ export default defineComponent({
     });
 
     // !Methods
+    const selectThisEl = () => {
+      const El = BCR.value ? BCR.value : false;
+      if (El && window) {
+        const R = new Range();
+        const WS = window.getSelection();
+        R.selectNode(El);
+        WS?.addRange(R);
+        console.log('just selected');
+        console.log(WS);
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     const shouldThrottleEvent = (
       eventType: string,
       E: Event,
@@ -550,7 +579,7 @@ export default defineComponent({
               FSM.toggled = !FSM.toggled;
               break;
             case 'touchend':
-              if (!XPOutOfBounds && !YPOutOfBounds) FSM.toggled = !FSM.toggled;
+              if (PointerInBounds) FSM.toggled = !FSM.toggled;
               break;
           }
         };
@@ -560,7 +589,7 @@ export default defineComponent({
               FSM.sliding = true;
               break;
             case 'touchmove':
-              FSM.sliding = !XPOutOfBounds && !YPOutOfBounds;
+              FSM.sliding = PointerInBounds;
               break;
             case 'touchend':
               FSM.sliding = false;
@@ -573,8 +602,50 @@ export default defineComponent({
               break;
           }
         };
-        const updateSelected = () => {};
-        const updateFocused = () => {};
+        const updateSelected = () => {
+          const listenForDeselect = (current: Node) => {
+            if (document) {
+              const DE /* (D)eselect (E)vents */ = ['pointerup'];
+              for (const E of DE) {
+                document.addEventListener(
+                  E,
+                  () => {
+                    const DS = document.getSelection();
+                    console.log(DS);
+                    FSM.selected =
+                      !!DS &&
+                      DS.anchorNode === current &&
+                      DS.focusNode === current &&
+                      !DS.isCollapsed &&
+                      DS.type === 'Range';
+                    console.log(FSM.selected);
+                  },
+                  { once: true }
+                );
+              }
+              return true;
+            } else {
+              return false;
+            }
+          };
+          switch (P.type) {
+            case 'mouseup':
+              if (BCR.value && selectThisEl()) {
+                FSM.selected = true;
+                listenForDeselect(BCR.value);
+              }
+              break;
+            case 'touchend':
+              if (PointerInBounds && BCR.value && selectThisEl()) {
+                FSM.selected = true;
+                listenForDeselect(BCR.value);
+              }
+              break;
+          }
+        };
+        const updateFocused = () => {
+          // see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
+        };
 
         if (
           props.isHoverable ||
@@ -608,7 +679,7 @@ export default defineComponent({
 
     // !Lifecycle Hooks
 
-    return { ...toRefs(DataAndComputed), FSM };
+    return { ...toRefs(DataAndComputed), FSM, BCR };
   },
 });
 </script>
