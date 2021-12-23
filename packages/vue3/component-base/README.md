@@ -266,7 +266,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tr>
   <!-- !Selectable -->
   <tr>
-    <td align="left" rowspan="4">Selectable<!-- need to add gif, or svg animation of the affordance --><br/><br/><ul><li>'selectable' is distinct from 'toggleable'. If a component is selectable, then it can be copied to the clipboard, or even <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#the_basics">dragged-and-dropped</a>. If a component is toggleable, it cannot be copied, or dragged-and-dropped</li></ul><ul><li>If you add the 'selectable' affordance to a component, you necessarily disable the 'slideable' affordance. That's because pressing and dragging a selectable component drags the entire component itself, rather than the content within the component.</li></ul></td>
+    <td align="left" rowspan="4">Selectable<!-- need to add gif, or svg animation of the affordance --><br/><br/><ul><li>'selectable' is distinct from 'toggleable'. If a component is selectable, then its contents can be copied to the clipboard. Depending on the browser, its contents can also be <a href="https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API#the_basics">dragged-and-dropped</a>. On the other hand if a component is toggleable, its contents cannot be be copied, or dragged-and-dropped</li></ul><ul><li>Adding 'isSelectable' to a component will always disable 'isSlideable'. That's because browsers usually make anything that is selected draggable. Therefore, the same mouse and touch movements that would normally drive the slideable affordance now initiate a drag-and-drop session instead.</li></ul></td>
     <td align="left">Mouse cursor presses and releases UI component:</td>
     <td rowspan="2">Pressed, Not Selected</td>
     <td rowspan="2">→</td>
@@ -286,7 +286,7 @@ For the most part, any UI component can have some, or all of the following affor
   </tr>
   <!-- !Focusable -->
   <tr>
-    <td align="left" rowspan="4">Focusable <!-- need to add gif, or svg animation of the affordance --></td>
+    <td align="left" rowspan="4">Focusable<br><br><ul><li><strong>focusable</strong> is distinct from <strong>editable</strong>. An element is focusable if it can receive keypresses. It is only editable if its contents can be modified using those keypresses. All editable elements are focusable, but not all focusable elements are editable.</li></ul> <!-- need to add gif, or svg animation of the affordance --></td>
     <td align="left">Mouse cursor releases UI component:</td>
     <td rowspan="2">Pressed, Not Focused</td>
     <td rowspan="2">→</td>

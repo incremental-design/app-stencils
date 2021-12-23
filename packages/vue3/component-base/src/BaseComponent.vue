@@ -1,5 +1,10 @@
 <template>
-  <div v-on="eventHandlers" :style="componentStyles" ref="BCR">
+  <div
+    v-on="eventHandlers"
+    :style="componentStyles"
+    ref="BCR"
+    :tabindex="isFocusable ? '-1' : ''"
+  >
     <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
     <!--
       @slot Default Content
@@ -155,7 +160,7 @@ export default defineComponent({
     },
 
     /**
-     * isSlideable - whether the component contains a handle that follows the mouse cursor or touch point when the component is pressed.
+     * isSlideable - whether the components' contents follow (or otherwise respond to) the mouse cursor or touch point when the component is pressed.
      *
      * @values true | false
      *
@@ -201,7 +206,7 @@ export default defineComponent({
     },
 
     /**
-     * isFocusable - whether the component's contents can be edited with a keyboard, mouse, or touch.
+     * isFocusable - whether the component can receive keypresses. Note that this does NOT mean that the component's contents can be edited.
      * @values true | false
      *
      * @example
@@ -278,15 +283,14 @@ export default defineComponent({
         // need to add touch-action: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
 
         const S: /* (S)tyles */ { [cssRule: string]: string } = {
-          // 'touch-action': 'manipulation',
+          'touch-action': 'manipulation',
         };
-        if (props.isSelectable || props.isFocusable) {
+        if (props.isSelectable) {
           Object.assign(S, {
             userSelect: 'all',
             WebkitUserSelect: 'all',
             MozUserSelect: 'all',
             MsUserSelect: 'all',
-            webkitTouchCallout: 'none',
           });
         } else {
           Object.assign(S, {
@@ -380,8 +384,16 @@ export default defineComponent({
         const WS = window.getSelection();
         R.selectNode(El);
         WS?.addRange(R);
-        console.log('just selected');
-        console.log(WS);
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    const focusThisEl = () => {
+      const El = BCR.value ? BCR.value : false;
+      if (El) {
+        (El as HTMLElement).focus();
         return true;
       } else {
         return false;
@@ -430,7 +442,17 @@ export default defineComponent({
 
     // const HS /* (H)andle (S)croll */
 
-    // const HF /* (H)andle (F)ocus */
+    const HF /* (H)andle (F)ocus */ = (E: FocusEvent) => {
+      // todo: implement focus input handler ... perhaps something that keeps track of the previous thing that was focused?
+      switch (E.type) {
+        case 'blur':
+          FSM.focused = false;
+          break;
+        case 'focus':
+          FSM.focused = true;
+          break;
+      }
+    };
 
     // const HK /* (H)andle (K)eyboard */
 
@@ -488,6 +510,8 @@ export default defineComponent({
       };
       const listenForFocus = (): void => {
         listenForPress();
+        if (!EH.blur) EH.blur = HF;
+        if (!EH.focus) EH.focus = HF;
       };
 
       const disableContextMenu = (): void => {
@@ -611,14 +635,12 @@ export default defineComponent({
                   E,
                   () => {
                     const DS = document.getSelection();
-                    console.log(DS);
                     FSM.selected =
                       !!DS &&
                       DS.anchorNode === current &&
                       DS.focusNode === current &&
                       !DS.isCollapsed &&
                       DS.type === 'Range';
-                    console.log(FSM.selected);
                   },
                   { once: true }
                 );
@@ -645,6 +667,15 @@ export default defineComponent({
         };
         const updateFocused = () => {
           // see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
+          switch (P.type) {
+            case 'mousedown':
+              FSM.focused = focusThisEl();
+              break;
+            case 'touchstart':
+              FSM.focused = focusThisEl();
+              break;
+          }
+          // todo: implement focus event input listener, and then handle it here
         };
 
         if (
