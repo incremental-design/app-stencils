@@ -17,13 +17,9 @@
 </template>
 
 <script lang="ts">
-// make sure user select === none so that by default nothing can be selected (unless isEditable)
-
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
 // needs a default slot and a fallback (ie suspense) slot
-
-// needs to accept following props: isHoverable isPeekable isPressable isToggleable isSlideable isSnappable isSelectable isCopyable isPasteable isReplicable isEditable theme
 
 // fallback slot should have all the same props as regular slot
 
@@ -59,6 +55,16 @@ import {
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
 } from '@incremental.design/device-input-event-handlers';
 import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
+
+export enum State {
+  hovered = 'hovered',
+  peeked = 'peeked',
+  pressed = 'pressed',
+  toggled = 'toggled',
+  sliding = 'sliding',
+  selected = 'selected',
+  focused = 'focused',
+}
 
 export default defineComponent({
   components: {
@@ -227,12 +233,22 @@ export default defineComponent({
       default: false,
     },
 
-    // todo: add theme
+    // todo: implement theme prop
   },
 
   emits: {
-    // see: https://v3.vuejs.org/api/options-data.html#emits
-    // emit
+    /**
+     * stateChange is emitted whenever the {@link State} of this component changes. For example, if this component `isPressable`, then a state change event will be emitted whenever the component is pressed, and whenever it is released.
+     *
+     * @param payload - an object that contains an array with the
+     */
+    stateChange: (payload: {
+      newState: Array<State>;
+      oldState: Array<State>;
+      inputEvents: Array<EventInfo<unknown>>;
+    }) => {
+      return true; /* there is no actual need to validate emit logic because it will always be valid ... this is just here for posterity */
+    },
   },
 
   setup(props, { attrs, slots, emit }) {
@@ -305,73 +321,117 @@ export default defineComponent({
       }),
     });
 
-    const FSM /* (F)inite (S)tate (M)achine */ = reactive({
+    type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
+
+    const FSM: /* (F)inite (S)tate (M)achine */ {
+      data: {
+        [data: string]: FSMEntry;
+      };
+      hovered: FSMEntry;
+      peeked: FSMEntry;
+      pressed: FSMEntry;
+      toggled: FSMEntry;
+      sliding: FSMEntry;
+      selected: FSMEntry;
+      focused: FSMEntry;
+    } = reactive({
+      data: {
+        hovered: { state: false, changedBy: null },
+        peeked: { state: false, changedBy: null },
+        pressed: { state: false, changedBy: null },
+        toggled: { state: false, changedBy: null },
+        sliding: { state: false, changedBy: null },
+        selected: { state: false, changedBy: null },
+        focused: { state: false, changedBy: null },
+      },
       /**
        * hovered - whether a mouse cursor is currently occluding the component
        */
-      hovered: false,
+      hovered: computed({
+        get: (): FSMEntry => {
+          return FSM.data.hovered;
+        },
+        set: (value: FSMEntry) => {
+          FSM.data.hovered =
+            FSM.data.hovered.state !== value.state ? value : FSM.data.hovered;
+        },
+      }),
       /**
        * peeked - whether the component is growing in size to reveal its contents
        */
-      peeked: false,
-      _pressed: false,
+      peeked: computed({
+        get: (): FSMEntry => {
+          return FSM.data.peeked;
+        },
+        set: (value: FSMEntry) => {
+          FSM.data.peeked =
+            FSM.data.peeked.state !== value.state ? value : FSM.data.peeked;
+        },
+      }),
       /**
        * pressed - whether a mouse cursor or touch point is currently depressing the component
        */
       pressed: computed({
-        get: (): boolean => {
-          return FSM._pressed;
+        get: (): FSMEntry => {
+          return FSM.data.pressed;
         },
-        set: (value: boolean) => {
-          FSM._pressed = value;
+        set: (value: FSMEntry) => {
+          FSM.data.pressed =
+            FSM.data.pressed.state !== value.state ? value : FSM.data.pressed;
         },
       }),
-      _toggled: false,
       /**
        * toggled - whether the component appears to be depressed after it has been pressed and released
        */
       toggled: computed({
-        get: (): boolean => {
-          return FSM._toggled;
+        get: (): FSMEntry => {
+          return FSM.data.toggled;
         },
-        set: (value: boolean) => {
-          FSM._toggled = value;
+        set: (value: FSMEntry) => {
+          FSM.data.toggled =
+            FSM.data.toggled.state !== value.state ? value : FSM.data.toggled;
         },
       }),
-      _sliding: false,
       /**
-       * dragged - whether the component's handle is currently following the mouse cursor or touch point
+       * sliding - whether the component's handle is currently following the mouse cursor or touch point
        */
       sliding: computed({
-        get: (): boolean => {
-          return FSM.pressed && FSM._sliding;
+        get: (): FSMEntry => {
+          return FSM.data.sliding;
         },
-        set: (value: boolean) => {
-          FSM._sliding = value;
+        set: (value: FSMEntry) => {
+          const ValueToSet = {
+            state: FSM.pressed.state && value.state,
+            changedBy: value.changedBy,
+          }; /* we have to check if pressed is true because the event listeners for sliding won't bother checking */
+          FSM.data.sliding =
+            FSM.data.sliding.state !== ValueToSet.state
+              ? ValueToSet
+              : FSM.data.sliding;
         },
       }),
-      _selected: false,
       /**
        * selected - whether all of the component's contents have been highlighted with a cursor, and can be copied to the clipboard.
        */
       selected: computed({
-        get: (): boolean => {
-          return FSM._selected;
+        get: (): FSMEntry => {
+          return FSM.data.selected;
         },
-        set: (value: boolean) => {
-          FSM._selected = value;
+        set: (value: FSMEntry) => {
+          FSM.data.selected =
+            FSM.data.selected.state !== value.state ? value : FSM.data.selected;
         },
       }),
-      _focused: false,
       /**
        * focused - whether the component's content are being modified with a keyboard, mouse, or touch
        */
       focused: computed({
-        get: (): boolean => {
-          return FSM.pressed && FSM._focused;
+        get: (): FSMEntry => {
+          return FSM.data.focused;
         },
-        set: (value: boolean) => {
-          FSM._focused = value;
+        set: (value: FSMEntry) => {
+          FSM.data.focused =
+            FSM.data.focused.state !== value.state ? value : FSM.data.focused;
         },
       }),
     });
@@ -446,10 +506,24 @@ export default defineComponent({
       // todo: implement focus input handler ... perhaps something that keeps track of the previous thing that was focused?
       switch (E.type) {
         case 'blur':
-          FSM.focused = false;
+          FSM.focused = {
+            state: false,
+            changedBy: {
+              type: E.type,
+              timestamp: E.timeStamp,
+              input: E /* this is technically incorrect, but works as a placeholder */,
+            },
+          };
           break;
         case 'focus':
-          FSM.focused = true;
+          FSM.focused = {
+            state: true,
+            changedBy: {
+              type: E.type,
+              timestamp: E.timeStamp,
+              input: E /* this is technically incorrect, but works as a placeholder */,
+            },
+          };
           break;
       }
     };
@@ -546,83 +620,84 @@ export default defineComponent({
         const updateHovered = () => {
           switch (P.type) {
             case 'mousemove':
-              FSM.hovered = true;
+              FSM.hovered = { state: true, changedBy: P };
               break;
             case 'mouseleave':
-              FSM.hovered = false;
+              FSM.hovered = { state: false, changedBy: P };
               break;
           }
         };
         const updatePeeked = () => {
           switch (P.type) {
             case 'mousemove':
-              FSM.peeked = true;
+              FSM.peeked = { state: true, changedBy: P };
               break;
             case 'mouseleave':
-              FSM.peeked = false;
+              FSM.peeked = { state: false, changedBy: P };
               break;
             case 'touchstart':
-              FSM.peeked = true;
+              FSM.peeked = { state: true, changedBy: P };
               break;
             case 'touchend':
-              FSM.peeked = false;
+              FSM.peeked = { state: false, changedBy: P };
               break;
             case 'touchcancel':
-              FSM.peeked = false;
+              FSM.peeked = { state: false, changedBy: P };
               break;
           }
         };
         const updatePressed = () => {
           switch (P.type) {
             case 'mousedown':
-              FSM.pressed = true;
+              FSM.pressed = { state: true, changedBy: P };
               break;
             case 'touchstart':
-              FSM.pressed = true;
+              FSM.pressed = { state: true, changedBy: P };
               break;
             case 'mouseup':
-              FSM.pressed = false;
+              FSM.pressed = { state: false, changedBy: P };
               break;
             case 'mouseleave':
-              FSM.pressed = false;
+              FSM.pressed = { state: false, changedBy: P };
               break;
             case 'touchcancel':
-              FSM.pressed = false;
+              FSM.pressed = { state: false, changedBy: P };
               break;
             case 'touchend':
-              FSM.pressed = false;
+              FSM.pressed = { state: false, changedBy: P };
               break;
             case 'touchmove':
-              FSM.pressed = PointerInBounds;
+              FSM.pressed = { state: PointerInBounds, changedBy: P };
               break;
           }
         };
         const updateToggled = () => {
           switch (P.type) {
             case 'mouseup':
-              FSM.toggled = !FSM.toggled;
+              FSM.toggled = { state: !FSM.toggled.state, changedBy: P };
               break;
             case 'touchend':
-              if (PointerInBounds) FSM.toggled = !FSM.toggled;
+              if (PointerInBounds)
+                FSM.toggled = { state: !FSM.toggled.state, changedBy: P };
               break;
           }
         };
         const updateSliding = () => {
           switch (P.type) {
             case 'mousemove':
-              FSM.sliding = true;
+              FSM.sliding = { state: true, changedBy: P };
               break;
             case 'touchmove':
-              FSM.sliding = PointerInBounds;
+              FSM.sliding = { state: PointerInBounds, changedBy: P };
               break;
             case 'touchend':
-              FSM.sliding = false;
+              FSM.sliding = { state: false, changedBy: P };
               break;
             case 'mouseleave':
-              FSM.sliding = false;
+              FSM.sliding = { state: false, changedBy: P };
               break;
             case 'mouseup':
-              FSM.sliding = false;
+              FSM.sliding = { state: false, changedBy: P };
               break;
           }
         };
@@ -633,14 +708,21 @@ export default defineComponent({
               for (const E of DE) {
                 document.addEventListener(
                   E,
-                  () => {
+                  E => {
                     const DS = document.getSelection();
-                    FSM.selected =
-                      !!DS &&
-                      DS.anchorNode === current &&
-                      DS.focusNode === current &&
-                      !DS.isCollapsed &&
-                      DS.type === 'Range';
+                    FSM.selected = {
+                      state:
+                        !!DS &&
+                        DS.anchorNode === current &&
+                        DS.focusNode === current &&
+                        !DS.isCollapsed &&
+                        DS.type === 'Range',
+                      changedBy: {
+                        type: E.type,
+                        timestamp: E.timeStamp,
+                        input: E,
+                      },
+                    };
                   },
                   { once: true }
                 );
@@ -653,13 +735,13 @@ export default defineComponent({
           switch (P.type) {
             case 'mouseup':
               if (BCR.value && selectThisEl()) {
-                FSM.selected = true;
+                FSM.selected = { state: true, changedBy: P };
                 listenForDeselect(BCR.value);
               }
               break;
             case 'touchend':
               if (PointerInBounds && BCR.value && selectThisEl()) {
-                FSM.selected = true;
+                FSM.selected = { state: true, changedBy: P };
                 listenForDeselect(BCR.value);
               }
               break;
@@ -669,10 +751,10 @@ export default defineComponent({
           // see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
           switch (P.type) {
             case 'mousedown':
-              FSM.focused = focusThisEl();
+              FSM.focused = { state: focusThisEl(), changedBy: P };
               break;
             case 'touchstart':
-              FSM.focused = focusThisEl();
+              FSM.focused = { state: focusThisEl(), changedBy: P };
               break;
           }
           // todo: implement focus event input listener, and then handle it here
@@ -704,6 +786,60 @@ export default defineComponent({
       },
       {
         deep: true,
+        immediate: false,
+      }
+    );
+
+    watch(
+      () => [
+        FSM.hovered.state,
+        FSM.peeked.state,
+        FSM.pressed.state,
+        FSM.toggled.state,
+        FSM.sliding.state,
+        FSM.selected.state,
+        FSM.focused.state,
+      ] /* see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#watching-reactive-objects */,
+      (current, previous) => {
+        const makeStateArrays = () => {
+          const newState = [];
+          const oldState = [];
+          const IES /* (I)nput (E)vent (S)et */ = new Set();
+
+          if (current[0] /* FSM.hovered.state */) newState.push(State.hovered);
+          if (current[1] /* FSM.peeked.state */) newState.push(State.peeked);
+          if (current[2] /* FSM.pressed.state */) newState.push(State.pressed);
+          if (current[3] /* FSM.toggled.state */) newState.push(State.toggled);
+          if (current[4] /* FSM.sliding.state */) newState.push(State.sliding);
+          if (current[5] /* FSM.selected.state */)
+            newState.push(State.selected);
+          if (current[6] /* FSM.focused.state */) newState.push(State.focused);
+
+          if (previous[0] /* FSM.hovered.state */) oldState.push(State.hovered);
+          if (previous[1] /* FSM.peeked.state */) oldState.push(State.peeked);
+          if (previous[2] /* FSM.pressed.state */) oldState.push(State.pressed);
+          if (previous[3] /* FSM.toggled.state */) oldState.push(State.toggled);
+          if (previous[4] /* FSM.sliding.state */) oldState.push(State.sliding);
+          if (previous[5] /* FSM.selected.state */)
+            oldState.push(State.selected);
+          if (previous[6] /* FSM.focused.state */) oldState.push(State.focused);
+
+          if (current[0] !== previous[0]) IES.add(FSM.hovered.changedBy);
+          if (current[1] !== previous[1]) IES.add(FSM.peeked.changedBy);
+          if (current[2] !== previous[2]) IES.add(FSM.pressed.changedBy);
+          if (current[3] !== previous[3]) IES.add(FSM.toggled.changedBy);
+          if (current[4] !== previous[4]) IES.add(FSM.sliding.changedBy);
+          if (current[5] !== previous[5]) IES.add(FSM.selected.changedBy);
+          if (current[6] !== previous[6]) IES.add(FSM.focused.changedBy);
+
+          const inputEvents = Array.from(IES) as Array<EventInfo<unknown>>;
+          return { newState, oldState, inputEvents };
+        };
+
+        emit('stateChange', makeStateArrays());
+      },
+      {
+        deep: false,
         immediate: false,
       }
     );

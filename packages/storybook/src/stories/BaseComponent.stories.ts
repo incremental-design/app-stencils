@@ -11,6 +11,7 @@ export default {
     isSlideable: { control: 'boolean' },
     isSelectable: { control: 'boolean' },
     isFocusable: { control: 'boolean' },
+    logStateChange: { action: 'hello' },
   },
   args: {
     isHoverable: true,
@@ -40,7 +41,7 @@ const Template = (args: BaseComponentArgs) => ({
     };
   },
   template:
-    '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isSlideable="args.isSlideable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable"></base-component>',
+    '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isSlideable="args.isSlideable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable" @stateChange="args.logStateChange"></base-component>',
 });
 
 export const Empty = Template.bind({});

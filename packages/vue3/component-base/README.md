@@ -646,9 +646,9 @@ You probably want your components to affect your app. For example, when a it tra
    export default defineComponent({<br/>
      methods:{
        <strong>doSomething({
-         newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-         oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-         input: Array&lt;<a href="">BaseComponent.input</a>&gt;
+         newState: Array&lt;<a href="./src/BaseComponent.vue">BaseComponent.State</a>&gt;, 
+         oldState: Array&lt;<a href="./src/BaseComponent.vue">BaseComponent.State</a>&gt;, 
+         inputEvents: Array&lt;<a href="../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts">EventInfo</a>&gt;
          })</strong> 
        {<br/>
        /* your method goes here */<br/>
@@ -676,8 +676,8 @@ You probably want your components to affect your app. For example, when a it tra
      <td>Array that contains zero or more strings from the <code><a href="">BaseComponent.state</a></code> enum. This array is the state that your component just transitioned out of.</td>
      <td><code>['hovered']</code></td></tr>
    <tr>
-     <td><code>input</code></td>
-     <td>An array of zero or more user interactions that caused the transition. User interactions are of type <code><a href="">BaseComponent.input</a></code>.</td>
+     <td><code>inputEvents</code></td>
+     <td>An array of zero or more user interactions that caused the transition. User interactions are of type <code><a href="../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts">EventInfo</a></code>.</td>
      <td>
    <pre>
    <code>
@@ -723,11 +723,11 @@ You probably want your components to affect your app. For example, when a it tra
    import BaseComponent from '@incremental.design/vue3-component-base'<br>
    export default defineComponent({<br/>
      methods:{
-       doSomething({
-         newState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-         oldState: Array&lt;<a href="">BaseComponent.state</a>&gt;, 
-         input: Array&lt;<a href="">BaseComponent.input</a>&gt;
-         })
+        doSomething({
+          newState: Array&lt;<a href="./src/BaseComponent.vue">BaseComponent.State</a>&gt;, 
+          oldState: Array&lt;<a href="./src/BaseComponent.vue">BaseComponent.State</a>&gt;, 
+          inputEvents: Array&lt;<a href="../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts">EventInfo</a>&gt;
+        })
        {<br/>
        /* your method goes here */<br/>
        }
@@ -737,7 +737,7 @@ You probably want your components to affect your app. For example, when a it tra
    </code>
    </pre>
 
-Once you set up this method, you can conditionally execute business logic, depending on the value of `currentState`, `oldState` and `input`. Most of the time, you'll only need `currentState`, but for more advanced behaviors, you might want the `oldState` and `input` as well. Keep in mind that all of these arguments are _arrays_. This is by design. It makes **compound** states and inputs - states that are a union of two or more states, and inputs that are a union of two or more inputs, respectively - easy to parse. For example:
+Once you set up this method, you can conditionally execute business logic, depending on the value of `currentState`, `oldState` and `inputEvents`. Most of the time, you'll only need `currentState`, but for more advanced behaviors, you might want the `oldState` and `inputEvents` as well. Keep in mind that all of these arguments are _arrays_. This is by design. It makes **compound** states and inputs - states that are a union of two or more states, and inputs that are a union of two or more inputs, respectively - easy to parse. For example:
 
 | Compound State       | How it's represented in the `currentState` and `previousState` arrays: |
 | :------------------- | :--------------------------------------------------------------------- |
@@ -750,7 +750,7 @@ Once you set up this method, you can conditionally execute business logic, depen
 <thead>
 <tr>
 <th align="left">Compound Interaction</th>
-<th align="left">How it's represented in the <code>input</code> array:</th>
+<th align="left">How it's represented in the <code>inputEvents</code> array:</th>
 </tr>
 </thead>
 <tbody>
@@ -814,7 +814,7 @@ eventInfo: {
 </tbody>
 </table>
 
-These arguments can also be _empty_ arrays. Once again, this is by design. The presence of a <code><a href="">BaseComponent.state</a></code> <!-- need to add link! --> indicates that the component is in that state. The absence indicates that the component is _not_ in that state. For example:
+These arguments can also be _empty_ arrays. Once again, this is by design. The presence of a <code><a href="./src/BaseComponent.vue">BaseComponent.state</a></code> <!-- need to add link! --> indicates that the component is in that state. The absence indicates that the component is _not_ in that state. For example:
 
 | State                                  | `newState` or `oldState` array: |
 | :------------------------------------- | :------------------------------ |
@@ -822,7 +822,7 @@ These arguments can also be _empty_ arrays. Once again, this is by design. The p
 | Hovered, Not Pressed, Not Selected     | `['hovered']`                   |
 | Not Hovered, Not Pressed, Not Selected | `[]`                            |
 
-There is exactly _one_ <code><a href="">BaseComponent.state</a></code> <!-- need to add link! --> for each affordance. Of these, your component can only have the ones that correspond to the affordances you chose for it. In other words, a state can only appear in the `newState` and `oldState` arrays if you specifically add the prop for the corresponding affordance to the base component:
+There is exactly _one_ <code><a href="./src/BaseComponent.vue">BaseComponent.state</a></code> <!-- need to add link! --> for each affordance. Of these, your component can only have the ones that correspond to the affordances you chose for it. In other words, a state can only appear in the `newState` and `oldState` arrays if you specifically add the prop for the corresponding affordance to the base component:
 
 | Affordance | Prop           | Corresponding `BaseComponent.state`: |
 | :--------- | :------------- | :----------------------------------- |
@@ -836,7 +836,7 @@ There is exactly _one_ <code><a href="">BaseComponent.state</a></code> <!-- need
 
 To conditionally execute your business logic, all you need to do is add a `switch()` statement to the method you bound to the base component's `stateChange` event. This switch statement should contain a case for each of your component's possible `BaseComponent.state`s.
 
-The possible values of `baseComponent.input` are similarly limited. Although they are objects with nested properties, rather than strings, they all conform to the [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) type. This means that they contain a `type`, `timestamp`, and `input` property. The `input` property will always be an object of type [`DragInput`](../../shared/device-input-event-handlers/src/README.md#draginput), [`DeviceInput`](../../shared/device-input-event-handlers/src/README.md#deviceinput), [`GamepadInput`](../../shared/device-input-event-handlers/src/README.md#gamepadinput), [`ScrollInput`](../../shared/device-input-event-handlers/src/README.md#scrollinput), [`FocusInput`](../../shared/device-input-event-handlers/src/README.md#focusinput), [`KeyboardInput`](../../shared/device-input-event-handlers/src/README.md#keyboardinput), or [`PointerInput`](../../shared/device-input-event-handlers/src/README.md#pointerinput). Each of these types contains all sorts of useful information about the user interaction that triggered the state change. While you don't _need_ to use the values of `input` to trigger your component's business logic, you can increase your component's level of interactivity by incorporating them into it.
+The possible values of the `inputEvents` array are similarly limited. Although they are objects with nested properties, rather than strings, they all conform to the [`EventInfo`](../../shared/device-input-event-handlers/src/event-handlers/handler-utils/EventInfo.ts) type. This means that they contain a `type`, `timestamp`, and `input` property. The `input` property will always be an object of type [`DragInput`](../../shared/device-input-event-handlers/src/README.md#draginput), [`DeviceInput`](../../shared/device-input-event-handlers/src/README.md#deviceinput), [`GamepadInput`](../../shared/device-input-event-handlers/src/README.md#gamepadinput), [`ScrollInput`](../../shared/device-input-event-handlers/src/README.md#scrollinput), [`FocusInput`](../../shared/device-input-event-handlers/src/README.md#focusinput), [`KeyboardInput`](../../shared/device-input-event-handlers/src/README.md#keyboardinput), or [`PointerInput`](../../shared/device-input-event-handlers/src/README.md#pointerinput). Each of these types contains all sorts of useful information about the user interaction that triggered the state change. While you don't _need_ to use the values of `input` to trigger your component's business logic, you can increase your component's level of interactivity by incorporating them into it.
 
 #### Use the `pointerInput`, `focusInput`, `keyboardInput`, `dragInput`, and `scrollInput` custom events to respond to every user interaction, all the time.
 
