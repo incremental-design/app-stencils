@@ -249,6 +249,18 @@ export default defineComponent({
     }) => {
       return true; /* there is no actual need to validate emit logic because it will always be valid ... this is just here for posterity */
     },
+    /**
+     * pointerInput is emitted whenever an {@link mousedown}, {@link mousemove}, {@link mouseup}, {@link mouseleave}, {@link touchcancel}, {@link touchstart}, {@link touchmove}, or {@link touchend} event occurs on the component.
+     *
+     * @param payload - a {@link EventInfo<PointerInput>} object.
+     */
+    pointerInput: (payload: EventInfo<PointerInput>) => {
+      return true; /* once again, there is no actual need to validate emit logic becasue it will always be valid ... this is just here for posterity */
+    },
+    // todo: make a focusInput event
+    // todo: make a keyboardInput event
+    // todo: make a dragInput event
+    // todo; make a scrollInput event
   },
 
   setup(props, { attrs, slots, emit }) {
@@ -605,10 +617,11 @@ export default defineComponent({
     };
 
     watch(
-      DataAndComputed /* we have to watch ALL of DataAndComputed because if we jsut watch pointerInput, Vue complains that it can't be watched if its value is 'false' */,
+      () => DataAndComputed.pointerInput,
       (current, previous) => {
         if (!DataAndComputed.pointerInput) return;
         const P = DataAndComputed.pointerInput;
+        emit('pointerInput', P);
         const XP = P.input.relative.xPercent;
         const YP = P.input.relative.yPercent;
         const XPOutOfBounds = XP ? XP < 0 || XP > 1 : false;
