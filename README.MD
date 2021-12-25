@@ -53,25 +53,38 @@ There are two types of packages in app stencils:
 </thead>
 <tbody>
 
-<!-- !Vue SFC Packages -->
+<!-- !Vue 3 Component -->
 <!-- !vue3-component-base -->
 <tr valign=top>
-<td align="left" rowspan="1">Vue 3 Component</td>
+<td align="left" rowspan="2">Vue 3 Component</td>
 <td align="left"><a href="./packages/vue3/component-base/README.md">
-<code>@incremental.design/vue3-component-base</code>
+<code>@incremental.design/component-base</code>
 </a>
 <br>
 <!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
 <br/>
-A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other <code>@incremental.design/vue3-component-*</code>s.
+A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other <code>@incremental.design/component-*</code>s.
+<br/>
+</td>
+<!-- !vue3-component-base -->
+<tr valign=top>
+
+<td align="left"><a href="./packages/vue3/component-tabs/README.md">
+<code>@incremental.design/component-tabs</code>
+</a>
+<br>
+<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
+<br/>
+A row or column of buttons that switch the contents of the current view.
 <br/>
 </td>
 </tr>
-<!-- !Framework-Agnostic Typescript Module -->
-<!-- !Baz -->
+</tr>
+<!-- !Typescript Module -->
 <tr valign="top">
-<td align="left" rowspan="1">Typescript Module</td>
-<td align="left"><a href="./packages/shared/device-input-event-handlers/README.md">
+<td align="left" rowspan="2">Typescript Module</td>
+<td align="left">
+<a href="./packages/shared/device-input-event-handlers/README.md">
 <code>@incremental.design/device-input-event-handlers</code>
 </a>
 <br>
