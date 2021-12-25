@@ -93,7 +93,11 @@ A row or column of buttons that switch the contents of the current view.
 Handlers for <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent" target="_blank">DeviceMotionEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent" target="_blank">DeviceOrientationEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/DragEvent" target="_blank">DragEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/FocusEvent" target="_blank">FocusEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" target="_blank">GamepadEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent" target="_blank">KeyboardEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent" target="_blank">MouseEvent</a></code> <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/TouchEvent" target="_blank">TouchEvent</a></code> and <code><a href="https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent" target="_blank">WheelEvent</a></code>. These handlers normalize and filter event details to make them easier to interpret.
 </td>
 </tr>
-
+<tr><td><a href="./packages/shared/theme/README.md"><code>@incremental.design/theme</code></a><br/>
+<!-- place gif of the component in storybook here. make the gif link to a storybook hosted on github pages -->
+<br/>
+Class that generates styles that match the visual languages of iOS, MacOS, tvOS, Android, Windows, GTK, or Web. This class describes the appearance of text and background shapes for: <br><ul><li>inline, small, medium, large, and massive sizes</li><li>light and dark modes</li><li>hovered, pressed, toggled, and focused states</li><li>active, progress, success, warning, and failure tints</li></ul>
+</td></tr>
 </tbody>
 </table>
 
