@@ -1,4 +1,4 @@
-# `incremental.design/vue3-component-base`
+# `incremental.design/component-base`
 
 <!--
 Add a banner image and badges
@@ -54,7 +54,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
 ## Installation:
 
-1.  Add the `incremental.design/vue3-component-base` package to your project:
+1.  Add the `incremental.design/component-base` package to your project:
 
     <table>
     <tr>
@@ -69,7 +69,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
     </tr>
     </table>
 
-2.  Import `vue3-component-base` into any of your Vue 3 components as follows:
+2.  Import `component-base` into any of your Vue 3 components as follows:
 
     ```vue
     <script lang="ts">
