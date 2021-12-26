@@ -1,32 +1,16 @@
-Class that generates styles that match the visual languages of iOS, MacOS, tvOS, Android, Windows, GTK, or Web. This class describes the appearance of text and background shapes for:
-inline, small, medium, large, and massive sizes
-light and dark modes
-hovered, pressed, toggled, and focused states
-active, progress, success, warning, and failure tints
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-A row or column of buttons that switch the contents of the current view.
-
 # `incremental.design/theme`
 
 <!--
 Add a banner image and badges
-
-see: https://towardsdatascience.com/how-to-write-an-awesome-readme-68bf4be91f8b
-
-For bonus points, make the banner animated with html, css and svg
-
-see: https://github.com/sindresorhus/css-in-readme-like-wat
- -->
+-->
 
 <!--
 Subtitle that explains why reader should care
 -->
 
-<!--
-Tell the reader how their world has changed in up to 3 sentences. Allude to the opportunities and threats this change presents. Be careful not to insinuate that your reader has a personal problem
--->
+Make your web app look just like an iOS, MacOS, tvOS, Android, Windows, GTK (linux), or Bootstrap 5 (web) app.
+
+If you design apps for a living, you probably have to prototype for a variety of desktop and mobile platforms - each of which have their own, unique visual language. You don't have time to re-skin the same prototype for each platform. With `@incremental.design/theme`, you don't have to.
 
 <!--
 List up to 6 ways your reader can use your codebase to respond to this change Each list item should contain a heading, followed by up to two supporting sentences.
@@ -38,6 +22,12 @@ List up to 6 ways your reader can use your codebase to respond to this change Ea
 * The supporting sentences should tell your reader where to find and how to use the code to complete the task.
   e.g. "`yarn add plumbus` to your project. Then `import {dinglebop} from 'plumbus'` and insert it as the first argument to your `grumbo(...)` function.
 -->
+
+- **Make the components in your web app match the visual language of iOS, MacOS, tvOS, Android, Windows, GTK (linux), or Bootstrap 5 (web) apps, by applyting the `Theme` object's styles.**
+
+- **reskin your components automatically, by changing the theme's `platform` string**
+
+- **define your own themes by passing an options object into the `Theme` constructor**
 
 <!-- list any codebases, websites, apps, platforms or other products that use your code -->
 
@@ -90,3 +80,11 @@ How to use `incremental.design/theme` in your codebase:
 | File or Folder | What does it do? | When should you modify it? |
 | :------------- | :--------------- | :------------------------- |
 |                |                  |                            |
+
+<!--
+Class that generates styles that match the visual languages of iOS, MacOS, tvOS, Android, Windows, GTK, or Web. This class describes the appearance of text and background shapes for:
+inline, small, medium, large, and massive sizes
+light and dark modes
+hovered, pressed, toggled, and focused states
+active, progress, success, warning, and failure tints
+-->
