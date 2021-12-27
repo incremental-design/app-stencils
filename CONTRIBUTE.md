@@ -226,7 +226,7 @@ Use `lerna <command>` to run tools in each of App stencils’ packages. Do not u
 
 Lerna lets you develop the code in App Stencils as if it was a single package, even though it's actually split into many packages. Without Lerna, this would be difficult, because you would have to manually run the same `yarn <command>` (e.g. `yarn install`, `yarn build`) in each package. When you run `lerna <command>`, (e.g. `lerna bootstrap`, `lerna build`), it actually runs the corresponding `yarn` command in every package at once. But that's not all - it also changes the location from which packages are retrieved. `yarn install` retrieves packages from `npmjs.com`, unless specifically configured otherwise. `Lerna bootstrap` retrieves packages from the `packages` folder. It only installs packages from `npmjs.com` if it can't find the package inside `packages`. This means that _you don't have to publish a package to `npmjs.com`_ before importing it into your code. Without Lerna, you would have to publish every package in `packages` to `npmjs.com` before you could use them.
 
-Use the following Lerna commands to run tasks in App Stencils:
+Lerna will drive _most_ of the tools in App stencils for you. All you need to do is run the following commands:
 
 <table>
 <thead>
@@ -291,12 +291,6 @@ Use the following Lerna commands to run tasks in App Stencils:
 <td><code>lerna run serve</code></td>
 <td><code>yarn serve</code></td>
 <td><code>npm run serve</code></td>
-</tr>
-<tr>
-<td>Run unit tests</td>
-<td><code>lerna run test:unit</code></td>
-<td><code>yarn test:unit</code></td>
-<td><code>npm run test:unit</code></td>
 </tr>
 </tbody>
 </table>
@@ -610,11 +604,20 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 
 [↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
-<!-- there should be ONE test file per folder within a package. The test file should inventory and test everything in the folder -->
+Monorepos make it easy to develop and reuse code across packages. By that same logic, they also make it easy to develop and reuse _bugs_ across packages. Unit tests catch bugs before they spread. They also give the rest of us working examples of your code. App Stencils uses Jest to run unit tests. All you need to do is add a `<name-of-test>.test.ts` file to any package in App Stencils, fill it with [unit tests](), and Jest will execute them it whenever you run `npx jest --watch` from the root of `App Stencils`.
 
-<!-- To test every package at once, `lerna run test:unit`.
+![`npx jest --watch`](.readme/npx-jest-watch.gif)
 
-This starts an instance of the Jest unit test framework for each package that contains unit tests. So, if your computer's fans start to sound like a jet engine at idle 🛩 ... this is why. -->
+**Note that `npx jest --watch` is one of the tools that Lerna doesn't run**. This is because Jest runs in the root of `App Stencils` - not in each of the packages. Lerna only runs tools from within packages. It does NOT run tools in the root of the repository.
+
+#### Place one test file in each of your package's folders.
+
+The best way to keep your tests organized is to add a `<name-of-folder>.test.ts` file within each of the subfolders within your package's `src` folder. This file should ONLY test the code contained within its respective folder and subfolders. It should NEVER test code in an ancestor folder, or in another package. This keeps the monorepo's dependency graph from becoming a tangled mess.
+
+<table>
+<tr><th>Bad</th><th>Good</th></tr>
+<tr><td><img src=".readme/diagram-test-bad.png" alt="don't do this"/></td><td><img src=".readme/diagram-test-good.png" alt="do this"/></td></tr>
+</table>
 
 ### Demo user interface components with Storybook:
 
