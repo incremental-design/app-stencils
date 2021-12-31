@@ -1,0 +1,456 @@
+{
+  "configs": [
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/dp/wdccwdmn3_5637dyyb1tntjm0000gp/T/jest_dy",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Volumes/Repositories/app-stencils",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": false,
+        "throwOnModuleCollision": false
+      },
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "93fd26212705495429966298a37b4b12",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/Repositories/app-stencils/packages/shared/device-input-event-handlers",
+      "roots": [
+        "/Volumes/Repositories/app-stencils/packages/shared/device-input-event-handlers"
+      ],
+      "runner": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/jest-runner/build/index.js",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/Repositories/app-stencils/node_modules/jest-environment-node/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/Repositories/app-stencils/node_modules/jest-circus/runner.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "/Volumes/Repositories/app-stencils/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    },
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/dp/wdccwdmn3_5637dyyb1tntjm0000gp/T/jest_dy",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Volumes/Repositories/app-stencils",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": false,
+        "throwOnModuleCollision": false
+      },
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "84dd4668d9d6ba829a4dd954da4ecb65",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/Repositories/app-stencils/packages/shared/theme",
+      "roots": [
+        "/Volumes/Repositories/app-stencils/packages/shared/theme"
+      ],
+      "runner": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/jest-runner/build/index.js",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/Repositories/app-stencils/node_modules/jest-environment-jsdom/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/Repositories/app-stencils/node_modules/jest-circus/runner.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "/Volumes/Repositories/app-stencils/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    },
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/dp/wdccwdmn3_5637dyyb1tntjm0000gp/T/jest_dy",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Volumes/Repositories/app-stencils",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": false,
+        "throwOnModuleCollision": false
+      },
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "7b6043d380de59790b2cca665ee1a576",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/Repositories/app-stencils/packages/vue3/component-base",
+      "roots": [
+        "/Volumes/Repositories/app-stencils/packages/vue3/component-base"
+      ],
+      "runner": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/jest-runner/build/index.js",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/Repositories/app-stencils/node_modules/jest-environment-node/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/Repositories/app-stencils/node_modules/jest-circus/runner.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "/Volumes/Repositories/app-stencils/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    },
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/dp/wdccwdmn3_5637dyyb1tntjm0000gp/T/jest_dy",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Volumes/Repositories/app-stencils",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": false,
+        "throwOnModuleCollision": false
+      },
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "338ddd6970771d2d0b1b528a3042e247",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/Repositories/app-stencils/packages/vue3/component-tabs",
+      "roots": [
+        "/Volumes/Repositories/app-stencils/packages/vue3/component-tabs"
+      ],
+      "runner": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/jest-runner/build/index.js",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/Repositories/app-stencils/node_modules/jest-environment-node/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/Repositories/app-stencils/node_modules/jest-circus/runner.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "/Volumes/Repositories/app-stencils/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    },
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "/private/var/folders/dp/wdccwdmn3_5637dyyb1tntjm0000gp/T/jest_dy",
+      "clearMocks": false,
+      "coveragePathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "cwd": "/Volumes/Repositories/app-stencils",
+      "detectLeaks": false,
+      "detectOpenHandles": false,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "extraGlobals": [],
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": false,
+        "throwOnModuleCollision": false
+      },
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "json",
+        "node"
+      ],
+      "moduleNameMapper": [],
+      "modulePathIgnorePatterns": [],
+      "name": "a59c075e49636ac4ac52635c5d74fc53",
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "/Volumes/Repositories/app-stencils/packages/storybook",
+      "roots": [
+        "/Volumes/Repositories/app-stencils/packages/storybook"
+      ],
+      "runner": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/jest-runner/build/index.js",
+      "setupFiles": [],
+      "setupFilesAfterEnv": [],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotSerializers": [],
+      "testEnvironment": "/Volumes/Repositories/app-stencils/node_modules/jest-environment-node/build/index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[tj]s?(x)"
+      ],
+      "testPathIgnorePatterns": [
+        "/node_modules/"
+      ],
+      "testRegex": [],
+      "testRunner": "/Volumes/Repositories/app-stencils/node_modules/jest-circus/runner.js",
+      "testURL": "http://localhost",
+      "timers": "real",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "/Volumes/Repositories/app-stencils/node_modules/babel-jest/build/index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "/node_modules/",
+        "\\.pnp\\.[^\\/]+$"
+      ],
+      "watchPathIgnorePatterns": []
+    }
+  ],
+  "globalConfig": {
+    "bail": 0,
+    "changedFilesWithAncestor": false,
+    "collectCoverage": false,
+    "collectCoverageFrom": [],
+    "coverageDirectory": "/Volumes/Repositories/app-stencils/coverage",
+    "coverageProvider": "babel",
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "detectLeaks": false,
+    "detectOpenHandles": false,
+    "errorOnDeprecated": false,
+    "expand": false,
+    "findRelatedTests": false,
+    "forceExit": false,
+    "json": false,
+    "lastCommit": false,
+    "listTests": false,
+    "logHeapUsage": false,
+    "maxConcurrency": 5,
+    "maxWorkers": 7,
+    "noStackTrace": false,
+    "nonFlagArgs": [],
+    "notify": false,
+    "notifyMode": "failure-change",
+    "onlyChanged": false,
+    "onlyFailures": false,
+    "passWithNoTests": false,
+    "projects": [
+      "packages/shared/device-input-event-handlers",
+      "packages/shared/theme",
+      "packages/vue3/component-base",
+      "packages/vue3/component-tabs",
+      "packages/storybook"
+    ],
+    "rootDir": "/Volumes/Repositories/app-stencils",
+    "runTestsByPath": false,
+    "skipFilter": false,
+    "testFailureExitCode": 1,
+    "testPathPattern": "",
+    "testSequencer": "/Volumes/Repositories/app-stencils/node_modules/@jest/core/node_modules/@jest/test-sequencer/build/index.js",
+    "updateSnapshot": "new",
+    "useStderr": false,
+    "watch": false,
+    "watchAll": false,
+    "watchPlugins": [
+      {
+        "config": {},
+        "path": "/Volumes/Repositories/app-stencils/node_modules/jest-watch-typeahead/filename.js"
+      },
+      {
+        "config": {},
+        "path": "/Volumes/Repositories/app-stencils/node_modules/jest-watch-typeahead/testname.js"
+      }
+    ],
+    "watchman": true
+  },
+  "version": "27.4.5"
+}

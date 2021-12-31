@@ -604,15 +604,32 @@ When we read your Vue components, we need to be able to guess the meaning of unf
 
 [↖ Table of Contents](./CONTRIBUTE.md#contribute-to-app-stencils)
 
-Monorepos make it easy to develop and reuse code across packages. By that same logic, they also make it easy to develop and reuse _bugs_ across packages. Unit tests catch bugs before they spread. They also give the rest of us working examples of your code. App Stencils uses Jest to run unit tests. All you need to do is add a `<name-of-test>.test.ts` file to any package in App Stencils, fill it with [unit tests](), and Jest will execute them it whenever you run `npx jest --watch` from the root of `App Stencils`.
+Monorepos make it easy to develop and reuse code across packages. By that same logic, they also make it easy to develop and reuse _bugs_ across packages. Unit tests catch bugs before they spread. They also give the rest of us working examples of your code. App Stencils uses Jest to run unit tests. All you need to do is:
 
-![`npx jest --watch`](.readme/npx-jest-watch.gif)
+1. Add a `jest.config.js` with the following lines to the root of any package in `App Stencils`.
+
+   ```
+   module.exports = {
+    testEnvironment: 'jsdom',
+    testPathIgnorePatterns: ['dist', 'node_modules'],
+   }
+   ```
+
+   ![Make a `jest.config.js` file](.readme/jest-stub-config.gif)
+
+2. add a `<name-of-test>.test.ts` file, import your package's code, and write unit tests.
+
+   ![Make a new `*.test.ts` file](.readme/jest-newfile.gif)
+
+3. run `npx jest --watch` from the root of `App Stencils` to run your tests.
+
+   ![`npx jest --watch`](.readme/npx-jest-watch.gif)
 
 **Note that `npx jest --watch` is one of the tools that Lerna doesn't run**. This is because Jest runs in the root of `App Stencils` - not in each of the packages. Lerna only runs tools from within packages. It does NOT run tools in the root of the repository.
 
-#### Place one test file in each of your package's folders.
+#### Place a single test file in your package's `src` folder:
 
-The best way to keep your tests organized is to add a `<name-of-folder>.test.ts` file within each of the subfolders within your package's `src` folder. This file should ONLY test the code contained within its respective folder and subfolders. It should NEVER test code in an ancestor folder, or in another package. This keeps the monorepo's dependency graph from becoming a tangled mess.
+The best way to keep your tests organized is to place a `<NameOfPackage>.test.ts` file in your package's `src` folder. This file should ONLY test the code contained within its respective folder and subfolders. It should NEVER test code in an ancestor folder, or in another package. This keeps the monorepo's dependency graph from becoming a tangled mess.
 
 <table>
 <tr><th>Bad</th><th>Good</th></tr>
