@@ -625,7 +625,7 @@ Monorepos make it easy to develop and reuse code across packages. By that same l
 
    ![`npx jest --watch`](.readme/npx-jest-watch.gif)
 
-**Note that `npx jest --watch` is one of the tools that Lerna doesn't run**. This is because Jest runs in the root of `App Stencils` - not in each of the packages. Lerna only runs tools from within packages. It does NOT run tools in the root of the repository.
+   **Note that `npx jest --watch` is one of the tools that Lerna doesn't run**. This is because Jest runs in the root of `App Stencils` - not in each of the packages. Lerna only runs tools from within packages. It does NOT run tools in the root of the repository.
 
 #### Place a single test file in your package's `src` folder:
 
