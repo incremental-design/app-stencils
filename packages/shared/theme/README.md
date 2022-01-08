@@ -38,7 +38,7 @@ Every [`style`]() in the [`Theme`](./src/Theme.ts) object has a light mode and d
 
 <!-- explain that all themes consist of platforms, layouts, elements and styles -->
 
-If you've ever prototyped a native app, you've probably spent more hours than you can count coaxing CSS into something that resembles the [Apple human interface guidelines](https://developer.apple.com/design/human-interface-guidelines/), [material design guidelines](https://material.io), or [fluent design guidelines](https://www.microsoft.com/design/fluent/#/). The [`Theme`](./src/Theme.ts) class takes care of that for you. Even better, it describes all of these visual languages with a simple, common vocabulary: **platforms**, **layouts**, **elements**, **styles**, **tints**, and **states**. When you use [`Theme`](./src/Theme.ts), you don't have to manually write hundreds of CSS selectors. All you need to do is describe the component you want to style in these six terms, and [`Theme`](./src/Theme.ts) will generate the corresponding styles for you.
+If you've ever prototyped a native app, you've probably spent more hours than you can count coaxing CSS into something that resembles the [Apple human interface guidelines](https://developer.apple.com/design/human-interface-guidelines/), [material design guidelines](https://material.io), or [fluent design guidelines](https://www.microsoft.com/design/fluent/#/). The [`Theme`](./src/Theme.ts) class takes care of that for you. Even better, it describes all of these visual languages with a simple, common vocabulary: **platforms**, **layouts**, **styles**, **tints**, and **states**. When you use [`Theme`](./src/Theme.ts), you don't have to manually write hundreds of CSS selectors. All you need to do is describe the component you want to style in these six terms, and [`Theme`](./src/Theme.ts) will generate the corresponding styles for you.
 
 <!-- need an illustration for platform -->
 
@@ -64,9 +64,6 @@ A visual language is the combination of styles that make a platform recognizable
    </tr>
    <tr>
       <td><code>gtk</code></td><td>the visual language of <a href="https://www.gtk.org">Linux (Gnome)</a></td>
-   </tr>
-   <tr>
-      <td><code>web</code></td><td>the visual language of <a href="https://getbootstrap.com">(Web) Bootstrap 5</a></td>
    </tr>
    </table>
 
@@ -201,42 +198,40 @@ A visual language is the combination of styles that make a platform recognizable
 
   Some preset themes also contain additional layouts that are specific to that theme. When you supply a platform to [`Theme.platform()`](./src/Theme.ts), it will return a list of all of the layouts that the platform contains.
 
-- An **element** is a specific piece of text, or a specific foreground or background shape within a layout.
+- A **style** is a set of CSS rules that position and shade a specific piece of text, or a specific foreground or background shape within a layout.
 
-  Every layout contains just three types of elements: `text`, `fill.foreground` and `fill.background`. After all, virtually every user interface component in any design system can be described in terms of its text, foreground fills, and background fills.
+  Every layout contains just three types of styles: `text`, `fill.foreground` and `fill.background`. After all, virtually every user interface component in any design system can be described in terms of its text, foreground fills, and background fills.
 
-  All of the layouts contain some combination of the following elements:
+  All of the layouts contain some combination of the following styles:
 
    <table>
-      <tr><th>Type</th><th>Element</th></tr>
-      <tr><td rowspan=7"><code>text</code></td></tr>
-      <tr><td><code>text-icon</code></td></tr>
-      <tr><td><code>text-body</code></td></tr>
-      <tr><td><code>text-footnote</code></td></tr>
-      <tr><td><code>text-headline</code></td></tr>
-      <tr><td><code>text-subhead</code></td></tr>
-      <tr><td><code>text-title</code></td></tr>
+      <tr><th>Type</th><th>styles</th></tr>
+      <tr><td rowspan=6"><code>text</code></td></tr>
+      <tr><td><code>textBody</code></td></tr>
+      <tr><td><code>textFootnote</code></td></tr>
+      <tr><td><code>textHeadline</code></td></tr>
+      <tr><td><code>textSubhead</code></td></tr>
+      <tr><td><code>textTitle</code></td></tr>
       <tr><td rowspan=5"><code>fill.foreground</code></td></tr>
-      <tr><td><code>fg-knob</code></td></tr>
-      <tr><td><code>fg-tactile</code></td></tr>
-      <tr><td><code>fg-primary</code></td></tr>
-      <tr><td><code>fg-secondary</code></td></tr>
+      <tr><td><code>fgKnob</code></td></tr>
+      <tr><td><code>fgTactile</code></td></tr>
+      <tr><td><code>fgPrimary</code></td></tr>
+      <tr><td><code>fgSecondary</code></td></tr>
          <tr><td rowspan=6"><code>fill.background</code></td></tr>
-      <tr><td><code>bg-popover</code></td></tr>
-      <tr><td><code>bg-floating</code></td></tr>
-      <tr><td><code>bg-primary</code></td></tr>
-      <tr><td><code>bg-secondary</code></td></tr>
-      <tr><td><code>bg-tertiary</code></td></tr>
+      <tr><td><code>bgPopover</code></td></tr>
+      <tr><td><code>bgFloating</code></td></tr>
+      <tr><td><code>bgPrimary</code></td></tr>
+      <tr><td><code>bgSecondary</code></td></tr>
+      <tr><td><code>bgTertiary</code></td></tr>
    </table>
 
-  Some layouts may contain elements that aren't listed here. When you supply one of the preset layouts to [`Theme.platform(<platform>).layout()`](./src/Theme.ts), you will receive a list of the elements within the layout.
-
-- A **style** is a set of CSS rules that define the color, shape and position of a specific element. To access an element's styles, pass the name of the element into the [`Theme.platform(<platform>).layout(<layout>).element()`](./src/Theme.ts) function, and it will return the corresponding CSS rules. You can also supply a [`tint`](./src/Theme.ts) and a [`state`](./src/Theme.ts) to the style function to tweak the CSS you receive.
+  Some layouts may contain styles that aren't listed here. When you supply one of the preset layouts to [`Theme.platform(<platform>).layout()`](./src/Theme.ts), you will receive a list of the styles within the layout.
 
 - A **tint** is an adjustment to a style that signifies a change in the application's data. Every style function accepts the following tints:
 
    <table>
    <tr><th>tint</th><th>what it signifies</th><tr>
+   <tr><td><code>none</code></td><td>Interacting with the component does not do anything to the application data.</td></tr>
    <tr><td><code>active</code></td><td>Interacting with the component will change the application data in a way that can be undone and redone.</td></tr>
    <tr><td><code>progress</code></td><td>Interacting with the component will initiate a change in the application data that will take at least a few seconds to complete.</td></tr>
    <tr><td><code>warn</code></td><td>Interacting with the component will initiate a change in the application data that CANNOT be undone.</td></tr>
@@ -247,6 +242,7 @@ A visual language is the combination of styles that make a platform recognizable
 - A **state** is an adjustment to a style that reflects user interaction. Every style function accepts the following states:
 
    <table>
+   <tr><td><code>none</code></td><td>The component is not being interacted with.</td></tr>
    <tr><td><code>hovered</code></td><td>The component is occluded by a pointer, such as a mouse cursor or fingertip.</td></tr>
    <tr><td><code>pressed</code></td><td>The component is depressed by a pointer.</td></tr>
    <tr><td><code>toggled</code></td><td>the component remains pressed after a pointer has released it.</td></tr>
@@ -255,7 +251,7 @@ A visual language is the combination of styles that make a platform recognizable
 
 ### Apply a preset theme:
 
-The `Theme` class is a tree of styles, grouped by platforms, then by layouts, then by elements, and then by styles. To access a style, you need to select the platform, layout, and element you want, as follows:
+The `Theme` class is a tree of styles, grouped by platforms, then by layouts,and then by styles. To access a style, you need to select the platform and layout to which that style belongs, as follows:
 
 1. Choose one of `ios`, `macos`, `tvos`, `android`, `windows`, `gtk` or `web`, and supply it to `Theme.platform`:
 
@@ -269,23 +265,13 @@ The `Theme` class is a tree of styles, grouped by platforms, then by layouts, th
 2. Choose one of `inline`, `small`, `smallVertical`, `smallWithInline`, `smallWithItemLeft`, `smallWithItemRight`, `medium`, `mediumVertical`, `large`, or `massive` and insert it into `Theme.platform(...).layout`:
 
    ```
-   const {element, elements} = Theme.platform('ios').layout('smallWithInline');
-
-   console.log(element) // function
-   console.log(elements) // {text: ['text-icon', 'text-body', 'text-footnote'], foreground: ['fg-primary', 'fg-secondary'], background: ['bg-primary', 'bg-secondary', 'bg-tertiary']}
-   ```
-
-3. Choose one of the `Elements` strings that `Theme.platform(...).layout` returned, and insert it into `Theme.platform(...).layout(...).element`
-
-   ```
-   const {style, tints, states} = Theme.platform('ios').layout('smallWithInline').element('text-body')
+   const {style, styles} = Theme.platform('ios').layout('smallWithInline');
 
    console.log(style) // function
-   console.log(tints) // ['active', 'progress', 'success', 'warn', 'fail']
-   console.log(states) // ['hovered', 'pressed', 'toggled', 'focused']
+   console.log(styles) // {text: ['textIcon', 'textBody', 'textFootnote'], fill:{foreground: ['fgPrimary', 'fgSecondary'], background: ['bgPrimary', 'bgSecondary', 'bgTertiary']}, tints: ['none', 'active', 'progress', 'warn', 'fail'], states:['none', 'hovered', 'pressed', 'toggled', 'focused']}
    ```
 
-4. Optionally choose one of the `Tints` and `States` that `Theme.platform(...).layout(...).element(...)` returned, and insert them into `Theme.platform(...).layout(...).element(...).style`:
+3. Chose one of the styles that `Theme.platform(...).layout(...)` returned, and insert it into `Theme.platform(...).layout(...).style`. You can also optionally insert one of the `Tint
 
    ```
    const CSSRules = Theme.platform('ios').layout('smallWithInline').element('text-body').style('active','hovered')

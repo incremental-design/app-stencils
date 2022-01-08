@@ -1,2 +1,2 @@
-export * from './ios';
+export * from './IOS';
 export * from './utils';

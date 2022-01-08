@@ -5,30 +5,8 @@ import {
   Font,
   FontAlign,
   FontVerticalAlign,
+  StyleFactory,
 } from '.';
-
-export const ios = {
-  layouts: {},
-  colorPalettes: {
-    light: {
-      fill: {
-        background: {
-          modal: {},
-          floating: {},
-          primary: {},
-          secondary: {},
-          tertiary: {},
-        },
-        foreground: {
-          primary: {},
-          secondary: {},
-        },
-      },
-      text: {},
-    },
-    dark: {},
-  },
-};
 
 const Colors = {
   cFFFFFF: {
@@ -60,7 +38,7 @@ const Colors = {
     a100: HR('000000', 100),
     a070: HR('000000', 70),
     a040: HR('000000', 40),
-    a030: HR('000000', 30), // is this even used?
+    a030: HR('000000', 30),
     a015: HR('000000', 15),
     a004: HR('000000', 4),
   },
@@ -112,7 +90,7 @@ const Colors = {
   },
 };
 
-const ForegroundPrimaryElevations: { [elevation: string]: Elevation<RGBA> } = {
+const ForegroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
   foregroundPrimaryBlue: {
     fill: [
       {
@@ -177,7 +155,7 @@ const ForegroundPrimaryElevations: { [elevation: string]: Elevation<RGBA> } = {
     ],
     dropShadow: [],
   },
-  foregroundPrimaryDefaultDark: {
+  foregroundPrimaryDark: {
     fill: [
       {
         color: Colors.cEFEFEF.a040,
@@ -193,7 +171,7 @@ const ForegroundPrimaryElevations: { [elevation: string]: Elevation<RGBA> } = {
     ],
     dropShadow: [],
   },
-  foregroundPrimaryDefaultLight: {
+  foregroundPrimaryLight: {
     fill: [
       {
         color: Colors.cFFFFFF.a100,
@@ -211,7 +189,7 @@ const ForegroundPrimaryElevations: { [elevation: string]: Elevation<RGBA> } = {
   },
 };
 
-const ForegroundSecondaryElevations: {
+const ForegroundSecondaryElevation: {
   [elevation: string]: Elevation<RGBA>;
 } = {
   foregroundSecondaryBlue: {
@@ -254,7 +232,7 @@ const ForegroundSecondaryElevations: {
     stroke: [],
     dropShadow: [],
   },
-  foregroundSecondaryDefaultDark: {
+  foregroundSecondaryDark: {
     fill: [
       {
         color: Colors.cEFEFEF.a040,
@@ -264,7 +242,7 @@ const ForegroundSecondaryElevations: {
     stroke: [],
     dropShadow: [],
   },
-  foregroundSecondaryDefaultLight: {
+  foregroundSecondaryLight: {
     fill: [
       {
         color: Colors.cEFEFEF.a100,
@@ -353,7 +331,7 @@ const backgroundTertiaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [],
     dropShadow: [],
   },
-  backgroundTertiaryDefaultDark: {
+  backgroundTertiaryDark: {
     fill: [
       {
         color: Colors.cEFEFEF.a010,
@@ -363,7 +341,7 @@ const backgroundTertiaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [],
     dropShadow: [],
   },
-  backgroundTertiaryDefaultLight: {
+  backgroundTertiaryLight: {
     fill: [
       {
         color: Colors.c191919.a007,
@@ -535,33 +513,34 @@ const TactileElevation: { [elevation: string]: Elevation<RGBA> } = {
       },
     ],
   },
-  TactileKnob: {
-    fill: [
-      {
-        color: Colors.cFFFFFF.a100,
-      },
-    ],
-    innerShadow: [],
-    stroke: [
-      {
-        color: Colors.c000000.a004,
-        offset: 'outer',
-        width: 0.5,
-      },
-    ],
-    dropShadow: [
-      {
-        y: 3,
-        blur: 8,
-        color: Colors.c000000.a015,
-      },
-      {
-        y: 3,
-        blur: 1,
-        color: Colors.c000000.a004,
-      },
-    ],
-  },
+};
+
+const KnobElevation: Elevation<RGBA> = {
+  fill: [
+    {
+      color: Colors.cFFFFFF.a100,
+    },
+  ],
+  innerShadow: [],
+  stroke: [
+    {
+      color: Colors.c000000.a004,
+      offset: 'outer',
+      width: 0.5,
+    },
+  ],
+  dropShadow: [
+    {
+      y: 3,
+      blur: 8,
+      color: Colors.c000000.a015,
+    },
+    {
+      y: 3,
+      blur: 1,
+      color: Colors.c000000.a004,
+    },
+  ],
 };
 
 const TypefaceFallback = ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'];
@@ -577,6 +556,8 @@ const SFPT /* (SF) (P)ro (T)ext */ = [
   'SF Pro Icons',
   ...TypefaceFallback,
 ];
+
+const FA /* (F)ont (A)wesome */ = ['Font Awesome 6 Pro'];
 
 const FontMassiveBG = {
   typeface: SFPR,
@@ -657,210 +638,774 @@ const FontFootnoteTiny = {
 };
 
 const Fonts: { [font: string]: Font<RGBA> } = {
-  massiveBGDarkDefault: { ...FontMassiveBG, color: Colors.cEFEFEF.a010 },
-  fontMassiveBGDarkGreen: { ...FontMassiveBG, color: Colors.c1ABD5E.a010 },
-  fontMassiveBGDarkYellow: { ...FontMassiveBG, color: Colors.cCBA12D.a012 },
-  fontMassiveBGDarkOrange: { ...FontMassiveBG, color: Colors.cDE6700.a010 },
-  fontMassiveBGLightDefault: { ...FontMassiveBG, color: Colors.c001927.a010 },
-  fontMassiveBGLightGreen: { ...FontMassiveBG, color: Colors.c1ABD5E.a020 },
-  fontMassiveBGLightYellow: { ...FontMassiveBG, color: Colors.cCBA12D.a025 },
-  fontMassiveBGLightOrange: { ...FontMassiveBG, color: Colors.cDE6700.a020 },
-  MassiveTitleDarkHovered: {
+  massiveBGDark: { ...FontMassiveBG, color: Colors.cEFEFEF.a010 },
+  massiveBGDarkGreen: { ...FontMassiveBG, color: Colors.c1ABD5E.a010 },
+  massiveBGDarkYellow: { ...FontMassiveBG, color: Colors.cCBA12D.a012 },
+  massiveBGDarkOrange: { ...FontMassiveBG, color: Colors.cDE6700.a010 },
+  massiveBGLight: { ...FontMassiveBG, color: Colors.c001927.a010 },
+  massiveBGLightGreen: { ...FontMassiveBG, color: Colors.c1ABD5E.a020 },
+  massiveBGLightYellow: { ...FontMassiveBG, color: Colors.cCBA12D.a025 },
+  massiveBGLightOrange: { ...FontMassiveBG, color: Colors.cDE6700.a020 },
+  massiveTitleDarkPrimary: {
     ...FontMassiveTitle,
     color: Colors.cEFEFEF.a100,
   },
-  massiveTitleDarkNotHovered: {
+  massiveTitleDarkSecondary: {
     ...FontMassiveTitle,
     color: Colors.cEFEFEF.a070,
   },
-  massiveTitleLightHovered: {
+  massiveTitleLightPrimary: {
     ...FontMassiveTitle,
     color: Colors.c001927.a100,
   },
-  massiveTitleLightNotHovered: {
+  massiveTitleLightSecondary: {
     ...FontMassiveTitle,
     color: Colors.c001927.a070,
   },
-  largeTitleDarkHovered: { ...FontLargeTitle, color: Colors.cEFEFEF.a100 },
-  largeTitleDarkNotHovered: {
+  largeTitleDarkPrimary: { ...FontLargeTitle, color: Colors.cEFEFEF.a100 },
+  largeTitleDarkSecondary: {
     ...FontLargeTitle,
     color: Colors.cEFEFEF.a070,
   },
-  largeTitleLightHovered: { ...FontLargeTitle, color: Colors.c001927.a100 },
-  largeTitleLightNotHovered: {
+  largeTitleLightPrimary: { ...FontLargeTitle, color: Colors.c001927.a100 },
+  largeTitleLightSecondary: {
     ...FontLargeTitle,
     color: Colors.c001927.a070,
   },
-  largeTitleAccentDefaultDarkHovered: {
+  largeTitleAccentDarkPrimary: {
     ...FontLargeTitle,
     color: Colors.c1BA1E5.a100,
   },
-  largeTitleAccentDefaultDarkNotHovered: {
+  largeTitleAccentDarkSecondary: {
     ...FontLargeTitle,
     color: Colors.c1BA1E5.a070,
   },
-  largeTitleAccentDefaultLightHovered: {
+  largeTitleAccentLightPrimary: {
     ...FontLargeTitle,
     color: Colors.c004D6F.a100,
   },
-  largeTitleAccentDefaultLightNotHovered: {
+  largeTitleAccentLightSecondary: {
     ...FontLargeTitle,
     color: Colors.c004D6F.a070,
   },
-  largeTitleAccentGreenDarkHovered: {
+  largeTitleAccentGreenDarkPrimary: {
     ...FontLargeTitle,
     color: Colors.c1ABD5E.a100,
   },
-  largeTitleAccentGreenDarkNotHovered: {
+  largeTitleAccentGreenDarkSecondary: {
     ...FontLargeTitle,
     color: Colors.c1ABD5E.a070,
   },
-  largeTitleAccentGreenLightHovered: {
+  largeTitleAccentGreenLightPrimary: {
     ...FontLargeTitle,
     color: Colors.c016557.a100,
   },
-  largeTitleAccentGreenLightNotHovered: {
+  largeTitleAccentGreenLightSecondary: {
     ...FontLargeTitle,
     color: Colors.c016557.a070,
   },
-  largeTitleAccentYellowDarkHovered: {
+  largeTitleAccentYellowDarkPrimary: {
     ...FontLargeTitle,
     color: Colors.cF5BF00.a100,
   },
-  largeTitleAccentYellowDarkNotHovered: {
+  largeTitleAccentYellowDarkSecondary: {
     ...FontLargeTitle,
     color: Colors.cF5BF00.a070,
   },
-  largeTitleAccentYellowLightHovered: {
+  largeTitleAccentYellowLightPrimary: {
     ...FontLargeTitle,
     color: Colors.c6D5100.a100,
   },
-  largeTitleAccentYellowLightNotHovered: {
+  largeTitleAccentYellowLightSecondary: {
     ...FontLargeTitle,
     color: Colors.c6D5100.a070,
   },
-  largeTitleAccentOrangeDarkHovered: {
+  largeTitleAccentOrangeDarkPrimary: {
     ...FontLargeTitle,
     color: Colors.cDE6700.a100,
   },
-  largeTitleAccentOrangeDarkNotHovered: {
+  largeTitleAccentOrangeDarkSecondary: {
     ...FontLargeTitle,
     color: Colors.cDE6700.a070,
   },
-  largeTitleAccentOrangeLightHovered: {
+  largeTitleAccentOrangeLightPrimary: {
     ...FontLargeTitle,
     color: Colors.c9B1700.a100,
   },
-  largeTitleAccentOrangeLightNotHovered: {
+  largeTitleAccentOrangeLightSecondary: {
     ...FontLargeTitle,
     color: Colors.c9B1700.a070,
   },
-  headlineDarkHovered: { ...FontHeadline, color: Colors.cEFEFEF.a070 },
-  headlineDarkNotHovered: { ...FontHeadline, color: Colors.cEFEFEF.a040 },
-  headlineLightHovered: { ...FontHeadline, color: Colors.c000000.a070 },
-  headlineLightNotHovered: { ...FontHeadline, color: Colors.c001927.a070 },
-  bodyDarkHovered: { ...FontBody, color: Colors.cFFFFFF.a100 },
-  bodyDarkNotHovered: { ...FontBody, color: Colors.cEFEFEF.a070 },
-  bodyLightHovered: { ...FontBody, color: Colors.c001927.a100 },
-  bodyLightNotHovered: { ...FontBody, color: Colors.c001927.a070 },
-  bodyAccentDefaultDarkHovered: { ...FontBody, color: Colors.c1BA1E5.a100 },
-  bodyAccentDefaultDarkNotHovered: { ...FontBody, color: Colors.c1BA1E5.a070 },
-  bodyAccentDefaultLightHovered: { ...FontBody, color: Colors.c004D6F.a100 },
-  bodyAccentDefaultLightNotHovered: { ...FontBody, color: Colors.c004D6F.a070 },
-  bodyAccentGreenDarkHovered: { ...FontBody, color: Colors.c1ABD5E.a100 },
-  bodyAccentGreenDarkNotHovered: { ...FontBody, color: Colors.c1ABD5E.a070 },
-  bodyAccentGreenLightHovered: { ...FontBody, color: Colors.c016557.a100 },
-  bodyAccentGreenLightNotHovered: { ...FontBody, color: Colors.c016557.a070 },
-  bodyAccentYellowDarkHovered: { ...FontBody, color: Colors.cF5BF00.a100 },
-  bodyAccentYellowDarkNotHovered: { ...FontBody, color: Colors.cF5BF00.a070 },
-  bodyAccentYellowLightHovered: { ...FontBody, color: Colors.c6D5100.a100 },
-  bodyAccentYellowLightNotHovered: { ...FontBody, color: Colors.c6D5100.a070 },
-  bodyAccentOrangeDarkHovered: { ...FontBody, color: Colors.cDE6700.a100 },
-  bodyAccentOrangeDarkNotHovered: { ...FontBody, color: Colors.cDE6700.a070 },
-  bodyAccentOrangeLightHovered: { ...FontBody, color: Colors.c9B1700.a100 },
-  bodyAccentOrangeLightNotHovered: { ...FontBody, color: Colors.c9B1700.a070 },
-  subheadDarkHovered: { ...FontSubhead, color: Colors.cEFEFEF.a070 },
-  subheadDarkNotHovered: { ...FontSubhead, color: Colors.cEFEFEF.a040 },
-  subheadLightHovered: { ...FontSubhead, color: Colors.c000000.a070 },
-  subheadLightNotHovered: { ...FontSubhead, color: Colors.c000000.a040 },
-  footnoteDarkHoveredCenterAligned: {
+  headlineDarkPrimary: { ...FontHeadline, color: Colors.cEFEFEF.a070 },
+  headlineDarkSecondary: { ...FontHeadline, color: Colors.cEFEFEF.a040 },
+  headlineLightPrimary: { ...FontHeadline, color: Colors.c000000.a070 },
+  headlineLightSecondary: { ...FontHeadline, color: Colors.c001927.a070 },
+  bodyDarkPrimary: { ...FontBody, color: Colors.cFFFFFF.a100 },
+  bodyDarkSecondary: { ...FontBody, color: Colors.cEFEFEF.a070 },
+  bodyLightPrimary: { ...FontBody, color: Colors.c001927.a100 },
+  bodyLightSecondary: { ...FontBody, color: Colors.c001927.a070 },
+  bodyAccentDarkPrimary: { ...FontBody, color: Colors.c1BA1E5.a100 },
+  bodyAccentDarkSecondary: { ...FontBody, color: Colors.c1BA1E5.a070 },
+  bodyAccentLightPrimary: { ...FontBody, color: Colors.c004D6F.a100 },
+  bodyAccentLightSecondary: { ...FontBody, color: Colors.c004D6F.a070 },
+  bodyAccentGreenDarkPrimary: { ...FontBody, color: Colors.c1ABD5E.a100 },
+  bodyAccentGreenDarkSecondary: { ...FontBody, color: Colors.c1ABD5E.a070 },
+  bodyAccentGreenLightPrimary: { ...FontBody, color: Colors.c016557.a100 },
+  bodyAccentGreenLightSecondary: { ...FontBody, color: Colors.c016557.a070 },
+  bodyAccentYellowDarkPrimary: { ...FontBody, color: Colors.cF5BF00.a100 },
+  bodyAccentYellowDarkSecondary: { ...FontBody, color: Colors.cF5BF00.a070 },
+  bodyAccentYellowLightPrimary: { ...FontBody, color: Colors.c6D5100.a100 },
+  bodyAccentYellowLightSecondary: { ...FontBody, color: Colors.c6D5100.a070 },
+  bodyAccentOrangeDarkPrimary: { ...FontBody, color: Colors.cDE6700.a100 },
+  bodyAccentOrangeDarkSecondary: { ...FontBody, color: Colors.cDE6700.a070 },
+  bodyAccentOrangeLightPrimary: { ...FontBody, color: Colors.c9B1700.a100 },
+  bodyAccentOrangeLightSecondary: { ...FontBody, color: Colors.c9B1700.a070 },
+  subheadDarkPrimary: { ...FontSubhead, color: Colors.cEFEFEF.a070 },
+  subheadDarkSecondary: { ...FontSubhead, color: Colors.cEFEFEF.a040 },
+  subheadLightPrimary: { ...FontSubhead, color: Colors.c000000.a070 },
+  subheadLightSecondary: { ...FontSubhead, color: Colors.c000000.a040 },
+  footnoteDarkPrimaryCenterAligned: {
     ...FontFootnote,
     align: FontAlign.center,
     color: Colors.cFFFFFF.a100,
   },
-  footnoteDarkNotHoveredCenterAligned: {
+  footnoteDarkSecondaryCenterAligned: {
     ...FontFootnote,
     align: FontAlign.center,
     color: Colors.cEFEFEF.a070,
   },
-  footnoteLightHoveredCenterAligned: {
+  footnoteLightPrimaryCenterAligned: {
     ...FontFootnote,
     align: FontAlign.center,
     color: Colors.c001927.a100,
   },
-  footnoteLightNotHoveredCenterAligned: {
+  footnoteLightSecondaryCenterAligned: {
     ...FontFootnote,
     align: FontAlign.center,
     color: Colors.c001927.a070,
   },
-  footnoteDarkHoveredLeftAligned: {
+  footnoteDarkPrimaryLeftAligned: {
     ...FontFootnote,
     align: FontAlign.left,
     color: Colors.cFFFFFF.a100,
   },
-  footnoteDarkNotHoveredLeftAligned: {
+  footnoteDarkSecondaryLeftAligned: {
     ...FontFootnote,
     align: FontAlign.left,
     color: Colors.cEFEFEF.a070,
   },
-  footnoteLightHoveredLeftAligned: {
+  footnoteLightPrimaryLeftAligned: {
     ...FontFootnote,
     align: FontAlign.left,
     color: Colors.c001927.a100,
   },
-  footnoteLightNotHoveredLeftAligned: {
+  footnoteLightSecondaryLeftAligned: {
     ...FontFootnote,
     align: FontAlign.left,
     color: Colors.c001927.a070,
   },
-  footnoteTinyDarkHoveredCenterAligned: {
+  footnoteTinyDarkPrimaryCenterAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.center,
     color: Colors.cEFEFEF.a070,
   },
-  footnoteTinyDarkNotHoveredCenterAligned: {
+  footnoteTinyDarkSecondaryCenterAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.center,
     color: Colors.cEFEFEF.a040,
   },
-  footnoteTinyLightHoveredCenterAligned: {
+  footnoteTinyLightPrimaryCenterAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.center,
     color: Colors.c000000.a070,
   },
-  footnoteTinyLightNotHoveredCenterAligned: {
+  footnoteTinyLightSecondaryCenterAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.center,
     color: Colors.c001927.a070,
   },
-  footnoteTinyDarkHoveredLeftAligned: {
+  footnoteTinyDarkPrimaryLeftAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.left,
     color: Colors.cEFEFEF.a070,
   },
-  footnoteTinyDarkNotHoveredLeftAligned: {
+  footnoteTinyDarkSecondaryLeftAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.left,
     color: Colors.cEFEFEF.a040,
   },
-  footnoteTinyLightHoveredLeftAligned: {
+  footnoteTinyLightPrimaryLeftAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.left,
     color: Colors.c000000.a070,
   },
-  footnoteTinyLightNotHoveredLeftAligned: {
+  footnoteTinyLightSecondaryLeftAligned: {
     ...FontFootnoteTiny,
     align: FontAlign.left,
     color: Colors.c001927.a070,
+  },
+};
+
+const CSSRules: {
+  [ruleset: string]: { [cssRule: string]: string | number };
+} = {
+  marginL8R8: {
+    marginLeft: 8,
+    marginRight: 8,
+  },
+  marginT4B4: {
+    marginTop: 4,
+    marginBottom: 4,
+  },
+  marginT4B8: {
+    marginTop: 4,
+    marginBottom: 8,
+  },
+  minWidth48: {
+    minWidth: 48,
+  },
+};
+
+const TSF: {
+  [styleName: string]: StyleFactory;
+} /* (T)ext (S)tyle (F)actories */ = {
+  body: {} as StyleFactory,
+  footnote: {} as StyleFactory,
+};
+
+const FSF: {
+  [styleName: string]: StyleFactory;
+} /* (F)oreground (S)tyle (F)actories */ = {
+  label: {} as StyleFactory,
+  button: {} as StyleFactory,
+};
+
+const BSF: {
+  [styleName: string]: StyleFactory;
+} /* (B)ackground (S)tyle (F)actories */ = {};
+
+export const IOS = {
+  layouts: {
+    /**
+     * Elements that have an inline layout include:
+     * * field
+     *  * label left
+     *    * icon left
+     *    * icon right
+     *    * label text center
+     *  * input and validation
+     *    * input text
+     *    * validator badge
+     *      * badge icon left
+     *      * badge icon right
+     *      * badge text center
+     *      * badge fill
+     *    * stepper handle right
+     *    * input fill
+     * * button
+     *  * back chevron
+     *  * label
+     *  * action icon
+     *    * disclosure indicator left
+     *    * disclosure indicator right
+     *    * fill
+     * * list item
+     *  * label text
+     *  * indicator badge
+     *    * icon left
+     *    * icon right
+     *    * text center
+     *  * indicator thumbnail rectangle
+     *    * indicator thumbnail image
+     *    * indicator thumbnail fill
+     *  * indicator thumbnail circle
+     *    * indicator thumbnail image
+     *    * indicator thumbnail fill
+     *  * disclosure hint
+     *  * disclosure indicator
+     */
+    inline: {
+      text: {
+        // TSF.body,
+      },
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    small: {
+      /**
+       * Elements that have a small layout include:
+       * * field
+       *    * float label
+       *      * label left
+       *      * icon left
+       *      * icon right
+       *    * label text center
+       *    * input and validation
+       *      * input text
+       *      * validator badge
+       *        * badge icon left
+       *        * badge icon right
+       *        * badge text center
+       *        * badge fill
+       *      * stepper handle right
+       * * button
+       *    * back chevron
+       *    * Action icon and disclosure
+       *      * Action icon
+       *      * disclosure indicator left
+       *      * disclosure indicator right
+       *      * fill
+       *    * label (bottom)
+       * * collection item
+       *    * label text
+       *    * disclosure left
+       *      * disclosure indicator (left)
+       *        * disclosure hint
+       *    * disclosure right
+       *      * disclosure indicator (right)
+       *        * disclosure hint
+       *    * thumbnail rectangle
+       *      * thumbnail image
+       *      * thumbnail fill
+       */
+      text: {
+        body: TSF.body,
+        footnote: TSF.footnote,
+      },
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Currently, there are no elements with a 'small vertical' layout
+     */
+    smallVertical: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+
+    smallWithInline: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a smallWithItemLeft layout include:
+     * * list item
+     *    * label text
+     *      * footnote text
+     *    * indicator badge
+     *      * icon left
+     *      * icon right
+     *      * text center
+     *    * indicator thumbnail rectangle
+     *      * indicator thumbnail image
+     *      * indicator thumbnail fill
+     *    * indicator thumbnail circle
+     *      * indicator thumbnail image
+     *      * indicator thumbnail fill
+     *    * disclosure indicator
+     *      * disclosure hint
+     */
+    smallWithItemLeft: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a smallWithItemRight layout include:
+     * * field
+     *    * float label
+     *      * label left
+     *      * icon left
+     *      * icon right
+     *    * label text center
+     *    * input and validation
+     *      * input text
+     *      * validator badge
+     *        * badge icon left
+     *        * badge icon right
+     *        * badge text center
+     *        * badge fill
+     *      * stepper handle right
+     * * button
+     *    * back chevron
+     *    * Action icon and disclosure
+     *      * Action icon
+     *      * disclosure indicator left
+     *      * disclosure indicator right
+     *      * fill
+     *    * label (left)
+     *      * footnote
+     */
+    smallWithItemRight: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a medium layout include:
+     * * slider
+     *  * footnote text
+     *  * knob
+     *    * knob fill
+     *  * field knob
+     *    * field label
+     *      * text left
+     *      * icon center
+     *      * text right
+     *    * field input
+     *      * input text
+     *      * stepper handle
+     *      * input fill
+     *    * knob fill
+     *  * track
+     *    * track fill
+     *    * interval tick
+     *    * interval label
+     *      * track interval label text
+     *      * track interval label icon (left)
+     *    * track beginning label
+     *    * track end label
+     *  * expandable chunk
+     *    * BG icon
+     *    * BG text
+     *    * label
+     *    * disclosure
+     *     * hint
+     *    * footnote
+     *    * card fill
+     */
+    medium: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a medium layout include:
+     *  * expandable chunk
+     *    * BG icon
+     *    * BG text
+     *    * label
+     *    * disclosure
+     *     * hint
+     *    * footnote
+     *    * card fill
+     */
+    mediumVertical: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a large layout include:
+     *  * expandable chunk
+     *    * BG icon
+     *    * BG text
+     *    * label
+     *    * disclosure
+     *     * hint
+     *    * footnote
+     *    * card fill
+     */
+    large: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+    /**
+     * Elements that have a massive layout include:
+     *  * expandable chunk
+     *    * BG icon
+     *    * BG text
+     *    * label
+     *    * disclosure
+     *     * hint
+     *    * footnote
+     *    * card fill
+     */
+    massive: {
+      text: {},
+      fill: {
+        foreground: {},
+        background: {},
+      },
+    },
+  },
+  colorPalettes: {
+    light: {
+      fill: {
+        background: {
+          modal: {
+            none: PopoverElevation.PopoverLight,
+          },
+          floating: {
+            none: FloatingElevation.FloatingLight,
+          },
+          primary: {
+            none: backgroundPrimaryElevation.backgroundPrimaryLight,
+          },
+          secondary: {
+            none: backgroundSecondaryElevation.backgroundSecondaryLight,
+          },
+          tertiary: {
+            none: backgroundTertiaryElevation.backgroundTertiaryLight,
+            success: backgroundTertiaryElevation.backgroundTertiaryGreen,
+            warn: backgroundTertiaryElevation.backgroundTertiaryYellow,
+            fail: backgroundTertiaryElevation.backgroundTertiaryRed,
+          },
+        },
+        foreground: {
+          primary: {
+            none: ForegroundPrimaryElevation.ForegroundPrimaryLight,
+            active: ForegroundPrimaryElevation.ForegroundPrimaryBlue,
+            success: ForegroundPrimaryElevation.ForegroundPrimaryGreen,
+            warn: ForegroundPrimaryElevation.ForegroundPrimaryYellow,
+            fail: ForegroundPrimaryElevation.ForegroundPrimaryOrange,
+          },
+          secondary: {
+            none: ForegroundSecondaryElevation.ForegroundSecondaryLight,
+            active: ForegroundSecondaryElevation.ForegroundSecondaryBlue,
+            success: ForegroundSecondaryElevation.ForegroundSecondaryGreen,
+            warn: ForegroundSecondaryElevation.ForegroundSecondaryYellow,
+            fail: ForegroundSecondaryElevation.ForegroundSecondaryOrange,
+          },
+          tactile: {
+            none: TactileElevation.TactileLight,
+          },
+          knob: {
+            none: KnobElevation,
+          },
+        },
+      },
+      text: {
+        primary: {
+          massiveBG: {
+            none: Fonts.massiveBGLight,
+            success: Fonts.massiveBGLightGreen,
+            warn: Fonts.massiveBGLightYellow,
+            fail: Fonts.massiveBGLightOrange,
+          },
+          massiveTitle: {
+            none: Fonts.massiveTitleLightPrimary,
+          },
+          title: {
+            none: Fonts.largeTitleLightPrimary,
+            active: Fonts.largeTitleAccentLightPrimary,
+            success: Fonts.largeTitleAccentGreenLightPrimary,
+            warn: Fonts.largeTitleAccentYellowLightPrimary,
+            fail: Fonts.largeTitleAccentOrangeLightPrimary,
+          },
+          headline: {
+            none: Fonts.headlineLightPrimary,
+          },
+          body: {
+            none: Fonts.bodyLightPrimary,
+            active: Fonts.bodyAccentLightPrimary,
+            success: Fonts.bodyAccentGreenLightPrimary,
+            warn: Fonts.bodyAccentYellowLightPrimary,
+            fail: Fonts.bodyAccentOrangeLightPrimary,
+          },
+          subhead: {
+            none: Fonts.subheadLightPrimary,
+          },
+          footnote: {
+            none: Fonts.footnoteLightPrimaryCenterAligned,
+          },
+          footnoteLeftAligned: {
+            none: Fonts.footnoteLightPrimaryLeftAligned,
+          },
+          footnoteTiny: {
+            none: Fonts.footnoteTinyLightPrimaryCenterAligned,
+          },
+          footnoteTinyLeftAligned: {
+            none: Fonts.footnoteTinyLightPrimaryLeftAligned,
+          },
+        },
+        secondary: {
+          massiveTitle: {
+            none: Fonts.massiveTitleLightSecondary,
+          },
+          title: {
+            none: Fonts.largeTitleLightSecondary,
+            active: Fonts.largeTitleAccentLightSecondary,
+            success: Fonts.largeTitleAccentGreenLightSecondary,
+            warn: Fonts.largeTitleAccentYellowLightSecondary,
+            fail: Fonts.largeTitleAccentOrangeLightSecondary,
+          },
+          headline: {
+            none: Fonts.headlineLightSecondary,
+          },
+          body: {
+            none: Fonts.bodyLightSecondary,
+            active: Fonts.bodyAccentLightSecondary,
+            success: Fonts.bodyAccentGreenLightSecondary,
+            warn: Fonts.bodyAccentYellowLightSecondary,
+            fail: Fonts.bodyAccentOrangeLightSecondary,
+          },
+          subhead: {
+            none: Fonts.subheadLightSecondary,
+          },
+          footnote: {
+            none: Fonts.footnoteLightSecondaryCenterAligned,
+          },
+          footnoteLeftAligned: {
+            none: Fonts.footnoteLightSecondaryLeftAligned,
+          },
+          footnoteTiny: {
+            none: Fonts.footnoteTinyLightSecondaryCenterAligned,
+          },
+          footnoteTinyLeftAligned: {
+            none: Fonts.footnoteTinyLightSecondaryLeftAligned,
+          },
+        },
+      },
+    },
+    dark: {
+      fill: {
+        background: {
+          modal: {
+            none: PopoverElevation.PopoverDark,
+          },
+          floating: {
+            none: FloatingElevation.FloatingDark,
+          },
+          primary: {
+            none: backgroundPrimaryElevation.backgroundPrimaryDark,
+          },
+          secondary: {
+            none: backgroundSecondaryElevation.backgroundSecondaryDark,
+          },
+          tertiary: {
+            none: backgroundTertiaryElevation.backgroundTertiaryDark,
+            success: backgroundTertiaryElevation.backgroundTertiaryGreen,
+            warn: backgroundTertiaryElevation.backgroundTertiaryYellow,
+            fail: backgroundTertiaryElevation.backgroundTertiaryRed,
+          },
+        },
+        foreground: {
+          primary: {
+            none: ForegroundPrimaryElevation.ForegroundPrimaryDark,
+            active: ForegroundPrimaryElevation.ForegroundPrimaryBlue,
+            success: ForegroundPrimaryElevation.ForegroundPrimaryGreen,
+            warn: ForegroundPrimaryElevation.ForegroundPrimaryYellow,
+            fail: ForegroundPrimaryElevation.ForegroundPrimaryOrange,
+          },
+          secondary: {
+            none: ForegroundSecondaryElevation.ForegroundSecondaryLight,
+            active: ForegroundSecondaryElevation.ForegroundSecondaryBlue,
+            success: ForegroundSecondaryElevation.ForegroundSecondaryGreen,
+            warn: ForegroundSecondaryElevation.ForegroundSecondaryYellow,
+            fail: ForegroundSecondaryElevation.ForegroundSecondaryOrange,
+          },
+          tactile: {
+            none: TactileElevation.tactileDark,
+          },
+          knob: {
+            none: KnobElevation,
+          },
+        },
+      },
+      text: {
+        primary: {
+          massiveBG: {
+            none: Fonts.massiveBGDark,
+            success: Fonts.massiveBGDarkGreen,
+            warn: Fonts.massiveBGDarkYellow,
+            fail: Fonts.massiveBGDarkOrange,
+          },
+          massiveTitle: {
+            none: Fonts.massiveTitleDarkPrimary,
+          },
+          title: {
+            none: Fonts.largeTitleDarkPrimary,
+            active: Fonts.largeTitleAccentDarkPrimary,
+            success: Fonts.largeTitleAccentGreenDarkPrimary,
+            warn: Fonts.largeTitleAccentYellowDarkPrimary,
+            fail: Fonts.largeTitleAccentOrangeDarkPrimary,
+          },
+          headline: {
+            none: Fonts.headlineDarkPrimary,
+          },
+          body: {
+            none: Fonts.bodyDarkPrimary,
+            active: Fonts.bodyAccentDarkPrimary,
+            success: Fonts.bodyAccentGreenDarkPrimary,
+            warn: Fonts.bodyAccentYellowDarkPrimary,
+            fail: Fonts.bodyAccentOrangeDarkPrimary,
+          },
+          subhead: {
+            none: Fonts.subheadDarkPrimary,
+          },
+          footnote: {
+            none: Fonts.footnoteDarkPrimaryCenterAligned,
+          },
+          footnoteLeftAligned: {
+            none: Fonts.footnoteDarkPrimaryLeftAligned,
+          },
+          footnoteTiny: {
+            none: Fonts.footnoteTinyDarkPrimaryCenterAligned,
+          },
+          footnoteTinyLeftAligned: {
+            none: Fonts.footnoteTinyDarkPrimaryLeftAligned,
+          },
+        },
+        secondary: {
+          massiveTitle: {
+            none: Fonts.massiveTitleDarkSecondary,
+          },
+          title: {
+            none: Fonts.largeTitleDarkSecondary,
+            active: Fonts.largeTitleAccentDarkSecondary,
+            success: Fonts.largeTitleAccentGreenDarkSecondary,
+            warn: Fonts.largeTitleAccentYellowDarkSecondary,
+            fail: Fonts.largeTitleAccentOrangeDarkSecondary,
+          },
+          headline: {
+            none: Fonts.headlineDarkSecondary,
+          },
+          body: {
+            none: Fonts.bodyDarkSecondary,
+            active: Fonts.bodyAccentDarkSecondary,
+            success: Fonts.bodyAccentGreenDarkSecondary,
+            warn: Fonts.bodyAccentYellowDarkSecondary,
+            fail: Fonts.bodyAccentOrangeDarkSecondary,
+          },
+          subhead: {
+            none: Fonts.subheadDarkSecondary,
+          },
+          footnote: {
+            none: Fonts.footnoteDarkSecondaryCenterAligned,
+          },
+          footnoteLeftAligned: {
+            none: Fonts.footnoteDarkSecondaryLeftAligned,
+          },
+          footnoteTiny: {
+            none: Fonts.footnoteTinyDarkSecondaryCenterAligned,
+          },
+          footnoteTinyLeftAligned: {
+            none: Fonts.footnoteTinyDarkSecondaryLeftAligned,
+          },
+        },
+      },
+    },
   },
 };

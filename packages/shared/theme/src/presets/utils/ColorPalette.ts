@@ -1,60 +1,26 @@
-import { Font, Platform, StyleFactory } from '.';
+import { Font } from '.';
 
-export class ColorPalette implements ColorPaletteInterface<RGBA> {
-  get fill(): {
-    background:
-      | {
-          modal: Tint<Elevation<RGBA>> /* same as popover on iOS */;
-          floating: Tint<Elevation<RGBA>>;
-          primary: Tint<Elevation<RGBA>>;
-          secondary: Tint<Elevation<RGBA>>;
-          tertiary: Tint<Elevation<RGBA>>;
-          [fillTreatmentName: string]: Tint<Elevation<RGBA>> | undefined;
-        }
-      | undefined;
-    foreground: {
-      primary: Tint<Elevation<RGBA>>;
-      secondary: Tint<Elevation<RGBA>>;
-      [fillTreatmentName: string]: Tint<Elevation<RGBA>> | undefined;
-    };
-  } {
-    throw new Error('not implemented');
-  }
-
-  get text(): {
-    title: Tint<Font<RGBA>>;
-    headline: Tint<Font<RGBA>>;
-    subhead: Tint<Font<RGBA>>;
-    icon: Tint<Font<RGBA>>;
-    body: Tint<Font<RGBA>>;
-    footnote: Tint<Font<RGBA>> | undefined;
-    [typeTreatmentName: string]: Tint<Font<RGBA>> | undefined;
-  } {
-    throw new Error('not implemented');
-  }
-}
+// todo - maybe make a helper class called 'ColorPalette' which implements ColorPaletteInterface.
 
 /**
  * ColorPaletteInterface contains ALL of the colors used in ALL of the layouts in a given {@link Platform}'s styles.
  *
  * @remarks
  *
- * Each of the {@link StyleGenerator}s you add to a {@link Layout} will use some or all of these colors.
+ * Each of the {@link StyleFactory} functions you add to a {@link Layout} will use some or all of these colors.
  *
  */
 
 export interface ColorPaletteInterface<T> {
   fill: {
-    background:
-      | {
-          modal: Tint<Elevation<T>> /* same as popover on iOS */;
-          floating: Tint<Elevation<T>>;
-          primary: Tint<Elevation<T>>;
-          secondary: Tint<Elevation<T>>;
-          tertiary: Tint<Elevation<T>>;
-          [fillTreatmentName: string]: Tint<Elevation<T>> | undefined;
-        }
-      | undefined;
+    background: {
+      modal: Tint<Elevation<T>> /* same as popover on iOS */;
+      floating: Tint<Elevation<T>>;
+      primary: Tint<Elevation<T>>;
+      secondary: Tint<Elevation<T>>;
+      tertiary: Tint<Elevation<T>>;
+      [fillTreatmentName: string]: Tint<Elevation<T>> | undefined;
+    };
     foreground: {
       primary: Tint<Elevation<T>>;
       secondary: Tint<Elevation<T>>;
@@ -62,13 +28,23 @@ export interface ColorPaletteInterface<T> {
     };
   };
   text: {
-    title: Tint<Font<T>>;
-    headline: Tint<Font<T>>;
-    subhead: Tint<Font<T>>;
-    icon: Tint<Font<T>>;
-    body: Tint<Font<T>>;
-    footnote: Tint<Font<T>> | undefined;
-    [typeTreatmentName: string]: Tint<Font<T>> | undefined;
+    // todo: make a way to handle icon fonts inline with text
+    primary: {
+      title: Tint<Font<T>>;
+      headline: Tint<Font<T>>;
+      subhead: Tint<Font<T>>;
+      body: Tint<Font<T>>;
+      footnote?: Tint<Font<T>>;
+      [typeTreatmentName: string]: Tint<Font<T>> | undefined;
+    };
+    secondary: {
+      title?: Tint<Font<T>>;
+      headline?: Tint<Font<T>>;
+      subhead?: Tint<Font<T>>;
+      body?: Tint<Font<T>>;
+      footnote?: Tint<Font<T>>;
+      [typeTreatmentName: string]: Tint<Font<T>> | undefined;
+    };
   };
 }
 
@@ -93,12 +69,12 @@ export interface ColorPaletteInterface<T> {
  *
  */
 export type Tint<T> = {
-  default: T;
-  active: T | undefined;
-  progress: T | undefined;
-  success: T | undefined;
-  warn: T | undefined;
-  fail: T | undefined;
+  none: T;
+  active?: T;
+  progress?: T;
+  success?: T;
+  warn?: T;
+  fail?: T;
   [tintName: string]: T | undefined;
 };
 

@@ -1,94 +1,32 @@
-import { RGBA, BlendMode, RGBAtoCSS, Elevation, ColorPalette } from '.';
-
-export class Style {}
-
-export interface StyleInterface {}
-
-/**
- * A shape to apply to a DOM node
- *
- * @param minWidth - the minimum width of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
- *
- * @param maxWidth - the optional maximum width of the shape in device-independent points (pt). Defaults to the minWidth.
- *
- * @param minHeight - the minimum height of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
- *
- * @param maxHeight - the optional maximum height of the shape in device-independent points (pt). Defaults to the minHeight.
- *
- * @param borderRadius - the radius of the shape in device-independent points (pt) This must be a value greater than 0. This is required.
- *
- */
-export type Shape = {
-  minWidth: number /* in pt */;
-  maxWidth?: number /* in pt */;
-  minHeight: number /* in pt */;
-  maxHeight?: number /* in pt */;
-  borderRadius: number /* in pt*/;
-};
-
-export function makeShapeCSSRules(S: Shape) {
-  const { minWidth, maxWidth, minHeight, maxHeight, borderRadius } = S;
-  return {
-    display: 'flex',
-    'flex-direction': 'row',
-    'min-width': `${minWidth}pt`,
-    'max-width': `${maxWidth ? maxWidth : minWidth}pt`,
-    'min-height': `${minHeight}pt`,
-    'max-height': `${maxHeight ? maxHeight : minHeight}pt`,
-    'border-radius': `${borderRadius}pt`,
-  };
-}
+import {
+  RGBA,
+  BlendMode,
+  RGBAtoCSS,
+  Elevation,
+  ColorPaletteInterface,
+} from '.';
 
 /**
- * A font to apply to a DOM node's text.
+ * StyleFactory applies a {@link Platform}'s {@link ColorPalette}s to its own positioning rules to produce a set of CSS rules. It varies the specific rules it accesses based on the parameters it receives.
  *
- * @param typeface - the name of the typeface to apply (e.g. 'Helvetica'). This is required.
+ * @param palette - the {@link Platform}'s {@link ColorPalette} to use.
  *
- * @param size - the size of the font in device-independent points (pt). This is required.
+ * @param tint - the tint to apply to the colors. This will always be one of the {@link Theme.} values.
  *
- * @param weight - a number between 100 and 900, inclusive, where 100 is the lightest and 900 is the heaviest. This is required.
+ * @param state - a {@link State} value.
  *
- * @param color - a color to apply to the font, which must contain a `r`, `g`, `b`, and `a` property. This is required.
+ * @param dark - a boolean that determines whether the dark palette should be applied. Defaults to `false`. In the case that palettes other than a light and dark are supplied by the {@link Platform} object, then the palette to use canbe selected by supplying the string that matches the key of the palette.
  *
- * @param blendMode - optional {@link BlendMode} to apply to the font. Defaults to {@link BlendMode.normal}.
- *
- * @param tracking - optional tracking of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}
- *
- * @param leading - optional leading of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
- *
- * @param align - optional alignment of the font. Defaults to 'left'. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align}
- *
- * @param verticalAlign - optional vertical alignment of the font within a flex container. Defaults to 'top'. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/align-self}
+ * @returns an object that contains CSS rules. These rules aren't stringified to valid CSS, but they can be applied to a Vue or React component, or be fed into autoprefixer.
  *
  * @remarks
  *
- * If you want your fonts to use em instead of pt, you need to apply your own font-size to the DOM node.
- *
  */
-export type Font<Color> = {
-  typeface: Array<string>;
-  size: number;
-  weight: number;
-  color: Color;
-  blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  tracking?: number /* in pt, omitted if not specified */;
-  leading?: number /* in pt, also known as line height. Omitted if not specified */;
-  align?: FontAlign /* defaults to 'left' */;
-  verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
-};
-
-export enum FontAlign {
-  left = 'left',
-  right = 'right',
-  center = 'center',
-  justify = 'justify',
-}
-
-export enum FontVerticalAlign {
-  top = 'top',
-  bottom = 'bottom',
-  middle = 'middle',
-}
+export type StyleFactory = (
+  palette: ColorPaletteInterface<RGBA>,
+  tint?: string,
+  state?: State
+) => { [cssRule: string]: string | number };
 
 export function makeFontCSSRules(F: Font<RGBA>) {
   const {
@@ -185,24 +123,105 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
 }
 
 /**
+ * A shape to apply to a DOM node
  *
- * @param palettes- an object that contains, at a minimum, a light and a dark {@link ColorPalette} object. This will always be supplied by the {@link Platform} class.
+ * @param minWidth - the minimum width of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
  *
- * @param tint - the tint to apply to the colors. This will always be one of the {@link Theme.} values.
+ * @param maxWidth - the optional maximum width of the shape in device-independent points (pt). Defaults to the minWidth.
  *
- * @param dark - a boolean that determines whether the dark palette should be applied. Defaults to `false`. In the case that palettes other than a light and dark are supplied by the {@link Platform} object, then the palette to use canbe selected by supplying the string that matches the key of the palette.
+ * @param minHeight - the minimum height of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
  *
- * @returns an object that contains CSS rules. These rules aren't stringified to valid CSS, but they can be applied to a Vue or React component, or be fed into autoprefixer.
+ * @param maxHeight - the optional maximum height of the shape in device-independent points (pt). Defaults to the minHeight.
+ *
+ * @param borderRadius - the radius of the shape in device-independent points (pt) This must be a value greater than 0. This is required.
+ *
+ */
+export type Shape = {
+  minWidth: number /* in pt */;
+  maxWidth?: number /* in pt */;
+  minHeight: number /* in pt */;
+  maxHeight?: number /* in pt */;
+  borderRadius: number /* in pt*/;
+};
+
+export function makeShapeCSSRules(S: Shape) {
+  const { minWidth, maxWidth, minHeight, maxHeight, borderRadius } = S;
+  return {
+    display: 'flex',
+    'flex-direction': 'row',
+    'min-width': `${minWidth}pt`,
+    'max-width': `${maxWidth ? maxWidth : minWidth}pt`,
+    'min-height': `${minHeight}pt`,
+    'max-height': `${maxHeight ? maxHeight : minHeight}pt`,
+    'border-radius': `${borderRadius}pt`,
+  };
+}
+
+/**
+ * A font to apply to a DOM node's text.
+ *
+ * @param typeface - the name of the typeface to apply (e.g. 'Helvetica'). This is required.
+ *
+ * @param size - the size of the font in device-independent points (pt). This is required.
+ *
+ * @param weight - a number between 100 and 900, inclusive, where 100 is the lightest and 900 is the heaviest. This is required.
+ *
+ * @param color - a color to apply to the font, which must contain a `r`, `g`, `b`, and `a` property. This is required.
+ *
+ * @param blendMode - optional {@link BlendMode} to apply to the font. Defaults to {@link BlendMode.normal}.
+ *
+ * @param tracking - optional tracking of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}
+ *
+ * @param leading - optional leading of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
+ *
+ * @param align - optional alignment of the font. Defaults to 'left'. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align}
+ *
+ * @param verticalAlign - optional vertical alignment of the font within a flex container. Defaults to 'top'. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/align-self}
  *
  * @remarks
  *
+ * If you want your fonts to use em instead of pt, you need to apply your own font-size to the DOM node.
+ *
  */
-export type StyleFactory = (
-  palettes: {
-    light: ColorPalette;
-    dark: ColorPalette;
-    [paletteName: string]: ColorPalette;
-  },
-  tint?: string,
-  dark?: boolean | string
-) => { SO: /* (S)tyle (O)bject */ { [cssRule: string]: string | number } };
+export type Font<Color> = {
+  typeface: Array<string>;
+  size: number;
+  weight: number;
+  color: Color;
+  blendMode?: BlendMode /* defaults to BlendMode.normal */;
+  tracking?: number /* in pt, omitted if not specified */;
+  leading?: number /* in pt, also known as line height. Omitted if not specified */;
+  align?: FontAlign /* defaults to 'left' */;
+  verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
+};
+
+export enum FontAlign {
+  left = 'left',
+  right = 'right',
+  center = 'center',
+  justify = 'justify',
+}
+
+export enum FontVerticalAlign {
+  top = 'top',
+  bottom = 'bottom',
+  middle = 'middle',
+}
+
+/**
+ * State describes all of the different appearances a component can adopt in response to user interaction.
+ *
+ * @param none - the element is not being interacted with.
+ * @param hover - the element is being occluded by a pointer.
+ * @param pressed - the element is being depressed by a pointer.
+ * @param toggled - the element was released by a pointer.
+ * @param focused - the element's contents can receive input from a keyboard or pointer.
+ *
+ */
+export enum State {
+  none,
+  hovered,
+  pressed,
+  toggled,
+  focused,
+}
