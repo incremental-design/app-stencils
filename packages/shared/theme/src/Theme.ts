@@ -11,7 +11,7 @@ import {
   ElementInterface,
   StyleInterface,
   ColorPaletteInterface,
-} from './utils';
+} from './presets';
 
 /**
  * Theme generates CSS rules for your components.
@@ -54,7 +54,7 @@ import {
  *
  * ```
  */
-class Theme {
+export default class Theme {
   // !Static Methods
 
   static platform(

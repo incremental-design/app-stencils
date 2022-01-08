@@ -1,4 +1,4 @@
-import { RGBA, BlendMode, RGBAtoCSS, Elevation, ColorPalette } from './';
+import { RGBA, BlendMode, RGBAtoCSS, Elevation, ColorPalette } from '.';
 
 export class Style {}
 
@@ -66,16 +66,29 @@ export function makeShapeCSSRules(S: Shape) {
  *
  */
 export type Font<Color> = {
-  typeface: string;
+  typeface: Array<string>;
   size: number;
   weight: number;
   color: Color;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
   tracking?: number /* in pt, omitted if not specified */;
-  leading?: number /* in pt, also known as line height */;
-  align?: 'left' | 'right' | 'center' | 'justify' /* defaults to 'left' */;
-  verticalAlign?: 'top' | 'bottom' | 'middle' /* defaults to 'top' */;
+  leading?: number /* in pt, also known as line height. Omitted if not specified */;
+  align?: FontAlign /* defaults to 'left' */;
+  verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
 };
+
+export enum FontAlign {
+  left = 'left',
+  right = 'right',
+  center = 'center',
+  justify = 'justify',
+}
+
+export enum FontVerticalAlign {
+  top = 'top',
+  bottom = 'bottom',
+  middle = 'middle',
+}
 
 export function makeFontCSSRules(F: Font<RGBA>) {
   const {
