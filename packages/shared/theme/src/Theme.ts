@@ -36,16 +36,13 @@ import {
  *  const {layout, layouts} = Theme.platform('ios')
  *
  * // 2. choose a layout
- * const {element, elements} = layout('small')
+ * const {style, styles, tints, states, modes} = layout('small')
  *
- * // 3. choose an element
- * const {style, tints, states} = element('text-body')
- *
- * // 4. generate CSS rules
- * const CSSRules = style('success', 'pressed')
+ * // 3. generate CSS rules
+ * const CSSRules = style('textBody','success', 'pressed')
  *
  * // You can chain these calls together:
- * Theme.platform('ios).layout('small').element('text-body').style('success','pressed')
+ * Theme.platform('ios).layout('small').style('textBody','success','pressed')
  *
  * ```
  */
@@ -83,52 +80,52 @@ export default class Theme {
     } = {
       platforms: {
         ios: {
-          layouts: makePresetLayouts('ios'),
+          layouts: this.makePresetLayouts('ios'),
           colorPalettes: {
-            light: makePresetColorPalette('ios', 'light'),
-            dark: makePresetColorPalette('ios', 'dark'),
+            light: this.makePresetColorPalette('ios', 'light'),
+            dark: this.makePresetColorPalette('ios', 'dark'),
           },
         },
         macos: {
-          layouts: makePresetLayouts('macos'),
+          layouts: this.makePresetLayouts('macos'),
           colorPalettes: {
-            light: makePresetColorPalette('macos', 'light'),
-            dark: makePresetColorPalette('macos', 'dark'),
+            light: this.makePresetColorPalette('macos', 'light'),
+            dark: this.makePresetColorPalette('macos', 'dark'),
           },
         },
         tvos: {
-          layouts: makePresetLayouts('tvos'),
+          layouts: this.makePresetLayouts('tvos'),
           colorPalettes: {
-            light: makePresetColorPalette('tvos', 'light'),
-            dark: makePresetColorPalette('tvos', 'dark'),
+            light: this.makePresetColorPalette('tvos', 'light'),
+            dark: this.makePresetColorPalette('tvos', 'dark'),
           },
         },
         android: {
-          layouts: makePresetLayouts('android'),
+          layouts: this.makePresetLayouts('android'),
           colorPalettes: {
-            light: makePresetColorPalette('android', 'light'),
-            dark: makePresetColorPalette('android', 'dark'),
+            light: this.makePresetColorPalette('android', 'light'),
+            dark: this.makePresetColorPalette('android', 'dark'),
           },
         },
         windows: {
-          layouts: makePresetLayouts('windows'),
+          layouts: this.makePresetLayouts('windows'),
           colorPalettes: {
-            light: makePresetColorPalette('windows', 'light'),
-            dark: makePresetColorPalette('windows', 'dark'),
+            light: this.makePresetColorPalette('windows', 'light'),
+            dark: this.makePresetColorPalette('windows', 'dark'),
           },
         },
         gtk: {
-          layouts: makePresetLayouts('gtk'),
+          layouts: this.makePresetLayouts('gtk'),
           colorPalettes: {
-            light: makePresetColorPalette('gtk', 'light'),
-            dark: makePresetColorPalette('gtk', 'dark'),
+            light: this.makePresetColorPalette('gtk', 'light'),
+            dark: this.makePresetColorPalette('gtk', 'dark'),
           },
         },
         web: {
-          layouts: makePresetLayouts('web'),
+          layouts: this.makePresetLayouts('web'),
           colorPalettes: {
-            light: makePresetColorPalette('web', 'light'),
-            dark: makePresetColorPalette('web', 'dark'),
+            light: this.makePresetColorPalette('web', 'light'),
+            dark: this.makePresetColorPalette('web', 'dark'),
           },
         },
       },
@@ -152,30 +149,30 @@ export default class Theme {
       .map((t) => throwIfNotLowercase(t))
       .map(
         (t) => `text${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
-      ); /* e.g. text.primary becomes textPrimary */
-    const FK /* (F)oreground (K)eys */ = Object.keys(L.fill.foreground)
+      ); /* e.g. text.input becomes textInput */
+    const FK /* (F)ill (K)eys */ = Object.keys(L.fill)
       .map((t) => throwIfNotLowercase(t))
       .map(
-        (t) => `fg${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
-      ); /* e.g. fill.foreground.primary becomes fgPrimary */
+        (t) => `fill${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
+      ); /* e.g. fill.input becomes fillInput */
     const BK /* (B)ackground (K)eys */ = Object.keys(L.fill.background)
       .map((t) => throwIfNotLowercase(t))
       .map(
         (t) => `bg${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
-      ); /* e.g. fill.background.primary becomes bgPrimary */
+      ); /* e.g. background.normal becomes bgNormal */
     return { TK, FK, BK };
   }
 
   private static unprefix(key: string) {
     let U /* (U)nprefixed */ = '';
     let S /* (S)tarts with */ = '';
-    if (key.startsWith('text')) {
+    if (key.startsWith('text') || key.startsWith('fill')) {
       U = key.slice(4);
-      S = 'text';
-    } else if (key.startsWith('fg') || key.startsWith('bg')) {
+      S = key.slice(0, 4);
+    } else if (key.startsWith('bg')) {
       U = key.slice(2);
-      S = key.slice(0, 2);
-    } else throw new Error(`key must start with 'text', 'fg' or 'bg'.`);
+      S = 'bg';
+    } else throw new Error(`key must start with 'text', 'fill' or 'bg'.`);
     if (U.length === 0)
       throw new Error(
         `key must not be blank.`
@@ -204,10 +201,8 @@ export default class Theme {
         style: this.makeStyleFn(L, P.colorPalettes),
         styles: {
           text: TK /* e.g. text.primary becomes textPrimary */,
-          fill: {
-            foreground: FK /* e.g. fill.foreground.primary becomes fgPrimary */,
-            background: BK /* e.g. fill.background.primary becomes bgPrimary */,
-          },
+          fill: FK /* e.g. fill.foreground.primary becomes fgPrimary */,
+          bg: BK /* e.g. fill.background.primary becomes bgPrimary */,
         },
         tints: L.tints,
         states: L.states,
@@ -241,11 +236,11 @@ export default class Theme {
           case 'text':
             SFG = L.text;
             break;
-          case 'fg':
-            SFG = L.fill.foreground;
+          case 'fill':
+            SFG = L.fill;
             break;
           case 'bg':
-            SFG = L.fill.background;
+            SFG = L.bg;
             break;
           default:
             throw new Error(`${style} must start with 'text', 'fg' or 'bg'.`);
@@ -301,6 +296,38 @@ export default class Theme {
       return SF(getPalette(), tint, getState());
     };
   }
+
+  private static makePresetColorPalette(
+    platform: string,
+    mode: string
+  ): ColorPaletteInterface<RGBA> {
+    if (mode !== 'light' && mode !== 'dark')
+      throw new Error(`mode must be one of 'light' or 'dark'... for now`);
+    switch (platform) {
+      case 'ios':
+        return IOS.colorPalettes[mode];
+      default:
+        throw new Error('not implemented');
+    }
+  }
+
+  private static makePresetLayouts(
+    platform: string
+  ): {
+    inline: LayoutInterface;
+    small: LayoutInterface;
+    smallVertical: LayoutInterface;
+    smallWithInline: LayoutInterface;
+    smallWithItemLeft: LayoutInterface;
+    smallWithItemRight: LayoutInterface;
+    medium: LayoutInterface;
+    mediumVertical: LayoutInterface;
+    large: LayoutInterface;
+    massive: LayoutInterface;
+    [layout: string]: LayoutInterface;
+  } {
+    throw new Error('not implemented');
+  }
 }
 
 /**
@@ -317,10 +344,8 @@ type layoutFn = (
   style: styleFn;
   styles: {
     text: Array<string>;
-    fill: {
-      foreground: Array<string>;
-      background: Array<string>;
-    };
+    fill: Array<string>;
+    bg: Array<string>;
   };
   tints: Array<string>;
   states: Array<string>;
@@ -347,35 +372,3 @@ type styleFn = (
   state?: string,
   darkMode?: boolean | string
 ) => { [cssRule: string]: number | string };
-
-function makePresetColorPalette(
-  platform: string,
-  mode: string
-): ColorPaletteInterface<RGBA> {
-  if (mode !== 'light' && mode !== 'dark')
-    throw new Error(`mode must be one of 'light' or 'dark'... for now`);
-  switch (platform) {
-    case 'ios':
-      return IOS.colorPalettes[mode];
-    default:
-      throw new Error('not implemented');
-  }
-}
-
-function makePresetLayouts(
-  platform: string
-): {
-  inline: LayoutInterface;
-  small: LayoutInterface;
-  smallVertical: LayoutInterface;
-  smallWithInline: LayoutInterface;
-  smallWithItemLeft: LayoutInterface;
-  smallWithItemRight: LayoutInterface;
-  medium: LayoutInterface;
-  mediumVertical: LayoutInterface;
-  large: LayoutInterface;
-  massive: LayoutInterface;
-  [layout: string]: LayoutInterface;
-} {
-  throw new Error('not implemented');
-}

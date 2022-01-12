@@ -6,6 +6,10 @@ import {
   FontAlign,
   FontVerticalAlign,
   StyleFactory,
+  State,
+  makeFontCSSRules,
+  LayoutInterface,
+  PlatformInterface,
 } from '.';
 
 const Colors = {
@@ -846,31 +850,175 @@ const Fonts: { [font: string]: Font<RGBA> } = {
   },
 };
 
-const CSSRules: {
-  [ruleset: string]: { [cssRule: string]: string | number };
-} = {
-  marginL8R8: {
-    marginLeft: 8,
-    marginRight: 8,
-  },
-  marginT4B4: {
-    marginTop: 4,
-    marginBottom: 4,
-  },
-  marginT4B8: {
-    marginTop: 4,
-    marginBottom: 8,
-  },
-  minWidth48: {
-    minWidth: 48,
-  },
+const MarginTLR = {
+  marginTop: 4,
+  marginLeft: 8,
+  marginRight: 8,
 };
+
+const MarginBottomStateNone = {
+  marginBottom: 8,
+};
+
+const MarginBottomStateHovered = {
+  marginBottom: 4,
+};
+
+const MarginBottom = (s: State) => {
+  if (s === State.none) return { MarginBottom: 8 };
+  return { MarginBottom: 4 };
+};
+
+const AdjustHeight = (s: State, h: { [heightCSSRule: string]: number }) => {
+  if (s === State.none) return h;
+  for (const rule in h) {
+    h[rule] = h[rule] + 4;
+  }
+  return h;
+};
+
+const Width = {
+  gt80: { minWidth: 80 },
+  eq48: { width: 48 },
+  lt48: { maxWidth: 48 },
+  gt48: { minWidth: 48 },
+  eq36: { width: 36 },
+};
+
+const Height = {
+  gt98: { minHeight: 88 },
+  eq76: { height: 76 },
+  eq54: { height: 54 },
+  eq32: { height: 32 },
+  gt22: { height: 22 },
+  eq18: { height: 18 },
+  eq11: { height: 11 },
+};
+
+const BodySpacing = {
+  ...Height.gt22,
+  ...Width.gt48,
+};
+
+const ItemSpacing = {
+  ...Width.lt48,
+  ...Height.eq32,
+};
+
+const FootnoteSpacing = (s: State) => ({
+  height: s === State.none ? 11 : 18,
+  marginTop: s === State.none ? -1 : -4,
+  display: 'block',
+  alignSelf: 'flex-end',
+});
+
+const LayoutSpacing = (s: State) => ({
+  inline: {
+    ...MarginTLR,
+    ...Width.gt48,
+  },
+  small: {
+    ...MarginTLR,
+    ...Width.lt48,
+    ...AdjustHeight(s, Height.eq32),
+    ...MarginBottom(s),
+  },
+  smallVertical: {
+    ...MarginTLR,
+    ...Width.eq36,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq32),
+  },
+  smallWithInline: {
+    ...MarginTLR,
+    ...Width.gt48,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq32),
+  },
+  smallWithItemLeft: {
+    ...MarginTLR,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq32),
+  },
+  smallWithItemRight: {
+    ...MarginTLR,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq32),
+  },
+  medium: {
+    ...MarginTLR,
+    ...Width.gt80,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq54),
+  },
+  mediumVertical: {
+    ...MarginTLR,
+    ...Width.eq48,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.gt98),
+  },
+  large: {
+    ...MarginTLR,
+    ...Width.gt80,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.eq76),
+  },
+  massive: {
+    ...MarginTLR,
+    ...Width.gt80,
+    ...MarginBottom(s),
+    ...AdjustHeight(s, Height.gt98),
+  },
+});
 
 const TSF: {
   [styleName: string]: StyleFactory;
 } /* (T)ext (S)tyle (F)actories */ = {
-  body: {} as StyleFactory,
-  footnote: {} as StyleFactory,
+  label: (palette, tint, state) => {
+    /* label text turns primary when it's hovered, toggled or focused. It turns secondary when it's pressed or none */
+    const LP /* (L)abel (P)rimary */ = palette.text.primary.body.none;
+    const LS /* (L)abel (S)econdary */ = palette.text.secondary.body
+      ? palette.text.secondary.body.none
+      : LP;
+    if (state === State.none || state === State.pressed)
+      return makeFontCSSRules(LS);
+    return makeFontCSSRules(LP);
+  },
+  footnoteLeftAligned: (palette, tint, state) => {
+    /* footnotes 'grow' when an item is hovered, pressed or toggled */
+    const F /* (F)ootnote */ = palette.text.primary.footnoteLeftAligned
+      ? palette.text.primary.footnoteLeftAligned.none
+      : palette.text.primary.body.none;
+    const FT /* (F)ootnote (T)iny */ = palette.text.primary
+      .footnoteTinyLeftAligned
+      ? palette.text.primary.footnoteTinyLeftAligned.none
+      : palette.text.primary.body.none;
+    if (state === State.none || state === State.focused)
+      return makeFontCSSRules(FT);
+    return makeFontCSSRules(F);
+  },
+  footnote: (palette, tint, state) => {
+    /* footnotes 'grow' when an item is hovered, pressed or toggled */
+    const F /* (F)ootnote */ = palette.text.primary.footnote
+      ? palette.text.primary.footnote.none
+      : palette.text.primary.body.none;
+    const FT /* (F)ootnote (T)iny */ = palette.text.primary.footnoteTiny
+      ? palette.text.primary.footnoteTiny.none
+      : palette.text.primary.body.none;
+    if (state === State.none || state === State.focused)
+      return makeFontCSSRules(FT);
+    return makeFontCSSRules(F);
+  },
+  fieldInputPlaceholder: (palette) => {
+    const S = palette.text.secondary.subhead
+      ? palette.text.secondary.subhead.none
+      : palette.text.primary.subhead.none;
+    return { ...makeFontCSSRules(S) };
+  },
+  fieldInputFilled: (palette) => {
+    const S = palette.text.primary.subhead.none;
+    return { ...makeFontCSSRules(S) };
+  },
 };
 
 const FSF: {
@@ -884,7 +1032,7 @@ const BSF: {
   [styleName: string]: StyleFactory;
 } /* (B)ackground (S)tyle (F)actories */ = {};
 
-export const IOS = {
+export const IOS: PlatformInterface = {
   layouts: {
     /**
      * Elements that have an inline layout include:
@@ -926,12 +1074,28 @@ export const IOS = {
      */
     inline: {
       text: {
-        // TSF.body,
+        labelText: TSF.label,
+        // labelIconLeft: TSF.labelIconLeft
+        // labelIconRight: TSF.labelIconRight
+        inputPlaceholder: TSF.fieldInputPlaceholder,
+        inputFilled: TSF.fieldInputFilled,
       },
       fill: {
-        foreground: {},
-        background: {},
+        // inputValidator: FSF.inputValidator
       },
+      bg: {
+        listItem: (palette, tint, state) => {
+          if (state)
+            return {
+              ...LayoutSpacing(state).inline,
+            };
+          return {
+            ...LayoutSpacing(State.none).inline,
+          };
+        },
+      },
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     small: {
       /**
@@ -974,28 +1138,20 @@ export const IOS = {
         body: TSF.body,
         footnote: TSF.footnote,
       },
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Currently, there are no elements with a 'small vertical' layout
      */
     smallVertical: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
-    },
-
-    smallWithInline: {
-      text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a smallWithItemLeft layout include:
@@ -1017,10 +1173,10 @@ export const IOS = {
      */
     smallWithItemLeft: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a smallWithItemRight layout include:
@@ -1050,10 +1206,10 @@ export const IOS = {
      */
     smallWithItemRight: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a medium layout include:
@@ -1090,10 +1246,10 @@ export const IOS = {
      */
     medium: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a medium layout include:
@@ -1108,10 +1264,10 @@ export const IOS = {
      */
     mediumVertical: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a large layout include:
@@ -1126,10 +1282,10 @@ export const IOS = {
      */
     large: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
     /**
      * Elements that have a massive layout include:
@@ -1144,10 +1300,10 @@ export const IOS = {
      */
     massive: {
       text: {},
-      fill: {
-        foreground: {},
-        background: {},
-      },
+      fill: {},
+      bg: {},
+      tints: ['none', 'active', 'warn', 'fail'],
+      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
     },
   },
   colorPalettes: {

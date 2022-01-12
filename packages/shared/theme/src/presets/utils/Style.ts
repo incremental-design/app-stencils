@@ -15,8 +15,6 @@ import {
  *
  * @param state - a {@link State} value.
  *
- * @param dark - a boolean that determines whether the dark palette should be applied. Defaults to `false`. In the case that palettes other than a light and dark are supplied by the {@link Platform} object, then the palette to use canbe selected by supplying the string that matches the key of the palette.
- *
  * @returns an object that contains CSS rules. These rules aren't stringified to valid CSS, but they can be applied to a Vue or React component, or be fed into autoprefixer.
  *
  * @remarks
@@ -42,7 +40,7 @@ export function makeFontCSSRules(F: Font<RGBA>) {
   } = F;
 
   const rules = {
-    fontFamily: typeface,
+    fontFamily: typeface.join(', '),
     fontSize: `${size}pt`,
     fontWeight: weight,
     color: RGBAtoCSS(color),

@@ -10,19 +10,23 @@ If you design apps for a living, you probably have to prototype user interfaces 
 
 **Make your prototypes look like native apps, without writing a single line of CSS:**
 
-The [`Theme`](./src/Theme.ts) object generates all of the CSS rules you need to make your prototype's UI components look just like a native app. All you need to do is choose a [`Platform`](./README.md#apply-a-preset-theme), a [`Layout`](./README.md#apply-a-preset-theme), [`Element`](./README.md#apply-a-preset-theme), and a [`Style`](./README.md#apply-a-preset-theme), and it will generate all the styles your component needs to match your favorite platform's visual language.
+The [`Theme`](./src/Theme.ts) object generates all of the CSS rules you need to make your prototype's UI components look just like a native app. All you need to do is choose a [`Platform`](./README.md#apply-a-preset-theme), a [`Layout`](./README.md#apply-a-preset-theme), and a [`Style`](./README.md#apply-a-preset-theme), and it will generate all the CSS rules that your component needs to match your favorite platform's visual language.
 
 **Reskin your components, with just one setting:**
 
-Just swap out the [`platform`](), and the [`Theme`](./src/Theme.ts) object will update every style it generates.
+Just swap out the [`platform`](./README.md#apply-a-preset-theme), and all of the [`styles`](./README.md#apply-a-preset-theme) will update instantly.
 
 **Add dark mode to your prototypes, without a single line of code:**
 
-Every [`style`]() in the [`Theme`](./src/Theme.ts) object has a light mode and dark mode. Best of all, the theme object automatically updates your prototype's styles to match your operating system's color scheme.
+Every [`style`](./README.MD#apply-a-preset-theme) in the [`Theme`](./src/Theme.ts) object has a light mode and dark mode. Best of all, the theme object automatically updates your prototype's styles to match your operating system's color scheme.
 
-**Make entirely new themes, with the [`Platform`](./src/Platform.ts), [`Layout`](./src/Layout.ts), [`Element`](./src/Element.ts), [`Style`](./src/Style.ts), and [`ColorPalette`](./src/ColorPalette.ts) classes:**
+<!--
+**Make entirely new themes, with the [`Platform`](./src/Platform.ts), [`Layout`](./src/Layout.ts), [`Style`](./src/Style.ts), and [`ColorPalette`](./src/ColorPalette.ts) classes:**
 
-~~Combine [ColorPalette](./src/ColorPalette.ts)s and [Layout](./src/Layout.ts)s to create an entirely new [Platform](./src/Platform.ts). Then, feed this platform into the `theme` object to generate CSS rules.~~
+Combine [ColorPalette](./src/ColorPalette.ts)s and [Layout](./src/Layout.ts)s to create an entirely new [Platform](./src/Platform.ts). Then, feed this platform into the `Theme` object to generate CSS rules.
+
+note that it would be ideal to make helper classes for Platform, Layout, and Style
+-->
 
 <!-- list any codebases, websites, apps, platforms or other products that use your code -->
 
@@ -36,9 +40,7 @@ Every [`style`]() in the [`Theme`](./src/Theme.ts) object has a light mode and d
 
 ## Usage:
 
-<!-- explain that all themes consist of platforms, layouts, elements and styles -->
-
-If you've ever prototyped a native app, you've probably spent more hours than you can count coaxing CSS into something that resembles the [Apple human interface guidelines](https://developer.apple.com/design/human-interface-guidelines/), [material design guidelines](https://material.io), or [fluent design guidelines](https://www.microsoft.com/design/fluent/#/). The [`Theme`](./src/Theme.ts) class takes care of that for you. Even better, it describes all of these visual languages with a simple, common vocabulary: **platforms**, **layouts**, **styles**, **tints**, and **states**. When you use [`Theme`](./src/Theme.ts), you don't have to manually write hundreds of CSS selectors. All you need to do is describe the component you want to style in these six terms, and [`Theme`](./src/Theme.ts) will generate the corresponding styles for you.
+If you've ever prototyped a native app, you've probably spent more hours than you can count coaxing CSS into something that resembles the [Apple human interface guidelines](https://developer.apple.com/design/human-interface-guidelines/), [material design guidelines](https://material.io), or [fluent design guidelines](https://www.microsoft.com/design/fluent/#/). The [`Theme`](./src/Theme.ts) class takes care of that for you. Even better, it describes all of these visual languages with a simple, common vocabulary: **platforms**, **layouts**, **styles**, **tints**, and **states**. When you use [`Theme`](./src/Theme.ts), you don't have to manually write hundreds of CSS selectors. All you need to do is describe the element you want to style in these five terms, and [`Theme`](./src/Theme.ts) will generate the corresponding CSS for you.
 
 <!-- need an illustration for platform -->
 
@@ -118,17 +120,6 @@ A visual language is the combination of styles that make a platform recognizable
          <td><img src="../../../.readme/something.png"/></td> -->
       </tr>
       <tr>
-         <td><a href="./src/Layout.ts"><code>smallWithInline</code></a></td>
-         <td><img src="../../../.readme/layout-iOS-smallWithInline.png"/></td>
-         <!-- <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td>
-         <td><img src="../../../.readme/something.png"/></td> -->
-      </tr>
-      <tr>
          <td><a href="./src/Layout.ts"><code>smallWithItemLeft</code></a></td>
          <td><img src="../../../.readme/layout-iOS-smallWithItemLeft.png"/></td>
          <!-- <td><img src="../../../.readme/something.png"/></td>
@@ -198,13 +189,13 @@ A visual language is the combination of styles that make a platform recognizable
 
   Some preset themes also contain additional layouts that are specific to that theme. When you supply a platform to [`Theme.platform()`](./src/Theme.ts), it will return a list of all of the layouts that the platform contains.
 
-- A **style** is a set of CSS rules that position and shade a specific piece of text, or a specific foreground or background shape within a layout.
+- A **style** is a set of CSS rules that position and shade a specific piece of text, or a specific foreground or background shape within a background shape.
 
-  Every layout contains just three types of styles: `text`, `fill.foreground` and `fill.background`. After all, virtually every user interface component in any design system can be described in terms of its text, foreground fills, and background fills.
+  Every layout contains just three types of styles: `text`, `fill` and `background`. After all, virtually every user interface component in any design system can be described in terms of its text, fill, and background.
 
   All of the layouts contain some combination of the following styles:
 
-   <table>
+   <!-- <table>
       <tr><th>Type</th><th>styles</th></tr>
       <tr><td rowspan=6"><code>text</code></td></tr>
       <tr><td><code>textBody</code></td></tr>
@@ -223,6 +214,50 @@ A visual language is the combination of styles that make a platform recognizable
       <tr><td><code>bgPrimary</code></td></tr>
       <tr><td><code>bgSecondary</code></td></tr>
       <tr><td><code>bgTertiary</code></td></tr>
+   </table> -->
+
+   <table>
+      <tr><th>Type</th><th>Styles</th></tr>
+      <tr>
+         <td rowspan="4">
+            <code>text</code>
+            <br/>
+            <ul>
+               <li>sets the color and size of the text it styles.</li>
+            </ul>
+         </td>
+         <td><code>textLabel</code></td>
+      </tr>
+      <tr><td><code>textFootnote</code></td></tr>
+      <tr><td><code>textInput</code></td></tr>
+      <tr><td><code>textItem</code></td></tr>
+      <tr>
+         <td rowspan="4">
+            <code>fill</code>
+            <br/>
+            <ul>
+               <li>positions the corresponding<code>text</code> within itself. E.g. <code>fillInput</code> positions <code>textInput</code>.</li>
+               <li>sets the color, shape and size of the <code>text</code>'s fill.</li>
+            </ul>
+         </td>
+         <td><code>fillLabel</code></td>
+      </tr>
+      <tr><td><code>fillFootnote</code></td></tr>
+      <tr><td><code>fillInput</code></td></tr>
+      <tr><td><code>fillItem</code></td></tr>
+      <tr>
+         <td rowspan="3">
+            <code>bg</code>
+            <br/>
+            <ul>
+               <li>positions <code>fill</code>s atop the element's background.</li>
+               <li>sets the color, shape and size of the element's background.</li>
+            </ul>
+         </td>
+         <td><code>bgFloating</code></td>
+      </tr>
+      <tr><td><code>bgExpanded</code></td></tr>
+      <tr><td><code>bgNormal</code></td></tr>
    </table>
 
   Some layouts may contain styles that aren't listed here. When you supply one of the preset layouts to [`Theme.platform(<platform>).layout()`](./src/Theme.ts), you will receive a list of the styles within the layout.
@@ -262,7 +297,7 @@ The `Theme` class is a tree of styles, grouped by platforms, then by layouts,and
    console.log(layouts) // ['inline', 'small', 'smallVertical', 'smallWithInline', 'smallWithItemLeft', 'smallWithItemRight', 'medium', 'mediumVertical', 'large', 'massive']
    ```
 
-2. Choose one of `inline`, `small`, `smallVertical`, `smallWithInline`, `smallWithItemLeft`, `smallWithItemRight`, `medium`, `mediumVertical`, `large`, or `massive` and insert it into `Theme.platform(...).layout`:
+2. Choose one of `inline`, `small`, `smallVertical`, `smallWithItemLeft`, `smallWithItemRight`, `medium`, `mediumVertical`, `large`, or `massive` and insert it into `Theme.platform(...).layout`:
 
    ```
    const {style, styles} = Theme.platform('ios').layout('smallWithInline');
@@ -271,13 +306,18 @@ The `Theme` class is a tree of styles, grouped by platforms, then by layouts,and
    console.log(styles) // {text: ['textIcon', 'textBody', 'textFootnote'], fill:{foreground: ['fgPrimary', 'fgSecondary'], background: ['bgPrimary', 'bgSecondary', 'bgTertiary']}, tints: ['none', 'active', 'progress', 'warn', 'fail'], states:['none', 'hovered', 'pressed', 'toggled', 'focused']}
    ```
 
-3. Chose one of the styles that `Theme.platform(...).layout(...)` returned, and insert it into `Theme.platform(...).layout(...).style`. You can also optionally insert one of the `Tint
+3. Chose one of the styles that `Theme.platform(...).layout(...)` returned, and insert it into `Theme.platform(...).layout(...).style`. You can also optionally insert one of the `tint`s and `state`s into this function.
 
    ```
-   const CSSRules = Theme.platform('ios').layout('smallWithInline').element('text-body').style('active','hovered')
+   const CSSRules = Theme.platform('ios').layout('smallWithInline').element('textBody').style('active','hovered')
 
    console.log(CSSRules) //tbd
    ```
+
+<!--
+ 4. apply the styles to your components.
+need to explain that relative positioning of the elements is up to you. the styles only affect the color treatment and size of the HTML elements. they don't affect relative positioning because positioning rules are usually specific to the components' DOM node nesting
+ -->
 
 ### Customise a preset theme
 
@@ -340,3 +380,11 @@ light and dark modes
 hovered, pressed, toggled, and focused states
 active, progress, success, warning, and failure tints
 -->
+
+<!--
+
+need to explain that most elements in seamlss share essentially the same layout
+
+need to explain that theme only sets the size and color treatments of text, foreground and background shapes. it doesn't set their relative positions because that depends on the way you nest the text and foreground shapes within the background
+
+ -->

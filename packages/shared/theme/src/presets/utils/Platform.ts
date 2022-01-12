@@ -7,7 +7,6 @@ export interface PlatformInterface {
     inline: LayoutInterface;
     small: LayoutInterface;
     smallVertical: LayoutInterface;
-    smallWithInline: LayoutInterface;
     smallWithItemLeft: LayoutInterface;
     smallWithItemRight: LayoutInterface;
     medium: LayoutInterface;

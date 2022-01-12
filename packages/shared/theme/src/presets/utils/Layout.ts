@@ -7,17 +7,14 @@ import { StyleFactory, Shape, Tint, State, RGBA } from '.';
  *
  */
 export interface LayoutInterface {
-  name: string;
   text: {
     [textName: string]: StyleFactory;
   };
   fill: {
-    foreground: {
-      [fillName: string]: StyleFactory;
-    };
-    background: {
-      [fillName: string]: StyleFactory;
-    };
+    [fillName: string]: StyleFactory;
+  };
+  bg: {
+    [bgName: string]: StyleFactory;
   };
   tints: Array<
     string | 'none' | 'active' | 'progress' | 'warn' | 'fail'
