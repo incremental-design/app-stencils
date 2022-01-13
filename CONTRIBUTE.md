@@ -1298,6 +1298,19 @@ Given that there isn't an intrinsic relationship between modules and the files t
 
 ![An `index.ts` file imports and re-exports every module in a folder.](.readme/diagram-index-file.png)
 
+#### Do NOT export one index file from another!
+
+Although typescript will let you import one index file into another, and then re-export it, Jest, Webpack and Babel won't be able to follow the trail of index files back to the code they export. This means that when you build or test a package with a nested index file, it will fail to build and test.
+
+<table>
+<tr>
+<th>Bad</th><th>Good</th>
+</tr>
+<tr>
+<td><img src=".readme/diagram-package-index-import-bad.png" alt="don't import from nested index files"/></td><td><img src=".readme/diagram-package-index-import-good.png" alt="import directly from index files"/></td>
+</tr>
+</table>
+
 #### Follow naming conventions:
 
 Whenever you add a folder to a typescript package, name it as follows:
