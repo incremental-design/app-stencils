@@ -10,7 +10,7 @@ import {
   makeFontCSSRules,
   LayoutInterface,
   PlatformInterface,
-} from '.';
+} from './utils';
 
 const Colors = {
   cFFFFFF: {
