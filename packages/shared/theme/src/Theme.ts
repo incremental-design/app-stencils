@@ -155,7 +155,7 @@ export default class Theme {
       .map(
         (t) => `fill${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
       ); /* e.g. fill.input becomes fillInput */
-    const BK /* (B)ackground (K)eys */ = Object.keys(L.fill.background)
+    const BK /* (B)ackground (K)eys */ = Object.keys(L.bg)
       .map((t) => throwIfNotLowercase(t))
       .map(
         (t) => `bg${t.slice(0, 1).toUpperCase()}${t.slice(1)}`
@@ -178,7 +178,7 @@ export default class Theme {
         `key must not be blank.`
       ); /* this should literally never happen */
     return {
-      startsWith: '',
+      startsWith: S,
       unprefixed: `${U.slice(0, 1).toLowerCase()}${U.slice(1)}`,
     };
   }
@@ -243,11 +243,11 @@ export default class Theme {
             SFG = L.bg;
             break;
           default:
-            throw new Error(`${style} must start with 'text', 'fg' or 'bg'.`);
+            throw new Error(`'${style}' must start with 'text', 'fg' or 'bg'.`);
         }
-
-        if (!SFG[unprefixed])
+        if (!Object.keys(SFG).includes(unprefixed))
           throw new Error(`${unprefixed} should be one of ${Object.keys(SFG)}`);
+        if (!SFG[unprefixed]) throw new Error(`${unprefixed} is undefined`);
         return SFG[unprefixed];
       };
       const SF =
@@ -307,7 +307,11 @@ export default class Theme {
       case 'ios':
         return IOS.colorPalettes[mode];
       default:
-        throw new Error('not implemented');
+        // throw new Error('not implemented');
+        console.warn(
+          `${platform} hasn't actually been implemented, so using 'ios' as platform instead`
+        );
+        return IOS.colorPalettes[mode];
     }
   }
 
@@ -317,7 +321,6 @@ export default class Theme {
     inline: LayoutInterface;
     small: LayoutInterface;
     smallVertical: LayoutInterface;
-    smallWithInline: LayoutInterface;
     smallWithItemLeft: LayoutInterface;
     smallWithItemRight: LayoutInterface;
     medium: LayoutInterface;
@@ -326,7 +329,15 @@ export default class Theme {
     massive: LayoutInterface;
     [layout: string]: LayoutInterface;
   } {
-    throw new Error('not implemented');
+    switch (platform) {
+      case 'ios':
+        return IOS.layouts;
+      default:
+        console.warn(
+          `${platform} hasn't actually been implemented, so using 'ios' as platform instead.`
+        );
+        return IOS.layouts;
+    }
   }
 }
 
