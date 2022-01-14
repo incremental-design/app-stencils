@@ -4,6 +4,7 @@ import {
   RGBAtoCSS,
   Elevation,
   ColorPaletteInterface,
+  Tint,
 } from '.';
 
 /**
@@ -22,7 +23,7 @@ import {
  */
 export type StyleFactory = (
   palette: ColorPaletteInterface<RGBA>,
-  tint?: string,
+  tint?: string /* technically keyof Tint */,
   state?: State
 ) => { [cssRule: string]: string | number };
 
@@ -213,13 +214,16 @@ export enum FontVerticalAlign {
  * @param hover - the element is being occluded by a pointer.
  * @param pressed - the element is being depressed by a pointer.
  * @param toggled - the element was released by a pointer.
+ * @param toggledHovered - the element was toggled, and is being occluded by a pointer. If the pointer depresses the element, it will enter the toggledPressed state
+ * @param toggledPressed - the element was toggled, and is beign pressed by a pointer. Once the element is released, it will enter the none state
  * @param focused - the element's contents can receive input from a keyboard or pointer.
- *
  */
 export enum State {
   none,
   hovered,
   pressed,
   toggled,
+  toggledHovered,
+  toggledPressed,
   focused,
 }

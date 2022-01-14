@@ -65,11 +65,11 @@ describe('Theme', () => {
               for (const state of states) {
                 for (const mode of modes) {
                   await print(
-                    `\n\nPlatform: ${platform} - layout: ${l} - style: ${s} - tint: ${tint} - state: ${state} - mode: ${mode}\n`
+                    `\n\nPlatform: ${platform}\n\tlayout: ${l}\n\t\tstyle: ${s}\n\t\t\ttint: ${tint}\n\t\t\tstate: ${state}\n\t\t\tmode: ${mode}\n\n`
                   );
                   const CSSRules = style(s, tint, state, mode);
                   for await (const rule of Object.keys(CSSRules)) {
-                    await print(`${rule}:\t\t ${CSSRules[rule]}\n`);
+                    await print(`${rule}: ${CSSRules[rule]}\n`);
                   }
                 }
               }

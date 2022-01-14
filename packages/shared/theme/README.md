@@ -219,7 +219,7 @@ A visual language is the combination of styles that make a platform recognizable
    <table>
       <tr><th>Type</th><th>Styles</th></tr>
       <tr>
-         <td rowspan="4">
+         <td rowspan="6">
             <code>text</code>
             <br/>
             <ul>
@@ -228,16 +228,20 @@ A visual language is the combination of styles that make a platform recognizable
          </td>
          <td><code>textLabel</code></td>
       </tr>
+      <tr><td><code>textLabelIcon</code></td></tr>
       <tr><td><code>textFootnote</code></td></tr>
       <tr><td><code>textInput</code></td></tr>
+      <tr><td><code>textInputIcon</code></td></tr>
       <tr><td><code>textItem</code></td></tr>
       <tr>
          <td rowspan="4">
             <code>fill</code>
             <br/>
             <ul>
-               <li>positions the corresponding<code>text</code> within itself. E.g. <code>fillInput</code> positions <code>textInput</code>.</li>
+               <li>positions the corresponding <code>text</code> within itself. E.g. <code>fillFootnote</code> positions <code>textFootnote</code>.
                <li>sets the color, shape and size of the <code>text</code>'s fill.</li>
+               <br/>
+               <li>Note that some text styles have <strong>variants</strong>. A variant is an alternate type treatment that <em>varies</em> the opacity, color, weight, or other property of the text style. Variants improve the legibility of the characters that they style. The most common variant is the 'icon' variant: E.g. <code>textLabel</code> has the variant <code>textLabel<strong>Icon</strong></code>. The corresponding <code>fillLabel</code> positions both of them.</li>
             </ul>
          </td>
          <td><code>fillLabel</code></td>

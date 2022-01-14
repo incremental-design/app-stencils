@@ -8,7 +8,7 @@ import {
   StyleFactory,
   State,
   makeFontCSSRules,
-  LayoutInterface,
+  makeElevationCSSRules,
   PlatformInterface,
 } from './utils';
 
@@ -94,7 +94,7 @@ const Colors = {
   },
 };
 
-const ForegroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
+const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
   foregroundPrimaryBlue: {
     fill: [
       {
@@ -193,7 +193,7 @@ const ForegroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
   },
 };
 
-const ForegroundSecondaryElevation: {
+const foregroundSecondaryElevation: {
   [elevation: string]: Elevation<RGBA>;
 } = {
   foregroundSecondaryBlue: {
@@ -1023,7 +1023,7 @@ const TSF: {
 
 const FSF: {
   [styleName: string]: StyleFactory;
-} /* (F)oreground (S)tyle (F)actories */ = {
+} /* (F)ill (S)tyle (F)actories */ = {
   label: {} as StyleFactory,
   button: {} as StyleFactory,
 };
@@ -1074,24 +1074,189 @@ export const IOS: PlatformInterface = {
      */
     inline: {
       text: {
-        labelText: TSF.label,
-        // labelIconLeft: TSF.labelIconLeft
-        // labelIconRight: TSF.labelIconRight
+        disclosureLeft: (palette) => {
+          const Font =
+            palette.text.primary.body.active ||
+            palette.text.primary.body
+              .none; /* this doesn't technically adhere to the guidelines on how to use 'active' tint. However, it is a quirk that iOS ships with, so we are going to blindly imitate it. */
+          return {
+            ...makeFontCSSRules(Font),
+            wordBreak: 'break-all',
+          };
+        } /* this is the 'back button' */,
+        indicator: () => ({
+          wordBreak: 'break-all',
+        }),
+        indicatorIcon: () => ({
+          wordBreak: 'break-all',
+        }),
+        label: TSF.label,
         inputPlaceholder: TSF.fieldInputPlaceholder,
         inputFilled: TSF.fieldInputFilled,
+        validator: () => ({
+          wordBreak: 'break-all',
+        }) /* https://www.sketch.com/s/e506713c-c34f-491f-a08d-87bd6dcab478/v/jMwqqa/p/4F71F5D4-375F-4A52-BE7E-AC323763973C/canvas?posX=-1491.9134521484375&posY=-19030.173828125&zoom=4.729273319244385 */,
+        validatorIcon: () => ({
+          wordBreak: 'break-all',
+        }) /* same as validator text except slightly less opaque */,
+        inputStepperIcon: () => ({
+          wordBreak: 'break-all',
+        }) /* this is footnote tiny. see: https://www.sketch.com/s/e506713c-c34f-491f-a08d-87bd6dcab478/v/jMwqqa/p/4F71F5D4-375F-4A52-BE7E-AC323763973C/canvas?posX=-1505.91845703125&posY=-20353.455078125&zoom=3.8640828132629395 */,
+        action: () => ({}) /* this is an inline 'button' that is always to the right of its label */,
+        actionDisclosure: () => ({
+          wordBreak: 'break-all',
+        }) /* is a different color than actionIcon */,
+        disclosureRight: () => ({
+          wordBreak: 'break-all',
+        }),
+        disclosureRightIcon: () => ({
+          wordBreak: 'break-all',
+        }),
       },
       fill: {
-        // inputValidator: FSF.inputValidator
+        disclosureLeft: () => ({
+          gridColumn: '1 / span 1',
+          gridRow: '1 / span 1',
+        }),
+        indicator: (palette, tint, state) => {
+          const t = tint || 'none';
+          const fill: Elevation<RGBA> | undefined = (() => {
+            switch (state) {
+              case State.toggledPressed:
+              case State.toggledHovered:
+                return (
+                  palette.fill.foreground.primary[t] ||
+                  palette.fill.foreground.primary.none
+                );
+              case State.toggled:
+                return (
+                  palette.fill.foreground.secondary[t] ||
+                  palette.fill.foreground.secondary.none
+                );
+                break;
+              default:
+                return; /* the reason there is no fill on item when state is hovered, or pressed is because it would visually conflict with the background of the inline layout. The reason there is not fill on an item when state is focused is because inline items that have indicators do not have a focusable component */
+            }
+          })();
+          const gridSpacing = {
+            gridColumn: '2 / span 1',
+            gridRow: '1 / span 1',
+          };
+          return fill
+            ? {
+                ...makeElevationCSSRules(fill),
+                ...gridSpacing,
+              }
+            : {
+                ...gridSpacing,
+              };
+        },
+        label: () => ({
+          gridColumn: '3 / span 1',
+          gridRow: '1 / span 1',
+        }),
+        input: (palette, tint, state) => {
+          const fill = (() => {
+            const t = 'none';
+            switch (state) {
+              case State.pressed:
+              case State.toggledPressed:
+                return palette.fill.background.secondary[t];
+              case State.focused:
+                return palette.fill.background.primary[t];
+              default:
+                return palette.fill.background.tertiary[t];
+            }
+          })();
+          return {
+            gridColumn: '4 / span 3',
+            gridRow: '1 / span 1',
+            zIndex: 0,
+            overflowX:
+              'scroll' /* this keeps long inputs from expanding the height of the input box */,
+            ...makeElevationCSSRules(fill),
+            /* don't forget to vary the size and shape of the fill according to state! e.g. pressed is -=1pt from other states */
+          };
+        },
+        validator: (palette, tint, state) => {
+          const fill = (() => {
+            const t = tint || 'none';
+            switch (state) {
+              case State.hovered:
+              case State.focused:
+                return (
+                  palette.fill.foreground.secondary[t] ||
+                  palette.fill.foreground.secondary.none
+                );
+              default:
+                return (
+                  palette.fill.background.tertiary[t] ||
+                  palette.fill.background.tertiary.none
+                );
+            }
+          })();
+          return {
+            gridColumn: '5 / span 1',
+            gridRow: '1 / span 1',
+            zIndex: 1,
+            ...makeElevationCSSRules(fill),
+            /* don't forget to inset the validator fill relative to the background! */
+          };
+        },
+        inputStepper: () => ({
+          gridColumn: '6 / span 1',
+          gridRow: '1 / span 1',
+          zIndex: 1,
+        }),
+        action: (palette, tint, state) => {
+          const fill: Elevation<RGBA> | undefined = (() => {
+            const t = tint || 'none';
+            switch (state) {
+              case State.none:
+                return;
+              case State.hovered:
+              case State.toggledHovered:
+                return (
+                  palette.fill.background.tertiary[t] ||
+                  palette.fill.background.tertiary.none
+                );
+              default:
+                return palette.fill.background.secondary.none;
+            }
+          })();
+          const gridPlacement = {
+            gridColumn: '7 / span 1',
+            gridRow: '1 / span 1',
+          };
+          return fill
+            ? {
+                ...makeElevationCSSRules(fill),
+                ...gridPlacement,
+              }
+            : {
+                ...gridPlacement,
+              };
+        },
+        disclosureRight: () => ({
+          gridColumn: '7 / span 1',
+          gridRow: '1 / span 1',
+        }),
       },
       bg: {
-        listItem: (palette, tint, state) => {
-          if (state)
-            return {
-              ...LayoutSpacing(state).inline,
-            };
-          return {
-            ...LayoutSpacing(State.none).inline,
+        inline: (palette, tint, state) => {
+          const Grid = {
+            display: 'inline-grid',
+            gridTemplateColumns: 'repeat(7, auto)',
           };
+          return state
+            ? {
+                ...LayoutSpacing(state).inline,
+                ...Grid,
+              }
+            : {
+                ...LayoutSpacing(State.none).inline,
+                ...Grid,
+              };
         },
       },
       tints: ['none', 'active', 'warn', 'fail'],
@@ -1134,10 +1299,7 @@ export const IOS: PlatformInterface = {
        *      * thumbnail image
        *      * thumbnail fill
        */
-      text: {
-        body: TSF.body,
-        footnote: TSF.footnote,
-      },
+      text: {},
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
@@ -1326,23 +1488,23 @@ export const IOS: PlatformInterface = {
             none: backgroundTertiaryElevation.backgroundTertiaryLight,
             success: backgroundTertiaryElevation.backgroundTertiaryGreen,
             warn: backgroundTertiaryElevation.backgroundTertiaryYellow,
-            fail: backgroundTertiaryElevation.backgroundTertiaryRed,
+            fail: backgroundTertiaryElevation.backgroundTertiaryOrange,
           },
         },
         foreground: {
           primary: {
-            none: ForegroundPrimaryElevation.ForegroundPrimaryLight,
-            active: ForegroundPrimaryElevation.ForegroundPrimaryBlue,
-            success: ForegroundPrimaryElevation.ForegroundPrimaryGreen,
-            warn: ForegroundPrimaryElevation.ForegroundPrimaryYellow,
-            fail: ForegroundPrimaryElevation.ForegroundPrimaryOrange,
+            none: foregroundPrimaryElevation.foregroundPrimaryLight,
+            active: foregroundPrimaryElevation.foregroundPrimaryBlue,
+            success: foregroundPrimaryElevation.foregroundPrimaryGreen,
+            warn: foregroundPrimaryElevation.foregroundPrimaryYellow,
+            fail: foregroundPrimaryElevation.foregroundPrimaryOrange,
           },
           secondary: {
-            none: ForegroundSecondaryElevation.ForegroundSecondaryLight,
-            active: ForegroundSecondaryElevation.ForegroundSecondaryBlue,
-            success: ForegroundSecondaryElevation.ForegroundSecondaryGreen,
-            warn: ForegroundSecondaryElevation.ForegroundSecondaryYellow,
-            fail: ForegroundSecondaryElevation.ForegroundSecondaryOrange,
+            none: foregroundSecondaryElevation.foregroundSecondaryLight,
+            active: foregroundSecondaryElevation.foregroundSecondaryBlue,
+            success: foregroundSecondaryElevation.foregroundSecondaryGreen,
+            warn: foregroundSecondaryElevation.foregroundSecondaryYellow,
+            fail: foregroundSecondaryElevation.foregroundSecondaryOrange,
           },
           tactile: {
             none: TactileElevation.TactileLight,
@@ -1454,23 +1616,23 @@ export const IOS: PlatformInterface = {
             none: backgroundTertiaryElevation.backgroundTertiaryDark,
             success: backgroundTertiaryElevation.backgroundTertiaryGreen,
             warn: backgroundTertiaryElevation.backgroundTertiaryYellow,
-            fail: backgroundTertiaryElevation.backgroundTertiaryRed,
+            fail: backgroundTertiaryElevation.backgroundTertiaryOrange,
           },
         },
         foreground: {
           primary: {
-            none: ForegroundPrimaryElevation.ForegroundPrimaryDark,
-            active: ForegroundPrimaryElevation.ForegroundPrimaryBlue,
-            success: ForegroundPrimaryElevation.ForegroundPrimaryGreen,
-            warn: ForegroundPrimaryElevation.ForegroundPrimaryYellow,
-            fail: ForegroundPrimaryElevation.ForegroundPrimaryOrange,
+            none: foregroundPrimaryElevation.foregroundPrimaryDark,
+            active: foregroundPrimaryElevation.foregroundPrimaryBlue,
+            success: foregroundPrimaryElevation.foregroundPrimaryGreen,
+            warn: foregroundPrimaryElevation.foregroundPrimaryYellow,
+            fail: foregroundPrimaryElevation.foregroundPrimaryOrange,
           },
           secondary: {
-            none: ForegroundSecondaryElevation.ForegroundSecondaryLight,
-            active: ForegroundSecondaryElevation.ForegroundSecondaryBlue,
-            success: ForegroundSecondaryElevation.ForegroundSecondaryGreen,
-            warn: ForegroundSecondaryElevation.ForegroundSecondaryYellow,
-            fail: ForegroundSecondaryElevation.ForegroundSecondaryOrange,
+            none: foregroundSecondaryElevation.foregroundSecondaryLight,
+            active: foregroundSecondaryElevation.foregroundSecondaryBlue,
+            success: foregroundSecondaryElevation.foregroundSecondaryGreen,
+            warn: foregroundSecondaryElevation.foregroundSecondaryYellow,
+            fail: foregroundSecondaryElevation.foregroundSecondaryOrange,
           },
           tactile: {
             none: TactileElevation.tactileDark,
