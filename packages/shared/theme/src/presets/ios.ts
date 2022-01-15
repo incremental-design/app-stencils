@@ -1019,6 +1019,31 @@ const TSF: {
     const S = palette.text.primary.subhead.none;
     return { ...makeFontCSSRules(S) };
   },
+  footnoteTiny: (palette, tint, state) => {
+    const text = (() => {
+      switch (state) {
+        case State.none:
+        case State.toggled:
+          return palette.text.secondary.footnoteTiny
+            ? palette.text.secondary.footnoteTiny.none
+            : palette.text.secondary.footnote
+            ? palette.text.secondary.footnote.none
+            : palette.text.secondary.body
+            ? palette.text.secondary.body.none
+            : palette.text.primary.body.none;
+        default:
+          return palette.text.primary.footnoteTiny
+            ? palette.text.primary.footnoteTiny.none
+            : palette.text.primary.footnote
+            ? palette.text.primary.footnote.none
+            : palette.text.primary.body.none;
+      }
+    })();
+    return {
+      ...makeFontCSSRules(text),
+      wordBreak: 'break-all',
+    };
+  },
 };
 
 const FSF: {
@@ -1091,27 +1116,69 @@ export const IOS: PlatformInterface = {
           wordBreak: 'break-all',
         }),
         label: TSF.label,
-        inputPlaceholder: TSF.fieldInputPlaceholder,
-        inputFilled: TSF.fieldInputFilled,
-        validator: () => ({
-          wordBreak: 'break-all',
-        }) /* https://www.sketch.com/s/e506713c-c34f-491f-a08d-87bd6dcab478/v/jMwqqa/p/4F71F5D4-375F-4A52-BE7E-AC323763973C/canvas?posX=-1491.9134521484375&posY=-19030.173828125&zoom=4.729273319244385 */,
-        validatorIcon: () => ({
-          wordBreak: 'break-all',
-        }) /* same as validator text except slightly less opaque */,
-        inputStepperIcon: () => ({
-          wordBreak: 'break-all',
-        }) /* this is footnote tiny. see: https://www.sketch.com/s/e506713c-c34f-491f-a08d-87bd6dcab478/v/jMwqqa/p/4F71F5D4-375F-4A52-BE7E-AC323763973C/canvas?posX=-1505.91845703125&posY=-20353.455078125&zoom=3.8640828132629395 */,
-        action: () => ({}) /* this is an inline 'button' that is always to the right of its label */,
-        actionDisclosure: () => ({
-          wordBreak: 'break-all',
-        }) /* is a different color than actionIcon */,
-        disclosureRight: () => ({
-          wordBreak: 'break-all',
+        inputPlaceholder: (palette, tint, state) => ({
+          ...TSF.fieldInputPlaceholder(palette, tint, state),
+          gridColumn:
+            '4 / span 1' /* we have to manually set this so that input text doesn't span the entire input fill */,
+          gridRow: '1 / span 1',
+          zIndex: 1,
         }),
-        disclosureRightIcon: () => ({
-          wordBreak: 'break-all',
+        inputFilled: (palette, tint, state) => ({
+          ...TSF.fieldInputFilled(palette, tint, state),
+          gridColumn:
+            '4 / span 1' /* we have to manually set this so that input text doesn't span the entire input fill */,
+          gridRow: '1 / span 1',
+          zIndex: 1,
         }),
+        validator: (palette, tint, state) => {
+          const text = (() => {
+            switch (state) {
+              case State.none:
+              case State.toggled:
+                if (palette.text.secondary.footnote)
+                  return palette.text.secondary.footnote.none;
+                if (palette.text.primary.footnote)
+                  return palette.text.primary.footnote.none;
+                if (palette.text.secondary.body)
+                  return palette.text.secondary.body.none;
+              default:
+                if (palette.text.primary.footnote)
+                  return palette.text.primary.footnote.none;
+                return palette.text.primary.body.none;
+            }
+          })();
+          return {
+            ...makeFontCSSRules(text),
+            wordBreak: 'break-all',
+          };
+        },
+        validatorIcon: TSF.footnoteTiny,
+        inputStepperIcon: TSF.footnoteTiny,
+        action: (palette, tint, state) => {
+          const t = tint || 'none';
+          const text = (() => {
+            switch (state) {
+              case State.none:
+              case State.toggled:
+                if (palette.text.secondary.body)
+                  return (
+                    palette.text.secondary.body[t] ||
+                    palette.text.secondary.body.none
+                  );
+              default:
+                return (
+                  palette.text.primary.body[t] || palette.text.primary.body.none
+                );
+            }
+          })();
+          return {
+            ...makeFontCSSRules(text),
+            fontSize: 14,
+          };
+        } /* this is an inline 'button' that is always to the right of its label */,
+        actionDisclosure: TSF.footnoteTiny,
+        disclosureRight: TSF.footnote,
+        disclosureRightIcon: TSF.footnoteTiny,
       },
       fill: {
         disclosureLeft: () => ({
