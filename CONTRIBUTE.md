@@ -224,7 +224,7 @@ You have to build, test, document and package your code before the rest of us ca
 
 Use `lerna <command>` to run tools in each of App stencils’ packages. Do not use `yarn <command>` or `npm <command>`.
 
-<!-- the point of lerna is that it lets you share configuration and tools between packages. set up all your tools in the root of your repository, and run them in each package, with lerna -->
+<!-- the point of lerna is that it lets you share configuration and tools between packages. set up all your tools in the root of your repository, and run them in each package, with lerna. maybe this should read 'share configuration with lerna' ... idk -->
 
 Lerna lets you develop the code in App Stencils as if it was a single package, even though it's actually split into many packages. Without Lerna, this would be difficult, because you would have to manually run the same `yarn <command>` (e.g. `yarn install`, `yarn build`) in each package. When you run `lerna <command>`, (e.g. `lerna bootstrap`, `lerna build`), it actually runs the corresponding `yarn` command in every package at once. But that's not all - it also changes the location from which packages are retrieved. `yarn install` retrieves packages from `npmjs.com`, unless specifically configured otherwise. `Lerna bootstrap` retrieves packages from the `packages` folder. It only installs packages from `npmjs.com` if it can't find the package inside `packages`. This means that _you don't have to publish a package to `npmjs.com`_ before importing it into your code. Without Lerna, you would have to publish every package in `packages` to `npmjs.com` before you could use them.
 
