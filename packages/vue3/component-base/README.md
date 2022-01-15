@@ -18,7 +18,13 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   <!-- need a storybook that shows base component responding to all the device inputs, with gif that links to it -->
 
-  ![Insert your component's markup into the base component's default slot to access its slot props.](../../../.readme/diagram-vue3-component-base-respond-to-user-interactions.png)
+  <table>
+  <tr><td>Without Base Component</td><td>With Base Component</td></tr>
+  <tr>
+    <td><img src="../../../.readme/diagram-vue3-component-base-without.png" alt="your component without base component"></td>
+    <td><img src="../../../.readme/diagram-vue3-component-base-with.png" alt="your component with base component"></td>
+  </tr>
+  </table>
 
   Use the base component's props to add [affordances](#toggle-the-base-components-affordances) to your component's markup.
 
@@ -30,7 +36,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
 
   ![Use the `:theme` prop to customize the styles contained in the default slot's `Theme` slot prop](../../../.readme/diagram-vue3-component-base-customize-theme.png)
 
-  Pass a [string](#set-the-base-components-theme-with-the-theme-prop) or [`Theme`]("/packages/shared/theme#make-a-theme-object") object into the base component's [`:theme`](#set-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
+  Pass a [string](#set-the-base-components-theme-with-the-theme-prop) or [`PlatformInterface`]("/packages/shared/theme/README.md#make-an-entirely-new-theme") object into the base component's [`:theme`](#set-the-base-components-theme-with-the-theme-prop) prop to customize the styles that it will provide to your component. You choose the theme, and the base component turns it into CSS for you.
 
 - **Theme your component, without writing a single CSS selector, by adding the base component's styles to your component.**
 
@@ -106,8 +112,7 @@ So, you're making a web app. You have a few dozen user flows, and a design syste
             * 'android',
             * 'windows',
             * 'gtk',
-            * 'web', 
-            * or any <a href="../../shared/theme/README.md#make-a-theme-object">Theme object</a>. 
+            * or any <a href="../../shared/theme/README.md#make-a-theme-object">PlatformInterface object</a>. 
           --&gt;
           
         &lt;!-- use the following events to run your component's methods --&gt;
@@ -606,21 +611,25 @@ In your component's template:
 </thead>
 <tbody>
 <tr>
-<td align="left"><code>Theme</code></td>
-<td align="left">whenever the base component emits a <code>stateChange</code> event.</td>
-<td align="left"><a href="#style-your-component-with-the-base-components-theme-slot-prop">CSS styles</a> for your component's text and fill</td>
-<td align="left">
+<td align="left"><code>layout</code></td>
+<td align="left" rowspan="2">Whenever the base component's <a href="#set-the-base-components-theme-with-the-theme-prop"><code>theme</code></a> prop changes.</td>
+<td align="left">A function that returns <a href="#style-your-component-with-the-base-components-layout-slot-prop">CSS styles</a> that you can apply to your component's markup.</td>
+<td align="left" rowspan="2">
 In your component's template:
 <pre><code class="language-vue">
 &lt;template&gt;
   &lt;BaseComponent&gt;
-    &lt;template v-slot:default="{<strong>Theme</strong>}"&gt;<br/>
-      &lt;!-- <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment" target="_blank">Destructure</a> the styles you want from <strong>Theme</strong> and pass them as a <a href="https://v3.vuejs.org/guide/component-props.html#props" target="_blank">prop</a> in your markup here --&gt;<br/>
+    &lt;template v-slot:default="{<strong>layout</strong>, <strong>layouts</strong>}"&gt;<br/>
+      &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;
   &lt;/BaseComponent&gt;
 &lt;/template&gt;
 </code></pre>
 </td>
+</tr>
+<tr>
+<td align="left"><code>layouts</code></td>
+<td align="left">A list of options that <code>layout</code> accepts.</td>
 </tr>
 </tbody>
 </table>
@@ -635,7 +644,7 @@ You probably want your components to affect your app. For example, when a it tra
    <code class="language-typescript">
    &lt;template&gt;
      &lt;BaseComponent isHoverable isPressable&gt;
-       &lt;template v-slot:default="{ Theme }"&gt;<br/>
+       &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
          &lt;!-- your markup here --&gt;<br/>
        &lt;/template&gt;
      &lt;/BaseComponent&gt;
@@ -713,7 +722,7 @@ You probably want your components to affect your app. For example, when a it tra
    <code class="language-typescript">
    &lt;template&gt;
      &lt;BaseComponent <strong>@stateChange="doSomething"</strong> isHoverable isPressable&gt;
-       &lt;template v-slot:default="{ Theme }"&gt;<br/>
+       &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
          &lt;!-- your markup here --&gt;<br/>
        &lt;/template&gt;
      &lt;/BaseComponent&gt;
@@ -1093,7 +1102,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="ios"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1117,7 +1126,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="macos"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1141,7 +1150,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="tvos"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1165,7 +1174,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="android"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1189,7 +1198,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="gtk"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1213,7 +1222,7 @@ The base component ships with six preset themes, each of which you can set using
 <code>
 &lt;template&gt;
   &lt;BaseComponent <strong>:theme="windows"</strong>&gt;<br/>
-    &lt;template v-slot:default="{ Theme }"&gt;<br/>
+    &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
       &lt;!-- your markup here --&gt;<br/>
     &lt;/template&gt;<br/>
   &lt;/BaseComponent&gt;
@@ -1234,64 +1243,172 @@ The base component ships with six preset themes, each of which you can set using
 
 Keep in mind that props are reactive: changing the value of the prop changes the theme on the fly. This can come in handy when you want to demonstrate the same component with different themes applied to it. In fact, this is the strongest use case for the base component.
 
-If none of the six preset themes fit your design system, you can easily define your own themes using the [`new Theme(...)` constructor](../../shared/theme/README.md). This constructor makes it easy to specify all of the styles that make up your theme: the sizes, shapes, fonts, colors, and elevations. It does all the hard work of turning those styles into CSS for you.
+If none of the six preset themes fit your design system, you can easily [define your own themes](../../shared/theme/README.md#).
 
 if you don't specify the theme prop, then the base component won't calculate styles for you. This is a great option if you've already written code for your app's theme, and you just want to use the base component's states. In fact, if you don't supply a theme prop, you will actually get a [slight performance boost](#how-incrementaldesign-vue3-component-base), because the base component won't calculate any of the theme's styles.
 
-### Style your component with the base component's `Theme` slot prop:
+### Style your component with the base component's `layout` slot prop:
 
-You just set the base component's `:theme`, and ... nothing changes. Your component's appearance hasn't updated to reflect the theme. This is a feature, not a bug. Although the base component calculates and updates the styles in a theme, you have to manually apply the styles you need to your markup. That's because the base component provides you with several variations on the same theme. It's up to you to apply the one that fits your component. To do this, you need to grab the `Theme` slot prop from the base component's default slot, and reference the specific style you need in your markup. For example, if you want make a UI component that functions as a button, you could do so as follows:
+You just set the base component's `:theme`, and ... nothing changes. Your component's appearance hasn't updated to reflect the theme. This is a feature, not a bug. Although the base component calculates and updates the styles in a theme, you have to manually apply the styles you need to your markup. That's because the base component provides you with several variations on the same theme. It's up to you to apply the one that fits your component. To do this, you need to:
 
-<pre>
-<code>
-&lt;template&gt;
-  &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
-    &lt;template v-slot:default="{ <strong>Theme</strong> }"&gt;<br/>
-      &lt;div <strong>:style="Theme.layoutSmall.fill.foreground.primary()"</strong>&gt;
-        &lt;p <strong>:style="Theme.layoutSmall.text.body()"</strong>&gt;Button&lt;/p&gt;
-      &lt;/div&gt;<br/>
+1.  Choose any of the options in <code>layouts</code> and insert it into <code>layout</code>:
+
+    <pre>
+    <code>
+    &lt;template&gt;
+      &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+        &lt;template v-slot:default="{ <strong>layout</strong>, <strong>layouts</strong> }"&gt;<br/>
+          &lt;div <strong>:style="layouts('inline')"</strong>&gt;&lt;/div&gt; 
+            &lt;!-- in this case, layouts[0] === 'inline' --&gt;<br/>
+        &lt;/template&gt;<br/>
+      &lt;/BaseComponent&gt;
     &lt;/template&gt;<br/>
-  &lt;/BaseComponent&gt;
-&lt;/template&gt;<br/>
-&lt;script&gt;<br/>
-  import { defineComponent } from 'vue';
-  import BaseComponent from '@incremental.design/vue3-component-base';<br/>
-  export default defineComponent({<br/>
-    /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
-  })<br/>
-&lt;/script&gt;
-</code>
-</pre>
+    &lt;script&gt;<br/>
+      import { defineComponent } from 'vue';
+      import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+      export default defineComponent({<br/>
+        /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+      })<br/>
+    &lt;/script&gt;
+    </code>
+    </pre>
 
-The `Theme` slot prop's styles, `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` not only give your component their styles, but also update in accordance with the `isPressable` and `isHoverable` props. This means that when you hover on or press your component, the `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` will automatically update to match.
+2.  Call `style` with the name of the style you want to apply.
 
-Notice that `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` are functions. Every style in the `Theme` slot prop is a function that can accept the following optional arguments:
+    <pre>
+    <code>
+    &lt;template&gt;
+      &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+        &lt;template v-slot:default="{ <strong>layout</strong>, <strong>layouts</strong> }"&gt;<br/>
+          &lt;div :style="layouts('inline')<strong>.style('bgInline')</strong>"&gt;&lt;/div&gt; 
+            &lt;!-- in this case, layouts[0] === 'inline' --&gt;<br/>
+        &lt;/template&gt;<br/>
+      &lt;/BaseComponent&gt;
+    &lt;/template&gt;<br/>
+    &lt;script&gt;<br/>
+      import { defineComponent } from 'vue';
+      import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+      export default defineComponent({<br/>
+        /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+      })<br/>
+    &lt;/script&gt;
+    </code>
+    </pre>
 
-<table>
-<thead>
-<tr>
-<th align="left">Argument</th>
-<th align="left">Accepted values:</th>
-<th align="left">What it does:</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left"><code>tint</code></td>
-<td align="left">string that is one of <code>active</code>, <code>progress</code>, <code>success</code>, <code>warn</code>, <code>fail</code></td>
-<td align="left">Varies the colors in the style.</td>
-</tr>
-<tr>
-<td align="left"><code>dark</code></td>
-<td align="left">boolean.</td>
-<td align="left">If set to 'true' it forces the style to adopt a 'dark' appearance. If set to 'false', it forces the style to adopt a 'light' appearance. If not set, the style adopts whatever appearance the browser <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme">specifies</a>.</td>
-</tr>
-</tbody>
-</table>
+3.  If you want to force a specific tint, you can do so by inserting the tint you want into `style`:
 
-Of course, the theme provides more than just the `Theme.layoutSmall.fill.foreground.primary()`, and `Theme.layoutSmall.text.body()` styles. It provides dozens of styles, categorized by size classes. Each size class contains two sets of styles: one for text and another for fill. That's because _almost every_ UI component you will ever write will contain both text and a fill. Each of these sets contains a handful of styles, so you can differentiate components from one another. For a complete list of all of the `Theme`'s styles, and an explanation of how and when to apply them, see the [README](../../shared/theme/README.md) for the `Theme` package.
+        <pre>
+        <code>
+        &lt;template&gt;
+          &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+            &lt;template v-slot:default="{ <strong>layout</strong>, <strong>layouts</strong> }"&gt;<br/>
+              &lt;div :style="layouts('inline').style('bgInline',<strong>'active'</strong>)"&gt;&lt;/div&gt;
+                &lt;!-- in this case, layouts[0] === 'inline' --&gt;<br/>
+            &lt;/template&gt;<br/>
+          &lt;/BaseComponent&gt;
+        &lt;/template&gt;<br/>
+        &lt;script&gt;<br/>
+          import { defineComponent } from 'vue';
+          import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+          export default defineComponent({<br/>
+            /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+          })<br/>
+        &lt;/script&gt;
+        </code>
 
-Keep in mind that you can use some or all of the styles provided by `Theme`. If your component contains markup that doesn't quite fit the styles that theme provides, you can always use the base component's events to drive your own custom CSS. You can even intermingle the `Theme`'s styles with your own, for the ultimate flexibility.
+    </pre>
+
+4.  If you want to force dark mode, you can do so by setting the `darkMode` argument of `style` to `true`:
+
+    <pre>
+    <code>
+    &lt;template&gt;
+      &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+        &lt;template v-slot:default="{ <strong>layout</strong>, <strong>layouts</strong> }"&gt;<br/>
+          &lt;div :style="layouts('inline').style('bgInline','active',<strong>true</strong>)"&gt;&lt;/div&gt; 
+            &lt;!-- in this case, layouts[0] === 'inline' --&gt;<br/>
+        &lt;/template&gt;<br/>
+      &lt;/BaseComponent&gt;
+    &lt;/template&gt;<br/>
+    &lt;script&gt;<br/>
+      import { defineComponent } from 'vue';
+      import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+      export default defineComponent({<br/>
+        /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+      })<br/>
+    &lt;/script&gt;
+    </code>
+    </pre>
+
+    The `layouts` array contains all of the options that `layout` accepts. The contents of `layouts` vary based on the [`theme`](#set-the-base-components-theme-with-the-theme-prop) you choose.
+
+    <pre>
+    <code>
+    &lt;template&gt;
+      &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+        &lt;template v-slot:default="{ layout, <strong>layouts</strong> }"&gt;<br/>
+          &lt;div :style="getAvailableStylesTintsModes(layout('inline'))"&gt;&lt;/div&gt; 
+            &lt;!-- 
+              layouts === [ 'inline', 'small', 'smallVertical', 
+                            'smallWithItemLeft', 'smallWithItemRight',
+                            'medium', 'mediumVertical', 'large', 'massive' ]
+            --&gt;<br/>
+        &lt;/template&gt;<br/>
+      &lt;/BaseComponent&gt;
+    &lt;/template&gt;<br/>
+    &lt;script&gt;<br/>
+      import { defineComponent } from 'vue';
+      import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+      export default defineComponent({<br/>
+        /* your component's <a href="https://v3.vuejs.org/api/options-api.html" target="_blank">options</a> here */<br/>
+      })<br/>
+    &lt;/script&gt;
+    </code>
+    </pre>
+
+    The `layout` function will tell you what styles, tints and color modes the `style` function accepts, if you destructure its return object as follows:
+
+    <pre>
+    <code>
+    &lt;template&gt;
+      &lt;BaseComponent :theme="ios" isPressable isHoverable&gt;<br/>
+        &lt;template v-slot:default="{ layout, layouts }"&gt;<br/>
+          &lt;div :style="<strong>generateStyles(layout('inline'))</strong>"&gt;&lt;/div&gt; <br/>
+        &lt;/template&gt;<br/>
+      &lt;/BaseComponent&gt;
+    &lt;/template&gt;<br/>
+    &lt;script&gt;<br/>
+      import { defineComponent } from 'vue';
+      import BaseComponent from '@incremental.design/vue3-component-base';<br/>
+      export default defineComponent({
+        <strong>
+        const generateStyles = ({
+          style: (styleName: string, tint?: string, darkMode?:string | boolean ) => {[cssRule: string]: string | number },
+          styles: {
+            text: Array&lt;string&gt;
+            fill: Array&lt;string&gt;
+            bg: Array&lt;string&gt;
+          },
+          tints: Array&lt;string&gt;,
+          modes: Array&lt;string&gt;
+        }) => {
+          console.log(styles.text); /* lists the available text styles e.g. 'textDisclosureLeft', 'textLabel', 'textFootnote' */
+          console.log(styles.fill); /* lists the available fills styles e.g. 'fillDisclosureLeft', 'fillLabel', 'fillFootnote' */
+          console.log(styles.bg); /* lists the available background styles */
+          console.log(tints) /* lists the available tints e.g. 'none', 'active', 'progress' 'success', 'warn', 'fail' */
+          console.log(modes) /* lists the available modes: e.g. 'light', 'dark'*/<br/>
+          return style('textLabel', 'none', 'light')<br/>
+        }
+        return {generateStyles}
+        </strong>
+      })<br/>
+    &lt;/script&gt;
+    </code>
+    </pre>
+
+The specific styles available will vary based on the layout you choose. For more information on all of the available styles, see the [`README` for @incremental.design/theme](../../shared/theme/README.md).
+
+<!-- need to explain what a 'tint' is, what a 'mode' is, and how base component automatically updates state -->
 
 ### Display a custom placeholder while your component is loading:
 
