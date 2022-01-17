@@ -1327,7 +1327,15 @@ export const IOS: PlatformInterface = {
         },
       },
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     small: {
       /**
@@ -1370,7 +1378,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Currently, there are no elements with a 'small vertical' layout
@@ -1380,7 +1396,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a smallWithItemLeft layout include:
@@ -1405,7 +1429,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a smallWithItemRight layout include:
@@ -1438,7 +1470,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a medium layout include:
@@ -1478,7 +1518,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a medium layout include:
@@ -1496,7 +1544,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a large layout include:
@@ -1514,7 +1570,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
     /**
      * Elements that have a massive layout include:
@@ -1532,7 +1596,15 @@ export const IOS: PlatformInterface = {
       fill: {},
       bg: {},
       tints: ['none', 'active', 'warn', 'fail'],
-      states: ['none', 'hovered', 'pressed', 'toggled', 'focused'],
+      states: [
+        'none',
+        'hovered',
+        'pressed',
+        'toggled',
+        'toggledHovered',
+        'toggledPressed',
+        'focused',
+      ],
     },
   },
   colorPalettes: {

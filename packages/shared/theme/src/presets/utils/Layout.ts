@@ -20,6 +20,12 @@ export interface LayoutInterface {
     string | 'none' | 'active' | 'progress' | 'warn' | 'fail'
   > /* this should be keyof Tint<RGBA> but typescript won't accept it */;
   states: Array<
-    string | 'none' | 'hovered' | 'pressed' | 'toggled' | 'focused'
+    | 'none'
+    | 'hovered'
+    | 'pressed'
+    | 'toggled'
+    | 'toggledHovered'
+    | 'toggledPressed'
+    | 'focused'
   > /* this should be keyof State but typescript won't accept it */;
 }

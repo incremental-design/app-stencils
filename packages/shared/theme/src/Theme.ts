@@ -8,6 +8,9 @@ import {
   State,
 } from './presets';
 
+export * from './presets';
+export * from './presets/utils';
+
 /**
  * Theme generates CSS rules for your components.
  * @remarks
@@ -222,7 +225,7 @@ export default class Theme {
     return (
       style: string | StyleFactory,
       tint?: string,
-      state?: string,
+      state?: string | State,
       darkMode?: boolean | string
     ) => {
       const styleFactoryFromString = (style: string) => {
@@ -271,24 +274,31 @@ export default class Theme {
 
       const getState = () => {
         if (!state) return State.none;
-        switch (
-          state /* yes, I know that I shouldn't hardcode this ... but I don't have a better way to unwrap the State enum rn*/
-        ) {
-          case 'none':
-            return State.none;
-          case 'hovered':
-            return State.hovered;
-          case 'pressed':
-            return State.pressed;
-          case 'toggled':
-            return State.toggled;
-          case 'focused':
-            return State.focused;
-          default:
-            throw new Error(
-              `${state} must be one of 'none', 'hovered', 'pressed', 'toggled', or 'focused'.`
-            );
+        if (typeof state === 'string') {
+          switch (
+            state /* yes, I know that I shouldn't hardcode this ... but I don't have a better way to unwrap the State enum rn*/
+          ) {
+            case 'none':
+              return State.none;
+            case 'hovered':
+              return State.hovered;
+            case 'pressed':
+              return State.pressed;
+            case 'toggled':
+              return State.toggled;
+            case 'toggledHovered':
+              return State.toggledHovered;
+            case 'toggledPressed':
+              return State.toggledPressed;
+            case 'focused':
+              return State.focused;
+            default:
+              throw new Error(
+                `${state} must be one of 'none', 'hovered', 'pressed', 'toggled', 'toggledHovered', 'toggledPressed', or 'focused'.`
+              );
+          }
         }
+        return state;
       };
 
       // todo: actually validate tint
@@ -380,6 +390,6 @@ type layoutFn = (
 type styleFn = (
   style: string | StyleFactory,
   tint?: string,
-  state?: string,
+  state?: string | State,
   darkMode?: boolean | string
 ) => { [cssRule: string]: number | string };

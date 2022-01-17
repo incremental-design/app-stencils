@@ -41,9 +41,9 @@ export function makeFontCSSRules(F: Font<RGBA>) {
   } = F;
 
   const rules = {
-    fontFamily: typeface.join(', '),
-    fontSize: `${size}pt`,
-    fontWeight: weight,
+    'font-family': typeface.join(', '),
+    'font-size': `${size}pt` /* should we append pt here? what if we need to change units elsewhere? */,
+    'font-weight': weight,
     color: RGBAtoCSS(color),
     'mix-blend-mode': blendMode ? blendMode : 'normal',
   };
