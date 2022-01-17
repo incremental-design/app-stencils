@@ -298,24 +298,89 @@ The `Theme` class is a tree of styles, grouped by platforms, then by layouts,and
    const {layout, layouts} = Theme.platform('ios')
 
    console.log(layout) // function
-   console.log(layouts) // ['inline', 'small', 'smallVertical', 'smallWithInline', 'smallWithItemLeft', 'smallWithItemRight', 'medium', 'mediumVertical', 'large', 'massive']
+   console.log(layouts) // ['inline', 'small', 'smallVertical', 'smallWithItemLeft', 'smallWithItemRight', 'medium', 'mediumVertical', 'large', 'massive']
    ```
 
 2. Choose one of `inline`, `small`, `smallVertical`, `smallWithItemLeft`, `smallWithItemRight`, `medium`, `mediumVertical`, `large`, or `massive` and insert it into `Theme.platform(...).layout`:
 
    ```
-   const {style, styles} = Theme.platform('ios').layout('smallWithInline');
+   const {style, styles, tints, states, modes} = Theme.platform('ios').layout('inline');
 
-   console.log(style) // function
-   console.log(styles) // {text: ['textIcon', 'textBody', 'textFootnote'], fill:{foreground: ['fgPrimary', 'fgSecondary'], background: ['bgPrimary', 'bgSecondary', 'bgTertiary']}, tints: ['none', 'active', 'progress', 'warn', 'fail'], states:['none', 'hovered', 'pressed', 'toggled', 'focused']}
+   console.log(style);  // function
+
+   console.log(styles); // {
+                        //    text:
+                        //       [  'textDisclosureLeft',
+                        //          'textIndicator',
+                        //          'textIndicatorIcon',
+                        //          'textLabel',
+                        //          'textInputPlaceholder',
+                        //          'textInputFilled',
+                        //          'textValidator',
+                        //          'textValidatorIcon',
+                        //          'textInputStepperIcon',
+                        //          'textAction',
+                        //          'textActionDisclosure',
+                        //          'textDisclosureRight',
+                        //          'textDisclosureRightIcon'
+                        //       ],
+                        //    fill:
+                        //       [  'fillDisclosureLeft',
+                        //          'fillIndicator',
+                        //          'fillLabel',
+                        //          'fillInput',
+                        //          'fillValidator',
+                        //          'fillInputStepper',
+                        //          'fillAction',
+                        //          'fillDisclosureRight'
+                        //       ],
+                        //    bg:
+                        //       [
+                        //          'bgInline'
+                        //       ]
+                        // }
+
+   console.log(tints);  // [
+                        //    'none',
+                        //    'active',
+                        //    'progress',
+                        //    'success',
+                        //    'warn',
+                        //    'fail',
+                        // ]
+
+   console.log(states); // [
+                        //    'none',
+                        //    'hovered',
+                        //    'pressed',
+                        //    'toggled',
+                        //    'toggledHovered',
+                        //    'toggledPressed',
+                        //    'focused'
+                        // ]
+
+   console.log(modes);  // [
+                        //    'light',
+                        //    'dark'
+                        // ]
    ```
 
-3. Chose one of the styles that `Theme.platform(...).layout(...)` returned, and insert it into `Theme.platform(...).layout(...).style`. You can also optionally insert one of the `tint`s and `state`s into this function.
+3. Chose one of the styles that `Theme.platform(...).layout(...)` returned, and insert it into `Theme.platform(...).layout(...).style`. You can also optionally insert one of the `tints`, `states` and `modes` into this function.
 
    ```
-   const CSSRules = Theme.platform('ios').layout('smallWithInline').element('textBody').style('active','hovered')
+   const CSSRules = Theme.platform('ios').layout('smallWithInline').style('textLabel','active','hovered')
 
-   console.log(CSSRules) //tbd
+   console.log(CSSRules)   // {
+                           //    'font-family': 'SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif',
+                           //    'font-size': '17pt',
+                           //    'font-weight': 400,
+                           //    'color': 'rgba(0, 25, 39, 0.7)',
+                           //    'mix-blend-mode': 'normal',
+                           //    'letter-spacing': '-0.43pt',
+                           //    'line-height': '22pt',
+                           //    'text-align': 'left',
+                           //    'align-self': 'start',
+                           // }
    ```
 
 <!--
