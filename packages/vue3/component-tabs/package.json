@@ -1,6 +1,6 @@
 {
   "name": "@incremental.design/component-tabs",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "main": "dist/component-tabs.common.js",
   "types": "dist/types/TabsComponent.vue.d.ts",
   "sideEffects": true,
