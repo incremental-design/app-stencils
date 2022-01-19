@@ -42,13 +42,13 @@ export function makeFontCSSRules(F: Font<RGBA>) {
 
   const rules = {
     'font-family': typeface.join(', '),
-    'font-size': `${size}pt` /* should we append pt here? what if we need to change units elsewhere? */,
+    'font-size': `${size}px` /* should we append px here? what if we need to change units elsewhere? */,
     'font-weight': weight,
     color: RGBAtoCSS(color),
     'mix-blend-mode': blendMode ? blendMode : 'normal',
   };
-  if (tracking) Object.assign(rules, { 'letter-spacing': `${tracking}pt` });
-  if (leading) Object.assign(rules, { 'line-height': `${leading}pt` });
+  if (tracking) Object.assign(rules, { 'letter-spacing': `${tracking}px` });
+  if (leading) Object.assign(rules, { 'line-height': `${leading}px` });
   if (align) Object.assign(rules, { 'text-align': align });
   if (verticalAlign)
     Object.assign(rules, {
@@ -76,7 +76,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
 
   if (fill[0].bgBlur)
     Object.assign(rules, {
-      'backdrop-filter': `blur(${fill[0].bgBlur.radius || 0}pt) saturate(${
+      'backdrop-filter': `blur(${fill[0].bgBlur.radius || 0}px) saturate(${
         (fill[0].bgBlur.saturation || 0) * 100
       }%)`,
     });
@@ -85,7 +85,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
   if (stroke[0])
     Object.assign(rules, {
       'border-color': RGBAtoCSS(stroke[0].color),
-      'border-width': `${stroke[0].width || 1}pt`,
+      'border-width': `${stroke[0].width || 1}px`,
       'border-style': 'solid',
       /* right now we discard offset and blend mode ... later on we can test using box shadow to achieve the same result */
     });
@@ -100,7 +100,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
     const s = spread || 0;
     const c = RGBAtoCSS(color);
     // const bm = blendMode || BlendMode.normal; /* for right now, no blend mode support */
-    BoxShadows.push(`inset ${x}pt ${y}pt ${b}pt ${s}pt ${c}`);
+    BoxShadows.push(`inset ${x}px ${y}px ${b}px ${s}px ${c}`);
   }
 
   dropShadow.forEach(({ x, y, blur, spread, color, blendMode }) => {
@@ -111,7 +111,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
     const c = RGBAtoCSS(color);
     // const bm = blendMode || BlendMode.normal; /* for right now, no blend mode support */
     BoxShadows.push(
-      `${xOffset}pt ${yOffset}pt ${blurOffset}pt ${spreadOffset}px ${c}`
+      `${xOffset}px ${yOffset}px ${blurOffset}px ${spreadOffset}px ${c}`
     );
   });
 
@@ -124,23 +124,23 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
 /**
  * A shape to apply to a DOM node
  *
- * @param minWidth - the minimum width of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
+ * @param minWidth - the minimum width of the shape in pixels (px) This must be a value greater than 0. this is required.
  *
- * @param maxWidth - the optional maximum width of the shape in device-independent points (pt). Defaults to the minWidth.
+ * @param maxWidth - the optional maximum width of the shape in pixels (px). Defaults to the minWidth.
  *
- * @param minHeight - the minimum height of the shape in device-independent points (pt) This must be a value greater than 0. this is required.
+ * @param minHeight - the minimum height of the shape in pixels (px) This must be a value greater than 0. this is required.
  *
- * @param maxHeight - the optional maximum height of the shape in device-independent points (pt). Defaults to the minHeight.
+ * @param maxHeight - the optional maximum height of the shape in pixels (px). Defaults to the minHeight.
  *
- * @param borderRadius - the radius of the shape in device-independent points (pt) This must be a value greater than 0. This is required.
+ * @param borderRadius - the radius of the shape in pixels (px) This must be a value greater than 0. This is required.
  *
  */
 export type Shape = {
-  minWidth: number /* in pt */;
-  maxWidth?: number /* in pt */;
-  minHeight: number /* in pt */;
-  maxHeight?: number /* in pt */;
-  borderRadius: number /* in pt*/;
+  minWidth: number /* in px */;
+  maxWidth?: number /* in px */;
+  minHeight: number /* in px */;
+  maxHeight?: number /* in px */;
+  borderRadius: number /* in px*/;
 };
 
 export function makeShapeCSSRules(S: Shape) {
@@ -148,11 +148,11 @@ export function makeShapeCSSRules(S: Shape) {
   return {
     display: 'flex',
     'flex-direction': 'row',
-    'min-width': `${minWidth}pt`,
-    'max-width': `${maxWidth ? maxWidth : minWidth}pt`,
-    'min-height': `${minHeight}pt`,
-    'max-height': `${maxHeight ? maxHeight : minHeight}pt`,
-    'border-radius': `${borderRadius}pt`,
+    'min-width': `${minWidth}px`,
+    'max-width': `${maxWidth ? maxWidth : minWidth}px`,
+    'min-height': `${minHeight}px`,
+    'max-height': `${maxHeight ? maxHeight : minHeight}px`,
+    'border-radius': `${borderRadius}px`,
   };
 }
 
@@ -161,7 +161,7 @@ export function makeShapeCSSRules(S: Shape) {
  *
  * @param typeface - the name of the typeface to apply (e.g. 'Helvetica'). This is required.
  *
- * @param size - the size of the font in device-independent points (pt). This is required.
+ * @param size - the size of the font in pixels (px). This is required.
  *
  * @param weight - a number between 100 and 900, inclusive, where 100 is the lightest and 900 is the heaviest. This is required.
  *
@@ -169,9 +169,9 @@ export function makeShapeCSSRules(S: Shape) {
  *
  * @param blendMode - optional {@link BlendMode} to apply to the font. Defaults to {@link BlendMode.normal}.
  *
- * @param tracking - optional tracking of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}
+ * @param tracking - optional tracking of the font in pixels (px). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/letter-spacing}
  *
- * @param leading - optional leading of the font in device-independent points (pt). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
+ * @param leading - optional leading of the font in pixels (px). defaults to 0. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/line-height}
  *
  * @param align - optional alignment of the font. Defaults to 'left'. Corresponds to {@link https://developer.mozilla.org/en-US/docs/Web/CSS/text-align}
  *
@@ -179,7 +179,7 @@ export function makeShapeCSSRules(S: Shape) {
  *
  * @remarks
  *
- * If you want your fonts to use em instead of pt, you need to apply your own font-size to the DOM node.
+ * If you want your fonts to use em instead of px, you need to apply your own font-size to the DOM node.
  *
  */
 export type Font<Color> = {
@@ -188,8 +188,8 @@ export type Font<Color> = {
   weight: number;
   color: Color;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  tracking?: number /* in pt, omitted if not specified */;
-  leading?: number /* in pt, also known as line height. Omitted if not specified */;
+  tracking?: number /* in px, omitted if not specified */;
+  leading?: number /* in px, also known as line height. Omitted if not specified */;
   align?: FontAlign /* defaults to 'left' */;
   verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
 };

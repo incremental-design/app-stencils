@@ -7,8 +7,8 @@
     "storybook:serve": "BROWSER=none vue-cli-service storybook:serve -p 6006 -c config/storybook"
   },
   "dependencies": {
-    "@incremental.design/component-base": "^0.0.0",
-    "@incremental.design/component-tabs": "^0.0.0",
+    "@incremental.design/component-base": "latest",
+    "@incremental.design/component-tabs": "latest",
     "core-js": "^3.6.5",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0"
