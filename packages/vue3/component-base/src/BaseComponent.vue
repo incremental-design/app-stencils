@@ -1004,7 +1004,7 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.no-pointer-events > * {
+.no-pointer-events >>> * {
   pointer-events: none;
 }
 </style>
