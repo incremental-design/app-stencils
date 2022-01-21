@@ -2,19 +2,14 @@
   <div
     v-on="eventHandlers"
     :style="componentStyles"
-    :class="componentClasses"
     ref="BCR"
     :tabindex="isFocusable ? '-1' : ''"
   >
-    <!-- see https://www.vuemastery.com/courses/component-design-patterns/one-object-to-rule-them-all -->
-    <!--
-      @slot Default Content
-        @binding BoundAttributes
-        @binding BoundEventHandlers
-    -->
-    <slot :layout="layout" :layouts="layouts">
-      isPressed: {{ pointerInput }}
-    </slot>
+    <div :style="isFocusable ? '' : 'pointer-events: none'">
+      <slot :layout="layout" :layouts="layouts">
+        isPressed: {{ pointerInput }}
+      </slot>
+    </div>
   </div>
   <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
@@ -342,7 +337,6 @@ export default defineComponent({
           | ((E: KeyboardEvent) => void)
           | ((E: WheelEvent) => void);
       };
-      componentClasses: Array<string>;
       componentStyles: {
         [styleName: string]: string;
       };
@@ -387,12 +381,6 @@ export default defineComponent({
           isSelectable,
           isFocusable
         );
-      }),
-      /**
-       * componentClasses - classes that have to be applied to the root of the component to make it work
-       */
-      componentClasses: computed(() => {
-        return props.isFocusable ? [] : ['no-pointer-events'];
       }),
       /**
        * componentStyles - styles that have to be applied to the root of the component to make it work.
@@ -1002,9 +990,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.no-pointer-events >>> * {
-  pointer-events: none;
-}
-</style>
