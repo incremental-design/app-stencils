@@ -1234,7 +1234,7 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@incremental.design/component-base@^0.0.1-alpha.306+09cb57f", "@incremental.design/component-base@latest":
+"@incremental.design/component-base@^0.0.1-alpha.306+09cb57f":
   version "0.0.1-alpha.306"
   resolved "https://registry.yarnpkg.com/@incremental.design/component-base/-/component-base-0.0.1-alpha.306.tgz#97710c48b9da3664ecac969911b0d372220684e4"
   integrity sha512-noMrRVrN/uwb62KSIfQR0HQPoe9CC+X+BIe0WODrA/H+08gIARuAaJsMp3HIG7WBfhbOCaF4HSYHki/7DxhNWg==

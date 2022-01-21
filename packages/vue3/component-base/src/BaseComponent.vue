@@ -2,6 +2,7 @@
   <div
     v-on="eventHandlers"
     :style="componentStyles"
+    :class="componentClasses"
     ref="BCR"
     :tabindex="isFocusable ? '-1' : ''"
   >
@@ -341,6 +342,7 @@ export default defineComponent({
           | ((E: KeyboardEvent) => void)
           | ((E: WheelEvent) => void);
       };
+      componentClasses: Array<string>;
       componentStyles: {
         [styleName: string]: string;
       };
@@ -385,6 +387,12 @@ export default defineComponent({
           isSelectable,
           isFocusable
         );
+      }),
+      /**
+       * componentClasses - classes that have to be applied to the root of the component to make it work
+       */
+      componentClasses: computed(() => {
+        return props.isFocusable ? [] : ['no-pointer-events'];
       }),
       /**
        * componentStyles - styles that have to be applied to the root of the component to make it work.
@@ -994,3 +1002,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.no-pointer-events > * {
+  pointer-events: none;
+}
+</style>
