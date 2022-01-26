@@ -1,6 +1,6 @@
 {
   "name": "@incremental.design/component-tabs",
-  "version": "0.0.1-alpha.305+2785342",
+  "version": "0.0.1-alpha.311+880450d",
   "main": "dist/component-tabs.common.js",
   "types": "dist/types/TabsComponent.vue.d.ts",
   "sideEffects": true,
@@ -13,7 +13,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@incremental.design/component-base": "^0.0.1-alpha.305+2785342",
+    "@incremental.design/component-base": "^0.0.1-alpha.311+880450d",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
@@ -26,5 +26,5 @@
     "less-loader": "^5.0.0",
     "typescript": "~4.1.5"
   },
-  "gitHead": "2785342b884f1d093c9d2ec81f1b06257d741725"
+  "gitHead": "880450de82b0615fc30b4fc6f6f17e7e817c196b"
 }
