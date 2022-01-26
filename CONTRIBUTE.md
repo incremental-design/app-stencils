@@ -254,7 +254,7 @@ Lerna will drive _most_ of the tools in App stencils for you. All you need to do
 </tr>
 <tr>
 <td>Install the dependencies listed in each package's <code>package.json</code></td>
-<td><code>lerna bootstrap</code></td>
+<td><code>lerna bootstrap --force-local</code></td>
 <td><code>yarn install</code></td>
 <td><code>npm install</code></td>
 </tr>

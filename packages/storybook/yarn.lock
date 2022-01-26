@@ -1234,35 +1234,6 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
-"@incremental.design/component-base@^0.0.1-alpha.306+09cb57f", "@incremental.design/component-base@latest":
-  version "0.0.1-alpha.306"
-  resolved "https://registry.yarnpkg.com/@incremental.design/component-base/-/component-base-0.0.1-alpha.306.tgz#97710c48b9da3664ecac969911b0d372220684e4"
-  integrity sha512-noMrRVrN/uwb62KSIfQR0HQPoe9CC+X+BIe0WODrA/H+08gIARuAaJsMp3HIG7WBfhbOCaF4HSYHki/7DxhNWg==
-  dependencies:
-    "@incremental.design/device-input-event-handlers" "^0.0.1-alpha.306+09cb57f"
-    "@incremental.design/theme" "^0.0.1-alpha.306+09cb57f"
-    core-js "^3.6.5"
-    vue "^3.0.0"
-
-"@incremental.design/component-tabs@latest":
-  version "0.0.1-alpha.306"
-  resolved "https://registry.yarnpkg.com/@incremental.design/component-tabs/-/component-tabs-0.0.1-alpha.306.tgz#a1e07eadd81c33b71eac94831d310956420904c1"
-  integrity sha512-LL7a64moQiKs+yXI/wwFv2Uvm0auyhyWvXI56yCIPR+0m++DwD4TbgQZFDds5zfyAU8KpDt2V3M6YgS0bmZkLQ==
-  dependencies:
-    "@incremental.design/component-base" "^0.0.1-alpha.306+09cb57f"
-    core-js "^3.6.5"
-    vue "^3.0.0"
-
-"@incremental.design/device-input-event-handlers@^0.0.1-alpha.306+09cb57f":
-  version "0.0.1-alpha.306"
-  resolved "https://registry.yarnpkg.com/@incremental.design/device-input-event-handlers/-/device-input-event-handlers-0.0.1-alpha.306.tgz#30d189c9cfe33e475a2ea65bb0bbc0c64e2b7bc6"
-  integrity sha512-tTzyaxmmO8B1ZqTQlEdHCnjEW2wO39ndI/NAw7XVR65slmrvRj64+G/qa9tV+zMml6N8I1/GJscu6aMoxdAc9A==
-
-"@incremental.design/theme@^0.0.1-alpha.306+09cb57f":
-  version "0.0.1-alpha.306"
-  resolved "https://registry.yarnpkg.com/@incremental.design/theme/-/theme-0.0.1-alpha.306.tgz#6817074fc94fad899178e6cb65989363c0d770f0"
-  integrity sha512-/6CDFl8M0UgzOEMwZmDloVv1g1PLkNo3MSEdLYlwS7CnwIxw27jpWxT2Ri677beUW52oAATdKsDKUzpVk4A+fw==
-
 "@intervolga/optimize-cssnano-plugin@^1.0.5":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@intervolga/optimize-cssnano-plugin/-/optimize-cssnano-plugin-1.0.6.tgz#be7c7846128b88f6a9b1d1261a0ad06eb5c0fdf8"

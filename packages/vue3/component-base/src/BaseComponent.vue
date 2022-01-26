@@ -47,7 +47,6 @@ import {
   handleMouse,
   handleTouch,
   PointerInput,
-  // PointerInput,
   // handleWindowResize,
   WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
@@ -269,12 +268,17 @@ export default defineComponent({
     /**
      * stateChange is emitted whenever the {@link State} of this component changes. For example, if this component `isPressable`, then a state change event will be emitted whenever the component is pressed, and whenever it is released.
      *
-     * @param payload - an object that contains an array with the
+     * @param payload - an object that contains:
+     *  * newState: an array that is one of {@link State}
+     *  * oldState: an array that is one of {@link State}
+     *  * inputEvents: an array of {@link EventInfo} that contains the events that caused the state change
+     *  * flags: an array of strings which convey additional information about the state change.
      */
     stateChange: (payload: {
       newState: Array<State>;
       oldState: Array<State>;
       inputEvents: Array<EventInfo<unknown>>;
+      flags: Array<'pointerReleasedInTarget'>;
     }) => {
       return true; /* there is no actual need to validate emit logic because it will always be valid ... this is just here for posterity */
     },
@@ -945,6 +949,7 @@ export default defineComponent({
           const newState = [];
           const oldState = [];
           const IES /* (I)nput (E)vent (S)et */ = new Set();
+          const flags: Array<'pointerReleasedInTarget'> = [];
 
           if (current[0] /* FSM.hovered.state */) newState.push(State.hovered);
           if (current[1] /* FSM.peeked.state */) newState.push(State.peeked);
@@ -973,7 +978,34 @@ export default defineComponent({
           if (current[6] !== previous[6]) IES.add(FSM.focused.changedBy);
 
           const inputEvents = Array.from(IES) as Array<EventInfo<unknown>>;
-          return { newState, oldState, inputEvents };
+
+          /* Check if the pointer released the target when it was in the target. */
+          if (
+            !newState.includes(State.pressed) &&
+            oldState.includes(State.pressed)
+          ) {
+            if (!inputEvents.map(e => e.type).includes('mouseleave')) {
+              flags.push('pointerReleasedInTarget');
+            } else if (inputEvents.map(e => e.type).includes('touchend')) {
+              const touchEndedEvents = inputEvents.filter(
+                e => e.type === 'touchend'
+              ) as Array<{
+                input: { relative: { xPercent: number; yPercent: number } };
+              }>;
+              if (
+                touchEndedEvents.every(
+                  e =>
+                    e.input.relative.xPercent >= 0 &&
+                    e.input.relative.xPercent <= 1 &&
+                    e.input.relative.yPercent >= 0 &&
+                    e.input.relative.yPercent <= 1
+                )
+              )
+                flags.push('pointerReleasedInTarget');
+            }
+          }
+
+          return { newState, oldState, inputEvents, flags };
         };
 
         emit('stateChange', makeStateArrays());
