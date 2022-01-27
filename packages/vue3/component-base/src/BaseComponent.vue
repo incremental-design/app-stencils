@@ -984,9 +984,10 @@ export default defineComponent({
             !newState.includes(State.pressed) &&
             oldState.includes(State.pressed)
           ) {
-            if (!inputEvents.map(e => e.type).includes('mouseleave')) {
-              flags.push('pointerReleasedInTarget');
-            } else if (inputEvents.map(e => e.type).includes('touchend')) {
+            let didReleaseInTarget = false;
+            const ietype = inputEvents.map(e => e.type);
+
+            if (ietype.includes('touchend')) {
               const touchEndedEvents = inputEvents.filter(
                 e => e.type === 'touchend'
               ) as Array<{
@@ -995,13 +996,18 @@ export default defineComponent({
               if (
                 touchEndedEvents.every(
                   e =>
-                    e.input.relative.xPercent >= 0 &&
-                    e.input.relative.xPercent <= 1 &&
-                    e.input.relative.yPercent >= 0 &&
+                    e.input.relative.xPercent >= 0 ||
+                    e.input.relative.xPercent <= 1 ||
+                    e.input.relative.yPercent >= 0 ||
                     e.input.relative.yPercent <= 1
                 )
               )
-                flags.push('pointerReleasedInTarget');
+                didReleaseInTarget = true;
+            } else if (ietype.includes('mouseup')) {
+              didReleaseInTarget = true;
+            }
+            if (didReleaseInTarget) {
+              flags.push('pointerReleasedInTarget');
             }
           }
 
