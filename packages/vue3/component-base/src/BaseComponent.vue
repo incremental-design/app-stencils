@@ -1,6 +1,11 @@
 <template>
   <div
-    v-on="eventHandlers"
+    v-on="eventHandlers.notPassive"
+    v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
+    v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
+    v-on:touchend.passive="eventHandlers.passive.touch.touchend"
+    v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
+    v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
     :style="componentStyles"
     ref="BCR"
     :tabindex="isFocusable ? '-1' : ''"
@@ -332,14 +337,23 @@ export default defineComponent({
     const DataAndComputed: {
       pointerInput: false | EventInfo<PointerInput>;
       eventHandlers: {
+        notPassive: {
         [eventType: string]:
           | ((E: MouseEvent) => void)
-          | ((E: TouchEvent) => void)
           | ((E: DragEvent) => void)
           | ((E: Event) => void)
           | ((E: FocusEvent) => void)
           | ((E: KeyboardEvent) => void)
-          | ((E: WheelEvent) => void);
+        },
+        passive: {
+          touch: {
+          [eventType: string]: ((E: TouchEvent) => void)
+          }
+          wheel: {
+          [eventType: string]: ((E: WheelEvent) => void);
+          }
+        },
+
       };
       componentStyles: {
         [styleName: string]: string;
@@ -369,21 +383,14 @@ export default defineComponent({
        * eventHandlers - object that binds events to handler functions.
        */
       eventHandlers: computed(() => {
-        const isHoverable = props.isHoverable;
-        const isPeekable = props.isPeekable;
-        const isPressable = props.isPressable;
-        const isToggleable = props.isToggleable;
-        const isSlideable = props.isSlideable;
-        const isSelectable = props.isSelectable;
-        const isFocusable = props.isFocusable;
         return makeEventHandlers(
-          isHoverable,
-          isPeekable,
-          isPressable,
-          isToggleable,
-          isSlideable,
-          isSelectable,
-          isFocusable
+          props.isHoverable,
+          props.isPeekable,
+          props.isPressable,
+          props.isToggleable,
+          props.isSlideable,
+          props.isSelectable,
+          props.isFocusable
         );
       }),
       /**
@@ -629,7 +636,6 @@ export default defineComponent({
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      E.preventDefault(); /* this stops the browser from 'helpfully' interpreting touch events as mouse events */
       if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
         return;
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
@@ -685,54 +691,68 @@ export default defineComponent({
       isFocusable: boolean
     ) => {
       let EH: /* (E)vent (H)andler */ {
-        [eventType: string]:
+        notPassive: {
+         [eventType: string]:
           | ((E: MouseEvent) => void)
-          | ((E: TouchEvent) => void)
           | ((E: DragEvent) => void)
           | ((E: Event) => void)
           | ((E: FocusEvent) => void)
           | ((E: KeyboardEvent) => void)
-          | ((E: WheelEvent) => void);
-      } = {};
+        },
+        passive: {
+          touch: {
+         [eventType: string]: ((E: TouchEvent) => void)
+          },
+          wheel: {
+         [eventType: string]: ((E: WheelEvent) => void);
+          }
+        },
+      } = {
+        passive: {
+          touch: {},
+          wheel: {},
+        },
+        notPassive: {},
+      };
 
       const listenForHover = (): void => {
-        if (!EH.mousemove) EH.mousemove = HM;
-        if (!EH.mouseleave) EH.mouseleave = HM;
+        if (!EH.notPassive.mousemove) EH.notPassive.mousemove = HM;
+        if (!EH.notPassive.mouseleave) EH.notPassive.mouseleave = HM;
       };
       const listenForPeek = (): void => {
         listenForHover();
-        if (!EH.touchstart) EH.touchstart = HT;
-        if (!EH.touchmove) EH.touchmove = HT;
-        if (!EH.touchend) EH.touchend = HT;
-        if (!EH.touchcancel) EH.touchcancel = HT;
+        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
+        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
+        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
       };
       const listenForPress = (): void => {
         listenForHover();
-        if (!EH.mousedown) EH.mousedown = HM;
-        if (!EH.mouseup) EH.mouseup = HM;
-        if (!EH.touchstart) EH.touchstart = HT;
-        if (!EH.touchmove) EH.touchmove = HT;
-        if (!EH.touchend) EH.touchend = HT;
-        if (!EH.touchcancel) EH.touchcancel = HT;
+        if (!EH.notPassive.mousedown) EH.notPassive.mousedown = HM;
+        if (!EH.notPassive.mouseup) EH.notPassive.mouseup = HM;
+        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
+        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
+        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
       };
       const listenForToggle = (): void => {
         listenForPress();
       };
       const listenForSlide = (): void => {
         listenForPress();
-        if (!EH.touchmove) EH.touchmove = HT;
+        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
       };
       const listenForSelect = (): void => {
         listenForPress();
       };
       const listenForFocus = (): void => {
         listenForPress();
-        if (!EH.blur) EH.blur = HF;
-        if (!EH.focus) EH.focus = HF;
+        if (!EH.notPassive.blur) EH.notPassive.blur = HF;
+        if (!EH.notPassive.focus) EH.notPassive.focus = HF;
       };
 
       const disableContextMenu = (): void => {
-        if (!EH.contextmenu) EH.contextmenu = DCM;
+        if (!EH.notPassive.contextmenu) EH.notPassive.contextmenu = DCM;
       };
 
       if (isHoverable) listenForHover();
