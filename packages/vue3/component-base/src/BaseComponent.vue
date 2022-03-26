@@ -638,6 +638,7 @@ export default defineComponent({
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
+      if(props.isPressable) E.preventDefault();
       if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
         return;
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
