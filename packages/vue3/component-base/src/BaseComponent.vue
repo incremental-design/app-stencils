@@ -344,6 +344,8 @@ export default defineComponent({
           | ((E: Event) => void)
           | ((E: FocusEvent) => void)
           | ((E: KeyboardEvent) => void)
+          | ((E: TouchEvent) => void)
+          | ((E: WheelEvent) => void)
         },
         passive: {
           touch: {
@@ -698,6 +700,8 @@ export default defineComponent({
           | ((E: Event) => void)
           | ((E: FocusEvent) => void)
           | ((E: KeyboardEvent) => void)
+          | ((E: TouchEvent) => void)
+          | ((E: WheelEvent) => void)
         },
         passive: {
           touch: {
@@ -730,10 +734,22 @@ export default defineComponent({
         listenForHover();
         if (!EH.notPassive.mousedown) EH.notPassive.mousedown = HM;
         if (!EH.notPassive.mouseup) EH.notPassive.mouseup = HM;
-        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
-        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
-        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
-        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
+        if (!EH.notPassive.touchstart){
+          EH.notPassive.touchstart = HT;
+          delete EH.passive.touch.touchstart;
+        } 
+        if (!EH.notPassive.touchmove){
+          EH.notPassive.touchmove = HT;
+          delete EH.passive.touch.touchmove;
+        }
+        if (!EH.notPassive.touchend) {
+          EH.notPassive.touchend = HT;
+          delete EH.passive.touch.touchend;
+        }
+        if (!EH.notPassive.touchcancel) {
+          EH.notPassive.touchcancel = HT;
+          delete EH.passive.touch.touchcancel; /* the idea is that there should NEVER be a passive and a not passive binding of the same handler */
+        }
       };
       const listenForToggle = (): void => {
         listenForPress();
