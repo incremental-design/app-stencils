@@ -638,6 +638,7 @@ export default defineComponent({
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
+      if(props.isPressable) E.preventDefault();
       if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
         return;
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
@@ -734,22 +735,22 @@ export default defineComponent({
         listenForHover();
         if (!EH.notPassive.mousedown) EH.notPassive.mousedown = HM;
         if (!EH.notPassive.mouseup) EH.notPassive.mouseup = HM;
-        if (!EH.notPassive.touchstart){
+        if (!EH.notPassive.touchstart)
           EH.notPassive.touchstart = HT;
-          delete EH.passive.touch.touchstart;
-        } 
-        if (!EH.notPassive.touchmove){
+
+         
+        if (!EH.notPassive.touchmove)
           EH.notPassive.touchmove = HT;
-          delete EH.passive.touch.touchmove;
-        }
-        if (!EH.notPassive.touchend) {
+
+        
+        if (!EH.notPassive.touchend) 
           EH.notPassive.touchend = HT;
-          delete EH.passive.touch.touchend;
-        }
-        if (!EH.notPassive.touchcancel) {
+
+        
+        if (!EH.notPassive.touchcancel) 
           EH.notPassive.touchcancel = HT;
-          delete EH.passive.touch.touchcancel; /* the idea is that there should NEVER be a passive and a not passive binding of the same handler */
-        }
+
+        
       };
       const listenForToggle = (): void => {
         listenForPress();
