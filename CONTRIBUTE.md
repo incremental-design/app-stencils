@@ -1069,27 +1069,19 @@ The more Vue components you write, the more you will find yourself rewriting the
 
    `cd packages/shared/<name-of-package>` and then run `npx tsc --init`. This command will create a `tsconfig.json` file within it.
 
-6. Set the Typescript target and module to `esnext`.
-
-   To take full advantage of every feature that Typescript has to offer, you need to instruct it to compile and package your typescript code as `esnext` modules. This means that typescript won't add [polyfills](https://developer.mozilla.org/en-US/docs/Glossary/Polyfill) to your code to make it compatible with older browsers. While this might sound like a problem, it's actually a good thing. That's because polyfills reduce performance. Furthermore, you're writing a _library_. Other developers are going to import your library into their projects, and add whatever polyfills they see fit. When you ship your code as `esnext` modules, you give them the choice between performance and compatibility, rather than forcing a performance penalty upon them.
-
-   Open your `tsconfig.json` file, and change the `target` field from `es5` to `esnext`. Then, change the `module` field from `commonjs` to `esnext`:
-
-   ![set `target` and `module` fields to `esnext`](./.readme/tsconfig-target-module-esnext.gif)
-
-7. Set typescript module resolution to `node`.
+6. Set typescript module resolution to `node`.
 
    Before you can import dependencies into your Typescript code, you have to tell Typescript to look inside the `packages/shared/<name-of-package>/node_modules` folder first. Uncomment `moduleResolution : "node"` in your `tsconfig.json` file to do this.
 
    ![Uncomment `moduleResolution: "node"`](./.readme/tsconfig-module-resolution.gif)
 
-8. Enable source maps.
+7. Enable source maps.
 
    If you want to debug like a 10x developer, you need to turn on source maps. They give your browser console a way to trace issues back to the source code that caused them. And when you use your typescript code within a Vue project, they even give the Vue inspector the ability to open your editor and locate the bug. Uncomment `sourceMap: true` to enable this time-saver.
 
    ![Uncomment `sourceMap: true`](./.readme/tsconfig-source-map.gif)
 
-9. Enable declaration generation.
+8. Enable declaration generation.
 
    You need to make sure that Typescript doesn't toss out all of the type annotations when it compiles your code. When you enable declaration file generation, Typescript scoops up all of the type annotations you wrote, and puts them in a [declaration](https://www.typescriptlang.org/docs/handbook/declaration-files/templates/module-d-ts.html) file, adjacent to the code it compiled. To set up declaration generation you need to:
 
@@ -1104,19 +1096,19 @@ The more Vue components you write, the more you will find yourself rewriting the
 
    ![Enable declaration generation](./.readme/tsconfig-declaration.gif)
 
-10. Tell Typescript what to compile.
+9. Tell Typescript what to compile.
 
     You need to tell Typescript what you want it to compile, before it will compile anything. Since all of your source code lives in the `src` folder of your package, you need to add the `"include": ["src/**/*"]` field to your `tsconfig.json`.
 
     ![Include `src`](./.readme/tsconfig-include-src.gif)
 
-11. Tell Typescript where to put compiled code.
+10. Tell Typescript where to put compiled code.
 
     You need to tell Typescript where it should put the code it compiles, or it will dump it directly into `packages/shared/<name-of-package>`. Since your package's `package.json` `main` field already points to `dist/`, you need to make sure Typescript does as well. Go to your `tsconfig.json`, Uncomment `outDir` and set it to `./dist/`.
 
     ![Set `outDir`](./.readme/tsconfig-outdir.gif)
 
-12. Tell Typescript which types it needs to import.
+11. Tell Typescript which types it needs to import.
 
     If you want Typescript to type-check any browser, Node or Jest API calls you make, you need to tell it to import the type declarations for those APIs:
 
@@ -1126,13 +1118,13 @@ The more Vue components you write, the more you will find yourself rewriting the
 
   ![set `types` and `lib` fields](./.readme/ts-types-lib.gif)
 
-13. Tell Typescript to resolve import statements relative to the package root.
+12. Tell Typescript to resolve import statements relative to the package root.
 
     If you don't want to have to prefix all of your imports with `packages/shared/<name-of-package>`, you should tell Typescript NOT to look outside of your package for dependencies. After all, it shouldn't have to: Lerna already does the hard work of placing every dependency inside `packages/shared/<name-of-package>/node_modules`. To tell Typescript to look for dependencies within your package, uncomment the `baseURL` field.
 
     ![Uncomment `baseURL`](./.readme/ts-baseurl.gif)
 
-14. Remove the unused parts of the typescript configuration file.
+13. Remove the unused parts of the typescript configuration file.
 
     Clean out your `tsconfig.json` file so that it's easier to read. Delete every line that is commented out. You should be left with:
 
@@ -1178,19 +1170,19 @@ The more Vue components you write, the more you will find yourself rewriting the
 
     ![Delete commented configuration fields](./.readme/tsconfig-delete-comments.gif)
 
-15. Connect Typescript to Lerna.
+14. Connect Typescript to Lerna.
 
     Congratulations! You've configured Typescript to compile your source code and place it in `/dist`. Now, it will compile your code whenever you run `npx tsc` inside your package. However, it won't compile your code when you run `lerna build`. To connect Typescript to Lerna, add `"build": "tsc"` to your `package.json`'s `script` field. Now, whenever you run `lerna build`, it will run your `package.json`'s `script.build` command for you.
 
     ![Add `"build": "tsc"` to `package.json`](./.readme/tsconfig-build-script.gif)
 
-16. Convert the contents of your package's `src` to typescript.
+15. Convert the contents of your package's `src` to typescript.
 
     Typescript only pays attention to the `.ts`, `.tsx`, `.d.ts` files in your package's `src` folder. It will ignore any `.js` and `.jsx` files. This is a problem, because your package currently contains a single `.js` file: in `src/<name-of-package>.js`. If you ask Typescript to build your code, it won't find anything to build, and it will error instead. To fix this, change the `.js` extension in `src/<name-of-package>.js` to `.ts` (i.e. `src/<name-of-package>.ts`). Once you make this change, Typescript will be able to notice and compile the file.
 
     ![Convert `.js` files to `.ts`](./.readme/tsconfig-js-to-ts.gif)
 
-17. Change your package's `src/<name-of-package>.ts` file to PascalCase.
+16. Change your package's `src/<name-of-package>.ts` file to PascalCase.
 
     You need to follow the [naming conventions](#follow-typescript-naming-conventions) for typescript files. To do this:
 
@@ -1201,7 +1193,7 @@ The more Vue components you write, the more you will find yourself rewriting the
 
       ![Change to PascalCase](.readme/tsconfig-pascalcase.gif)
 
-18. Delete the `module` field from your `package.json`.
+17. Delete the `module` field from your `package.json`.
 
     The `module` field can interfere with the build output of other packages in this repository.
 
