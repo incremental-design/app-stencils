@@ -1,11 +1,19 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "es5",
+    "module": "commonJS",
     "moduleResolution": "node",
     "baseUrl": "./",
-    "types": ["webpack-env", "node"],
-    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    "types": [
+      "webpack-env",
+      "node"
+    ],
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -16,5 +24,7 @@
     "strict": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }
