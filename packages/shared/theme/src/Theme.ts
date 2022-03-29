@@ -257,19 +257,26 @@ export default class Theme {
         typeof style === 'string' ? styleFactoryFromString(style) : style;
 
       const getPalette = () => {
-        if (typeof darkMode === 'string') {
+        const isServer = process ? true: false; /* smh we have to do this because ES5 transform isn't smart enough to understand process === undefined is falsy */
+
+        if(typeof darkMode === 'string')
           return P[darkMode];
-        } else {
-          if (darkMode) {
-            return P.dark;
-          } else if (window) {
-            return window.matchMedia('(prefers-color-scheme: dark)').matches
-              ? P.dark
-              : P.light; /* I might want to move this out of here later on, because I don't want to call window every time I recalculate a single style */
-          } else {
-            return P.light; /* server-side render will default to light because window is undefined */
-          }
+
+        if(typeof darkMode === 'boolean')
+          return darkMode ? P.dark : P.light;
+      
+        /* if component is being server-side rendered */
+        if(isServer){
+          return P.light;
         }
+
+        const w = window || false;
+
+        if(w) return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? P.dark
+        : P.light; /* I might want to move this out of here later on, because I don't want to call window every time I recalculate a single style */
+
+        return P.light;
       };
 
       const getState = () => {
