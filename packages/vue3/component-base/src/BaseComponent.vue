@@ -1,16 +1,16 @@
 <template>
   <div
     v-on="eventHandlers.notPassive"
-    v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
-    v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
-    v-on:touchend.passive="eventHandlers.passive.touch.touchend"
-    v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
-    v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
+    v-on:touchstart.capture.passive="eventHandlers.passive.touch.touchstart"
+    v-on:touchmove.capture.passive="eventHandlers.passive.touch.touchmove"
+    v-on:touchend.capture.passive="eventHandlers.passive.touch.touchend"
+    v-on:touchcancel.capture.passive="eventHandlers.passive.touch.touchcancel"
+    v-on:wheel.capture.passive="eventHandlers.passive.wheel.wheel"
     :style="componentStyles"
     ref="BCR"
     :tabindex="isFocusable ? '-1' : ''"
   >
-    <div :style="isFocusable ? '' : 'pointer-events: none'">
+    <div>
       <slot :layout="layout" :layouts="layouts">
         isPressed: {{ pointerInput }}
       </slot>
@@ -638,7 +638,6 @@ export default defineComponent({
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      if(props.isPressable) E.preventDefault();
       if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
         return;
       DataAndComputed.pointerInput = DataAndComputed.pointerInput
