@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "storybook:build": "vue-cli-service storybook:build -c config/storybook",
+    "storybook:build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service storybook:build -c config/storybook",
     "storybook:serve": "BROWSER=none vue-cli-service storybook:serve -p 6006 -c config/storybook"
   },
   "dependencies": {

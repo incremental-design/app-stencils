@@ -1,4 +1,6 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
 lerna run lint && lerna run build

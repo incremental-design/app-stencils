@@ -7,7 +7,7 @@
   "private": false,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --modern --name component-tabs src/TabsComponent.vue && rm -rf ./node_modules/.cache"
+    "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build --target lib --modern --name component-tabs src/TabsComponent.vue && rm -rf ./node_modules/.cache"
   },
   "publishConfig": {
     "access": "public"
