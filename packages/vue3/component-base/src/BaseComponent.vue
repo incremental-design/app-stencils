@@ -63,7 +63,9 @@ import {
   State as ThemeState,
 } from '@incremental.design/theme';
 
-import emits, { State } from './useEmits'
+import emits, { State, StateChangePayload, PointerInputPayload } from './useEmits'
+
+export {State, StateChangePayload, PointerInputPayload}
 
 export default defineComponent({
   components: {

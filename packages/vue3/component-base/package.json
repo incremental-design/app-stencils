@@ -1,6 +1,6 @@
 {
   "name": "@incremental.design/component-base",
-  "version": "0.0.1-alpha.313+e73ec5e",
+  "version": "0.0.1-alpha.327+1aa926e",
   "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "license": "MIT",
@@ -12,8 +12,8 @@
     "build": "NODE_OPTIONS=--openssl-legacy-provider vue-cli-service build --target lib --name component-base src/BaseComponent.vue && rm -rf ./node_modules/.cache"
   },
   "dependencies": {
-    "@incremental.design/device-input-event-handlers": "^0.0.1-alpha.313+e73ec5e",
-    "@incremental.design/theme": "^0.0.1-alpha.313+e73ec5e",
+    "@incremental.design/device-input-event-handlers": "^0.0.1-alpha.327+1aa926e",
+    "@incremental.design/theme": "^0.0.1-alpha.327+1aa926e",
     "core-js": "^3.6.5",
     "vue": "^3.0.0"
   },
@@ -29,5 +29,5 @@
     "less-loader": "^5.0.0",
     "typescript": "^4.4.2"
   },
-  "gitHead": "e73ec5ef8564b363b276490121495b30f55f8843"
+  "gitHead": "1aa926e9790e5de845fada382c32ccbc4d4a01b5"
 }
