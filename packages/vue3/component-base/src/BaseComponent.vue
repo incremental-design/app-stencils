@@ -595,9 +595,9 @@ export default defineComponent({
     const shouldDiscardMouseEvent = (e: MouseEvent) => {
       /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
       if(!DataAndComputed.pointerInput) return false;
-      const sameTimestamp = DataAndComputed.pointerInput.timestamp === e.timeStamp
       const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(DataAndComputed.pointerInput.type)
-      if(sameTimestamp && prevIsTouch) return true;
+      const sameTimeframe = e.timeStamp - DataAndComputed.pointerInput.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
+      if(sameTimeframe && prevIsTouch) return true;
       return false
     }
 
