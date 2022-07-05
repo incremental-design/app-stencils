@@ -592,7 +592,17 @@ export default defineComponent({
       return false;
     };
 
+    const shouldDiscardMouseEvent = (e: MouseEvent) => {
+      /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
+      if(!DataAndComputed.pointerInput) return false;
+      const sameTimestamp = DataAndComputed.pointerInput.timestamp === e.timeStamp
+      const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(DataAndComputed.pointerInput.type)
+      if(sameTimestamp && prevIsTouch) return true;
+      return false
+    }
+
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
+      if(shouldDiscardMouseEvent(E)) return;
       /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
       if (shouldThrottleEvent('mousemove', E, DataAndComputed.pointerInput))
         return;
@@ -686,13 +696,13 @@ export default defineComponent({
       const listenForHover = (): void => {
         if (!EH.notPassive.mousemove) EH.notPassive.mousemove = HM;
         if (!EH.notPassive.mouseleave) EH.notPassive.mouseleave = HM;
+        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
+        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
+        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
       };
       const listenForPeek = (): void => {
         listenForHover();
-        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
-        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
-        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
-        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
       };
       const listenForPress = (): void => {
         listenForHover();
