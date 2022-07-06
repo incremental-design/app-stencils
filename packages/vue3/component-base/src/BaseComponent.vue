@@ -10,13 +10,10 @@
     ref="BCR"
     :tabindex="isFocusable ? '-1' : ''"
   >
-    <div>
       <slot :layout="layout" :layouts="layouts">
         isPressed: {{ pointerInput }}
       </slot>
-    </div>
   </div>
-  <!-- todo: add suspense slot: https://v3.vuejs.org/guide/migration/suspense.html -->
 </template>
 
 <script lang="ts">
