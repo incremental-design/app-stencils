@@ -4,14 +4,14 @@ import {
   PointerInput,
 } from '@incremental.design/device-input-event-handlers';
 
-export enum State {
-  hovered = 'hovered',
-  peeked = 'peeked',
-  pressed = 'pressed',
-  toggled = 'toggled',
-  sliding = 'sliding',
-  selected = 'selected',
-  focused = 'focused',
+export const enum State {
+  hovered,
+  peeked,
+  pressed,
+  toggled,
+  sliding,
+  selected,
+  focused,
 }
 
 export type StateChangePayload = {
