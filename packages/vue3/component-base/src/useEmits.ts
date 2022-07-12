@@ -5,13 +5,13 @@ import {
 } from '@incremental.design/device-input-event-handlers';
 
 export const enum State {
-  "hovered",
-  "peeked",
-  "pressed",
-  "toggled",
-  "sliding",
-  "selected",
-  "focused",
+  hovered = "hovered",
+  peeked = "peeked",
+  pressed = "pressed",
+  toggled = "toggled",
+  sliding = "sliding",
+  selected = "selected",
+  focused = "focused",
 }
 
 export type StateChangePayload = {
