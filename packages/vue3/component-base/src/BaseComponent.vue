@@ -367,11 +367,10 @@ export default defineComponent({
        * componentStyles - styles that have to be applied to the root of the component to make it work.
        */
       componentStyles: computed(() => {
-        // need to add touch-action: https://developer.mozilla.org/en-US/docs/Web/CSS/touch-action
-
         const S: /* (S)tyles */ { [cssRule: string]: string } = {
           'touch-action': 'manipulation',
           position: 'relative',
+          display: 'inline-block'
         };
         if (props.isSelectable) {
           Object.assign(S, {
@@ -391,12 +390,12 @@ export default defineComponent({
         }
         return S;
       }),
-      suppressPointer: {
-        pointerEvents: 'none',
+      suppressPointer: computed(() => ({
+        pointerEvents: props.isFocusable ? 'auto' : 'none',
         position: 'relative',
         width: '100%',
         height: '100%'
-      },
+      })),
       /**
        * layout - a wrapper of the @incremental.design/theme Theme.platform(...).layout
        */
