@@ -42,7 +42,7 @@ const Template = (args: BaseComponentArgs) => ({
     };
   },
   template:
-    '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isSlideable="args.isSlideable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable" @stateChange="args.logStateChange" @pointerInput="args.logPointerInput"></base-component>',
+    '<base-component :isHoverable="args.isHoverable" :isPeekable="args.isPeekable" :isPressable="args.isPressable" :isToggleable="args.isToggleable" :isSlideable="args.isSlideable" :isSelectable="args.isSelectable" :isFocusable="args.isFocusable" @stateChange="args.logStateChange" @pointerInput="args.logPointerInput"><div style="width: 100px; height: 100px; background: blue"><div style="marginLeft:100px; width: 100px; height: 100px; background: red"></base-component>',
 });
 
 export const Empty = Template.bind({});
