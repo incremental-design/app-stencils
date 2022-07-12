@@ -370,7 +370,6 @@ export default defineComponent({
         const S: /* (S)tyles */ { [cssRule: string]: string } = {
           'touch-action': 'manipulation',
           position: 'relative',
-          display: 'inline-block'
         };
         if (props.isSelectable) {
           Object.assign(S, {

@@ -1,6 +1,6 @@
 {
   "name": "@incremental.design/device-input-event-handlers",
-  "version": "0.0.1-alpha.328+ddf2bb3",
+  "version": "0.0.1-alpha.334+d5abb99",
   "description": "Handlers for `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` and `WheelEvent`. These handlers normalize and filter event details to make them easier to interpret.",
   "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
   "homepage": "https://github.com/incremental-design/app-stencils/packages/shared/input-event-handlers/#readme",
@@ -29,5 +29,5 @@
     "@types/webpack-env": "^1.16.3",
     "typescript": "^4.4.2"
   },
-  "gitHead": "ddf2bb3386513efc426568c3ae6b2a1278c7fec0"
+  "gitHead": "d5abb99590199a3523b60145069b846583c8657a"
 }
