@@ -25,10 +25,6 @@
 <script lang="ts">
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
-// needs a default slot and a fallback (ie suspense) slot
-
-// fallback slot should have all the same props as regular slot
-
 import {
   defineComponent,
   reactive,
@@ -683,7 +679,7 @@ export default defineComponent({
           },
           notMouse: {
             [eventType: string]:
-             | ((E: MouseEvent) => void)
+             | ((E: TouchEvent) => void)
              | ((E: DragEvent) => void)
              | ((E: Event) => void)
              | ((E: FocusEvent) => void)
@@ -746,8 +742,15 @@ export default defineComponent({
         listenForPress();
       };
       const listenForSlide = (): void => {
-        listenForPress();
-        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+        // listenForPress();
+        if(EH.passive.touch.touchmove) delete EH.passive.touch.touchmove;
+        if(EH.passive.touch.touchstart) delete EH.passive.touch.touchstart;
+        if(EH.passive.touch.touchend) delete EH.passive.touch.touchend;
+        if(EH.passive.touch.touchcancel) delete EH.passive.touch.touchcancel;
+        if (!EH.notPassive.notMouse.touchmove) EH.notPassive.notMouse.touchmove = HT;
+        if (!EH.notPassive.notMouse.touchstart) EH.notPassive.notMouse.touchstart = HT;
+        if (!EH.notPassive.notMouse.touchend) EH.notPassive.notMouse.touchend = HT;
+        if (!EH.notPassive.notMouse.touchcancel) EH.notPassive.notMouse.touchcancel = HT;
       };
       const listenForSelect = (): void => {
         listenForPress();
