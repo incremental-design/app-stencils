@@ -1,10 +1,14 @@
 <template>
   <div
-    v-on="eventHandlers.notPassive.notMouse"
+    v-on="eventHandlers.notPassive.other"
     v-on:mousedown="eventHandlers.notPassive.mouse.mousedown"
     v-on:mouseup="eventHandlers.notPassive.mouse.mouseup"
     v-on:mousemove="eventHandlers.notPassive.mouse.mousemove"
     v-on:mouseleave="eventHandlers.notPassive.mouse.mouseleave"
+    v-on:touchstart.prevent="eventHandlers.notPassive.touch.touchstart"
+    v-on:touchmove.prevent="eventHandlers.notPassive.touch.touchmove"
+    v-on:touchend.prevent="eventHandlers.notPassive.touch.touchend"
+    v-on:touchcancel.prevent="eventHandlers.notPassive.touch.touchcancel"
     v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
     v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
@@ -61,6 +65,35 @@ import {
 import emits, { State, StateChangePayload, PointerInputPayload } from './useEmits'
 
 export {State, StateChangePayload, PointerInputPayload}
+
+interface EventHandlers {
+        notPassive: {
+          mouse: {
+            [eventType: string]:
+           ((E: MouseEvent) => void)
+          },
+          touch: {
+            [eventType: string]:
+            ((E: TouchEvent) => void)
+          }
+          other: {
+            [eventType: string]:
+             | ((E: DragEvent) => void)
+             | ((E: Event) => void)
+             | ((E: FocusEvent) => void)
+             | ((E: KeyboardEvent) => void)
+             | ((E: WheelEvent) => void)
+          }
+        },
+        passive: {
+          touch: {
+         [eventType: string]: ((E: TouchEvent) => void)
+          },
+          wheel: {
+         [eventType: string]: ((E: WheelEvent) => void);
+          }
+        },
+      }
 
 export default defineComponent({
 
@@ -291,33 +324,7 @@ export default defineComponent({
 
     const DataAndComputed: {
       pointerInput: false | EventInfo<PointerInput>;
-      eventHandlers: {
-        notPassive: {
-          mouse: {
-            [eventType: string]:
-              ((E: MouseEvent) => void)
-          },
-          notMouse: {
-            [eventType: string]:
-              | ((E: MouseEvent) => void)
-              | ((E: DragEvent) => void)
-              | ((E: Event) => void)
-              | ((E: FocusEvent) => void)
-              | ((E: KeyboardEvent) => void)
-              | ((E: TouchEvent) => void)
-              | ((E: WheelEvent) => void)
-          }
-        },
-        passive: {
-          touch: {
-          [eventType: string]: ((E: TouchEvent) => void)
-          }
-          wheel: {
-          [eventType: string]: ((E: WheelEvent) => void);
-          }
-        },
-
-      };
+      eventHandlers: EventHandlers;
       componentStyles: {
         [styleName: string]: string;
       };
@@ -671,38 +678,15 @@ export default defineComponent({
       isSelectable: boolean,
       isFocusable: boolean
     ) => {
-      let EH: /* (E)vent (H)andler */ {
-        notPassive: {
-          mouse: {
-            [eventType: string]:
-           ((E: MouseEvent) => void)
-          },
-          notMouse: {
-            [eventType: string]:
-             | ((E: TouchEvent) => void)
-             | ((E: DragEvent) => void)
-             | ((E: Event) => void)
-             | ((E: FocusEvent) => void)
-             | ((E: KeyboardEvent) => void)
-             | ((E: WheelEvent) => void)
-          }
-        },
-        passive: {
-          touch: {
-         [eventType: string]: ((E: TouchEvent) => void)
-          },
-          wheel: {
-         [eventType: string]: ((E: WheelEvent) => void);
-          }
-        },
-      } = {
+      let EH: /* (E)vent (H)andler */ EventHandlers = {
         passive: {
           touch: {},
           wheel: {},
         },
         notPassive: {
           mouse:{},
-          notMouse:{}
+          touch:{},
+          other:{}
         },
       };
 
@@ -747,22 +731,22 @@ export default defineComponent({
         if(EH.passive.touch.touchstart) delete EH.passive.touch.touchstart;
         if(EH.passive.touch.touchend) delete EH.passive.touch.touchend;
         if(EH.passive.touch.touchcancel) delete EH.passive.touch.touchcancel;
-        if (!EH.notPassive.notMouse.touchmove) EH.notPassive.notMouse.touchmove = HT;
-        if (!EH.notPassive.notMouse.touchstart) EH.notPassive.notMouse.touchstart = HT;
-        if (!EH.notPassive.notMouse.touchend) EH.notPassive.notMouse.touchend = HT;
-        if (!EH.notPassive.notMouse.touchcancel) EH.notPassive.notMouse.touchcancel = HT;
+        if (!EH.notPassive.touch.touchmove) EH.notPassive.touch.touchmove = HT;
+        if (!EH.notPassive.touch.touchstart) EH.notPassive.touch.touchstart = HT;
+        if (!EH.notPassive.touch.touchend) EH.notPassive.touch.touchend = HT;
+        if (!EH.notPassive.touch.touchcancel) EH.notPassive.touch.touchcancel = HT;
       };
       const listenForSelect = (): void => {
         listenForPress();
       };
       const listenForFocus = (): void => {
         listenForPress();
-        if (!EH.notPassive.notMouse.blur) EH.notPassive.notMouse.blur = HF;
-        if (!EH.notPassive.notMouse.focus) EH.notPassive.notMouse.focus = HF;
+        if (!EH.notPassive.other.blur) EH.notPassive.other.blur = HF;
+        if (!EH.notPassive.other.focus) EH.notPassive.other.focus = HF;
       };
 
       const disableContextMenu = (): void => {
-        if (!EH.notPassive.notMouse.contextmenu) EH.notPassive.notMouse.contextmenu = DCM;
+        if (!EH.notPassive.other.contextmenu) EH.notPassive.other.contextmenu = DCM;
       };
 
       if (isHoverable) listenForHover();
