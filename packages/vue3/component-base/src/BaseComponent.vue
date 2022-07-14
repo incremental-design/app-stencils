@@ -5,10 +5,6 @@
     v-on:mouseup="eventHandlers.notPassive.mouse.mouseup"
     v-on:mousemove="eventHandlers.notPassive.mouse.mousemove"
     v-on:mouseleave="eventHandlers.notPassive.mouse.mouseleave"
-    v-on:touchstart.prevent="eventHandlers.notPassive.touch.touchstart"
-    v-on:touchmove.prevent="eventHandlers.notPassive.touch.touchmove"
-    v-on:touchend.prevent="eventHandlers.notPassive.touch.touchend"
-    v-on:touchcancel.prevent="eventHandlers.notPassive.touch.touchcancel"
     v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
     v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
@@ -719,14 +715,14 @@ export default defineComponent({
       };
       const listenForSlide = (): void => {
         listenForPress();
-        if(EH.passive.touch.touchmove) delete EH.passive.touch.touchmove;
-        if(EH.passive.touch.touchstart) delete EH.passive.touch.touchstart;
-        if(EH.passive.touch.touchend) delete EH.passive.touch.touchend;
-        if(EH.passive.touch.touchcancel) delete EH.passive.touch.touchcancel;
-        if (!EH.notPassive.touch.touchmove) EH.notPassive.touch.touchmove = HT;
-        if (!EH.notPassive.touch.touchstart) EH.notPassive.touch.touchstart = HT;
-        if (!EH.notPassive.touch.touchend) EH.notPassive.touch.touchend = HT;
-        if (!EH.notPassive.touch.touchcancel) EH.notPassive.touch.touchcancel = HT;
+        // if(EH.passive.touch.touchmove) delete EH.passive.touch.touchmove;
+        // if(EH.passive.touch.touchstart) delete EH.passive.touch.touchstart;
+        // if(EH.passive.touch.touchend) delete EH.passive.touch.touchend;
+        // if(EH.passive.touch.touchcancel) delete EH.passive.touch.touchcancel;
+        // if (!EH.notPassive.touch.touchmove) EH.notPassive.touch.touchmove = HT;
+        // if (!EH.notPassive.touch.touchstart) EH.notPassive.touch.touchstart = HT;
+        // if (!EH.notPassive.touch.touchend) EH.notPassive.touch.touchend = HT;
+        // if (!EH.notPassive.touch.touchcancel) EH.notPassive.touch.touchcancel = HT;
       };
       const listenForSelect = (): void => {
         listenForPress();
