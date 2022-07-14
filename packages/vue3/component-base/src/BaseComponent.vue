@@ -68,10 +68,6 @@ interface EventHandlers {
             [eventType: string]:
            ((E: MouseEvent) => void)
           },
-          touch: {
-            [eventType: string]:
-            ((E: TouchEvent) => void)
-          }
           other: {
             [eventType: string]:
              | ((E: DragEvent) => void)
@@ -681,22 +677,17 @@ export default defineComponent({
         },
         notPassive: {
           mouse:{},
-          touch:{},
           other:{}
         },
       };
 
-      const listenForTouch = (): void => {
+      const listenForHover = (): void => {
         if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
         if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
         if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
         if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
-      };
-
-      const listenForHover = (): void => {
         if (!EH.notPassive.mouse.mousemove) EH.notPassive.mouse.mousemove = HM;
         if (!EH.notPassive.mouse.mouseleave) EH.notPassive.mouse.mouseleave = HM;
-        listenForTouch();
       };
       const listenForPeek = (): void => {
         listenForHover();
@@ -715,14 +706,6 @@ export default defineComponent({
       };
       const listenForSlide = (): void => {
         listenForPress();
-        // if(EH.passive.touch.touchmove) delete EH.passive.touch.touchmove;
-        // if(EH.passive.touch.touchstart) delete EH.passive.touch.touchstart;
-        // if(EH.passive.touch.touchend) delete EH.passive.touch.touchend;
-        // if(EH.passive.touch.touchcancel) delete EH.passive.touch.touchcancel;
-        // if (!EH.notPassive.touch.touchmove) EH.notPassive.touch.touchmove = HT;
-        // if (!EH.notPassive.touch.touchstart) EH.notPassive.touch.touchstart = HT;
-        // if (!EH.notPassive.touch.touchend) EH.notPassive.touch.touchend = HT;
-        // if (!EH.notPassive.touch.touchcancel) EH.notPassive.touch.touchcancel = HT;
       };
       const listenForSelect = (): void => {
         listenForPress();
@@ -737,7 +720,6 @@ export default defineComponent({
         if (!EH.notPassive.other.contextmenu) EH.notPassive.other.contextmenu = DCM;
       };
 
-      listenForTouch(); /* without this, touch events will be discarded entirely, preventing touch-to-scroll */
       if (isHoverable) listenForHover();
       if (isPeekable) listenForPeek();
       if (isPressable) listenForPress();
