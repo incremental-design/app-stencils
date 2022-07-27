@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && pnpm -r build"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
