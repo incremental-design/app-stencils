@@ -1,6 +1,6 @@
 {
   "version": "0.0.0",
-  "npmClient": "yarn",
+  "npmClient": "pnpm",
   "command": {
     "publish": {
       "ignoreChanges": ["*.md. packages/*/assets/**"],
@@ -10,5 +10,6 @@
       "npmClientArgs": []
     }
   },
-  "packages": ["packages/shared/*", "packages/vue3/*", "packages/storybook"]
+  "packages": ["packages/shared/*", "packages/vue3/*", "packages/storybook"],
+  "useWorkspaces" : true
 }
