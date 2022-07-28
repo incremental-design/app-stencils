@@ -25,11 +25,6 @@
 <script lang="ts">
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
-
-
-// try publish
-
-
 import {
   defineComponent,
   reactive,
