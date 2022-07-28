@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "install": "lerna bootstrap --force-local",
+    "publish:snapshot": "lerna publish --canary"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
