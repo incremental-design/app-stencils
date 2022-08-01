@@ -5,7 +5,7 @@
  * @param previous - any information of type {@link Input} that was previously returned from this handler.
  * @returns EventInfo<Input> - contains the type of event, its timestamp, and all information that was filtered out of the event.
  */
-import { EventInfo } from './';
+import { EventInfo } from '.';
 
 export declare type Handler<EventType extends Event, Input> = (
   event: EventType,

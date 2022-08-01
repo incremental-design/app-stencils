@@ -1,8 +1,8 @@
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils/';
+import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
 import {
   WindowResizeInput,
   getWindowResizeInput,
-} from './window-resize-utils/';
+} from './window-resize-utils';
 
 // resize
 

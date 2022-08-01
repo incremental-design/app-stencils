@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo } from './handler-utils/';
-import { FocusInput, getFocusInput } from './focus-utils/';
+import { Handler, mergeWithEventInfo } from './handler-utils';
+import { FocusInput, getFocusInput } from './focus-utils';
 
 // blur, focus, focusin, focusout, select??
 

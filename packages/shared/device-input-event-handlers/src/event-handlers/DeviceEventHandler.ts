@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo } from './handler-utils/';
-import { DeviceInput, getDeviceInput } from './device-utils/';
+import { Handler, mergeWithEventInfo } from './handler-utils';
+import { DeviceInput, getDeviceInput } from './device-utils';
 
 declare type DeviceEvent = DeviceMotionEvent | DeviceOrientationEvent;
 

@@ -58,9 +58,7 @@ import {
   State as ThemeState,
 } from '@incremental.design/theme';
 
-import emits, { State, StateChangePayload, PointerInputPayload } from './useEmits'
-
-export {State, StateChangePayload, PointerInputPayload}
+import emits, { State } from './useEmits'
 
 interface EventHandlers {
         notPassive: {
@@ -931,8 +929,8 @@ export default defineComponent({
       ] /* see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#watching-reactive-objects */,
       (current, previous) => {
         const makeStateArrays = () => {
-          const newState = [];
-          const oldState = [];
+          const newState: Array<State> = [];
+          const oldState: Array<State> = [];
           const IES /* (I)nput (E)vent (S)et */ = new Set();
           const flags: Array<'pointerReleasedInTarget'> = [];
 

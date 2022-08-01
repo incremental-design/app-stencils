@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo } from './handler-utils/';
-import { ScrollInput, getScrollInput } from './scroll-utils/';
+import { Handler, mergeWithEventInfo } from './handler-utils';
+import { ScrollInput, getScrollInput } from './scroll-utils';
 
 export const handleScroll: Handler<Event | WheelEvent, ScrollInput> = (
   event,

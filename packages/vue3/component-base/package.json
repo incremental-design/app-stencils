@@ -1,33 +1,28 @@
 {
   "name": "@incremental.design/component-base",
-  "version": "0.0.1-alpha.334+d5abb99",
-  "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",
-  "author": "Ajay Ganapathy <lets.talk@designbyajay.com>",
-  "license": "MIT",
-  "main": "dist/component-base.common.js",
-  "types": "dist/types/index.d.ts",
-  "sideEffects": true,
   "private": false,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/ComponentBase.umd.cjs",
+  "module": "dist/ComponentBase.js",
+  "types": "dist/types/ComponentBase.d.ts",
+  "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",
   "scripts": {
-    "build": "vue-cli-service build --target lib --name component-base src/BaseComponent.vue && rm -rf ./node_modules/.cache"
+    "build": "vue-tsc --noEmit && vite build"
   },
   "dependencies": {
-    "@incremental.design/device-input-event-handlers": "^0.0.1-alpha.334+d5abb99",
-    "@incremental.design/theme": "^0.0.1-alpha.334+d5abb99",
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0"
-  },
-  "publishConfig": {
-    "access": "public"
+    "vue": "^3.2.37",
+    "@incremental.design/device-input-event-handlers": "latest",
+    "@incremental.design/theme": "latest"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/compiler-sfc": "^3.0.0",
-    "less": "^3.0.4",
-    "less-loader": "^5.0.0",
-    "typescript": "latest"
+    "typescript": "^4.6.4",
+    "vite-plugin-dts": "^1.4.0",
+    "@vitejs/plugin-vue": "^3.0.0",
+    "vite": "^3.0.0",
+    "vue-tsc": "^0.38.4"
   },
-  "gitHead": "d5abb99590199a3523b60145069b846583c8657a"
+  "bugs": {
+    "url": "https://github.com/incremental-design/app-stencils/issues"
+  }
 }

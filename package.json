@@ -1,12 +1,14 @@
 {
   "name": "root",
   "private": true,
+  "type": "module",
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
     "prepare": "husky install",
-    "postinstall": "lerna bootstrap --force-local",
+    "postinstall": "lerna bootstrap --force-local --hoist",
     "build": "lerna run build",
     "publish:snapshot": "lerna publish --canary",
+    "create-package": "./createPackage.js",
     "clean": "lerna clean"
   },
   "devDependencies": {

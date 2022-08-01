@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo } from './handler-utils/';
-import { GamepadInput, getGamepadInput } from './gamepad-utils/';
+import { Handler, mergeWithEventInfo } from './handler-utils';
+import { GamepadInput, getGamepadInput } from './gamepad-utils';
 
 // gamepadconnected gamepaddisconnected
 

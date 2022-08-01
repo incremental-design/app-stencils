@@ -1,5 +1,4 @@
-import BaseComponent from './BaseComponent.vue'
-import { State, StateChangePayload, PointerInputPayload } from './useEmits'
+import ComponentBase from './ComponentBase.vue'
 
-export default BaseComponent
-export { State, StateChangePayload, PointerInputPayload }
+export default ComponentBase
+export * from './useEmits'

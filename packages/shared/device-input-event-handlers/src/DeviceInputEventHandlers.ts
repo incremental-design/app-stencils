@@ -1,5 +1,3 @@
-export * from './event-handlers';
-
 import {
   handleDevice,
   DeviceInput,
@@ -18,9 +16,9 @@ import {
   PointerInput,
   handleWindowResize,
   WindowResizeInput,
-} from './event-handlers/';
+} from './event-handlers';
 
-import { Handler, EventInfo } from './event-handlers/handler-utils/';
+import { Handler, EventInfo } from './event-handlers/handler-utils';
 
 type AllDeviceEvents =
   | DeviceMotionEvent

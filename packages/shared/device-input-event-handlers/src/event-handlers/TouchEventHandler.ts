@@ -1,4 +1,4 @@
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils/';
+import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
 import { PointerInput, getPointerInput } from './pointer-utils';
 
 /**

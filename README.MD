@@ -205,3 +205,33 @@ See: [`CONTRIBUTE.md`](./CONTRIBUTE.md)
 	 * compare action to doing nothing -->
 
 <!-- * how tell if succeeded? -->
+
+<!-- 
+==================
+
+vue websites:
+
+vitedge only (drop to ssr if >1mb) 
+vitest (instead of jest??) (will it work w playwright? does it matter?)
+vite plugin pwa(??)
+typescript
+Editorconfig (NOT prettier)
+NO ESLINT
+optional pinia
+optional partytown
+
+==================
+
+vue libraries
+
+vitest (or jest) and playwright(?)
+typescript
+editorconfig (no prettier, no eslint)
+some way to bundle <style> blocks
+
+BUT 
+
+use nuxt 3 (with webpack … sorry, I know) for incremental.design website … also use uxlens
+
+==================
+ -->
