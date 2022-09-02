@@ -1,19 +1,27 @@
 import {
+  /* device */
   handleDevice,
   DeviceInput,
+  /* drag */
   handleDrag,
   DragInput,
+  /* scroll */
   handleScroll,
   ScrollInput,
+  /* focus */
   handleFocus,
   FocusInput,
+  /* gamepad */
   handleGamepad,
   GamepadInput,
+  /* keyboard */
   handleKeyboard,
   KeyboardInput,
+  /* mouse and touch */
   handleMouse,
   handleTouch,
   PointerInput,
+  /* window */
   handleWindowResize,
   WindowResizeInput,
 } from './event-handlers';
@@ -46,73 +54,21 @@ type AllDeviceInputs =
 /**
  * handle is a wrapper for every other event handler in this package. When you insert an event into it, it runs {@link handleDevice}, {@link handleDrag}, {@link handleScroll}, {@link handleFocus}, {@link handleGamepad}, {@link handleKeyboard}, {@link handleMouse}, {@link handleTouch}, or {@link handleWindowResize}, depending on the event you insert into it. If you insert an unsupported event, it errors.
  *
- * @param event - Any {@link DeviceMotionEvent}, {@link DeviceOrientationEvent}, {@link FocusEvent}, {@link GamepadEvent}, {@link KeyboardEvent}, {@link DragEvent}, {@link MouseEvent}, {@link TouchEvent}, {@link Event} where {@link Event.type} is 'scroll', {@link UIEvent}, or {@link WheelEvent}
+ * @param event - Any {@link DeviceMotionEvent}, {@link DeviceOrientationEvent}, {@link FocusEvent}, {@link GamepadEvent}, {@link KeyboardEvent}, {@link DragEvent}, {@link MouseEvent}, {@link TouchEvent}, {@link Event} where {@link Event.type} is 'scroll', {@link UIEvent} where {@link UIEvent.type} is 'resize', or {@link WheelEvent}
  *
  * @param previous - the object that was previously returned from this function.
  *
  *
- * @returns a {@link DeviceInput}, {@link DragInput}, {@link ScrollInput}, {@link FocusInput}, {@link GamepadInput}, {@link KeyboardInput}, {@link PointerInput}, or {@link WindowResizeInput} object, depending on what kind of event was passed into it.
- *
- * @example
- * ```vue
- * <template>
- *  <div @="Handlers">
- *    <!-- ... -->
- *  </div>
- * </template>
- *
- * <script lang="ts">
- *  import { defineComponent, reactive } from 'vue';
- *
- *  import handle from '@incremental.design/device-input-event-handlers';
- *
- *  export default defineComponent({
- *    setup(){
- *
- *      const DataAndComputed: any = reactive({
- *       previous: false,
- *      });
- *
- *      const H = (e: Event) => handle(e, DataAndComputed.previous);
- *
- *      const Handlers = {
- *        drag: H,
- *        dragend: H,
- *        dragenter: H,
- *        dragleave: H,
- *        dragover: H,
- *        dragstart: H,
- *        drop: H,
- *        scroll: H,
- *        blur: H,
- *        focus: H,
- *        focusin: H,
- *        focusout: H,
- *        keydown: H,
- *        keypress: H,
- *        keyup: H,
- *        auxclick: H,
- *        click: H,
- *        contextmenu: H,
- *        dblclick: H,
- *        mousedown: H,
- *        mouseenter: H,
- *        mouseleave: H,
- *        mouseout: H,
- *        mouseover: H,
- *        mouseout: H,
- *        touchcancel: H,
- *        touchend: H,
- *        touchmove: H,
- *        touchstart: H,
- *        wheel: H
- *      };
- *
- *      return { TouchEventHandlers, DataAndComputed };
- *    }
- *  });
- * </script>
- * ```
+ * @returns `{@link EventInfo}<input>` object, where `input` is
+ * - {@link DeviceInput} if `event` is a {@link DeviceMotionEvent} or {@link DeviceOrientationEvent}
+ * - {@link DragInput} if `event` is a {@link DragEvent}
+ * - {@link ScrollInput} if `event` is a {@link ScrollEvent} or {@link Event} where {@link Event.type} is 'scroll'
+ * - {@link FocusInput} if `event` is a {@link FocusEvent}
+ * - {@link GamepadInput} if `event` is a {@link GamepadEvent} 
+ * - {@link KeyboardInput} if `event` is a {@link KeyboardEvent}
+ * - {@link PointerInput} if `event` is a {@link link to class or URL | Description}
+ * - {@link WindowResizeInput} if `event` is a {@link UIEvent}
+ * 
  *
  * @see https://developer.mozilla.org/en-US/docs/Web/API/DeviceMotionEvent
  *
@@ -137,7 +93,7 @@ type AllDeviceInputs =
  * @see https://developer.mozilla.org/en-US/docs/Web/API/WheelEvent
  */
 const handle: Handler<AllDeviceEvents, AllDeviceInputs> = (event, previous) => {
-  // since instanceof is slow, we are going to switch based on the `event.type` property:
+  /* since instanceof is slow, we are going to switch based on the `event.type` property */
 
   const T = event.type;
   switch (T) {

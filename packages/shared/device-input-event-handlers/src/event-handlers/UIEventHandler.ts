@@ -6,6 +6,15 @@ import {
 
 // resize
 
+/**
+ * Handles {@link UIEvent}s where {@link UIEvent.type} is 'resize'. Turns them into {@link EventInfo}<{@link WindowResizeInput}>. Tracks the change between successive {@link UIEvent}s.
+ *
+ * @param event - any {@link UIEvent} where 
+ * @param previous - the {@link EventInfo}<{@link WindowResizeInput}> that was returned the last time this function ran.
+ *
+ * @returns 
+ * {@link EventInfo}<{@link WindowResizeInput}>
+*/
 export const handleWindowResize: Handler<UIEvent, WindowResizeInput> = (
   event,
   previous

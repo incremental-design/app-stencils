@@ -10,41 +10,6 @@ import { PointerInput, getPointerInput } from './pointer-utils';
  *
  * @returns a {@link EventInfo}<{@link PointerInput}> object
  *
- * @example
- * ```vue
- * <template>
- *  <div @="TouchEventHandlers">
- *    <!-- ... -->
- *  </div>
- * </template>
- *
- * <script lang="ts">
- *  import { defineComponent, reactive } from 'vue';
- *
- *  import { handleTouch } from '@incremental.design/device-input-event-handlers';
- *
- *  export default defineComponent({
- *    setup(){
- *
- *      const DataAndComputed: any = reactive({
- *       previous: false,
- *      });
- *
- *      const H = (e: Event) => handleTouch(e, DataAndComputed.previous);
- *
- *      const TouchEventHandlers = {
- *        touchcancel: H,
- *        touchend: H,
- *        touchmove: H,
- *        touchstart: H
- *      };
- *
- *      return { TouchEventHandlers, DataAndComputed };
- *    }
- *  });
- * </script>
- * ```
- *
  */
 export const handleTouch: Handler<TouchEvent, PointerInput> = (
   event,

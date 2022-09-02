@@ -64,21 +64,6 @@ importers:
       vite-plugin-dts: 1.4.0_vite@3.0.4
       vue-tsc: 0.38.9_typescript@4.7.4
 
-  packages/shared/tinytest:
-    specifiers:
-      typescript: ^4.6.4
-      vite: ^3.0.0
-      vite-plugin-dts: ^1.4.0
-      vue: ^3.2.37
-      vue-tsc: ^0.38.4
-    dependencies:
-      vue: 3.2.37
-    devDependencies:
-      typescript: 4.7.4
-      vite: 3.0.4
-      vite-plugin-dts: 1.4.0_vite@3.0.4
-      vue-tsc: 0.38.9_typescript@4.7.4
-
   packages/storybook:
     specifiers:
       '@incremental.design/component-base': ^0.0.1-alpha.305+2785342
@@ -8521,7 +8506,7 @@ packages:
       minipass-pipeline: 1.2.4
       mkdirp: 1.0.4
       p-map: 4.0.0
-      promise-inflight: 1.0.1_bluebird@3.7.2
+      promise-inflight: 1.0.1
       rimraf: 3.0.2
       ssri: 8.0.1
       tar: 6.1.11

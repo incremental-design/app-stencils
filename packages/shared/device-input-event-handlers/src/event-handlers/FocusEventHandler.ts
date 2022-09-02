@@ -1,8 +1,16 @@
-import { Handler, mergeWithEventInfo } from './handler-utils';
+import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
 import { FocusInput, getFocusInput } from './focus-utils';
 
 // blur, focus, focusin, focusout, select??
-
+/**
+ * Handles {@link FocusEvent}s. Turns them into {@link EventInfo}<{@link FocusInput}>. Tracks the change between successive {@link FocusEvent}s.
+ *
+ * @param event - any {@link FocusEvent}
+ * @param previous - the {@link EventInfo}<{@link FocusInput}> that was returned the last time this function ran. This parameter is optional.
+ *
+ * @returns 
+ * {@link EventInfo}<{@link FocusInput}>
+*/
 export const handleFocus: Handler<FocusEvent, FocusInput> = (
   event,
   previous

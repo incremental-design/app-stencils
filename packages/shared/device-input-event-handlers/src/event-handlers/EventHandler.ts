@@ -1,6 +1,14 @@
 import { Handler, mergeWithEventInfo } from './handler-utils';
 import { ScrollInput, getScrollInput } from './scroll-utils';
 
+/**
+ * Handles {@link Event}s where {@link Event.type} is 'scroll'. Turns them into {@link EventInfo}<{@link ScrollInput}>. Tracks the change between successive {@link Event}s and {@link WheelEvent}s. Does NOT handle {@link Event}s where {@link Event.type} is NOT 'scroll'.
+ *
+ * @param event - any {@link Event} where {@link Event.type} is 'scroll'
+ * @param previous - the {@link EventInfo}<{@link ScrollInput}> that was returned the last time this function ran. This parameter is optional.
+ *
+ * @returns {@link EventInfo}<{@link ScrollInput}>
+*/
 export const handleScroll: Handler<Event | WheelEvent, ScrollInput> = (
   event,
   previous
