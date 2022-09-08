@@ -12,18 +12,10 @@
     "clean": "lerna clean"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-transform-modules-commonjs": "^7.16.7",
-    "@babel/preset-typescript": "^7.16.7",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
     "@typescript-eslint/eslint-plugin": "^4.4.1",
-    "@vue/cli": "^4.5.15",
-    "@vue/cli-plugin-unit-jest": "^4.5.15",
-    "@vue/test-utils": "^1.0.3",
-    "babel-jest": "^27.4.5",
     "husky": "^6.0.0",
-    "jest": "^27.4.5",
     "lerna": "^5.0.0",
     "typescript": "latest"
   }, 
