@@ -84,6 +84,9 @@ For example:
 Volar enables typescript intellisense for Vue components within your editor of choice.
 If you use VSCode, don't forget to enable [takeover mode](https://github.com/johnsoncodehk/volar/discussions/471), or Volar won't work.
 
+### Build the code
+run `pnpm build`
+
 
 <!-- ### Install ESlint -->
 <!-- eslint enforces typescript naming conventions, and formats your code on save (does this work outside of vscode?) -->
