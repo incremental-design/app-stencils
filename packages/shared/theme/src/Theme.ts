@@ -31,7 +31,7 @@ export * from './presets/utils';
  *
  * * It doesn't make sense to extend this class, because you can achieve complete customization of any preset theme, or even create your own theme, using dependency injection.
  *
- * * Theme is designed to be entirely static. It doesn't even have a constructor.This drastically lowers its memory footprint - especially when it's used to style every component in your web app.
+ * * Theme is designed to be entirely static. It doesn't even have a constructor. This drastically lowers its memory footprint - especially when it's used to style every component in your web app.
  *
  * @example
  * ```typescript

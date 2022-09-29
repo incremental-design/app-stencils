@@ -59,26 +59,16 @@ You must include the following information in your commits. Otherwise, Git will 
    - Note: You MUST begin your commit body with a blank line, or Commitlint will complain.
 
 For example:
+* type and subject: `feat(plumbus): repurpose the batch of schleem`
+* body: 
+  ```
+  1. Add the `dinglebopper` to the `blamf`.
+  2. Cut the `fleeb`.
+  3. Chumble the `hizzards`.
+  4. Make the `plumbus`.
 
-<table>
-<tbody>
-<!--  -->
-<tr>
-<th>Type</th>
-<th>Subject</th>
-</tr>
-<!--  -->
-<tr>
-<td>feat(plumbus):</td>
-<td>repurpose the batch of schleem</td>
-</tr>
-<!--  -->
-<tr><th colspan="2">Body</th></tr>
-<!--  -->
-<tr><td colspan="2"><ol><li>Add the <code>dinglebopper</code> to the `blamf.</li><li>Cut the <code>fleeb</code>.</li><li>Chumble the <code>hizzards</code>.</li><li>Make the <code>plumbus</code>.</li></ol><br>See: <a href="https://www.youtube.com/watch?v=eMJk4y9NGvE">https://www.youtube.com/watch?v=eMJk4y9NGvE</a></td></tr>
-<!--  -->
-</tbody>
-</table>
+  See: https://www.youtube.com/watch?v=eMJk4y9NGvE
+  ```
 
 ### Install [Volar](https://github.com/johnsoncodehk/volar)
 Volar enables typescript intellisense for Vue components within your editor of choice.
@@ -86,6 +76,8 @@ If you use VSCode, don't forget to enable [takeover mode](https://github.com/joh
 
 ### Build the code
 run `pnpm build`
+
+To delete and reinstall `node_modules` folders before a rebuild, run `pnpm clean && pnpm i`
 
 
 <!-- ### Install ESlint -->
@@ -96,7 +88,8 @@ ESlint will fail if you don't adhere to the following naming conventions. -->
 <!-- bullet of naming conventions -->
 <!-- and link to typescript eslint -->
 
-<!-- todo: test with jest (what about potentially using vitest??) -->
+<!-- todo: test with vitest -->
+<!-- need to explain that you should populate the <package-name>.test.ts file with whatever test and then run pnpm test and it will continuously watch as you code -->
 
 <!-- todo: document components. right now this doesn't exist because we don't have a documentation site within this repo -->
 
