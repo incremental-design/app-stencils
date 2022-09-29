@@ -12,7 +12,7 @@
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
     :style="componentStyles"
     ref="BCR"
-    :tabindex="isFocusable ? '-1' : ''"
+    :tabIndex="isFocusable ? -1 : undefined"
   >
     <div :style="suppressPointer">
       <slot :layout="layout" :layouts="layouts">
