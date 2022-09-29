@@ -12,10 +12,9 @@
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
     :style="componentStyles"
     ref="BCR"
-    :tabIndex="isFocusable ? -1 : undefined"
   >
     <div :style="suppressPointer">
-      <slot :layout="layout" :layouts="layouts">
+      <slot>
         isPressed: {{ pointerInput }}
       </slot>
     </div>
@@ -52,11 +51,6 @@ import {
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
 } from '@incremental.design/device-input-event-handlers';
 import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
-import Theme from '@incremental.design/theme';
-import {
-  PlatformInterface,
-  State as ThemeState,
-} from '@incremental.design/theme';
 
 import emits, { State } from './useEmits'
 
@@ -267,50 +261,24 @@ export default defineComponent({
      * ```
      * @ignore
      */
-    theme: {
-      type: [String, Object], // todo: make a Platform constructor when making the helper classes
-      required: false,
-      validator: (value: string | PlatformInterface): boolean => {
-        if (typeof value === 'string') return Theme.platforms.includes(value);
-        return true; /* note that we are just going to assume that whatever PlatformInterface you pass into theme is valid. That's because it's too expensive to check if the platform interface is valid every time Vue makes a component with base component. */
-      },
-    },
   },
 
   emits,
 
   setup(props, { emit }) {
-    const BCR: Ref<null | Node> /*(B)ase (C)omponent (R)oot */ = ref(null);
+    const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
-    const makeLayouts = (
-      themeProp?: PlatformInterface | string
-    ):
-      | ReturnType<typeof Theme.platform>
-      | { layout: false; layouts: false } => {
-      const None: { layout: false; layouts: false } = {
-        layout: false,
-        layouts: false,
-      };
-
-      if (!themeProp) return None;
-      try {
-        return Theme.platform(
-          themeProp
-        ); /* it is too expensive to actually check props.theme on EVERY instance of base component. Best to just let Theme error if it isn't */
-      } catch (e) {
-        console.warn(e);
-        return None;
-      }
-    };
-
-    const LL: /* (L)ayout (L)ayouts */
-    | ReturnType<typeof Theme.platform>
-      | {
-          layout: false;
-          layouts: false;
-        } = reactive(
-      makeLayouts(props.theme as string | PlatformInterface | undefined)
-    );
+    watch(
+      [() => BCR.value, () => props.isFocusable],
+      (current) => {
+        const [el, focusable] = current;
+        
+        if(!el) return;
+        if(focusable) return el.tabIndex = 0
+        return el.tabIndex = -1
+      },
+      {immediate: true}
+      )
 
     const DataAndComputed: {
       pointerInput: false | EventInfo<PointerInput>;
@@ -321,25 +289,6 @@ export default defineComponent({
       suppressPointer: {
         [styleName: string]: string;
       };
-      layout:
-        | ((
-            layoutName: string
-          ) => {
-            style: (
-              styleName: string,
-              tint?: string,
-              darkMode?: boolean | string
-            ) => { [cssRule: string]: string | number };
-            styles: {
-              text: Array<string>;
-              fill: Array<string>;
-              bg: Array<string>;
-            };
-            tints: Array<string>;
-            modes: Array<string>;
-          })
-        | false;
-      layouts: Array<string> | false;
     } = reactive({
       pointerInput: false,
       /**
@@ -388,54 +337,6 @@ export default defineComponent({
         width: '100%',
         height: '100%'
       })),
-      /**
-       * layout - a wrapper of the @incremental.design/theme Theme.platform(...).layout
-       */
-      layout: computed(() => {
-        if (!LL.layout) return false;
-
-        const Hovered = FSM.hovered.state;
-        const Pressed = FSM.pressed.state;
-        const Toggled = FSM.toggled.state;
-        const ToggledHovered = Toggled && Hovered;
-        const ToggledPressed = Toggled && Pressed;
-        const Focused = FSM.focused.state;
-
-        const LW /* (L)ayout (W)rapper */ = (layoutName: string) => {
-          const { style, styles, states, tints, modes } = LL.layout(layoutName);
-
-          const S /* (S)tate */ = (() => {
-            if (Focused) return ThemeState.focused;
-            if (ToggledPressed) return ThemeState.toggledPressed;
-            if (ToggledHovered) return ThemeState.toggledPressed;
-            if (Toggled) return ThemeState.toggled;
-            if (Pressed) return ThemeState.pressed;
-            if (Hovered) return ThemeState.hovered;
-          })();
-
-          const SW /* (S)tyle (W)rapper */ = (
-            styleName: string,
-            tint?: string,
-            mode?: string | boolean
-          ) => {
-            return style(styleName, tint, S, mode);
-          };
-
-          return {
-            style: SW,
-            styles,
-            tints,
-            modes,
-          };
-        };
-        return LW;
-      }),
-      /**
-       * layouts - a list of layouts that the layout function accepts
-       */
-      layouts: computed(() => {
-        return LL.layouts;
-      }),
     });
 
     type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
