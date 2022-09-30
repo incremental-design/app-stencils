@@ -10,10 +10,10 @@
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :style="componentStyles"
+    :class="[isSelectable ? 'selectable' : '', 'outer']"
     ref="BCR"
   >
-    <div :style="suppressPointer">
+    <div :class="[isFocusable ? 'suppress-pointer' : '', 'inner']">
       <slot>
         isPressed: {{ pointerInput }}
       </slot>
@@ -53,6 +53,7 @@ import {
 import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
 
 import emits, { State } from './useEmits'
+import props from './useProps'
 
 interface EventHandlers {
         notPassive: {
@@ -81,193 +82,13 @@ interface EventHandlers {
 
 export default defineComponent({
 
-  props: {
-    /**
-     * isHoverable - whether the component's appearance should change when a mouse cursor occludes it.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isHoverable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isHoverable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isPeekable - whether the component should increase in size and reveal its contents when it is hovered.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isPeekable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isPeekable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isPressable - whether the component's appearance should change when it is clicked or tapped.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isPeekable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isPressable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isToggleable - whether the component should maintain its appearance when it is pressed and the mouse cursor or touch point is released.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isToggleable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isToggleable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isSlideable - whether the components' contents follow (or otherwise respond to) the mouse cursor or touch point when the component is pressed.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isSlideable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isSlideable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isSelectable - whether the component's contents can be copied to the clipboard.
-     *
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isSelectable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isSelectable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * isFocusable - whether the component can receive keypresses. Note that this does NOT mean that the component's contents can be edited.
-     * @values true | false
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component isToggleable>
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     */
-    isFocusable: {
-      type: Boolean,
-      default: false,
-    },
-
-    /**
-     * theme - whether the component should calculate the CSS rules needed to make the template match the visual language of iOS, macOS, tvOS, android, windows, or gtk (linux)
-     *
-     * @values 'ios', 'macos', 'tvos', 'android', 'windows', 'gtk' or a {@link PlatformInterface} object.
-     *
-     * @example
-     * ```vue
-     *
-     * <template>
-     *  <base-component theme="ios">
-     *    <template v-slot:default>
-     *     <!-- ... -->
-     *    </template>
-     *  </base-component>
-     * </template>
-     *
-     * ```
-     * @ignore
-     */
-  },
-
+  props,
   emits,
 
   setup(props, { emit }) {
     const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
+    /* if props.isFocusable, then set the tab index of base component */
     watch(
       [() => BCR.value, () => props.isFocusable],
       (current) => {
@@ -280,22 +101,12 @@ export default defineComponent({
       {immediate: true}
       )
 
-    const DataAndComputed: {
-      pointerInput: false | EventInfo<PointerInput>;
-      eventHandlers: EventHandlers;
-      componentStyles: {
-        [styleName: string]: string;
-      };
-      suppressPointer: {
-        [styleName: string]: string;
-      };
-    } = reactive({
-      pointerInput: false,
-      /**
-       * eventHandlers - object that binds events to handler functions.
-       */
-      eventHandlers: computed(() => {
-        return makeEventHandlers(
+    /* track the previous location and velocity of the pointer */
+    const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
+
+    /* put all event handler functions into a single object, and bind it to BCR */
+    const eventHandlers = computed(() => {
+      return makeEventHandlers(
           props.isHoverable,
           props.isPeekable,
           props.isPressable,
@@ -304,40 +115,7 @@ export default defineComponent({
           props.isSelectable,
           props.isFocusable
         );
-      }),
-      /**
-       * componentStyles - styles that have to be applied to the root of the component to make it work.
-       */
-      componentStyles: computed(() => {
-        const S: /* (S)tyles */ { [cssRule: string]: string } = {
-          'touch-action': 'manipulation',
-          position: 'relative',
-        };
-        if (props.isSelectable) {
-          Object.assign(S, {
-            userSelect: 'all',
-            WebkitUserSelect: 'all',
-            MozUserSelect: 'all',
-            MsUserSelect: 'all',
-          });
-        } else {
-          Object.assign(S, {
-            userSelect: 'none',
-            WebkitUserSelect: 'none',
-            MozUserSelect: 'none',
-            MsUserSelect: 'none',
-            webkitTouchCallout: 'none',
-          });
-        }
-        return S;
-      }),
-      suppressPointer: computed(() => ({
-        pointerEvents: props.isFocusable ? 'auto' : 'none',
-        position: 'relative',
-        width: '100%',
-        height: '100%'
-      })),
-    });
+    })
 
     type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
 
@@ -497,9 +275,9 @@ export default defineComponent({
 
     const shouldDiscardMouseEvent = (e: MouseEvent) => {
       /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
-      if(!DataAndComputed.pointerInput) return false;
-      const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(DataAndComputed.pointerInput.type)
-      const sameTimeframe = e.timeStamp - DataAndComputed.pointerInput.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
+      if(!pointerInput.value) return false;
+      const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(pointerInput.value.type)
+      const sameTimeframe = e.timeStamp - pointerInput.value.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
       if(sameTimeframe && prevIsTouch) return true;
       return false
     }
@@ -507,18 +285,18 @@ export default defineComponent({
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
       if(shouldDiscardMouseEvent(E)) return;
       /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
-      if (shouldThrottleEvent('mousemove', E, DataAndComputed.pointerInput))
+      if (shouldThrottleEvent('mousemove', E, pointerInput.value))
         return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleMouse(E, DataAndComputed.pointerInput)
+      !!pointerInput.value
+        ? handleMouse(E, pointerInput.value)
         : handleMouse(E);
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
+      if (shouldThrottleEvent('touchmove', E, pointerInput.value))
         return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleTouch(E, DataAndComputed.pointerInput)
+      !!pointerInput.value
+        ? handleTouch(E, pointerInput.value)
         : handleTouch(E);
     };
 
@@ -632,13 +410,13 @@ export default defineComponent({
     };
 
     watch(
-      () => DataAndComputed.pointerInput,
+      () => pointerInput.value,
       (current, previous) => {
-        if (!DataAndComputed.pointerInput) return;
-        const P = DataAndComputed.pointerInput;
+        const P = current;
+        if (!P) return;
         emit('pointerInput', P);
-        const XP = P.input.relative.xPercent;
-        const YP = P.input.relative.yPercent;
+        const XP = current.input.relative.xPercent;
+        const YP = current.input.relative.yPercent;
         const XPOutOfBounds = XP ? XP < 0 || XP > 1 : false;
         const YPOutOfBounds = YP ? YP < 0 || YP > 1 : false;
         const PointerInBounds = !XPOutOfBounds && !YPOutOfBounds;
@@ -908,7 +686,28 @@ export default defineComponent({
 
     // !Lifecycle Hooks
 
-    return { ...toRefs(DataAndComputed), FSM, BCR };
+    return { pointerInput, eventHandlers, FSM, BCR };
   },
 });
 </script>
+
+<style scoped>
+  .suppress-pointer{
+    pointer-events: none;
+  }
+  .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .outer {
+    touch-action: manipulation;
+    position: relative;
+    user-select: none;
+  }
+
+  .selectable {
+    user-select: all;
+  }
+</style>
