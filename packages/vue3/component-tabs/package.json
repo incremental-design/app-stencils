@@ -4,7 +4,7 @@
   "sideEffects": true,
   "license": "MIT",
   "author": "Ajay Ganapathy <ajay@incremental.design>",
-  "version": "0.0.1-alpha.365+8be3515",
+  "version": "0.0.1-alpha.365+e1eb2de",
   "type": "module",
   "main": "dist/ComponentTabs.umd.cjs",
   "module": "dist/ComponentTabs.js",
@@ -29,5 +29,5 @@
   "bugs": {
     "url": "https://github.com/incremental-design/app-stencils/issues"
   },
-  "gitHead": "8be35151e8884459926e35cc71b56e3623d957c2"
+  "gitHead": "e1eb2de2575d71c20bbe8b8b71b5e2b3288a70f9"
 }
