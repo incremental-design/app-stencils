@@ -101,14 +101,11 @@ export default defineComponent({
       {immediate: true}
       )
 
+    const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
+
     const DataAndComputed: {
-      pointerInput: false | EventInfo<PointerInput>;
       eventHandlers: EventHandlers;
     } = reactive({
-      pointerInput: false,
-      /**
-       * eventHandlers - object that binds events to handler functions.
-       */
       eventHandlers: computed(() => {
         return makeEventHandlers(
           props.isHoverable,
@@ -280,9 +277,9 @@ export default defineComponent({
 
     const shouldDiscardMouseEvent = (e: MouseEvent) => {
       /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
-      if(!DataAndComputed.pointerInput) return false;
-      const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(DataAndComputed.pointerInput.type)
-      const sameTimeframe = e.timeStamp - DataAndComputed.pointerInput.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
+      if(!pointerInput.value) return false;
+      const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(pointerInput.value.type)
+      const sameTimeframe = e.timeStamp - pointerInput.value.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
       if(sameTimeframe && prevIsTouch) return true;
       return false
     }
@@ -290,18 +287,18 @@ export default defineComponent({
     const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
       if(shouldDiscardMouseEvent(E)) return;
       /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
-      if (shouldThrottleEvent('mousemove', E, DataAndComputed.pointerInput))
+      if (shouldThrottleEvent('mousemove', E, pointerInput.value))
         return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleMouse(E, DataAndComputed.pointerInput)
+      pointerInput.value = pointerInput.value
+        ? handleMouse(E, pointerInput.value)
         : handleMouse(E);
     };
 
     const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      if (shouldThrottleEvent('touchmove', E, DataAndComputed.pointerInput))
+      if (shouldThrottleEvent('touchmove', E, pointerInput.value))
         return;
-      DataAndComputed.pointerInput = DataAndComputed.pointerInput
-        ? handleTouch(E, DataAndComputed.pointerInput)
+      pointerInput.value = pointerInput.value
+        ? handleTouch(E, pointerInput.value)
         : handleTouch(E);
     };
 
@@ -415,10 +412,10 @@ export default defineComponent({
     };
 
     watch(
-      () => DataAndComputed.pointerInput,
-      (current, previous) => {
-        if (!DataAndComputed.pointerInput) return;
-        const P = DataAndComputed.pointerInput;
+      () => pointerInput.value,
+      (current) => {
+        if (!current) return;
+        const P = current;
         emit('pointerInput', P);
         const XP = P.input.relative.xPercent;
         const YP = P.input.relative.yPercent;
