@@ -4,7 +4,7 @@
   "sideEffects": true,
   "license": "MIT",
   "author": "Ajay Ganapathy <ajay@incremental.design>",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.364+b1238a6",
   "type": "module",
   "main": "dist/ComponentTabs.umd.cjs",
   "module": "dist/ComponentTabs.js",
@@ -13,14 +13,14 @@
     "build": "vue-tsc --noEmit && vite build"
   },
   "dependencies": {
-    "vue": "^3.2.37",
-    "@incremental.design/component-base": "latest"
+    "@incremental.design/component-base": "latest",
+    "vue": "^3.2.37"
   },
   "devDependencies": {
-    "typescript": "^4.6.4",
-    "vite-plugin-dts": "^1.4.0",
     "@vitejs/plugin-vue": "^3.0.0",
+    "typescript": "^4.6.4",
     "vite": "^3.0.0",
+    "vite-plugin-dts": "^1.4.0",
     "vue-tsc": "^0.38.4"
   },
   "publishConfig": {
@@ -28,5 +28,6 @@
   },
   "bugs": {
     "url": "https://github.com/incremental-design/app-stencils/issues"
-  }
+  },
+  "gitHead": "b1238a68e5e834e80fc42a207530bff3975cc4dd"
 }
