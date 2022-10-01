@@ -10,7 +10,7 @@
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :style="outer"
+    :class="outer"
     ref="BCR"
   >
     <div :style="inner">
