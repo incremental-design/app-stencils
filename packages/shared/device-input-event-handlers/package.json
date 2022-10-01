@@ -5,7 +5,7 @@
   "license": "MIT",
   "description": "Handlers for `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` and `WheelEvent`. These handlers normalize and filter event details to make them easier to interpret.",
   "author": "Ajay Ganapathy <ajay@incremental.design>",
-  "version": "0.0.1-alpha.364+b1238a6",
+  "version": "0.0.0",
   "type": "module",
   "main": "dist/DeviceInputEventHandlers.umd.cjs",
   "module": "dist/DeviceInputEventHandlers.js",
@@ -18,8 +18,8 @@
   },
   "devDependencies": {
     "typescript": "^4.6.4",
-    "vite": "^3.0.0",
     "vite-plugin-dts": "^1.4.0",
+    "vite": "^3.0.0",
     "vue-tsc": "^0.38.4"
   },
   "publishConfig": {
@@ -27,6 +27,5 @@
   },
   "bugs": {
     "url": "https://github.com/incremental-design/app-stencils/issues"
-  },
-  "gitHead": "b1238a68e5e834e80fc42a207530bff3975cc4dd"
+  }
 }

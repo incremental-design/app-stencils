@@ -10,10 +10,10 @@
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :class="$style.outer"
+    :class="[isSelectable ? 'selectable' : '', 'outer']"
     ref="BCR"
   >
-    <div :style="$style.inner">
+    <div :class="[isFocusable ? 'suppress-pointer' : '', 'inner']">
       <slot>
         isPressed: {{ pointerInput }}
       </slot>
@@ -31,6 +31,7 @@ import {
   watch,
   ref,
   Ref,
+  toRefs,
 } from 'vue';
 
 import {
@@ -55,29 +56,29 @@ import emits, { State } from './useEmits'
 import props from './useProps'
 
 interface EventHandlers {
-  notPassive: {
-    mouse: {
-      [eventType: string]:
-      ((E: MouseEvent) => void)
-    },
-    other: {
-      [eventType: string]:
-        | ((E: DragEvent) => void)
-        | ((E: Event) => void)
-        | ((E: FocusEvent) => void)
-        | ((E: KeyboardEvent) => void)
-        | ((E: WheelEvent) => void)
-    }
-  },
-  passive: {
-    touch: {
-    [eventType: string]: ((E: TouchEvent) => void)
-    },
-    wheel: {
-    [eventType: string]: ((E: WheelEvent) => void);
-    }
-  },
-}
+        notPassive: {
+          mouse: {
+            [eventType: string]:
+           ((E: MouseEvent) => void)
+          },
+          other: {
+            [eventType: string]:
+             | ((E: DragEvent) => void)
+             | ((E: Event) => void)
+             | ((E: FocusEvent) => void)
+             | ((E: KeyboardEvent) => void)
+             | ((E: WheelEvent) => void)
+          }
+        },
+        passive: {
+          touch: {
+         [eventType: string]: ((E: TouchEvent) => void)
+          },
+          wheel: {
+         [eventType: string]: ((E: WheelEvent) => void);
+          }
+        },
+      }
 
 export default defineComponent({
 
@@ -683,34 +684,30 @@ export default defineComponent({
       }
     );
 
-    const userSelect = computed(() => props.isSelectable ? 'all' : 'none')
-    const pointerEvents = computed(() => props.isFocusable ? 'auto' : 'none')
-
     // !Lifecycle Hooks
 
-    return { 
-      pointerInput, 
-      eventHandlers, 
-      FSM, 
-      BCR,
-      userSelect,
-      pointerEvents, 
-    };
+    return { pointerInput, eventHandlers, FSM, BCR };
   },
 });
 </script>
 
-<style module>
+<style scoped>
+  .suppress-pointer{
+    pointer-events: none;
+  }
   .inner {
     position: relative;
     width: 100%;
     height: 100%;
-    pointer-events: v-bind(pointerEvents);
   }
 
   .outer {
     touch-action: manipulation;
     position: relative;
-    user-select: v-bind(userSelect);
+    user-select: none;
+  }
+
+  .selectable {
+    user-select: all;
   }
 </style>
