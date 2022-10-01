@@ -10,10 +10,10 @@
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :style="componentStyles"
+    :class="$style.outer"
     ref="BCR"
   >
-    <div :style="suppressPointer">
+    <div :class="$style.inner">
       <slot>
         isPressed: {{ pointerInput }}
       </slot>
@@ -104,12 +104,6 @@ export default defineComponent({
     const DataAndComputed: {
       pointerInput: false | EventInfo<PointerInput>;
       eventHandlers: EventHandlers;
-      componentStyles: {
-        [styleName: string]: string;
-      };
-      suppressPointer: {
-        [styleName: string]: string;
-      };
     } = reactive({
       pointerInput: false,
       /**
@@ -126,38 +120,6 @@ export default defineComponent({
           props.isFocusable
         );
       }),
-      /**
-       * componentStyles - styles that have to be applied to the root of the component to make it work.
-       */
-      componentStyles: computed(() => {
-        const S: /* (S)tyles */ { [cssRule: string]: string } = {
-          'touch-action': 'manipulation',
-          position: 'relative',
-        };
-        if (props.isSelectable) {
-          Object.assign(S, {
-            userSelect: 'all',
-            WebkitUserSelect: 'all',
-            MozUserSelect: 'all',
-            MsUserSelect: 'all',
-          });
-        } else {
-          Object.assign(S, {
-            userSelect: 'none',
-            WebkitUserSelect: 'none',
-            MozUserSelect: 'none',
-            MsUserSelect: 'none',
-            webkitTouchCallout: 'none',
-          });
-        }
-        return S;
-      }),
-      suppressPointer: computed(() => ({
-        pointerEvents: props.isFocusable ? 'auto' : 'none',
-        position: 'relative',
-        width: '100%',
-        height: '100%'
-      })),
     });
 
     type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
@@ -727,9 +689,25 @@ export default defineComponent({
       }
     );
 
-    // !Lifecycle Hooks
+    const userSelect = computed(() => props.isSelectable ? 'all' : 'none')
+    const pointerEvents = computed(() => props.isFocusable ? 'auto' : 'none')
 
-    return { ...toRefs(DataAndComputed), FSM, BCR };
+    return { ...toRefs(DataAndComputed), FSM, BCR, userSelect, pointerEvents };
   },
 });
 </script>
+
+<style module>
+  .outer {
+    touch-action: manipulation;
+    position: relative;
+    user-select: v-bind(userSelect);
+  }
+
+  .inner {
+    pointer-events: v-bind(pointerEvents);
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+</style>
