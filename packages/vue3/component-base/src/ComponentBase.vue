@@ -103,21 +103,15 @@ export default defineComponent({
 
     const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
 
-    const DataAndComputed: {
-      eventHandlers: EventHandlers;
-    } = reactive({
-      eventHandlers: computed(() => {
-        return makeEventHandlers(
-          props.isHoverable,
-          props.isPeekable,
-          props.isPressable,
-          props.isToggleable,
-          props.isSlideable,
-          props.isSelectable,
-          props.isFocusable
-        );
-      }),
-    });
+    const eventHandlers = computed(() => makeEventHandlers(
+      props.isHoverable,
+        props.isPeekable,
+        props.isPressable,
+        props.isToggleable,
+        props.isSlideable,
+        props.isSelectable,
+        props.isFocusable
+    ))
 
     type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
 
@@ -689,7 +683,7 @@ export default defineComponent({
     const userSelect = computed(() => props.isSelectable ? 'all' : 'none')
     const pointerEvents = computed(() => props.isFocusable ? 'auto' : 'none')
 
-    return { ...toRefs(DataAndComputed), FSM, BCR, userSelect, pointerEvents };
+    return { eventHandlers, FSM, BCR, userSelect, pointerEvents };
   },
 });
 </script>
