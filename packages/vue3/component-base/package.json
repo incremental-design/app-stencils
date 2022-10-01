@@ -1,7 +1,7 @@
 {
   "name": "@incremental.design/component-base",
   "private": false,
-  "version": "0.0.1-alpha.365+e1eb2de",
+  "version": "0.0.1-alpha.364+b1238a6",
   "type": "module",
   "main": "dist/ComponentBase.umd.cjs",
   "module": "dist/ComponentBase.js",
@@ -25,5 +25,5 @@
   "bugs": {
     "url": "https://github.com/incremental-design/app-stencils/issues"
   },
-  "gitHead": "e1eb2de2575d71c20bbe8b8b71b5e2b3288a70f9"
+  "gitHead": "b1238a68e5e834e80fc42a207530bff3975cc4dd"
 }
