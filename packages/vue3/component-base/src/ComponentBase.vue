@@ -10,10 +10,10 @@
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
     v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :class="$style.outer"
+    :class="outer"
     ref="BCR"
   >
-    <div :style="$style.inner">
+    <div :style="inner">
       <slot>
         isPressed: {{ pointerInput }}
       </slot>
@@ -686,6 +686,19 @@ export default defineComponent({
     const userSelect = computed(() => props.isSelectable ? 'all' : 'none')
     const pointerEvents = computed(() => props.isFocusable ? 'auto' : 'none')
 
+    const inner = computed(() => ({
+      position: 'relative',
+      width: '100%',
+      height: '100%',
+      pointerEvents: pointerEvents.value
+    }))
+
+    const outer = computed(() => ({
+      touchAction: 'manipulation',
+      position: 'relative',
+      userSelect: userSelect.value
+    }))
+
     // !Lifecycle Hooks
 
     return { 
@@ -693,24 +706,9 @@ export default defineComponent({
       eventHandlers, 
       FSM, 
       BCR,
-      userSelect,
-      pointerEvents, 
+      inner,
+      outer,
     };
   },
 });
 </script>
-
-<style module>
-  .inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    pointer-events: v-bind(pointerEvents);
-  }
-
-  .outer {
-    touch-action: manipulation;
-    position: relative;
-    user-select: v-bind(userSelect);
-  }
-</style>

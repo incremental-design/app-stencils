@@ -4,7 +4,7 @@
   "sideEffects": false,
   "license": "MIT",
   "author": "Ajay Ganapathy <ajay@incremental.design>",
-  "version": "0.0.1-alpha.364+b1238a6",
+  "version": "0.0.1-alpha.365+e1eb2de",
   "type": "module",
   "main": "dist/Theme.umd.cjs",
   "module": "dist/Theme.js",
@@ -25,5 +25,5 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "b1238a68e5e834e80fc42a207530bff3975cc4dd"
+  "gitHead": "e1eb2de2575d71c20bbe8b8b71b5e2b3288a70f9"
 }
