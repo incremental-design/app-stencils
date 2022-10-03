@@ -53,6 +53,7 @@ import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/
 import e, { State } from './useEmits'
 import p from './useProps'
 import useMakeEventHandlers from './useMakeEventHandlers'
+import useMakeFiniteStateMachine from './useMakeFiniteStateMachine';
 
 const emit = defineEmits(e)
 const props = defineProps(p)
@@ -73,7 +74,9 @@ watch(
 
 const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
 
-const {makeEventHandlers, FSM} = useMakeEventHandlers(pointerInput)
+const FSM = useMakeFiniteStateMachine()
+
+const makeEventHandlers = useMakeEventHandlers(pointerInput, FSM)
 
 const eventHandlers = computed(() => makeEventHandlers(
   props.isHoverable,
