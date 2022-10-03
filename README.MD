@@ -43,26 +43,31 @@ All typescript modules are located in `packages/shared`. As the name suggests, t
 vue websites:
 
 vitedge only (drop to ssr if >1mb) 
-vitest (instead of jest??) (will it work w playwright? does it matter?)
-vite plugin pwa(??)
-typescript
-Editorconfig (NOT prettier)
-NO ESLINT
-optional pinia
-optional partytown
+vitest + playwright
+vite plugin pwa
+typescript (done)
+Editorconfig
+pinia
+partytown
+supertokens (eventually)
+surrealdb in browser (eventually)
+uxlens
+strapi or directus for content api ... or maybe just supabase?
+
+some kind of caching strategy??
+
+for this repo, all of the site content will be served from strapi
 
 ==================
 
 vue libraries
 
-vitest (or jest) and playwright(?)
-typescript
+vitest + playwright
 editorconfig (no prettier, no eslint)
-some way to bundle <style> blocks
 
-BUT 
+typescript (done)
+some way to bundle <style> blocks (done w <style module>)
 
-use nuxt 3 (with webpack … sorry, I know) for incremental.design website … also use uxlens
 
 ==================
 -->
