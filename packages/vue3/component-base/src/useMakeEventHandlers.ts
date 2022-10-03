@@ -318,5 +318,5 @@ const FSM: /* (F)inite (S)tate (M)achine */ {
       return EH;
     };
 
-    return makeEventHandlers;
+    return {makeEventHandlers, FSM};
 }

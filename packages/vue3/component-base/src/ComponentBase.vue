@@ -57,31 +57,6 @@ import useMakeEventHandlers from './useMakeEventHandlers'
 const emit = defineEmits(e)
 const props = defineProps(p)
 
-interface EventHandlers {
-  notPassive: {
-    mouse: {
-      [eventType: string]:
-      ((E: MouseEvent) => void)
-    },
-    other: {
-      [eventType: string]:
-        | ((E: DragEvent) => void)
-        | ((E: Event) => void)
-        | ((E: FocusEvent) => void)
-        | ((E: KeyboardEvent) => void)
-        | ((E: WheelEvent) => void)
-    }
-  },
-  passive: {
-    touch: {
-    [eventType: string]: ((E: TouchEvent) => void)
-    },
-    wheel: {
-    [eventType: string]: ((E: WheelEvent) => void);
-    }
-  },
-}
-
 const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
 watch(
@@ -98,7 +73,7 @@ watch(
 
 const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
 
-const makeEventHandlers = useMakeEventHandlers(pointerInput)
+const {makeEventHandlers, FSM} = useMakeEventHandlers(pointerInput)
 
 const eventHandlers = computed(() => makeEventHandlers(
   props.isHoverable,
