@@ -74,6 +74,12 @@ For example:
 Volar enables typescript intellisense for Vue components within your editor of choice.
 If you use VSCode, don't forget to enable [takeover mode](https://github.com/johnsoncodehk/volar/discussions/471), or Volar won't work.
 
+- If you're using VScode, once you install Volar _and_ enable takeover mode, you should get syntax highlighting, intellisense, and formatting in your `.vue`,`.ts`, and `.js` files. If you don't:
+  1. use cmd-shift-p to bring up the command palette.
+  2. Type "Format document with" into the palette, and press enter.
+  3. Select "Configure default formatter", and press enter.
+  4. Select "Vue Language Features (Volar)"
+
 ### Build the code
 run `pnpm build`
 

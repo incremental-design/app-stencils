@@ -17,7 +17,8 @@
     "@typescript-eslint/eslint-plugin": "^4.4.1",
     "husky": "^6.0.0",
     "lerna": "^5.0.0",
-    "typescript": "latest"
+    "typescript": "latest",
+    "@volar-plugins/prettier": "latest"
   }, 
   "workspaces": [
     "packages/shared/*", "packages/vue3/*", "packages/storybook"

@@ -1,18 +1,12 @@
 <template>
-  <div
-    v-on="eventHandlers.notPassive.other"
-    v-on:mousedown="eventHandlers.notPassive.mouse.mousedown"
-    v-on:mouseup="eventHandlers.notPassive.mouse.mouseup"
-    v-on:mousemove="eventHandlers.notPassive.mouse.mousemove"
+  <div v-on="eventHandlers.notPassive.other" v-on:mousedown="eventHandlers.notPassive.mouse.mousedown"
+    v-on:mouseup="eventHandlers.notPassive.mouse.mouseup" v-on:mousemove="eventHandlers.notPassive.mouse.mousemove"
     v-on:mouseleave="eventHandlers.notPassive.mouse.mouseleave"
     v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
     v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
     v-on:touchend.passive="eventHandlers.passive.touch.touchend"
     v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
-    v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :class="$style.outer"
-    ref="BCR"
-  >
+    v-on:wheel.passive="eventHandlers.passive.wheel.wheel" :class="$style.outer" ref="BCR">
     <div :class="$style.inner">
       <slot>
         isPressed: {{ pointerInput }}
@@ -64,12 +58,12 @@ watch(
   [() => BCR.value, () => props.isFocusable],
   (current) => {
     const [el, focusable] = current;
-    
-    if(!el) return;
-    if(focusable) return el.tabIndex = 0
+
+    if (!el) return;
+    if (focusable) return el.tabIndex = 0
     return el.tabIndex = -1
   },
-  {immediate: true}
+  { immediate: true }
 )
 
 const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false)
@@ -80,12 +74,12 @@ const makeEventHandlers = useMakeEventHandlers(pointerInput, FSM)
 
 const eventHandlers = computed(() => makeEventHandlers(
   props.isHoverable,
-    props.isPeekable,
-    props.isPressable,
-    props.isToggleable,
-    props.isSlideable,
-    props.isSelectable,
-    props.isFocusable
+  props.isPeekable,
+  props.isPressable,
+  props.isToggleable,
+  props.isSlideable,
+  props.isSelectable,
+  props.isFocusable
 ))
 
 // !Methods
@@ -107,7 +101,7 @@ const focusThisEl = () => {
   const El = BCR.value ? BCR.value : false;
   if (El) {
     (El as HTMLElement).focus();
-    return true;
+            return true;
   } else {
     return false;
   }
@@ -394,16 +388,16 @@ const pointerEvents = computed(() => props.isFocusable ? 'auto' : 'none')
 </script>
 
 <style module>
-  .outer {
-    touch-action: manipulation;
-    position: relative;
-    user-select: v-bind(userSelect);
-  }
+.outer {
+  touch-action: manipulation;
+  position: relative;
+  user-select: v-bind(userSelect);
+}
 
-  .inner {
-    pointer-events: v-bind(pointerEvents);
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
+.inner {
+  pointer-events: v-bind(pointerEvents);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
 </style>
