@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
-import { DeviceInput, getDeviceInput } from './device-utils';
+import { Handler, mergeWithEventInfo, EventInfo } from "./handler-utils";
+import { DeviceInput, getDeviceInput } from "./device-utils";
 
 declare type DeviceEvent = DeviceMotionEvent | DeviceOrientationEvent;
 
@@ -9,16 +9,16 @@ declare type DeviceEvent = DeviceMotionEvent | DeviceOrientationEvent;
  * @param event - any {@link DeviceEvent}
  * @param previous - the {@link EventInfo}<{@link DeviceInput}> that was returned the last time this function ran. This parameter is optional
  *
- * @returns 
+ * @returns
  * {@link EventInfo}<{@link DeviceInput}>
-*/
+ */
 export const handleDevice: Handler<DeviceEvent, DeviceInput> = (
   event,
   previous
 ) => {
   return mergeWithEventInfo<DeviceInput>(
     event,
-    previous && previous.input.type === 'DeviceInput'
+    previous && previous.input.type === "DeviceInput"
       ? getDeviceInput(event, previous.input)
       : getDeviceInput(event)
   );

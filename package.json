@@ -22,7 +22,10 @@
     "eslint-plugin-vue": "latest",
     "vue-eslint-parser": "latest",
     "@typescript-eslint/parser": "latest",
-    "@typescript-eslint/eslint-plugin": "latest"
+    "@typescript-eslint/eslint-plugin": "latest",
+    "prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-config-prettier": "latest"
   }, 
   "workspaces": [
     "packages/shared/*", "packages/vue3/*", "packages/storybook"

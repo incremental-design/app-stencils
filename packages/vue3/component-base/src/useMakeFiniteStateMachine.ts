@@ -1,9 +1,6 @@
-import {
-  computed,
-    reactive
-  } from 'vue';
+import { computed, reactive } from "vue";
 
-import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
+import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
 
 type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
 
@@ -18,9 +15,9 @@ export type FiniteStateMachine = {
   sliding: FSMEntry;
   selected: FSMEntry;
   focused: FSMEntry;
-}
+};
 
-// export default () => 
+// export default () =>
 
 export default () => {
   const FSM: FiniteStateMachine = reactive({
@@ -125,5 +122,4 @@ export default () => {
     }),
   });
   return FSM;
-}
-
+};
