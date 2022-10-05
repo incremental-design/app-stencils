@@ -1,0 +1,14 @@
+{
+  "apexskier.eslint.config.eslintPath" : "node_modules\/.bin\/eslint",
+  "prettier.default-config.useTabs" : "Disable",
+  "tommasonegri.vue.config.vetur.languageFeatures.codeActions" : "Enable",
+  "tommasonegri.vue.config.vetur.languageFeatures.updateImportOnFileMove" : "Enable",
+  "tommasonegri.vue.config.vetur.misc.useWorkspaceDependencies" : "Enable",
+  "tommasonegri.vue.config.vetur.validation.script" : "Enable",
+  "tommasonegri.vue.config.vetur.validation.style" : "Enable",
+  "tommasonegri.vue.config.vetur.validation.template" : "Enable",
+  "tommasonegri.vue.config.vetur.validation.templateProps" : "Enable",
+  "workspace.preview_append_paths" : true,
+  "workspace.preview_server_allow_external" : false,
+  "workspace.preview_url" : "localhost:6006"
+}

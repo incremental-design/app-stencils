@@ -75,8 +75,6 @@ Volar enables typescript intellisense for Vue components within your editor of c
 - [Install in VSCode](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
   - If you use VSCode, don't forget to enable [takeover mode](https://github.com/johnsoncodehk/volar/discussions/471), or Volar won't work.
 - [Install in Panic Nova](https://extensions.panic.com/extensions/com.tommasonegri/com.tommasonegri.Vue/)
-  - make sure you also `npm install --global @volar/vue-language-server typescript`.
-  - make sure these extensions match the version of typescript used in this monorepo, or you will end up introducing typescript-version-related inconsistencies in this codebase.
 
 ### Install ESlint
 eslint enforces typescript naming conventions, and formats your code on save.

@@ -1,0 +1,9 @@
+{
+  "actions" : {
+    "run" : {
+      "enabled" : true,
+      "script" : "lerna run storybook:serve"
+    }
+  },
+  "identifier" : "F8ABDEEE-F1D2-497C-8976-8407E33503A2"
+}
