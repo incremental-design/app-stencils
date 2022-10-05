@@ -42,6 +42,18 @@ interface EventHandlers {
   };
 }
 
+interface Affordances {
+  isHoverable: boolean;
+  isPressable: boolean;
+  isPeekable: boolean;
+  isToggleable: boolean;
+  isDraggable: boolean;
+  isSelectable: boolean;
+  isFocusable: boolean;
+  isEditable: boolean;
+  isScrollable: boolean;
+}
+
 export interface PreviousInputs {
   dragInput: false | EventInfo<DragInput>;
   scrollInput: false | EventInfo<ScrollInput>;
@@ -139,15 +151,7 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
 
   // const HW /* (H)andle (W)heel */
 
-  const makeEventHandlers = (
-    isHoverable: boolean,
-    isPeekable: boolean,
-    isPressable: boolean,
-    isToggleable: boolean,
-    isSlideable: boolean,
-    isSelectable: boolean,
-    isFocusable: boolean
-  ) => {
+  const makeEventHandlers = (a: Affordances) => {
     const EH: /* (E)vent (H)andler */ EventHandlers = {
       passive: {
         touch: {},
@@ -167,24 +171,18 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
       if (!EH.notPassive.mouse.mousemove) EH.notPassive.mouse.mousemove = HM;
       if (!EH.notPassive.mouse.mouseleave) EH.notPassive.mouse.mouseleave = HM;
     };
-    const listenForPeek = (): void => {
-      listenForHover();
-    };
     const listenForPress = (): void => {
       listenForHover();
       if (!EH.notPassive.mouse.mousedown) EH.notPassive.mouse.mousedown = HM;
       if (!EH.notPassive.mouse.mouseup) EH.notPassive.mouse.mouseup = HM;
-      if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
-      if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
-      if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
-      if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
+    };
+    const listenForPeek = (): void => {
+      listenForPress();
     };
     const listenForToggle = (): void => {
       listenForPress();
     };
-    const listenForSlide = (): void => {
-      listenForPress();
-    };
+    // const listenForDrag = (): void => {}
     const listenForSelect = (): void => {
       listenForPress();
     };
@@ -193,20 +191,27 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
       if (!EH.notPassive.other.blur) EH.notPassive.other.blur = HF;
       if (!EH.notPassive.other.focus) EH.notPassive.other.focus = HF;
     };
+    // const listenForEdit = () => {}
+    const listenForScroll = (): void => {
+      listenForPress();
+      // need to listen for wheel
+    };
 
     const disableContextMenu = (): void => {
       if (!EH.notPassive.other.contextmenu)
         EH.notPassive.other.contextmenu = DCM;
     };
 
-    if (isHoverable) listenForHover();
-    if (isPeekable) listenForPeek();
-    if (isPressable) listenForPress();
-    if (isToggleable) listenForToggle();
-    if (isSlideable) listenForSlide();
-    if (isSelectable) listenForSelect();
-    if (isFocusable) listenForFocus();
-    if (!isSelectable) disableContextMenu();
+    if (a.isHoverable) listenForHover();
+    if (a.isPressable) listenForPress();
+    if (a.isPeekable) listenForPeek();
+    if (a.isToggleable) listenForToggle();
+    // if (a.isDraggable) listenForDrag();
+    if (a.isSelectable) listenForSelect();
+    if (a.isFocusable) listenForFocus();
+    // if (a.isEditable) listenForEdit();
+    if (a.isScrollable) listenForScroll();
+    if (!a.isSelectable) disableContextMenu();
 
     return EH;
   };

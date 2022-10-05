@@ -63,17 +63,7 @@ const FSM = useMakeFiniteStateMachine();
 
 const makeEventHandlers = useMakeEventHandlers(prev, FSM);
 
-const eventHandlers = computed(() =>
-  makeEventHandlers(
-    props.isHoverable,
-    props.isPeekable,
-    props.isPressable,
-    props.isToggleable,
-    props.isScrollable,
-    props.isSelectable,
-    props.isFocusable
-  )
-);
+const eventHandlers = computed(() => makeEventHandlers({ ...props }));
 
 // !Methods
 
@@ -114,57 +104,57 @@ watch(
 
     // do something with P
 
-    const updateHovered = () => {
+    const updateHovering = () => {
       switch (P.type) {
         case "mousemove":
-          FSM.hovered = { state: true, changedBy: P };
+          FSM.hovering = { state: true, changedBy: P };
           break;
         case "mouseleave":
-          FSM.hovered = { state: false, changedBy: P };
+          FSM.hovering = { state: false, changedBy: P };
           break;
       }
     };
-    const updatePeeked = () => {
-      switch (P.type) {
-        case "mousemove":
-          FSM.peeked = { state: true, changedBy: P };
-          break;
-        case "mouseleave":
-          FSM.peeked = { state: false, changedBy: P };
-          break;
-        case "touchstart":
-          FSM.peeked = { state: true, changedBy: P };
-          break;
-        case "touchend":
-          FSM.peeked = { state: false, changedBy: P };
-          break;
-        case "touchcancel":
-          FSM.peeked = { state: false, changedBy: P };
-          break;
-      }
-    };
-    const updatePressed = () => {
+    const updatePressing = () => {
       switch (P.type) {
         case "mousedown":
-          FSM.pressed = { state: true, changedBy: P };
+          FSM.pressing = { state: true, changedBy: P };
           break;
         case "touchstart":
-          FSM.pressed = { state: true, changedBy: P };
+          FSM.pressing = { state: true, changedBy: P };
           break;
         case "mouseup":
-          FSM.pressed = { state: false, changedBy: P };
+          FSM.pressing = { state: false, changedBy: P };
           break;
         case "mouseleave":
-          FSM.pressed = { state: false, changedBy: P };
+          FSM.pressing = { state: false, changedBy: P };
           break;
         case "touchcancel":
-          FSM.pressed = { state: false, changedBy: P };
+          FSM.pressing = { state: false, changedBy: P };
           break;
         case "touchend":
-          FSM.pressed = { state: false, changedBy: P };
+          FSM.pressing = { state: false, changedBy: P };
           break;
         case "touchmove":
-          FSM.pressed = { state: PointerInBounds, changedBy: P };
+          FSM.pressing = { state: PointerInBounds, changedBy: P };
+          break;
+      }
+    };
+    const updatePeeking = () => {
+      switch (P.type) {
+        case "mousemove":
+          FSM.peeking = { state: true, changedBy: P };
+          break;
+        case "mouseleave":
+          FSM.peeking = { state: false, changedBy: P };
+          break;
+        case "touchstart":
+          FSM.peeking = { state: true, changedBy: P };
+          break;
+        case "touchend":
+          FSM.peeking = { state: false, changedBy: P };
+          break;
+        case "touchcancel":
+          FSM.peeking = { state: false, changedBy: P };
           break;
       }
     };
@@ -179,25 +169,7 @@ watch(
           break;
       }
     };
-    const updateSliding = () => {
-      switch (P.type) {
-        case "mousemove":
-          FSM.sliding = { state: true, changedBy: P };
-          break;
-        case "touchmove":
-          FSM.sliding = { state: PointerInBounds, changedBy: P };
-          break;
-        case "touchend":
-          FSM.sliding = { state: false, changedBy: P };
-          break;
-        case "mouseleave":
-          FSM.sliding = { state: false, changedBy: P };
-          break;
-        case "mouseup":
-          FSM.sliding = { state: false, changedBy: P };
-          break;
-      }
-    };
+    // const updateDragging = () => {}
     const updateSelected = () => {
       const listenForDeselect = (current: Node) => {
         if (document) {
@@ -256,6 +228,26 @@ watch(
       }
       // todo: implement focus event input listener, and then handle it here
     };
+    // const updateEditing = () => {}
+    const updateScrolling = () => {
+      switch (P.type) {
+        case "mousemove":
+          FSM.scrolling = { state: true, changedBy: P };
+          break;
+        case "touchmove":
+          FSM.scrolling = { state: PointerInBounds, changedBy: P };
+          break;
+        case "touchend":
+          FSM.scrolling = { state: false, changedBy: P };
+          break;
+        case "mouseleave":
+          FSM.scrolling = { state: false, changedBy: P };
+          break;
+        case "mouseup":
+          FSM.scrolling = { state: false, changedBy: P };
+          break;
+      }
+    };
 
     if (
       props.isHoverable ||
@@ -266,8 +258,7 @@ watch(
       props.isSelectable ||
       props.isFocusable
     )
-      updateHovered();
-    if (props.isPeekable) updatePeeked();
+      updateHovering();
     if (
       props.isPressable ||
       props.isToggleable ||
@@ -275,11 +266,14 @@ watch(
       props.isSelectable ||
       props.isFocusable
     )
-      updatePressed();
+      updatePressing();
+    if (props.isPeekable) updatePeeking();
     if (props.isToggleable) updateToggled();
-    if (props.isScrollable) updateSliding();
+    // if (props.isDraggable) updateDragging();
     if (props.isSelectable) updateSelected();
     if (props.isFocusable) updateFocused();
+    // if (props.isEditable) updateEditing();
+    if (props.isScrollable) updateScrolling();
   },
   {
     deep: true,
@@ -289,13 +283,15 @@ watch(
 
 watch(
   () => [
-    FSM.hovered.state,
-    FSM.peeked.state,
-    FSM.pressed.state,
+    FSM.hovering.state,
+    FSM.pressing.state,
+    FSM.peeking.state,
     FSM.toggled.state,
-    FSM.sliding.state,
+    // FSM.dragging.state,
     FSM.selected.state,
+    // FSM.editing.state,
     FSM.focused.state,
+    FSM.scrolling.state,
   ] /* see: https://v3.vuejs.org/guide/reactivity-computed-watchers.html#watching-reactive-objects */,
   (current, previous) => {
     const makeStateArrays = () => {
@@ -304,36 +300,42 @@ watch(
       const IES /* (I)nput (E)vent (S)et */ = new Set();
       const flags: Array<"pointerReleasedInTarget"> = [];
 
-      if (current[0] /* FSM.hovered.state */) newState.push(State.hovered);
-      if (current[1] /* FSM.peeked.state */) newState.push(State.peeked);
-      if (current[2] /* FSM.pressed.state */) newState.push(State.pressed);
+      if (current[0] /* FSM.hovered.state */) newState.push(State.hovering);
+      if (current[1] /* FSM.pressed.state */) newState.push(State.pressing);
+      if (current[2] /* FSM.peeked.state */) newState.push(State.peeking);
       if (current[3] /* FSM.toggled.state */) newState.push(State.toggled);
-      if (current[4] /* FSM.sliding.state */) newState.push(State.sliding);
-      if (current[5] /* FSM.selected.state */) newState.push(State.selected);
-      if (current[6] /* FSM.focused.state */) newState.push(State.focused);
+      // add dragging support
+      if (current[4] /* FSM.selected.state */) newState.push(State.selected);
+      if (current[5] /* FSM.focused.state */) newState.push(State.focused);
+      // add editing support
+      if (current[6] /* FSM.scrolling.state */) newState.push(State.scrolling);
 
-      if (previous[0] /* FSM.hovered.state */) oldState.push(State.hovered);
-      if (previous[1] /* FSM.peeked.state */) oldState.push(State.peeked);
-      if (previous[2] /* FSM.pressed.state */) oldState.push(State.pressed);
+      if (previous[0] /* FSM.hovered.state */) oldState.push(State.hovering);
+      if (previous[1] /* FSM.pressed.state */) oldState.push(State.pressing);
+      if (previous[2] /* FSM.peeked.state */) oldState.push(State.peeking);
       if (previous[3] /* FSM.toggled.state */) oldState.push(State.toggled);
-      if (previous[4] /* FSM.sliding.state */) oldState.push(State.sliding);
-      if (previous[5] /* FSM.selected.state */) oldState.push(State.selected);
-      if (previous[6] /* FSM.focused.state */) oldState.push(State.focused);
+      // add dragging support
+      if (previous[4] /* FSM.selected.state */) oldState.push(State.selected);
+      if (previous[5] /* FSM.focused.state */) oldState.push(State.focused);
+      // add editing support
+      if (previous[6] /* FSM.scrolling.state */) oldState.push(State.scrolling);
 
-      if (current[0] !== previous[0]) IES.add(FSM.hovered.changedBy);
-      if (current[1] !== previous[1]) IES.add(FSM.peeked.changedBy);
-      if (current[2] !== previous[2]) IES.add(FSM.pressed.changedBy);
+      if (current[0] !== previous[0]) IES.add(FSM.hovering.changedBy);
+      if (current[1] !== previous[1]) IES.add(FSM.pressing.changedBy);
+      if (current[2] !== previous[2]) IES.add(FSM.peeking.changedBy);
       if (current[3] !== previous[3]) IES.add(FSM.toggled.changedBy);
-      if (current[4] !== previous[4]) IES.add(FSM.sliding.changedBy);
-      if (current[5] !== previous[5]) IES.add(FSM.selected.changedBy);
-      if (current[6] !== previous[6]) IES.add(FSM.focused.changedBy);
+      // add dragging support
+      if (current[4] !== previous[5]) IES.add(FSM.selected.changedBy);
+      if (current[5] !== previous[6]) IES.add(FSM.focused.changedBy);
+      // add editing support
+      if (current[6] !== previous[4]) IES.add(FSM.scrolling.changedBy);
 
       const inputEvents = Array.from(IES) as Array<EventInfo<unknown>>;
 
       /* Check if the pointer released the target when it was in the target. */
       if (
-        !newState.includes(State.pressed) &&
-        oldState.includes(State.pressed)
+        !newState.includes(State.pressing) &&
+        oldState.includes(State.pressing)
       ) {
         let didReleaseInTarget = false;
         const ietype = inputEvents.map((e) => e.type);

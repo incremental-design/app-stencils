@@ -8,13 +8,15 @@ export type FiniteStateMachine = {
   data: {
     [data: string]: FSMEntry;
   };
-  hovered: FSMEntry;
-  peeked: FSMEntry;
-  pressed: FSMEntry;
+  hovering: FSMEntry;
+  pressing: FSMEntry;
+  peeking: FSMEntry;
   toggled: FSMEntry;
-  sliding: FSMEntry;
+  dragging: FSMEntry;
   selected: FSMEntry;
   focused: FSMEntry;
+  editing: FSMEntry;
+  scrolling: FSMEntry;
 };
 
 // export default () =>
@@ -22,48 +24,50 @@ export type FiniteStateMachine = {
 export default () => {
   const FSM: FiniteStateMachine = reactive({
     data: {
-      hovered: { state: false, changedBy: null },
-      peeked: { state: false, changedBy: null },
-      pressed: { state: false, changedBy: null },
+      hovering: { state: false, changedBy: null },
+      pressing: { state: false, changedBy: null },
+      peeking: { state: false, changedBy: null },
       toggled: { state: false, changedBy: null },
-      sliding: { state: false, changedBy: null },
+      dragging: { state: false, changedBy: null },
       selected: { state: false, changedBy: null },
       focused: { state: false, changedBy: null },
+      editing: { state: false, changedBy: null },
+      scrolling: { state: false, changedBy: null },
     },
     /**
-     * hovered - whether a mouse cursor is currently occluding the component
+     * hovering - whether a mouse cursor is currently occluding the component
      */
-    hovered: computed({
+    hovering: computed({
       get: (): FSMEntry => {
-        return FSM.data.hovered;
+        return FSM.data.hovering;
       },
       set: (value: FSMEntry) => {
-        FSM.data.hovered =
-          FSM.data.hovered.state !== value.state ? value : FSM.data.hovered;
+        FSM.data.hovering =
+          FSM.data.hovering.state !== value.state ? value : FSM.data.hovering;
       },
     }),
     /**
-     * peeked - whether the component is growing in size to reveal its contents
+     * pressing - whether a pointer is currently depressing the component, or if the component is focused, whether the enter key is depressed.
      */
-    peeked: computed({
+    pressing: computed({
       get: (): FSMEntry => {
-        return FSM.data.peeked;
+        return FSM.data.pressing;
       },
       set: (value: FSMEntry) => {
-        FSM.data.peeked =
-          FSM.data.peeked.state !== value.state ? value : FSM.data.peeked;
+        FSM.data.pressing =
+          FSM.data.pressing.state !== value.state ? value : FSM.data.pressing;
       },
     }),
     /**
-     * pressed - whether a mouse cursor or touch point is currently depressing the component
+     * peeking - whether the component has grown in size to reveal or otherwise magnify its contents
      */
-    pressed: computed({
+    peeking: computed({
       get: (): FSMEntry => {
-        return FSM.data.pressed;
+        return FSM.data.peeking;
       },
       set: (value: FSMEntry) => {
-        FSM.data.pressed =
-          FSM.data.pressed.state !== value.state ? value : FSM.data.pressed;
+        FSM.data.peeking =
+          FSM.data.peeking.state !== value.state ? value : FSM.data.peeking;
       },
     }),
     /**
@@ -79,21 +83,15 @@ export default () => {
       },
     }),
     /**
-     * sliding - whether the component's handle is currently following the mouse cursor or touch point
+     * dragging - whether a pointer is moving a component from one location to another.
      */
-    sliding: computed({
+    dragging: computed({
       get: (): FSMEntry => {
-        return FSM.data.sliding;
+        return FSM.data.dragging;
       },
       set: (value: FSMEntry) => {
-        const ValueToSet = {
-          state: FSM.pressed.state && value.state,
-          changedBy: value.changedBy,
-        }; /* we have to check if pressed is true because the event listeners for sliding won't bother checking */
-        FSM.data.sliding =
-          FSM.data.sliding.state !== ValueToSet.state
-            ? ValueToSet
-            : FSM.data.sliding;
+        FSM.data.dragging =
+          FSM.data.dragging.state !== value.state ? value : FSM.data.dragging;
       },
     }),
     /**
@@ -118,6 +116,38 @@ export default () => {
       set: (value: FSMEntry) => {
         FSM.data.focused =
           FSM.data.focused.state !== value.state ? value : FSM.data.focused;
+      },
+    }),
+    /**
+     * editing - whether the component's content are being modified with a keyboard, mouse, or touch
+     */
+    editing: computed({
+      get: (): FSMEntry => {
+        return FSM.data.editing;
+      },
+      set: (value: FSMEntry) => {
+        FSM.data.editing =
+          FSM.data.editing.state !== value.state ? value : FSM.data.focused;
+        /* if editing is true, then the component is necessarily focused */
+        if (value.state && !FSM.data.focused.state) FSM.data.focused = value;
+      },
+    }),
+    /**
+     * scrolling - whether the component's contents are tracking or otherwise responding to pointer or wheel input
+     */
+    scrolling: computed({
+      get: (): FSMEntry => {
+        return FSM.data.scrolling;
+      },
+      set: (value: FSMEntry) => {
+        const valueToSet = {
+          state: FSM.pressing.state && value.state,
+          changedBy: value.changedBy,
+        }; /* we have to check if pressed is true because the event listeners for sliding won't bother checking */
+        FSM.data.scrolling =
+          FSM.data.scrolling.state !== valueToSet.state
+            ? valueToSet
+            : FSM.data.scrolling;
       },
     }),
   });

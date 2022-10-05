@@ -3,13 +3,15 @@ import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/
 import { PointerInput } from "@incremental.design/device-input-event-handlers";
 
 export const enum State {
-  hovered = "hovered",
-  peeked = "peeked",
-  pressed = "pressed",
-  toggled = "toggled",
-  sliding = "sliding",
+  hovering = "hovering",
+  pressing = "pressing",
+  peeking = "peeking",
+  toggled = "toggling",
+  dragging = "dragging",
   selected = "selected",
   focused = "focused",
+  editing = "editing",
+  scrolling = "scrolling",
 }
 
 export type StateChangePayload = {
