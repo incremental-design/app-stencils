@@ -1,5 +1,3 @@
-import { Ref } from "vue";
-
 import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
 
 import {
@@ -15,7 +13,6 @@ import {
   handleTouch,
   PointerInput,
   // handleWindowResize,
-  WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
 } from "@incremental.design/device-input-event-handlers";
 
@@ -45,10 +42,15 @@ interface EventHandlers {
   };
 }
 
-export default (
-  pointerInput: Ref<false | EventInfo<PointerInput>>,
-  FSM: FiniteStateMachine
-) => {
+export interface PreviousInputs {
+  dragInput: false | EventInfo<DragInput>;
+  scrollInput: false | EventInfo<ScrollInput>;
+  focusInput: false | EventInfo<FocusInput>;
+  keyboardInput: false | EventInfo<KeyboardInput>;
+  pointerInput: false | EventInfo<PointerInput>;
+}
+
+export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
   const shouldThrottleEvent = (
     eventType: string,
     E: Event,
@@ -67,15 +69,15 @@ export default (
 
   const shouldDiscardMouseEvent = (e: MouseEvent) => {
     /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
-    if (!pointerInput.value) return false;
+    if (!prev.pointerInput) return false;
     const prevIsTouch = [
       "touchstart",
       "touchend",
       "touchmove",
       "touchcancel",
-    ].includes(pointerInput.value.type);
+    ].includes(prev.pointerInput.type);
     const sameTimeframe =
-      e.timeStamp - pointerInput.value.timestamp <=
+      e.timeStamp - prev.pointerInput.timestamp <=
       250; /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
     if (sameTimeframe && prevIsTouch) return true;
     return false;
@@ -84,16 +86,16 @@ export default (
   const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
     if (shouldDiscardMouseEvent(E)) return;
     /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
-    if (shouldThrottleEvent("mousemove", E, pointerInput.value)) return;
-    pointerInput.value = pointerInput.value
-      ? handleMouse(E, pointerInput.value)
+    if (shouldThrottleEvent("mousemove", E, prev.pointerInput)) return;
+    prev.pointerInput = prev.pointerInput
+      ? handleMouse(E, prev.pointerInput)
       : handleMouse(E);
   };
 
   const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-    if (shouldThrottleEvent("touchmove", E, pointerInput.value)) return;
-    pointerInput.value = pointerInput.value
-      ? handleTouch(E, pointerInput.value)
+    if (shouldThrottleEvent("touchmove", E, prev.pointerInput)) return;
+    prev.pointerInput = prev.pointerInput
+      ? handleTouch(E, prev.pointerInput)
       : handleTouch(E);
   };
 

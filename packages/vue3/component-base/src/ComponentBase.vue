@@ -14,7 +14,7 @@
     @wheel.passive="eventHandlers.passive.wheel.wheel"
   >
     <div :class="$style.inner">
-      <slot> isPressed: {{ pointerInput }} </slot>
+      <slot> isPressed: {{ prev.pointerInput }} </slot>
     </div>
   </div>
 </template>
@@ -22,29 +22,13 @@
 <script lang="ts" setup>
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
-import { reactive, computed, watch, ref, Ref } from "vue";
+import { computed, watch, ref, Ref, reactive } from "vue";
 
-import {
-  // handleDrag,
-  DragInput,
-  // handleScroll,
-  ScrollInput,
-  // handleFocus,
-  FocusInput,
-  // handleKeyboard,
-  KeyboardInput,
-  handleMouse,
-  handleTouch,
-  PointerInput,
-  // handleWindowResize,
-  WindowResizeInput,
-  /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
-} from "@incremental.design/device-input-event-handlers";
 import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
 
 import e, { State } from "./useEmits";
 import p from "./useProps";
-import useMakeEventHandlers from "./useMakeEventHandlers";
+import useMakeEventHandlers, { PreviousInputs } from "./useMakeEventHandlers";
 import useMakeFiniteStateMachine from "./useMakeFiniteStateMachine";
 
 const emit = defineEmits(e);
@@ -52,23 +36,32 @@ const props = defineProps(p);
 
 const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
+/* set tabIndex if component is focusable or editable */
 watch(
-  [() => BCR.value, () => props.isFocusable],
+  [() => BCR.value, () => props.isFocusable, () => props.isEditable],
   (current) => {
-    const [el, focusable] = current;
+    const [el, focusable, editable] = current;
 
     if (!el) return;
-    if (focusable) return (el.tabIndex = 0);
+    if (focusable || editable) return (el.tabIndex = 0);
     return (el.tabIndex = -1);
   },
   { immediate: true }
 );
 
-const pointerInput: Ref<false | EventInfo<PointerInput>> = ref(false);
+/* keep track of previous inputs */
+
+const prev: PreviousInputs = reactive({
+  dragInput: false,
+  scrollInput: false,
+  focusInput: false,
+  keyboardInput: false,
+  pointerInput: false,
+});
 
 const FSM = useMakeFiniteStateMachine();
 
-const makeEventHandlers = useMakeEventHandlers(pointerInput, FSM);
+const makeEventHandlers = useMakeEventHandlers(prev, FSM);
 
 const eventHandlers = computed(() =>
   makeEventHandlers(
@@ -76,7 +69,7 @@ const eventHandlers = computed(() =>
     props.isPeekable,
     props.isPressable,
     props.isToggleable,
-    props.isSlideable,
+    props.isScrollable,
     props.isSelectable,
     props.isFocusable
   )
@@ -108,7 +101,7 @@ const focusThisEl = () => {
 };
 
 watch(
-  () => pointerInput.value,
+  () => prev.pointerInput,
   (current) => {
     if (!current) return;
     const P = current;
@@ -269,7 +262,7 @@ watch(
       props.isPeekable ||
       props.isPressable ||
       props.isToggleable ||
-      props.isSlideable ||
+      props.isScrollable ||
       props.isSelectable ||
       props.isFocusable
     )
@@ -278,13 +271,13 @@ watch(
     if (
       props.isPressable ||
       props.isToggleable ||
-      props.isSlideable ||
+      props.isScrollable ||
       props.isSelectable ||
       props.isFocusable
     )
       updatePressed();
     if (props.isToggleable) updateToggled();
-    if (props.isSlideable) updateSliding();
+    if (props.isScrollable) updateSliding();
     if (props.isSelectable) updateSelected();
     if (props.isFocusable) updateFocused();
   },

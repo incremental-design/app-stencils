@@ -56,7 +56,21 @@ strapi or directus for content api ... or maybe just supabase?
 
 some kind of caching strategy??
 
-for this repo, all of the site content will be served from strapi
+for this repo, all of the site content will be served from strapi. Here's how it will work:
+
+there will be a site: appstencils.io (or something like it)
+
+this site will contain vue router, and an authentication mechanism. vue router will call out to strapi, and supply authentication credentials. 
+
+strapi will respond with a JSON document that contains an array of objects, each of which describes a section of documentation (e.g. a paragraph of text, a code block, an interactive sandbox, etc.)
+
+vue router will use <component :is="" > to load in the content from strapi and display the docs.
+
+in the case that vue router does not supply authentication, strapi will respond with a JSON document that contains the same array of objects. However, the text in the documentation will be replaced with hipster ipsum. The idea is that you can only access the documentation text if you authenticate. 
+
+To authenticate, you will have to create a .env file with your auth credentials. vue router will scoop up those credentials when you launch the site.
+
+when this site is deployed, it will secure the content WITHOUT auth. Instead, it will use CORS to make sure that only appstencils.io can request the text from strapi
 
 ==================
 
