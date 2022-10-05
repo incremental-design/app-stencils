@@ -1,4 +1,4 @@
-import ComponentBase from './ComponentBase.vue'
+import ComponentBase from "./ComponentBase.vue";
 
-export default ComponentBase
-export * from './useEmits'
+export default ComponentBase;
+export * from "./useEmits";

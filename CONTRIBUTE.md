@@ -71,8 +71,19 @@ For example:
   ```
 
 ### Install [Volar](https://github.com/johnsoncodehk/volar)
-Volar enables typescript intellisense for Vue components within your editor of choice.
-If you use VSCode, don't forget to enable [takeover mode](https://github.com/johnsoncodehk/volar/discussions/471), or Volar won't work.
+Volar enables typescript intellisense for Vue components within your editor of choice:
+- [Install in VSCode](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+  - If you use VSCode, don't forget to enable [takeover mode](https://github.com/johnsoncodehk/volar/discussions/471), or Volar won't work.
+- [Install in Panic Nova](https://extensions.panic.com/extensions/com.tommasonegri/com.tommasonegri.Vue/)
+  - make sure you also `npm install --global @volar/vue-language-server typescript`.
+  - make sure these extensions match the version of typescript used in this monorepo, or you will end up introducing typescript-version-related inconsistencies in this codebase.
+
+### Install ESlint
+eslint enforces typescript naming conventions, and formats your code on save.
+- [install ESlint in VSCode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [install ESlint in Panic Nova](https://extensions.panic.com/extensions/apexskier/apexskier.eslint/)
+
+Note that if you have prettier installed in either [VSCode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) or in [Panic Nova](https://extensions.panic.com/extensions/alexanderweiss/alexanderweiss.prettier/) you MUST disable this extension when you work in this monorepo! Otherwise, you will end up double-formatting this code every time you save.
 
 - If you're using VScode, once you install Volar _and_ enable takeover mode, you should get syntax highlighting, intellisense, and formatting in your `.vue`,`.ts`, and `.js` files. If you don't:
   1. use cmd-shift-p to bring up the command palette.
@@ -84,15 +95,6 @@ If you use VSCode, don't forget to enable [takeover mode](https://github.com/joh
 run `pnpm build`
 
 To delete and reinstall `node_modules` folders before a rebuild, run `pnpm clean && pnpm i`
-
-
-<!-- ### Install ESlint -->
-<!-- eslint enforces typescript naming conventions, and formats your code on save (does this work outside of vscode?) -->
-
-<!-- #### Follow Typescript [naming conventions](https://typescript-eslint.io/rules/naming-convention/)
-ESlint will fail if you don't adhere to the following naming conventions. -->
-<!-- bullet of naming conventions -->
-<!-- and link to typescript eslint -->
 
 <!-- todo: test with vitest -->
 <!-- need to explain that you should populate the <package-name>.test.ts file with whatever test and then run pnpm test and it will continuously watch as you code -->

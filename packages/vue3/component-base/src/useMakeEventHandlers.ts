@@ -1,8 +1,6 @@
-import {
-  Ref,
-} from 'vue';
+import { Ref } from "vue";
 
-import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
+import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
 
 import {
   // handleDrag,
@@ -19,42 +17,38 @@ import {
   // handleWindowResize,
   WindowResizeInput,
   /* note: we don't import handleDevice, DeviceInput, handleGamepad, GamepadInput, handleWindowResize, WindowResizeInput because those events are only ever emitted on window */
-} from '@incremental.design/device-input-event-handlers';
+} from "@incremental.design/device-input-event-handlers";
 
-import { FiniteStateMachine } from './useMakeFiniteStateMachine'
-
+import { FiniteStateMachine } from "./useMakeFiniteStateMachine";
 
 interface EventHandlers {
   notPassive: {
     mouse: {
-      [eventType: string]:
-      ((E: MouseEvent) => void)
-    },
+      [eventType: string]: (E: MouseEvent) => void;
+    };
     other: {
       [eventType: string]:
         | ((E: DragEvent) => void)
         | ((E: Event) => void)
         | ((E: FocusEvent) => void)
         | ((E: KeyboardEvent) => void)
-        | ((E: WheelEvent) => void)
-    }
-  },
+        | ((E: WheelEvent) => void);
+    };
+  };
   passive: {
     touch: {
-    [eventType: string]: ((E: TouchEvent) => void)
-    },
+      [eventType: string]: (E: TouchEvent) => void;
+    };
     wheel: {
-    [eventType: string]: ((E: WheelEvent) => void);
-    }
-  },
+      [eventType: string]: (E: WheelEvent) => void;
+    };
+  };
 }
 
 export default (
   pointerInput: Ref<false | EventInfo<PointerInput>>,
   FSM: FiniteStateMachine
-  ) => {
-
-
+) => {
   const shouldThrottleEvent = (
     eventType: string,
     E: Event,
@@ -70,142 +64,150 @@ export default (
       return true;
     return false;
   };
-  
+
   const shouldDiscardMouseEvent = (e: MouseEvent) => {
     /* since we aren't preventing default events, the browser will resolve touchstart, touchend, touchmove, and touchcancel to mousevents. Discard mousevents that are directly preceded by a touchevent */
-    if(!pointerInput.value) return false;
-    const prevIsTouch = ['touchstart','touchend','touchmove','touchcancel'].includes(pointerInput.value.type)
-    const sameTimeframe = e.timeStamp - pointerInput.value.timestamp <= 250 /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
-    if(sameTimeframe && prevIsTouch) return true;
-    return false
-  }
+    if (!pointerInput.value) return false;
+    const prevIsTouch = [
+      "touchstart",
+      "touchend",
+      "touchmove",
+      "touchcancel",
+    ].includes(pointerInput.value.type);
+    const sameTimeframe =
+      e.timeStamp - pointerInput.value.timestamp <=
+      250; /* discard mouse events that happen up to 250 ms after a preceding touch event - this is important for safari, because it lags when dispatching default event. I know this is clumsy and could be annoying for someone who is using both mouse and touch ... but I don't have a better solution at the moment */
+    if (sameTimeframe && prevIsTouch) return true;
+    return false;
+  };
 
   const HM /* (H)andle (M)ouse */ = (E: MouseEvent) => {
-      if(shouldDiscardMouseEvent(E)) return;
-      /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
-      if (shouldThrottleEvent('mousemove', E, pointerInput.value))
-        return;
-      pointerInput.value = pointerInput.value
-        ? handleMouse(E, pointerInput.value)
-        : handleMouse(E);
-    };
-    
-    const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
-      if (shouldThrottleEvent('touchmove', E, pointerInput.value))
-        return;
-      pointerInput.value = pointerInput.value
-        ? handleTouch(E, pointerInput.value)
-        : handleTouch(E);
-    };
-    
-    const DCM /* (D)isable (C)ontext (M)enu */ = (E: Event) => {
-      E.preventDefault();
-    };
-    
-    // const HD /* (H)andle (D)rag */
-    
-    // const HS /* (H)andle (S)croll */
-    
-    const HF /* (H)andle (F)ocus */ = (E: FocusEvent) => {
-      // todo: implement focus input handler ... perhaps something that keeps track of the previous thing that was focused?
-      switch (E.type) {
-        case 'blur':
-          FSM.focused = {
-            state: false,
-            changedBy: {
-              type: E.type,
-              timestamp: E.timeStamp,
-              input: E /* this is technically incorrect, but works as a placeholder */,
-            },
-          };
-          break;
-        case 'focus':
-          FSM.focused = {
-            state: true,
-            changedBy: {
-              type: E.type,
-              timestamp: E.timeStamp,
-              input: E /* this is technically incorrect, but works as a placeholder */,
-            },
-          };
-          break;
-      }
-    };
-    
-    // const HK /* (H)andle (K)eyboard */
-    
-    // const HW /* (H)andle (W)heel */
-    
-    const makeEventHandlers = (
-      isHoverable: boolean,
-      isPeekable: boolean,
-      isPressable: boolean,
-      isToggleable: boolean,
-      isSlideable: boolean,
-      isSelectable: boolean,
-      isFocusable: boolean
-    ) => {
-      let EH: /* (E)vent (H)andler */ EventHandlers = {
-        passive: {
-          touch: {},
-          wheel: {},
-        },
-        notPassive: {
-          mouse:{},
-          other:{}
-        },
-      };
-    
-      const listenForHover = (): void => {
-        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
-        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
-        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
-        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
-        if (!EH.notPassive.mouse.mousemove) EH.notPassive.mouse.mousemove = HM;
-        if (!EH.notPassive.mouse.mouseleave) EH.notPassive.mouse.mouseleave = HM;
-      };
-      const listenForPeek = (): void => {
-        listenForHover();
-      };
-      const listenForPress = (): void => {
-        listenForHover();
-        if (!EH.notPassive.mouse.mousedown) EH.notPassive.mouse.mousedown = HM;
-        if (!EH.notPassive.mouse.mouseup) EH.notPassive.mouse.mouseup = HM;
-        if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
-        if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
-        if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
-        if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
-      };
-      const listenForToggle = (): void => {
-        listenForPress();
-      };
-      const listenForSlide = (): void => {
-        listenForPress();
-      };
-      const listenForSelect = (): void => {
-        listenForPress();
-      };
-      const listenForFocus = (): void => {
-        listenForPress();
-        if (!EH.notPassive.other.blur) EH.notPassive.other.blur = HF;
-        if (!EH.notPassive.other.focus) EH.notPassive.other.focus = HF;
-      };
-    
-      const disableContextMenu = (): void => {
-        if (!EH.notPassive.other.contextmenu) EH.notPassive.other.contextmenu = DCM;
-      };
-    
-      if (isHoverable) listenForHover();
-      if (isPeekable) listenForPeek();
-      if (isPressable) listenForPress();
-      if (isToggleable) listenForToggle();
-      if (isSlideable) listenForSlide();
-      if (isSelectable) listenForSelect();
-      if (isFocusable) listenForFocus();
-      if (!isSelectable) disableContextMenu();
-    
-      return EH;
+    if (shouldDiscardMouseEvent(E)) return;
+    /* don't process mousemove events that are closer than 100ms together because it gums up the reactivity system */
+    if (shouldThrottleEvent("mousemove", E, pointerInput.value)) return;
+    pointerInput.value = pointerInput.value
+      ? handleMouse(E, pointerInput.value)
+      : handleMouse(E);
+  };
+
+  const HT /* (H)andle (T)ouch */ = (E: TouchEvent) => {
+    if (shouldThrottleEvent("touchmove", E, pointerInput.value)) return;
+    pointerInput.value = pointerInput.value
+      ? handleTouch(E, pointerInput.value)
+      : handleTouch(E);
+  };
+
+  const DCM /* (D)isable (C)ontext (M)enu */ = (E: Event) => {
+    E.preventDefault();
+  };
+
+  // const HD /* (H)andle (D)rag */
+
+  // const HS /* (H)andle (S)croll */
+
+  const HF /* (H)andle (F)ocus */ = (E: FocusEvent) => {
+    // todo: implement focus input handler ... perhaps something that keeps track of the previous thing that was focused?
+    switch (E.type) {
+      case "blur":
+        FSM.focused = {
+          state: false,
+          changedBy: {
+            type: E.type,
+            timestamp: E.timeStamp,
+            input:
+              E /* this is technically incorrect, but works as a placeholder */,
+          },
+        };
+        break;
+      case "focus":
+        FSM.focused = {
+          state: true,
+          changedBy: {
+            type: E.type,
+            timestamp: E.timeStamp,
+            input:
+              E /* this is technically incorrect, but works as a placeholder */,
+          },
+        };
+        break;
+    }
+  };
+
+  // const HK /* (H)andle (K)eyboard */
+
+  // const HW /* (H)andle (W)heel */
+
+  const makeEventHandlers = (
+    isHoverable: boolean,
+    isPeekable: boolean,
+    isPressable: boolean,
+    isToggleable: boolean,
+    isSlideable: boolean,
+    isSelectable: boolean,
+    isFocusable: boolean
+  ) => {
+    const EH: /* (E)vent (H)andler */ EventHandlers = {
+      passive: {
+        touch: {},
+        wheel: {},
+      },
+      notPassive: {
+        mouse: {},
+        other: {},
+      },
     };
 
-    return makeEventHandlers;
-}
+    const listenForHover = (): void => {
+      if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+      if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
+      if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
+      if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
+      if (!EH.notPassive.mouse.mousemove) EH.notPassive.mouse.mousemove = HM;
+      if (!EH.notPassive.mouse.mouseleave) EH.notPassive.mouse.mouseleave = HM;
+    };
+    const listenForPeek = (): void => {
+      listenForHover();
+    };
+    const listenForPress = (): void => {
+      listenForHover();
+      if (!EH.notPassive.mouse.mousedown) EH.notPassive.mouse.mousedown = HM;
+      if (!EH.notPassive.mouse.mouseup) EH.notPassive.mouse.mouseup = HM;
+      if (!EH.passive.touch.touchstart) EH.passive.touch.touchstart = HT;
+      if (!EH.passive.touch.touchmove) EH.passive.touch.touchmove = HT;
+      if (!EH.passive.touch.touchend) EH.passive.touch.touchend = HT;
+      if (!EH.passive.touch.touchcancel) EH.passive.touch.touchcancel = HT;
+    };
+    const listenForToggle = (): void => {
+      listenForPress();
+    };
+    const listenForSlide = (): void => {
+      listenForPress();
+    };
+    const listenForSelect = (): void => {
+      listenForPress();
+    };
+    const listenForFocus = (): void => {
+      listenForPress();
+      if (!EH.notPassive.other.blur) EH.notPassive.other.blur = HF;
+      if (!EH.notPassive.other.focus) EH.notPassive.other.focus = HF;
+    };
+
+    const disableContextMenu = (): void => {
+      if (!EH.notPassive.other.contextmenu)
+        EH.notPassive.other.contextmenu = DCM;
+    };
+
+    if (isHoverable) listenForHover();
+    if (isPeekable) listenForPeek();
+    if (isPressable) listenForPress();
+    if (isToggleable) listenForToggle();
+    if (isSlideable) listenForSlide();
+    if (isSelectable) listenForSelect();
+    if (isFocusable) listenForFocus();
+    if (!isSelectable) disableContextMenu();
+
+    return EH;
+  };
+
+  return makeEventHandlers;
+};

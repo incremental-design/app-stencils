@@ -137,6 +137,28 @@ const vueComponent =
 </script>
   `
 
+const makeEslintrc = (isVuePackage) => {
+  const v = `\n
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:vue/vue3-recommended'
+  ],
+  parser: 'vue-eslint-parser',
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    sourceType: 'module'
+  },
+  `
+  return `// eslint-disable-next-line no-undef
+  module.exports = {${isVuePackage ? v : ''}
+    env: {
+        node: false,
+        browser: true,
+    }
+  }`
+}
+
 function createPackage() {
 
   const packageFolderAndName = process.argv[2]
@@ -172,6 +194,7 @@ function createPackage() {
   fs.writeFileSync(path.join(root, 'package.json'), makePackageJSON(packageName, base, isVuePackage))
   fs.writeFileSync(path.join(root, 'vite.config.ts'), makeViteConfig(packageName, isVuePackage))
   fs.writeFileSync(path.join(root, 'tsconfig.json'), makeTsConfig(dir))
+  fs.writeFileSync(path.join(root, '.eslintrc.cjs'), makeEslintrc(isVuePackage))
 
   const src = path.join(root, 'src')
   fs.mkdirSync(src)

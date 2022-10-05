@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
-import { PointerInput, getPointerInput } from './pointer-utils';
+import { Handler, mergeWithEventInfo, EventInfo } from "./handler-utils";
+import { PointerInput, getPointerInput } from "./pointer-utils";
 
 /**
  * HandleMouse extracts the useful information from a sequence of mouse events.
@@ -17,7 +17,7 @@ export const handleMouse: Handler<MouseEvent, PointerInput> = (
 ) => {
   return mergeWithEventInfo(
     event,
-    previous && previous.input.type === 'PointerInput'
+    previous && previous.input.type === "PointerInput"
       ? getPointerInput(event, previous.input)
       : getPointerInput(event)
   );

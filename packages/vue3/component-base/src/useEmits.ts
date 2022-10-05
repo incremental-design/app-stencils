@@ -1,8 +1,6 @@
-import { EventInfo } from '@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils';
+import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
 
-import {
-  PointerInput,
-} from '@incremental.design/device-input-event-handlers';
+import { PointerInput } from "@incremental.design/device-input-event-handlers";
 
 export const enum State {
   hovered = "hovered",
@@ -18,10 +16,10 @@ export type StateChangePayload = {
   newState: Array<State>;
   oldState: Array<State>;
   inputEvents: Array<EventInfo<unknown>>;
-  flags: Array<'pointerReleasedInTarget'>;
-}
+  flags: Array<"pointerReleasedInTarget">;
+};
 
-export type PointerInputPayload = EventInfo<PointerInput>
+export type PointerInputPayload = EventInfo<PointerInput>;
 
 export default {
   /**
@@ -48,4 +46,4 @@ export default {
   // todo: make a keyboardInput event
   // todo: make a dragInput event
   // todo; make a scrollInput event
-}
+};

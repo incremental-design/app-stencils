@@ -1,5 +1,5 @@
-import { Handler, mergeWithEventInfo } from './handler-utils';
-import { GamepadInput, getGamepadInput } from './gamepad-utils';
+import { Handler, mergeWithEventInfo } from "./handler-utils";
+import { GamepadInput, getGamepadInput } from "./gamepad-utils";
 
 // gamepadconnected gamepaddisconnected
 
@@ -9,16 +9,16 @@ import { GamepadInput, getGamepadInput } from './gamepad-utils';
  * @param event - any {@link GamepadEvent}
  * @param previous - the {@link EventInfo}<{@link GamepadInput}> that was returned the last time this function ran. This parameter is optional.
  *
- * @returns 
+ * @returns
  * {@link EventInfo}<{@link GamepadInput}>
-*/
+ */
 export const handleGamepad: Handler<GamepadEvent, GamepadInput> = (
   event,
   previous
 ) => {
   return mergeWithEventInfo<GamepadInput>(
     event,
-    previous && previous.input.type === 'GamepadInput'
+    previous && previous.input.type === "GamepadInput"
       ? getGamepadInput(event, previous.input)
       : getGamepadInput(event)
   );

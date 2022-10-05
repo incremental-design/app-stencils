@@ -9,16 +9,23 @@
     "build": "lerna run build",
     "publish:snapshot": "lerna publish --canary",
     "create-package": "./createPackage.js",
-    "clean": "lerna clean"
+    "clean": "lerna clean",
+    "lint": "lerna run lint"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@typescript-eslint/eslint-plugin": "^4.4.1",
     "husky": "^6.0.0",
     "lerna": "^5.0.0",
     "typescript": "latest",
-    "@volar-plugins/prettier": "latest"
+    "eslint": "latest",
+    "eslint-plugin-vue": "latest",
+    "vue-eslint-parser": "latest",
+    "@typescript-eslint/parser": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-config-prettier": "latest"
   }, 
   "workspaces": [
     "packages/shared/*", "packages/vue3/*", "packages/storybook"
