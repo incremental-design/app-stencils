@@ -1,17 +1,17 @@
 <template>
   <div
-    v-on="eventHandlers.notPassive.other"
-    v-on:mousedown="eventHandlers.notPassive.mouse.mousedown"
-    v-on:mouseup="eventHandlers.notPassive.mouse.mouseup"
-    v-on:mousemove="eventHandlers.notPassive.mouse.mousemove"
-    v-on:mouseleave="eventHandlers.notPassive.mouse.mouseleave"
-    v-on:touchstart.passive="eventHandlers.passive.touch.touchstart"
-    v-on:touchmove.passive="eventHandlers.passive.touch.touchmove"
-    v-on:touchend.passive="eventHandlers.passive.touch.touchend"
-    v-on:touchcancel.passive="eventHandlers.passive.touch.touchcancel"
-    v-on:wheel.passive="eventHandlers.passive.wheel.wheel"
-    :class="$style.outer"
     ref="BCR"
+    :class="$style.outer"
+    v-on="eventHandlers.notPassive.other"
+    @mousedown="eventHandlers.notPassive.mouse.mousedown"
+    @mouseup="eventHandlers.notPassive.mouse.mouseup"
+    @mousemove="eventHandlers.notPassive.mouse.mousemove"
+    @mouseleave="eventHandlers.notPassive.mouse.mouseleave"
+    @touchstart.passive="eventHandlers.passive.touch.touchstart"
+    @touchmove.passive="eventHandlers.passive.touch.touchmove"
+    @touchend.passive="eventHandlers.passive.touch.touchend"
+    @touchcancel.passive="eventHandlers.passive.touch.touchcancel"
+    @wheel.passive="eventHandlers.passive.wheel.wheel"
   >
     <div :class="$style.inner">
       <slot>

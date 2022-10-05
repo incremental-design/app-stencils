@@ -79,14 +79,10 @@ run `pnpm build`
 
 To delete and reinstall `node_modules` folders before a rebuild, run `pnpm clean && pnpm i`
 
-
-<!-- ### Install ESlint -->
-<!-- eslint enforces typescript naming conventions, and formats your code on save (does this work outside of vscode?) -->
-
-<!-- #### Follow Typescript [naming conventions](https://typescript-eslint.io/rules/naming-convention/)
-ESlint will fail if you don't adhere to the following naming conventions. -->
-<!-- bullet of naming conventions -->
-<!-- and link to typescript eslint -->
+### Install ESlint
+eslint enforces typescript naming conventions, and formats your code on save.
+- [install ESlint in VSCode](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [install ESlint in Panic Nova](https://extensions.panic.com/extensions/apexskier/apexskier.eslint/)
 
 <!-- todo: test with vitest -->
 <!-- need to explain that you should populate the <package-name>.test.ts file with whatever test and then run pnpm test and it will continuously watch as you code -->

@@ -11,7 +11,8 @@
   "module": "dist/DeviceInputEventHandlers.js",
   "types": "dist/types/DeviceInputEventHandlers.d.ts",
   "scripts": {
-    "build": "vue-tsc --noEmit && vite build"
+    "build": "vue-tsc --noEmit && vite build",
+    "lint": "eslint src/**/*.ts --fix"
   },
   "dependencies": {
     "vue": "^3.2.37"

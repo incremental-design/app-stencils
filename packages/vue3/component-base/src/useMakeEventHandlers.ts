@@ -145,7 +145,7 @@ export default (
       isSelectable: boolean,
       isFocusable: boolean
     ) => {
-      let EH: /* (E)vent (H)andler */ EventHandlers = {
+      const EH: /* (E)vent (H)andler */ EventHandlers = {
         passive: {
           touch: {},
           wheel: {},
