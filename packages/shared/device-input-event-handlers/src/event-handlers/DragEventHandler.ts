@@ -2,6 +2,7 @@
 
 // note: `drop` won't work unless dragenter and dragover are prevented. see: https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/Drag_operations#droptargets
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Handler, mergeWithEventInfo, EventInfo } from "./handler-utils";
 import { DragInput, getDragInput } from "./pointer-utils";
 

@@ -1,5 +1,5 @@
-import handle from './DeviceInputEventHandlers'
+import handle from "./DeviceInputEventHandlers";
 
-export default handle
+export default handle;
 
-export * from './event-handlers/index';
+export * from "./event-handlers/index";

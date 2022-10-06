@@ -10,87 +10,87 @@ import {
   makeFontCSSRules,
   makeElevationCSSRules,
   PlatformInterface,
-} from './utils';
+} from "./utils";
 
 const Colors = {
   cFFFFFF: {
-    a100: HR('FFFFFF', 1),
+    a100: HR("FFFFFF", 1),
   },
   c191919: {
-    a007: HR('191919', 0.07),
+    a007: HR("191919", 0.07),
   },
   cF4F4F7: {
-    a100: HR('F4F4F7', 1),
+    a100: HR("F4F4F7", 1),
   },
   cEFEFEF: {
-    a100: HR('EFEFEF', 1),
-    a070: HR('EFEFEF', 0.7),
-    a040: HR('EFEFEF', 0.4),
-    a015: HR('EFEFEF', 0.15),
-    a010: HR('EFEFEF', 0.1),
+    a100: HR("EFEFEF", 1),
+    a070: HR("EFEFEF", 0.7),
+    a040: HR("EFEFEF", 0.4),
+    a015: HR("EFEFEF", 0.15),
+    a010: HR("EFEFEF", 0.1),
   },
   c009AF2: {
-    a016: HR('009AF2', 0.16),
+    a016: HR("009AF2", 0.16),
   },
   c001927: {
-    a100: HR('001927', 1),
-    a070: HR('001927', 0.7),
-    a015: HR('001927', 0.15),
-    a010: HR('001927', 0.1),
+    a100: HR("001927", 1),
+    a070: HR("001927", 0.7),
+    a015: HR("001927", 0.15),
+    a010: HR("001927", 0.1),
   },
   c000000: {
-    a100: HR('000000', 1),
-    a070: HR('000000', 0.7),
-    a040: HR('000000', 0.4),
-    a030: HR('000000', 0.3),
-    a015: HR('000000', 0.15),
-    a004: HR('000000', 0.04),
+    a100: HR("000000", 1),
+    a070: HR("000000", 0.7),
+    a040: HR("000000", 0.4),
+    a030: HR("000000", 0.3),
+    a015: HR("000000", 0.15),
+    a004: HR("000000", 0.04),
   },
   c1BA1E5: {
-    a070: HR('1BA1E5', 0.7),
-    a100: HR('1BA1E5', 1),
+    a070: HR("1BA1E5", 0.7),
+    a100: HR("1BA1E5", 1),
   },
   c004D6F: {
-    a100: HR('004D6F', 1),
-    a070: HR('004D6F', 0.7),
+    a100: HR("004D6F", 1),
+    a070: HR("004D6F", 0.7),
   },
   c1ABD5E: {
-    a010: HR('1ABD5E', 0.1),
-    a020: HR('1ABD5E', 0.2),
-    a070: HR('1ABD5E', 0.7),
-    a100: HR('1ABD5E', 1),
+    a010: HR("1ABD5E", 0.1),
+    a020: HR("1ABD5E", 0.2),
+    a070: HR("1ABD5E", 0.7),
+    a100: HR("1ABD5E", 1),
   },
   c016557: {
-    a100: HR('016557', 1),
-    a070: HR('016557', 0.7),
+    a100: HR("016557", 1),
+    a070: HR("016557", 0.7),
   },
   cB05200: {
-    a020: HR('B05200', 0.2),
+    a020: HR("B05200", 0.2),
   },
   cDE6700: {
-    a010: HR('DE6700', 0.1),
-    a020: HR('DE6700', 0.2),
-    a070: HR('DE6700', 0.7),
-    a100: HR('DE6700', 1),
+    a010: HR("DE6700", 0.1),
+    a020: HR("DE6700", 0.2),
+    a070: HR("DE6700", 0.7),
+    a100: HR("DE6700", 1),
   },
   c9B1700: {
-    a100: HR('9B1700', 1),
-    a070: HR('9B1700', 0.7),
+    a100: HR("9B1700", 1),
+    a070: HR("9B1700", 0.7),
   },
   cCBA12D: {
-    a010: HR('CBA12D', 0.1),
-    a012: HR('CBA12D', 0.12),
-    a018: HR('CBA12D', 0.18),
-    a025: HR('CBA12D', 0.25),
-    a100: HR('CBA12D', 1),
+    a010: HR("CBA12D", 0.1),
+    a012: HR("CBA12D", 0.12),
+    a018: HR("CBA12D", 0.18),
+    a025: HR("CBA12D", 0.25),
+    a100: HR("CBA12D", 1),
   },
   cF5BF00: {
-    a100: HR('F5BF00', 1),
-    a070: HR('F5BF00', 0.7),
+    a100: HR("F5BF00", 1),
+    a070: HR("F5BF00", 0.7),
   },
   c6D5100: {
-    a100: HR('6D5100', 1),
-    a070: HR('6D5100', 0.7),
+    a100: HR("6D5100", 1),
+    a070: HR("6D5100", 0.7),
   },
 };
 
@@ -105,7 +105,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -121,7 +121,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -137,7 +137,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -153,7 +153,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -169,7 +169,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -185,7 +185,7 @@ const foregroundPrimaryElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -406,7 +406,7 @@ const FloatingElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -438,7 +438,7 @@ const FloatingElevation: { [elevation: string]: Elevation<RGBA> } = {
     stroke: [
       {
         color: Colors.c000000.a004,
-        offset: 'outer',
+        offset: "outer",
         width: 0.5,
       },
     ],
@@ -470,7 +470,7 @@ const TactileElevation: { [elevation: string]: Elevation<RGBA> } = {
     innerShadow: [],
     stroke: [
       {
-        offset: 'outer',
+        offset: "outer",
         color: Colors.c000000.a004,
         width: 0.5,
       },
@@ -502,7 +502,7 @@ const TactileElevation: { [elevation: string]: Elevation<RGBA> } = {
       {
         color: Colors.c000000.a004,
         width: 0.5,
-        offset: 'outer',
+        offset: "outer",
       },
     ],
     dropShadow: [
@@ -529,7 +529,7 @@ const KnobElevation: Elevation<RGBA> = {
   stroke: [
     {
       color: Colors.c000000.a004,
-      offset: 'outer',
+      offset: "outer",
       width: 0.5,
     },
   ],
@@ -547,21 +547,21 @@ const KnobElevation: Elevation<RGBA> = {
   ],
 };
 
-const TypefaceFallback = ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'];
+const TypefaceFallback = ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"];
 
 const SFPR /* (SF) (P)ro (R)ounded */ = [
-  'SF Pro Rounded',
-  'SF Pro Icons',
+  "SF Pro Rounded",
+  "SF Pro Icons",
   ...TypefaceFallback,
 ];
 
 const SFPT /* (SF) (P)ro (T)ext */ = [
-  'SF Pro Text',
-  'SF Pro Icons',
+  "SF Pro Text",
+  "SF Pro Icons",
   ...TypefaceFallback,
 ];
 
-const FA /* (F)ont (A)wesome */ = ['Font Awesome 6 Pro'];
+const FA /* (F)ont (A)wesome */ = ["Font Awesome 6 Pro"];
 
 const FontMassiveBG = {
   typeface: SFPR,
@@ -908,8 +908,8 @@ const ItemSpacing = {
 const FootnoteSpacing = (s: State) => ({
   height: s === State.none ? 11 : 18,
   marginTop: s === State.none ? -1 : -4,
-  display: 'block',
-  alignSelf: 'flex-end',
+  display: "block",
+  alignSelf: "flex-end",
 });
 
 const LayoutSpacing = (s: State) => ({
@@ -1041,7 +1041,7 @@ const TSF: {
     })();
     return {
       ...makeFontCSSRules(text),
-      wordBreak: 'break-all',
+      wordBreak: "break-all",
     };
   },
 };
@@ -1106,28 +1106,28 @@ export const IOS: PlatformInterface = {
               .none; /* this doesn't technically adhere to the guidelines on how to use 'active' tint. However, it is a quirk that iOS ships with, so we are going to blindly imitate it. */
           return {
             ...makeFontCSSRules(Font),
-            wordBreak: 'break-all',
+            wordBreak: "break-all",
           };
         } /* this is the 'back button' */,
         indicator: () => ({
-          wordBreak: 'break-all',
+          wordBreak: "break-all",
         }),
         indicatorIcon: () => ({
-          wordBreak: 'break-all',
+          wordBreak: "break-all",
         }),
         label: TSF.label,
         inputPlaceholder: (palette, tint, state) => ({
           ...TSF.fieldInputPlaceholder(palette, tint, state),
           gridColumn:
-            '4 / span 1' /* we have to manually set this so that input text doesn't span the entire input fill */,
-          gridRow: '1 / span 1',
+            "4 / span 1" /* we have to manually set this so that input text doesn't span the entire input fill */,
+          gridRow: "1 / span 1",
           zIndex: 1,
         }),
         inputFilled: (palette, tint, state) => ({
           ...TSF.fieldInputFilled(palette, tint, state),
           gridColumn:
-            '4 / span 1' /* we have to manually set this so that input text doesn't span the entire input fill */,
-          gridRow: '1 / span 1',
+            "4 / span 1" /* we have to manually set this so that input text doesn't span the entire input fill */,
+          gridRow: "1 / span 1",
           zIndex: 1,
         }),
         validator: (palette, tint, state) => {
@@ -1141,6 +1141,7 @@ export const IOS: PlatformInterface = {
                   return palette.text.primary.footnote.none;
                 if (palette.text.secondary.body)
                   return palette.text.secondary.body.none;
+                break;
               default:
                 if (palette.text.primary.footnote)
                   return palette.text.primary.footnote.none;
@@ -1149,13 +1150,13 @@ export const IOS: PlatformInterface = {
           })();
           return {
             ...makeFontCSSRules(text),
-            wordBreak: 'break-all',
+            wordBreak: "break-all",
           };
         },
         validatorIcon: TSF.footnoteTiny,
         inputStepperIcon: TSF.footnoteTiny,
         action: (palette, tint, state) => {
-          const t = tint || 'none';
+          const t = tint || "none";
           const text = (() => {
             switch (state) {
               case State.none:
@@ -1165,6 +1166,7 @@ export const IOS: PlatformInterface = {
                     palette.text.secondary.body[t] ||
                     palette.text.secondary.body.none
                   );
+                break;
               default:
                 return (
                   palette.text.primary.body[t] || palette.text.primary.body.none
@@ -1182,11 +1184,11 @@ export const IOS: PlatformInterface = {
       },
       fill: {
         disclosureLeft: () => ({
-          gridColumn: '1 / span 1',
-          gridRow: '1 / span 1',
+          gridColumn: "1 / span 1",
+          gridRow: "1 / span 1",
         }),
         indicator: (palette, tint, state) => {
-          const t = tint || 'none';
+          const t = tint || "none";
           const fill: Elevation<RGBA> | undefined = (() => {
             switch (state) {
               case State.toggledPressed:
@@ -1206,8 +1208,8 @@ export const IOS: PlatformInterface = {
             }
           })();
           const gridSpacing = {
-            gridColumn: '2 / span 1',
-            gridRow: '1 / span 1',
+            gridColumn: "2 / span 1",
+            gridRow: "1 / span 1",
           };
           return fill
             ? {
@@ -1219,12 +1221,12 @@ export const IOS: PlatformInterface = {
               };
         },
         label: () => ({
-          gridColumn: '3 / span 1',
-          gridRow: '1 / span 1',
+          gridColumn: "3 / span 1",
+          gridRow: "1 / span 1",
         }),
         input: (palette, tint, state) => {
           const fill = (() => {
-            const t = 'none';
+            const t = "none";
             switch (state) {
               case State.pressed:
               case State.toggledPressed:
@@ -1236,18 +1238,18 @@ export const IOS: PlatformInterface = {
             }
           })();
           return {
-            gridColumn: '4 / span 3',
-            gridRow: '1 / span 1',
+            gridColumn: "4 / span 3",
+            gridRow: "1 / span 1",
             zIndex: 0,
             overflowX:
-              'scroll' /* this keeps long inputs from expanding the height of the input box */,
+              "scroll" /* this keeps long inputs from expanding the height of the input box */,
             ...makeElevationCSSRules(fill),
             /* don't forget to vary the size and shape of the fill according to state! e.g. pressed is -=1pt from other states */
           };
         },
         validator: (palette, tint, state) => {
           const fill = (() => {
-            const t = tint || 'none';
+            const t = tint || "none";
             switch (state) {
               case State.hovered:
               case State.focused:
@@ -1263,21 +1265,21 @@ export const IOS: PlatformInterface = {
             }
           })();
           return {
-            gridColumn: '5 / span 1',
-            gridRow: '1 / span 1',
+            gridColumn: "5 / span 1",
+            gridRow: "1 / span 1",
             zIndex: 1,
             ...makeElevationCSSRules(fill),
             /* don't forget to inset the validator fill relative to the background! */
           };
         },
         inputStepper: () => ({
-          gridColumn: '6 / span 1',
-          gridRow: '1 / span 1',
+          gridColumn: "6 / span 1",
+          gridRow: "1 / span 1",
           zIndex: 1,
         }),
         action: (palette, tint, state) => {
           const fill: Elevation<RGBA> | undefined = (() => {
-            const t = tint || 'none';
+            const t = tint || "none";
             switch (state) {
               case State.none:
                 return;
@@ -1292,8 +1294,8 @@ export const IOS: PlatformInterface = {
             }
           })();
           const gridPlacement = {
-            gridColumn: '7 / span 1',
-            gridRow: '1 / span 1',
+            gridColumn: "7 / span 1",
+            gridRow: "1 / span 1",
           };
           return fill
             ? {
@@ -1305,15 +1307,15 @@ export const IOS: PlatformInterface = {
               };
         },
         disclosureRight: () => ({
-          gridColumn: '7 / span 1',
-          gridRow: '1 / span 1',
+          gridColumn: "7 / span 1",
+          gridRow: "1 / span 1",
         }),
       },
       bg: {
         inline: (palette, tint, state) => {
           const Grid = {
-            display: 'inline-grid',
-            gridTemplateColumns: 'repeat(7, auto)',
+            display: "inline-grid",
+            gridTemplateColumns: "repeat(7, auto)",
           };
           return state
             ? {
@@ -1326,15 +1328,15 @@ export const IOS: PlatformInterface = {
               };
         },
       },
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     small: {
@@ -1377,15 +1379,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1395,15 +1397,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1428,15 +1430,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1469,15 +1471,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1517,15 +1519,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1543,15 +1545,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1569,15 +1571,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
     /**
@@ -1595,15 +1597,15 @@ export const IOS: PlatformInterface = {
       text: {},
       fill: {},
       bg: {},
-      tints: ['none', 'active', 'warn', 'fail'],
+      tints: ["none", "active", "warn", "fail"],
       states: [
-        'none',
-        'hovered',
-        'pressed',
-        'toggled',
-        'toggledHovered',
-        'toggledPressed',
-        'focused',
+        "none",
+        "hovered",
+        "pressed",
+        "toggled",
+        "toggledHovered",
+        "toggledPressed",
+        "focused",
       ],
     },
   },

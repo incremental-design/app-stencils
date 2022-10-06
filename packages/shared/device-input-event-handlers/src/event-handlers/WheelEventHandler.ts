@@ -1,4 +1,5 @@
 import { handleScroll } from ".";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { EventInfo } from "./handler-utils";
 
 /**

@@ -11,7 +11,8 @@
   "types": "dist/types/Theme.d.ts",
   "description": "Theme class constructor and utility functions. This class creates a JSON object that specifies ALL of the colors, shapes, sizes, type treatments, elevations, and states that comprise a user interface theme.",
   "scripts": {
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "eslint src/**/*.ts --fix"
   },
   "devDependencies": {
     "typescript": "^4.6.4",
