@@ -12,11 +12,21 @@ const __dirname = path.parse(fileURLToPath(import.meta.url)).dir
 
 const version = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'lerna.json'))).version
 
-const getVueDeps = (isVuePackage) => isVuePackage
+const getVueDevDeps = (isVuePackage) => isVuePackage
   ? {
     '@vitejs/plugin-vue': '^3.0.0',
   }
   : {}
+
+const  getVueDeps = (isVuePackage) => isVuePackage 
+? {
+  dependencies : {
+    vue: '^3.2.37',
+    'vue-tsc': '^0.38.4'
+  }
+}
+: {}
+
 
 const makePackageJSON = (entryFileName, packageName, isVuePackage) => JSON.stringify({
   name: `@incremental.design/${packageName}`,
@@ -30,17 +40,14 @@ const makePackageJSON = (entryFileName, packageName, isVuePackage) => JSON.strin
   module: `dist/${entryFileName}.js`,
   types: `dist/types/${entryFileName}.d.ts`,
   scripts: {
-    build: 'vue-tsc --noEmit && vite build'
+    build: `${isVuePackage ? 'vue-tsc --noEmit && ' : ''}vite build`
   },
-  dependencies: {
-    vue: '^3.2.37'
-  },
+  ...getVueDeps(isVuePackage),
   devDependencies: {
     typescript: '^4.6.4',
     "vite-plugin-dts": "^1.4.0",
-    ...getVueDeps(isVuePackage),
     vite: '^3.0.0',
-    'vue-tsc': '^0.38.4'
+    ...getVueDevDeps(isVuePackage)
   },
   publishConfig: {
     access: "public"
