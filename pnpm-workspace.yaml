@@ -1,4 +1,4 @@
 packages:
   - "packages/shared/*"
   - "packages/vue3/*"
-  - "packages/storybook"
+  - "packages/app-stencils-documentation"

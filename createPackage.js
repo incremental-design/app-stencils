@@ -18,6 +18,7 @@ const getVueDevDeps = (isVuePackage) =>
   isVuePackage
     ? {
         "@vitejs/plugin-vue": "^3.0.0",
+        "vue-tsc": "^0.38.4",
       }
     : {};
 
@@ -26,7 +27,6 @@ const getVueDeps = (isVuePackage) =>
     ? {
         dependencies: {
           vue: "^3.2.37",
-          "vue-tsc": "^0.38.4",
         },
       }
     : {};

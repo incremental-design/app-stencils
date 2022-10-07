@@ -4,13 +4,15 @@
   "type": "module",
   "scripts": {
     "test:unit": "vue-cli-service test:unit",
+    "pnpm:devPreinstall": "source ./preinstall.sh",
     "prepare": "husky install",
     "postinstall": "lerna bootstrap --force-local --hoist",
     "build": "lerna run build",
     "publish:snapshot": "lerna publish --canary",
     "create-package": "./createPackage.js",
     "clean": "lerna clean",
-    "lint": "lerna run lint"
+    "lint": "lerna run lint",
+    "dev": "lerna run dev"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
@@ -26,8 +28,10 @@
     "prettier": "latest",
     "eslint-plugin-prettier": "latest",
     "eslint-config-prettier": "latest"
-  }, 
+  },
   "workspaces": [
-    "packages/shared/*", "packages/vue3/*", "packages/storybook"
+    "packages/shared/*",
+    "packages/vue3/*",
+    "packages/app-stencils-documentation/"
   ]
 }

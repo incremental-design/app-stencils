@@ -3,13 +3,14 @@
   "npmClient": "pnpm",
   "command": {
     "publish": {
-      "ignoreChanges": ["*.md. packages/*/assets/**"],
+      "ignoreChanges": [
+        "*.md. packages/*/assets/**"
+      ],
       "message": "chore(release) publish"
     },
     "bootstrap": {
       "npmClientArgs": []
     }
   },
-  "packages": ["packages/shared/*", "packages/vue3/*", "packages/storybook"],
-  "useWorkspaces" : true
+  "useWorkspaces": true
 }
