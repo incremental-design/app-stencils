@@ -1,16 +1,11 @@
 <template>
-  <p>hello world</p>
+  <div :class="grid.pageGrid" />
 </template>
 
 <script lang="ts" setup>
+import grid from "@incremental.design/page-grid";
+import "@incremental.design/page-grid/dist/style.css"; /* todo: fix this ... its unintuitive to have to import BOTH the default export AND the style.css */
+
 const props = defineProps({});
 const emits = defineEmits({});
-
-/* see: https://vuejs.org/api/sfc-script-setup.html */
-
-/* see: https://vuejs.org/api/sfc-script-setup.html#defineprops-defineemits */
-
-/* see: https://vuejs.org/api/sfc-script-setup.html#defineexpose */
-
-// defineExpose({})
 </script>
