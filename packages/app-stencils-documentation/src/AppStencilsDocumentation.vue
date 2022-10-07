@@ -1,5 +1,9 @@
 <template>
-  <div :class="grid.pageGrid" />
+  <div :class="grid.pageGrid">
+    <RouterView v-slot="{ Component }">
+      <component :is="Component" />
+    </RouterView>
+  </div>
 </template>
 
 <script lang="ts" setup>

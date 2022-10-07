@@ -17,7 +17,7 @@ const routes = Object.keys(pages).map((path) => {
     throw new Error("there are no pages in your /src/pages directory");
   const name = matches[1].toLowerCase();
   return {
-    path: name === "/home" ? "/" : name,
+    path: name === "/pagehome" ? "/" : name,
     component: pages[path], // () => import('./pages/*.vue')
   };
 });
