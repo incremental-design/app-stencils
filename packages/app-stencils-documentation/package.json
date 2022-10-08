@@ -19,6 +19,7 @@
     "vue": "^3.2.37",
     "vue-router": "^4.0.16",
     "@incremental.design/page-grid": "latest",
+    "@incremental.design/component-video-player": "latest",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-brands-svg-icons": "^6.1.1",
     "@fortawesome/pro-duotone-svg-icons": "^6.1.1",

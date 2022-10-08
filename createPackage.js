@@ -19,6 +19,8 @@ const getVueDevDeps = (isVuePackage) =>
     ? {
         "@vitejs/plugin-vue": "^3.0.0",
         "vue-tsc": "^1.0.0",
+        "postcss-mixins": "^9.0.4",
+        "postcss-nesting": "^10.1.10",
       }
     : {};
 
@@ -163,6 +165,21 @@ const makeEslintrc = (isVuePackage) => {
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
+  rules: {
+    "vue/max-attributes-per-line": "off",
+    "vue/html-self-closing": [
+      "error",
+      {
+        html: {
+          void: "always",
+          normal: "always",
+          component: "always",
+        },
+        svg: "always",
+        math: "always",
+      },
+    ],
+  },
   `;
   return `// eslint-disable-next-line no-undef
   module.exports = {${isVuePackage ? v : ""}
@@ -172,6 +189,12 @@ const makeEslintrc = (isVuePackage) => {
     }
   }`;
 };
+
+const makePostcssConfig = () => `
+module.exports = {
+  plugins: [require("postcss-mixins"), require("postcss-nesting")],
+};
+`;
 
 function createPackage() {
   const packageFolderAndName = process.argv[2];
@@ -223,6 +246,9 @@ function createPackage() {
     path.join(root, ".eslintrc.cjs"),
     makeEslintrc(isVuePackage)
   );
+
+  if (isVuePackage)
+    fs.writeFileSync(path.join(root, "postcss.config.cjs"), makePostcssConfig);
 
   const src = path.join(root, "src");
   fs.mkdirSync(src);
