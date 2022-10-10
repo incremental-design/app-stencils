@@ -21,8 +21,11 @@ const getVueDevDeps = (isVuePackage) =>
         "vue-tsc": "^1.0.0",
         "postcss-mixins": "^9.0.4",
         "postcss-nesting": "^10.1.10",
+        "vite-plugin-dts": "^1.4.0",
       }
-    : {};
+    : {
+        "dts-bundle-generator": "^7.0.0",
+      };
 
 const getVueDeps = (isVuePackage) =>
   isVuePackage
@@ -32,6 +35,16 @@ const getVueDeps = (isVuePackage) =>
         },
       }
     : {};
+
+const getVueScripts = (isVuePackage, entryFileName) =>
+  isVuePackage
+    ? {
+        build: "vue-tsc --noEmit && vite build",
+      }
+    : {
+        build: "vite build && pnpm build:types",
+        "build:types": `dts-bundle-generator -o dist/types/${entryFileName}.d.ts src/index.ts`,
+      };
 
 const makePackageJSON = (entryFileName, packageName, isVuePackage) =>
   JSON.stringify(
@@ -47,13 +60,12 @@ const makePackageJSON = (entryFileName, packageName, isVuePackage) =>
       module: `dist/${entryFileName}.js`,
       types: `dist/types/${entryFileName}.d.ts`,
       scripts: {
-        build: `${isVuePackage ? "vue-tsc --noEmit && " : ""}vite build`,
+        ...getVueScripts(isVuePackage, entryFileName),
         lint: `eslint src/**/*${isVuePackage ? "{.vue,.ts}" : ".ts"} --fix`,
       },
       ...getVueDeps(isVuePackage),
       devDependencies: {
         typescript: "^4.6.4",
-        "vite-plugin-dts": "^1.4.0",
         vite: "^3.0.0",
         ...getVueDevDeps(isVuePackage),
       },
@@ -106,13 +118,22 @@ export default defineConfig({
 })
   `;
 
-const makeTsConfig = (dir) => {
+const makeTsConfig = (dir, isVuePackage) => {
   const numDirComponents = dir.slice(__dirname.length).split("/").length;
-  return `{
-    "extends": "${
+
+  const tsConfig = {
+    extends: `${
       new Array(numDirComponents).fill("..").join(path.sep) + path.sep
-    }tsconfig.json"
-}`;
+    }.tsconfig.json`,
+    ...(isVuePackage
+      ? {}
+      : {
+          isolatedModules: false,
+          declaration: true,
+        }),
+  };
+
+  return JSON.stringify(tsConfig);
 };
 
 const makeIndexTs = (isVuePackage, packageName) =>
@@ -241,7 +262,10 @@ function createPackage() {
     path.join(root, "vite.config.ts"),
     makeViteConfig(packageName, isVuePackage)
   );
-  fs.writeFileSync(path.join(root, "tsconfig.json"), makeTsConfig(dir));
+  fs.writeFileSync(
+    path.join(root, "tsconfig.json"),
+    makeTsConfig(dir, isVuePackage)
+  );
   fs.writeFileSync(
     path.join(root, ".eslintrc.cjs"),
     makeEslintrc(isVuePackage)

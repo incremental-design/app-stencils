@@ -1,25 +1,13 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
 
-import { resolve } from 'path'
-import dts from 'vite-plugin-dts'
-
-const dtsConfig = {
-  outputDir: 'dist/types',
-  staticImport: true,
-  insertTypesEntry: true,
-  rollupTypes: true,
-  copyDtsFiles: false
-}
+import { resolve } from "path";
 
 export default defineConfig({
-  plugins: [dts(dtsConfig)],
-    build: {
-      lib: {
-        entry: resolve(__dirname, 'src/index.ts'),
-        name: 'DeviceInputEventHandlers',
-        fileName: 'DeviceInputEventHandlers',
-      },
-      
-  }
-})
-  
+  build: {
+    lib: {
+      entry: resolve(__dirname, "src/index.ts"),
+      name: "DeviceInputEventHandlers",
+      fileName: "DeviceInputEventHandlers",
+    },
+  },
+});

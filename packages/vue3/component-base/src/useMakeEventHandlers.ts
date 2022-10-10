@@ -1,4 +1,4 @@
-import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
+import { EventInfo } from "@incremental.design/device-input-event-handlers";
 
 import {
   // handleDrag,
@@ -17,6 +17,7 @@ import {
 } from "@incremental.design/device-input-event-handlers";
 
 import { FiniteStateMachine } from "./useMakeFiniteStateMachine";
+import { Affordances } from "./useProps";
 
 interface EventHandlers {
   notPassive: {
@@ -40,18 +41,6 @@ interface EventHandlers {
       [eventType: string]: (E: WheelEvent) => void;
     };
   };
-}
-
-interface Affordances {
-  isHoverable: boolean;
-  isPressable: boolean;
-  isPeekable: boolean;
-  isToggleable: boolean;
-  isDraggable: boolean;
-  isSelectable: boolean;
-  isFocusable: boolean;
-  isEditable: boolean;
-  isScrollable: boolean;
 }
 
 export interface PreviousInputs {
@@ -179,9 +168,15 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
     const listenForPeek = (): void => {
       listenForPress();
     };
+    const listenForScroll = (): void => {
+      // listenForPress();
+      // need to listen for wheel
+      // maybe scroll just needs to be passive true??
+    };
     const listenForToggle = (): void => {
       listenForPress();
     };
+    // const listenForSwipe = (): void => {}
     // const listenForDrag = (): void => {}
     const listenForSelect = (): void => {
       listenForPress();
@@ -192,10 +187,6 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
       if (!EH.notPassive.other.focus) EH.notPassive.other.focus = HF;
     };
     // const listenForEdit = () => {}
-    const listenForScroll = (): void => {
-      listenForPress();
-      // need to listen for wheel
-    };
 
     const disableContextMenu = (): void => {
       if (!EH.notPassive.other.contextmenu)
@@ -206,6 +197,7 @@ export default (prev: PreviousInputs, FSM: FiniteStateMachine) => {
     if (a.isPressable) listenForPress();
     if (a.isPeekable) listenForPeek();
     if (a.isToggleable) listenForToggle();
+    // if (a.isSwipeable) listenForSwipe();
     // if (a.isDraggable) listenForDrag();
     if (a.isSelectable) listenForSelect();
     if (a.isFocusable) listenForFocus();

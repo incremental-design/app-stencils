@@ -24,15 +24,43 @@
 
 import { computed, watch, ref, Ref, reactive } from "vue";
 
-import { EventInfo } from "@incremental.design/device-input-event-handlers/dist/types/event-handlers/handler-utils";
+import {
+  EventInfo,
+  PointerInput,
+  FocusInput,
+  KeyboardInput,
+  ScrollInput,
+  DragInput,
+} from "@incremental.design/device-input-event-handlers";
 
-import e, { State } from "./useEmits";
+import { State, StateChange } from "./useEmits";
 import p from "./useProps";
 import useMakeEventHandlers, { PreviousInputs } from "./useMakeEventHandlers";
 import useMakeFiniteStateMachine from "./useMakeFiniteStateMachine";
 
-const emit = defineEmits(e);
 const props = defineProps(p);
+
+/**
+ * @emits stateChange - an event that contains a {@link StateChange}. This event is emitted any time the state of base component changes. It includes the {@link State}s that base component has, and the array of {@link EventInfo} that caused the state to change.
+ *
+ * @emits pointerInput - an event that contains a {@link PointerInput}. This event is emitted every time a pointer, such as a mouse cursor or touch point interacts with base component.
+ *
+ * @emit focusInput - an event that contains a {@link FocusInput}. This event is emitted every time base component gains or loses focus.
+ *
+ * @emit keyboardInput - an event that contains a {@link KeyboardInput}. This event is emitted every time the base component receives a keypress.
+ *
+ * @emit scrollInput - an event that contains a {@link ScrollInput}. This event is emitted every time the base component receives wheel or pointer input that results in a scroll event.
+ *
+ * @emit dragInput - an event that contains a {@link DragInput}. This event is emitted every time the base component is dragged or dropped.
+ */
+const emit = defineEmits<{
+  (e: "stateChange", payload: StateChange): void;
+  (e: "pointerInput", payload: EventInfo<PointerInput>): void;
+  (e: "focusInput", payload: EventInfo<FocusInput>): void;
+  (e: "keyboardInput", payload: EventInfo<KeyboardInput>): void;
+  (e: "scrollInput", payload: EventInfo<ScrollInput>): void;
+  (e: "dragInput", payload: EventInfo<DragInput>): void;
+}>();
 
 const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
@@ -50,7 +78,6 @@ watch(
 );
 
 /* keep track of previous inputs */
-
 const prev: PreviousInputs = reactive({
   dragInput: false,
   scrollInput: false,
@@ -64,8 +91,6 @@ const FSM = useMakeFiniteStateMachine();
 const makeEventHandlers = useMakeEventHandlers(prev, FSM);
 
 const eventHandlers = computed(() => makeEventHandlers({ ...props }));
-
-// !Methods
 
 const selectThisEl = () => {
   const El = BCR.value ? BCR.value : false;
@@ -95,6 +120,7 @@ watch(
   (current) => {
     if (!current) return;
     const P = current;
+    // emit("pointerInput", P);
     emit("pointerInput", P);
     const XP = P.input.relative.xPercent;
     const YP = P.input.relative.yPercent;
