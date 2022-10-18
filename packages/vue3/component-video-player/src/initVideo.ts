@@ -213,9 +213,8 @@ export default async (
     },
     getTimeUpdate: (updateFn: (timeMs: number) => void): (() => void) => {
       const callUpdate = () => updateFn(videoElement.currentTime * 1000);
-      videoElement.addEventListener("timeupdate", () => callUpdate);
-      return () =>
-        videoElement.removeEventListener("timeupdate", () => callUpdate);
+      videoElement.addEventListener("timeupdate", callUpdate);
+      return () => videoElement.removeEventListener("timeupdate", callUpdate);
     },
     destroy: noOp,
     useSource: rightSizeSource,
