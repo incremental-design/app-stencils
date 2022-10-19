@@ -65,7 +65,7 @@ importers:
       '@fortawesome/pro-solid-svg-icons': 6.2.0
       '@fortawesome/vue-fontawesome': 3.0.1_nr6uyybgklcwotlnjtmg3tr7si
       '@incremental.design/component-video-player': link:../vue3/component-video-player
-      '@incremental.design/page-grid': 0.0.1-alpha.391_postcss@8.4.14
+      '@incremental.design/page-grid': link:../shared/page-grid
       vue: 3.2.37
       vue-router: 4.1.5_vue@3.2.37
     devDependencies:
@@ -118,8 +118,8 @@ importers:
 
   packages/vue3/component-base:
     specifiers:
-      '@incremental.design/device-input-event-handlers': workspace:*
-      '@incremental.design/theme': workspace*
+      '@incremental.design/device-input-event-handlers': latest
+      '@incremental.design/theme': latest
       '@vitejs/plugin-vue': ^3.0.0
       typescript: ^4.6.4
       vite: ^3.0.0
@@ -147,7 +147,7 @@ importers:
       vue: ^3.2.37
       vue-tsc: ^1.0.0
     dependencies:
-      '@incremental.design/component-base': 0.0.1-alpha.306
+      '@incremental.design/component-base': link:../component-base
       vue: 3.2.37
     devDependencies:
       '@vitejs/plugin-vue': 3.0.1_vite@3.0.4+vue@3.2.37
@@ -474,32 +474,6 @@ packages:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
     dev: true
-
-  /@incremental.design/component-base/0.0.1-alpha.306:
-    resolution: {integrity: sha512-noMrRVrN/uwb62KSIfQR0HQPoe9CC+X+BIe0WODrA/H+08gIARuAaJsMp3HIG7WBfhbOCaF4HSYHki/7DxhNWg==}
-    dependencies:
-      '@incremental.design/device-input-event-handlers': 0.0.1
-      '@incremental.design/theme': 0.0.1
-      core-js: 3.24.0
-      vue: 3.2.37
-    dev: false
-
-  /@incremental.design/device-input-event-handlers/0.0.1:
-    resolution: {integrity: sha512-QKK91RyhlgsjmxNmmtW6qeFyfEo3RMxtANLg3fj86l8pHPRsxdtaHyqZMPDNTvvKcoQivW4V9//45Qd+JOrbhQ==}
-    dev: false
-
-  /@incremental.design/page-grid/0.0.1-alpha.391_postcss@8.4.14:
-    resolution: {integrity: sha512-4UHZfpRPcZItXGPgWNEwoQ2M/daZAmnTxUuz4SpH7BykQrb3osT5jtrbkVkvv8+9YBVza/ol2y9oQ0+Rj/F/Xw==}
-    dependencies:
-      postcss-mixins: 9.0.4_postcss@8.4.14
-      postcss-nesting: 10.2.0_postcss@8.4.14
-    transitivePeerDependencies:
-      - postcss
-    dev: false
-
-  /@incremental.design/theme/0.0.1:
-    resolution: {integrity: sha512-QTRjrv9E7BHzcY/sKB8njpRgCglBiz7/OatJJm1pz8gQpgCLEDNltAPP0lRUPGLpReTV+QmMqCP1Es36fldYGQ==}
-    dev: false
 
   /@isaacs/string-locale-compare/1.1.0:
     resolution: {integrity: sha512-SQ7Kzhh9+D+ZW9MA0zkYv3VXhIDNx+LzM6EJ+/65I3QY+enU6Itte7E5XX7EWrqLW2FN4n06GWzBnPoC3th2aQ==}
@@ -2725,11 +2699,6 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
     dev: true
-
-  /core-js/3.24.0:
-    resolution: {integrity: sha512-IeOyT8A6iK37Ep4kZDD423mpi6JfPRoPUdQwEWYiGolvn4o6j2diaRzNfDfpTdu3a5qMbrGUzKUpYpRY8jXCkQ==}
-    requiresBuild: true
-    dev: false
 
   /core-util-is/1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
