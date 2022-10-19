@@ -14,7 +14,7 @@
   "dependencies": {
     "vue": "^3.2.37",
     "@incremental.design/device-input-event-handlers": "workspace:*",
-    "@incremental.design/theme": "workspace*"
+    "@incremental.design/theme": "workspace:*"
   },
   "devDependencies": {
     "typescript": "^4.6.4",
