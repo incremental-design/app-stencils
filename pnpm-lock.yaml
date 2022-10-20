@@ -64,7 +64,7 @@ importers:
       '@fortawesome/pro-regular-svg-icons': 6.2.0
       '@fortawesome/pro-solid-svg-icons': 6.2.0
       '@fortawesome/vue-fontawesome': 3.0.1_nr6uyybgklcwotlnjtmg3tr7si
-      '@incremental.design/component-video-player': link:../vue3/component-video-player
+      '@incremental.design/component-video-player': 0.0.1-alpha.399
       '@incremental.design/page-grid': 0.0.1-alpha.391_postcss@8.4.14
       vue: 3.2.37
       vue-router: 4.1.5_vue@3.2.37
@@ -108,18 +108,18 @@ importers:
 
   packages/shared/theme:
     specifiers:
+      dts-bundle-generator: ^7.0.0
       typescript: ^4.6.4
       vite: ^3.0.0
-      vite-plugin-dts: ^1.4.0
     devDependencies:
+      dts-bundle-generator: 7.0.0
       typescript: 4.7.4
       vite: 3.0.4
-      vite-plugin-dts: 1.4.0_vite@3.0.4
 
   packages/vue3/component-base:
     specifiers:
       '@incremental.design/device-input-event-handlers': workspace:*
-      '@incremental.design/theme': workspace*
+      '@incremental.design/theme': workspace:*
       '@vitejs/plugin-vue': ^3.0.0
       typescript: ^4.6.4
       vite: ^3.0.0
@@ -136,6 +136,27 @@ importers:
       vite: 3.0.4
       vite-plugin-dts: 1.4.0_vite@3.0.4
       vue-tsc: 1.0.0_typescript@4.7.4
+
+  packages/vue3/component-button:
+    specifiers:
+      '@vitejs/plugin-vue': ^3.0.0
+      postcss-mixins: ^9.0.4
+      postcss-nesting: ^10.1.10
+      typescript: ^4.6.4
+      vite: ^3.0.0
+      vite-plugin-dts: ^1.4.0
+      vue: ^3.2.37
+      vue-tsc: ^1.0.0
+    dependencies:
+      vue: 3.2.37
+    devDependencies:
+      '@vitejs/plugin-vue': 3.0.1_vite@3.0.4+vue@3.2.37
+      postcss-mixins: 9.0.4_postcss@8.4.14
+      postcss-nesting: 10.2.0_postcss@8.4.14
+      typescript: 4.8.4
+      vite: 3.0.4
+      vite-plugin-dts: 1.4.0_vite@3.0.4
+      vue-tsc: 1.0.0_typescript@4.8.4
 
   packages/vue3/component-tabs:
     specifiers:
@@ -481,6 +502,14 @@ packages:
       '@incremental.design/device-input-event-handlers': 0.0.1
       '@incremental.design/theme': 0.0.1
       core-js: 3.24.0
+      vue: 3.2.37
+    dev: false
+
+  /@incremental.design/component-video-player/0.0.1-alpha.399:
+    resolution: {integrity: sha512-3vx4cyzgFtO7dAhfAQ+vjNda/C+46/NadZnsW6SVUdupvpji9pmjlDbBg2I24/SKhv3fVR6xBhVrcnn3aEtp7Q==}
+    dependencies:
+      dashjs: 4.5.0
+      hls.js: 1.2.4
       vue: 3.2.37
     dev: false
 
@@ -1639,7 +1668,7 @@ packages:
   /@ts-morph/common/0.13.0:
     resolution: {integrity: sha512-fEJ6j7Cu8yiWjA4UmybOBH9Efgb/64ZTWuvCF4KysGu4xz8ettfyaqFt8WZ1btCxXsGZJjZ2/3svOF6rL+UFdQ==}
     dependencies:
-      fast-glob: 3.2.11
+      fast-glob: 3.2.12
       minimatch: 5.1.0
       mkdirp: 1.0.4
       path-browserify: 1.0.1
@@ -3509,6 +3538,7 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.4
+    dev: true
 
   /fast-glob/3.2.12:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
@@ -3519,7 +3549,6 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.4
-    dev: true
 
   /fast-glob/3.2.7:
     resolution: {integrity: sha512-rYGMRwip6lUMvYD3BTScMwT1HtAs2d71SMv66Vrxs0IekGZEjhM0pcMfjQPnknBt2zeCwQMEupiN02ZP4DiT1Q==}
@@ -5440,7 +5469,7 @@ packages:
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      fast-glob: 3.2.11
+      fast-glob: 3.2.12
       postcss: 8.4.14
       postcss-js: 4.0.0_postcss@8.4.14
       postcss-simple-vars: 7.0.0_postcss@8.4.14

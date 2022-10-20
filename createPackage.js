@@ -84,14 +84,18 @@ const makeViteConfig = (fileName, isVuePackage) =>
   `import { defineConfig } from 'vite'
 ${isVuePackage ? "import vue from '@vitejs/plugin-vue'" : ""}
 import { resolve } from 'path'
-import dts from 'vite-plugin-dts'
+${isVuePackage ? "import dts from 'vite-plugin-dts" : ""}
 
-const dtsConfig = {
+${
+  isVuePackage
+    ? `const dtsConfig = {
   outputDir: 'dist/types',
   staticImport: true,
   insertTypesEntry: true,
   rollupTypes: true,
   copyDtsFiles: false
+}`
+    : ``
 }
 
 export default defineConfig({
@@ -124,7 +128,7 @@ const makeTsConfig = (dir, isVuePackage) => {
   const tsConfig = {
     extends: `${
       new Array(numDirComponents).fill("..").join(path.sep) + path.sep
-    }.tsconfig.json`,
+    }tsconfig.json`,
     ...(isVuePackage
       ? {}
       : {
@@ -272,7 +276,10 @@ function createPackage() {
   );
 
   if (isVuePackage)
-    fs.writeFileSync(path.join(root, "postcss.config.cjs"), makePostcssConfig);
+    fs.writeFileSync(
+      path.join(root, "postcss.config.cjs"),
+      makePostcssConfig()
+    );
 
   const src = path.join(root, "src");
   fs.mkdirSync(src);
