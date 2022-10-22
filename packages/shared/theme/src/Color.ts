@@ -31,6 +31,27 @@ export const enum BlendMode {
   luminosity = "luminosity",
 }
 
+const blendModeStrings = [
+  "normal",
+  "multiply",
+  "screen",
+  "overlay",
+  "darken",
+  "lighten",
+  "color-dodge",
+  "color-burn",
+  "hard-light",
+  "soft-light",
+  "difference",
+  "exclusion",
+  "hue",
+  "saturation",
+  "color",
+  "luminosity",
+];
+
+export const isBlendMode = (b: string) => blendModeStrings.includes(b);
+
 /**
  * Converts a hex string with alpha to {@link RGBA}
  *
@@ -68,4 +89,18 @@ export function hexAlphaToRGBA(hex: string, alpha: number) {
 
 export function RGBAtoCSS(R: RGBA) {
   return `rgba(${R.r}, ${R.g}, ${R.b}, ${R.a})`;
+}
+
+export function isColor(c: unknown) {
+  const cR = c as RGBA;
+  const { r, g, b, a } = cR;
+  if (
+    typeof r === "number" &&
+    typeof g === "number" &&
+    typeof b === "number" &&
+    typeof a === "number"
+  )
+    return true;
+  return false;
+  // todo: test other color formats
 }

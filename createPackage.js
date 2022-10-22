@@ -84,7 +84,7 @@ const makeViteConfig = (fileName, isVuePackage) =>
   `import { defineConfig } from 'vite'
 ${isVuePackage ? "import vue from '@vitejs/plugin-vue'" : ""}
 import { resolve } from 'path'
-${isVuePackage ? "import dts from 'vite-plugin-dts" : ""}
+${isVuePackage ? "import dts from 'vite-plugin-dts'" : ""}
 
 ${
   isVuePackage
@@ -99,7 +99,7 @@ ${
 }
 
 export default defineConfig({
-  plugins: [${isVuePackage ? "vue(), " : ""}dts(dtsConfig)],
+  ${isVuePackage ? "plugins: [vue(), dts(dtsConfig)]," : ""}
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),

@@ -32,3 +32,12 @@ export function makeShapeCSSRules(s: Shape) {
     "border-radius": `${borderRadius}px`,
   };
 }
+
+export const validateShape = (s: unknown) => {
+  const { minWidth, minHeight, borderRadius, maxWidth, maxHeight } = s as Shape;
+  if (typeof minWidth !== "number") return false;
+  if (typeof minHeight !== "number") return false;
+  if (typeof borderRadius !== "number") return false;
+  if (maxWidth && typeof maxWidth !== "number") return false;
+  if (maxHeight && typeof maxHeight !== "number") return false;
+};

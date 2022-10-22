@@ -1,4 +1,38 @@
-import { BlendMode, RGBA, RGBAtoCSS } from "./Color";
+import { BlendMode, isBlendMode, isColor, RGBA, RGBAtoCSS } from "./Color";
+
+type Fill<Color> = {
+  color: Color;
+  blendMode?: BlendMode /* default to BlendMode.normal */;
+  bgBlur?: {
+    radius?: number /* in pt, defaults to 0pt */;
+    saturation?: number /* -1 to 1, defaults to 0 */;
+  };
+};
+
+type InnerShadow<Color> = {
+  blur?: number /* in pt, defaults to 0pt */;
+  spread?: number /* in pt, defaults to 0pt */;
+  color: Color;
+  blendMode?: BlendMode /* defaults to BlendMode.normal */;
+  xOffset?: number /* in pt, defaults to 0pt */;
+  yOffset?: number /* in pt, defaults to 0pt */;
+};
+
+type Stroke<Color> = {
+  color: Color;
+  width?: number /* in pt, defaults to 1pt */;
+  offset?: "inner" | "outer" | "center" /* defaults to 'center' */;
+  blendMode?: BlendMode /* defaults to BlendMode.normal */;
+};
+
+type DropShadow<Color> = {
+  x?: number /* in pt, defaults to 0pt */;
+  y?: number /* in pt, defaults to 0pt */;
+  blur?: number /* in pt, defaults to 0pt */;
+  spread?: number /* in pt, defaults to 0pt */;
+  color: Color;
+  blendMode?: BlendMode /* defaults to BlendMode.normal */;
+};
 
 /**
  * A set of fills, inner shadows, strokes, and drop shadows to apply to a DOM node.
@@ -65,36 +99,10 @@ import { BlendMode, RGBA, RGBAtoCSS } from "./Color";
  *
  */
 export type Elevation<Color> = {
-  fill: Array<{
-    color: Color;
-    blendMode?: BlendMode /* default to BlendMode.normal */;
-    bgBlur?: {
-      radius?: number /* in pt, defaults to 0pt */;
-      saturation?: number /* -1 to 1, defaults to 0 */;
-    };
-  }>;
-  innerShadow: Array<{
-    blur?: number /* in pt, defaults to 0pt */;
-    spread?: number /* in pt, defaults to 0pt */;
-    color: Color;
-    blendMode?: BlendMode /* defaults to BlendMode.normal */;
-    xOffset?: number /* in pt, defaults to 0pt */;
-    yOffset?: number /* in pt, defaults to 0pt */;
-  }>;
-  stroke: Array<{
-    color: Color;
-    width?: number /* in pt, defaults to 1pt */;
-    offset?: "inner" | "outer" | "center" /* defaults to 'center' */;
-    blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  }>;
-  dropShadow: Array<{
-    x?: number /* in pt, defaults to 0pt */;
-    y?: number /* in pt, defaults to 0pt */;
-    blur?: number /* in pt, defaults to 0pt */;
-    spread?: number /* in pt, defaults to 0pt */;
-    color: Color;
-    blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  }>;
+  fill: Array<Fill<Color>>;
+  innerShadow: Array<InnerShadow<Color>>;
+  stroke: Array<Stroke<Color>>;
+  dropShadow: Array<DropShadow<Color>>;
 };
 
 export function makeElevationCSSRules(E: Elevation<RGBA>) {
@@ -155,3 +163,54 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
 
   return rules;
 }
+
+const isUndefinedOrNumber = (a: Array<undefined | number>) => {
+  return a.every((n) => {
+    if (!n) return true;
+    if (typeof n === "number") return true;
+    return false;
+  });
+};
+
+const isDropShadow = (d: unknown) => {
+  const { x, y, blur, spread, color, blendMode } = d as DropShadow<unknown>;
+  if (!isUndefinedOrNumber([x, y, blur, spread])) return false;
+  if (!isColor(color)) return false;
+  if (blendMode && !isBlendMode(blendMode)) return false;
+  return true;
+};
+
+const isInnerShadow = (i: unknown) => {
+  const { xOffset, yOffset, blur, spread, color, blendMode } =
+    i as InnerShadow<unknown>;
+  if (!isUndefinedOrNumber([xOffset, yOffset, blur, spread])) return false;
+  if (!isColor(color)) return false;
+  if (blendMode && !isBlendMode(blendMode)) return false;
+  return true;
+};
+
+const isFill = (f: unknown) => {
+  const { color, blendMode, bgBlur } = f as Fill<unknown>;
+  if (!isColor(color)) return false;
+  if (blendMode && !isBlendMode(blendMode)) return false;
+  if (bgBlur) return isUndefinedOrNumber([bgBlur.radius, bgBlur.saturation]);
+  return true;
+};
+
+const isStroke = (s: unknown) => {
+  const { color, width, offset, blendMode } = s as Stroke<unknown>;
+  if (!isColor(color)) return false;
+  if (width && typeof width !== "number") return false;
+  if (offset && !["inner", "outer", "center"].includes(offset)) return false;
+  if (blendMode && !isBlendMode(blendMode)) return false;
+  return true;
+};
+
+export const validateElevation = (e: unknown) => {
+  const elevation = e as Elevation<unknown>;
+  if (!elevation.dropShadow.every((d) => isDropShadow(d))) return false;
+  if (!elevation.fill.every((f) => isFill(f))) return false;
+  if (!elevation.innerShadow.every((i) => isInnerShadow(i))) return false;
+  if (!elevation.stroke.every((s) => isStroke(s))) return false;
+  return true;
+};

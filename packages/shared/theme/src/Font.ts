@@ -1,4 +1,4 @@
-import { RGBA, BlendMode, RGBAtoCSS } from "./Color";
+import { RGBA, BlendMode, RGBAtoCSS, isColor, isBlendMode } from "./Color";
 
 export type Font<Color> = {
   typeface: Array<string>;
@@ -12,18 +12,22 @@ export type Font<Color> = {
   verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
 };
 
-export enum FontAlign {
+export const enum FontAlign {
   left = "left",
   right = "right",
   center = "center",
   justify = "justify",
 }
 
-export enum FontVerticalAlign {
+export const fontAlignStrings = ["left", "right", "center", "justify"];
+
+export const enum FontVerticalAlign {
   top = "top",
   bottom = "bottom",
   middle = "middle",
 }
+
+export const FontVerticalAlignStrings = ["top", "bottom", "middle"];
 
 export function makeFontCSSRules(F: Font<RGBA>) {
   const {
@@ -59,3 +63,34 @@ export function makeFontCSSRules(F: Font<RGBA>) {
     });
   return rules;
 }
+
+export const validateFont = (f: unknown) => {
+  const {
+    typeface,
+    size,
+    weight,
+    color,
+    blendMode,
+    tracking,
+    leading,
+    align,
+    verticalAlign,
+  } = f as Font<unknown>;
+  if (
+    !(Array.isArray(typeface) && typeface.every((t) => typeof t === "string"))
+  )
+    return false;
+  if (!(typeof size === "number") && size > 0) return false;
+  if (!(typeof weight === "number") && weight > 0) return false;
+  if (!isColor(color)) return false;
+  if (blendMode && isBlendMode(blendMode)) return false;
+  if (tracking && !(typeof tracking === "number")) return false;
+  if (leading && !(typeof leading === "number")) return false;
+  if (align && !fontAlignStrings.includes(align as string)) return false;
+  if (
+    verticalAlign &&
+    !FontVerticalAlignStrings.includes(verticalAlign as string)
+  )
+    return false;
+  return true;
+};

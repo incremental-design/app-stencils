@@ -1,0 +1,37 @@
+{
+  "name": "@incremental.design/async-import-font-awesome",
+  "private": false,
+  "sideEffects": false,
+  "license": "MIT",
+  "author": "Ajay Ganapathy <ajay@incremental.design>",
+  "version": "0.0.0",
+  "type": "module",
+  "main": "dist/AsyncImportFontAwesome.umd.cjs",
+  "module": "dist/AsyncImportFontAwesome.js",
+  "types": "dist/types/AsyncImportFontAwesome.d.ts",
+  "scripts": {
+    "build": "vite build && pnpm build:types",
+    "build:types": "dts-bundle-generator -o dist/types/AsyncImportFontAwesome.d.ts src/index.ts",
+    "lint": "eslint src/**/*.ts --fix"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.0",
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/pro-duotone-svg-icons": "^6.2.0",
+    "@fortawesome/pro-light-svg-icons": "^6.2.0",
+    "@fortawesome/pro-thin-svg-icons": "^6.2.0",
+    "@fortawesome/pro-regular-svg-icons": "^6.2.0",
+    "@fortawesome/pro-solid-svg-icons": "^6.2.0"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "vite": "^3.0.0",
+    "dts-bundle-generator": "^7.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/incremental-design/app-stencils/issues"
+  }
+}
