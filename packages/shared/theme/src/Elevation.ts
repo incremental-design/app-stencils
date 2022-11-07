@@ -4,32 +4,32 @@ type Fill<Color> = {
   color: Color;
   blendMode?: BlendMode /* default to BlendMode.normal */;
   bgBlur?: {
-    radius?: number /* in pt, defaults to 0pt */;
+    radius?: number /* in px, defaults to 0px */;
     saturation?: number /* -1 to 1, defaults to 0 */;
   };
 };
 
 type InnerShadow<Color> = {
-  blur?: number /* in pt, defaults to 0pt */;
-  spread?: number /* in pt, defaults to 0pt */;
+  blur?: number /* in px, defaults to 0px */;
+  spread?: number /* in px, defaults to 0px */;
   color: Color;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  xOffset?: number /* in pt, defaults to 0pt */;
-  yOffset?: number /* in pt, defaults to 0pt */;
+  xOffset?: number /* in px, defaults to 0px */;
+  yOffset?: number /* in px, defaults to 0px */;
 };
 
 type Stroke<Color> = {
   color: Color;
-  width?: number /* in pt, defaults to 1pt */;
+  width?: number /* in px, defaults to 1px */;
   offset?: "inner" | "outer" | "center" /* defaults to 'center' */;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
 };
 
 type DropShadow<Color> = {
-  x?: number /* in pt, defaults to 0pt */;
-  y?: number /* in pt, defaults to 0pt */;
-  blur?: number /* in pt, defaults to 0pt */;
-  spread?: number /* in pt, defaults to 0pt */;
+  x?: number /* in px, defaults to 0px */;
+  y?: number /* in px, defaults to 0px */;
+  blur?: number /* in px, defaults to 0px */;
+  spread?: number /* in px, defaults to 0px */;
   color: Color;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
 };
@@ -45,29 +45,29 @@ type DropShadow<Color> = {
  *
  * @param bgBlur - optional gaussian blur applied to the contents behind the fill.
  *
- * @param bgBlur.radius - optional radius of the background blur in device-independent points (pt). defaults to 0.
+ * @param bgBlur.radius - optional radius of the background blur in pixels. defaults to 0px.
  *
  * @param bgBlur.saturation - optional saturation of the background blur. defaults to 0. Must be a number between -1 (i.e. -100%) and 1 (i.e. 100%).
  *
  * @param innerShadow - array with zero or more inner shadows to apply to a DOM node.
  *
- * @param innerShadow.blur - optional blur of the inner shadow in device-independent points (pt). defaults to 0.
+ * @param innerShadow.blur - optional blur of the inner shadow in pixels. defaults to 0px.
  *
- * @param innerShadow.spread - optional spread of the inner shadow in device-independent points (pt). defaults to 0.
+ * @param innerShadow.spread - optional spread of the inner shadow in pixels. defaults to 0px.
  *
  * @param innerShadow.color - a color to apply to the inner shadow. This color must contain a `r`, `g`, `b`, and `a` property. This property is required.
  *
  * @param innerShadow.blendMode - optional {@link BlendMode} to apply to the inner shadow. Defaults to {@link BlendMode.normal}.
  *
- * @param innerShadow.xOffset - optional x-offset of the inner shadow in device-independent points (pt). defaults to 0.
+ * @param innerShadow.xOffset - optional x-offset of the inner shadow in pixels. defaults to 0px.
  *
- * @param innerShadow.yOffset - optional y-offset of the inner shadow in device-independent points (pt). defaults to 0.
+ * @param innerShadow.yOffset - optional y-offset of the inner shadow in pixels. defaults to 0px.
  *
  * @param stroke - an array with zero or more strokes to apply to a DOM node.
  *
  * @param stroke.color - a color to apply to the stroke. This color must contain a `r`, `g`, `b`, and `a` property. This property is required.
  *
- * @param stroke.width - optional width of the stroke in device-independent points (pt). defaults to 1.
+ * @param stroke.width - optional width of the stroke in pixels. defaults to 1px.
  *
  * @param stroke.offset - optional offset of the stroke relative to the edge of the DOM node. can be one of 'inside', 'outside', or 'center'. defaults to 'center'.
  *
@@ -75,13 +75,13 @@ type DropShadow<Color> = {
  *
  * @param dropShadow - array of zero or more drop shadows to apply to the DOM node.
  *
- * @param dropShadow.x - optional x-offset of the drop shadow in device-independent points (pt). defaults to 0.
+ * @param dropShadow.x - optional x-offset of the drop shadow in pixels. defaults to 0px.
  *
- * @param dropShadow.y - optional y-offset of the drop shadow in device-independent points (pt). defaults to 0.
+ * @param dropShadow.y - optional y-offset of the drop shadow in pixels. defaults to 0px.
  *
- * @param dropShadow.blur - optional blur of the drop shadow in device-independent points (pt). defaults to 0.
+ * @param dropShadow.blur - optional blur of the drop shadow in pixels. defaults to 0px.
  *
- * @param dropShadow.spread - optional spread of the drop shadow in device-independent points (pt). defaults to 0.
+ * @param dropShadow.spread - optional spread of the drop shadow in pixels. defaults to 0px.
  *
  * @param dropShadow.color - a color to apply to the drop shadow. This color must contain a `r`, `g`, `b`, and `a` property. This property is required.
  *
@@ -105,7 +105,15 @@ export type Elevation<Color> = {
   dropShadow: Array<DropShadow<Color>>;
 };
 
-export function makeElevationCSSRules(E: Elevation<RGBA>) {
+export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
+  "background-color": string;
+  "background-blend-mode": string;
+  "backdrop-filter": string;
+  "border-color": string;
+  "border-width": string;
+  "border-style": string;
+  "box-shadow": string;
+}> {
   const { fill, innerShadow, stroke, dropShadow } = E;
 
   const rules = {};
@@ -133,7 +141,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>) {
       /* right now we discard offset and blend mode ... later on we can test using box shadow to achieve the same result */
     });
 
-  const BoxShadows = [];
+  const BoxShadows: Array<string> = [];
   /* notice that right now we are only using the first inner shadow value. This isn't because of any intrinsic limitation in css box-shadow. It's just because we don't need to supply multiple inner shadows (for now) */
   if (innerShadow[0]) {
     const { xOffset, yOffset, blur, spread, color, blendMode } = innerShadow[0];

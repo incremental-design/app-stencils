@@ -1,12 +1,20 @@
 <!-- eslint-disable vue/max-attributes-per-line -->
 <template>
-  <VideoPlayer
+  <!-- <VideoPlayer
     :playback="filePlayback"
     :options="fileOptions"
     @click="playPauseFile"
-    @currentTimeMs="tu"
-  />
+  /> -->
   <!-- <VideoPlayer v-model:playback="streamPlayback" :options="streamOptions" /> -->
+  <div
+    style="
+      grid-column: left-content-start / left-content-end;
+      grid-row: 0 span 1;
+    "
+  >
+    <Button :options="buttonOptions" />
+    <Button :options="buttonOptions" />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -15,7 +23,9 @@ import VideoPlayer, {
   VideoPlayerPlayback,
 } from "@incremental.design/component-video-player";
 import "@incremental.design/component-video-player/dist/style.css"; // todo: come up with a cleaner way to import styles
+import Button, { ButtonProps } from "@incremental.design/component-button";
 import { reactive } from "vue";
+import { faChessQueen } from "@fortawesome/pro-duotone-svg-icons";
 
 const fileOptions: VideoPlayerOptions = {
   content: {
@@ -100,8 +110,6 @@ const playPauseFile = () => {
   filePlayback.rate = filePlayback.rate === 0 ? 1 : 0;
 };
 
-const tu = (time: number) => console.log(time);
-
 const streamOptions: VideoPlayerOptions = {
   content: {
     posters: fileOptions.content.posters,
@@ -132,5 +140,120 @@ const streamPlayback: VideoPlayerPlayback = {
   startAt: 10000,
   loop: true,
   volume: 0,
+};
+
+const buttonOptions: ButtonProps = {
+  style: {
+    font: {
+      none: {
+        typeface: ["Helvetica", "Arial", "Sans Serif"],
+        size: 1,
+        weight: 400,
+        color: {
+          r: 0,
+          g: 0,
+          b: 0,
+          a: 1,
+        },
+      },
+      hovering: {
+        typeface: ["Helvetica", "Arial", "Sans Serif"],
+        size: 1,
+        weight: 400,
+        color: {
+          r: 0,
+          g: 0,
+          b: 255,
+          a: 1,
+        },
+      },
+      pressing: {
+        typeface: ["Helvetica", "Arial", "Sans Serif"],
+        size: 1,
+        weight: 400,
+        color: {
+          r: 0,
+          g: 255,
+          b: 0,
+          a: 1,
+        },
+      },
+    },
+    shape: {
+      none: {
+        minWidth: 3,
+        minHeight: 3,
+        borderRadius: 1.5,
+      },
+      hovering: {
+        minWidth: 3,
+        minHeight: 3,
+        borderRadius: 1.5,
+      },
+      pressing: {
+        minWidth: 3,
+        minHeight: 3,
+        borderRadius: 1.5,
+      },
+    },
+    elevation: {
+      none: {
+        fill: [
+          {
+            color: {
+              r: 128,
+              g: 128,
+              b: 128,
+              a: 1,
+            },
+          },
+        ],
+        innerShadow: [],
+        dropShadow: [],
+        stroke: [],
+      },
+      hovering: {
+        fill: [
+          {
+            color: {
+              r: 128,
+              g: 128,
+              b: 128,
+              a: 1,
+            },
+          },
+        ],
+        innerShadow: [],
+        dropShadow: [],
+        stroke: [],
+      },
+      pressing: {
+        fill: [
+          {
+            color: {
+              r: 128,
+              g: 128,
+              b: 128,
+              a: 1,
+            },
+          },
+        ],
+        innerShadow: [],
+        dropShadow: [],
+        stroke: [],
+      },
+    },
+  },
+  content: {
+    label: "hibob",
+    iconLeft: {
+      icon: faChessQueen,
+      animateOnPress: "hide",
+    },
+    iconRight: {
+      icon: faChessQueen,
+      animateOnPress: "show",
+    },
+  },
 };
 </script>

@@ -1,66 +1,35 @@
 <template>
-  <div
-    ref="BCR"
-    :class="$style.outer"
-    v-on="eventHandlers.notPassive.other"
-    @mousedown="eventHandlers.notPassive.mouse.mousedown"
-    @mouseup="eventHandlers.notPassive.mouse.mouseup"
-    @mousemove="eventHandlers.notPassive.mouse.mousemove"
-    @mouseleave="eventHandlers.notPassive.mouse.mouseleave"
-    @touchstart.passive="eventHandlers.passive.touch.touchstart"
-    @touchmove.passive="eventHandlers.passive.touch.touchmove"
-    @touchend.passive="eventHandlers.passive.touch.touchend"
-    @touchcancel.passive="eventHandlers.passive.touch.touchcancel"
-    @wheel.passive="eventHandlers.passive.wheel.wheel"
-  >
-    <div :class="$style.inner">
-      <slot> isPressed: {{ prev.pointerInput }} </slot>
-    </div>
+  <div ref="BCR" :style="container">
+    <slot> isPressed: {{ prev.pointerInput }} </slot>
   </div>
+  <!-- <div ref="BCR" :style="pointerDetector" /> -->
 </template>
 
 <script lang="ts" setup>
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
-import { computed, watch, ref, Ref, reactive } from "vue";
-
 import {
-  EventInfo,
-  PointerInput,
-  FocusInput,
-  KeyboardInput,
-  ScrollInput,
-  DragInput,
-} from "@incremental.design/device-input-event-handlers";
+  computed,
+  watch,
+  ref,
+  Ref,
+  reactive,
+  CSSProperties,
+  ComputedRef,
+} from "vue";
 
-import { State, StateChange } from "./useEmits";
-import p from "./useProps";
-import useMakeEventHandlers, { PreviousInputs } from "./useMakeEventHandlers";
+import { EventInfo } from "@incremental.design/device-input-event-handlers";
+
+import e, { State } from "./useEmits";
+import p, { Affordances } from "./useProps";
+// import useMakeEventHandlers, { PreviousInputs } from "./useMakeEventHandlers";
 import useMakeFiniteStateMachine from "./useMakeFiniteStateMachine";
+
+import listeners, { PreviousInputs } from "./useEventListeners";
 
 const props = defineProps(p);
 
-/**
- * @emits stateChange - an event that contains a {@link StateChange}. This event is emitted any time the state of base component changes. It includes the {@link State}s that base component has, and the array of {@link EventInfo} that caused the state to change.
- *
- * @emits pointerInput - an event that contains a {@link PointerInput}. This event is emitted every time a pointer, such as a mouse cursor or touch point interacts with base component.
- *
- * @emit focusInput - an event that contains a {@link FocusInput}. This event is emitted every time base component gains or loses focus.
- *
- * @emit keyboardInput - an event that contains a {@link KeyboardInput}. This event is emitted every time the base component receives a keypress.
- *
- * @emit scrollInput - an event that contains a {@link ScrollInput}. This event is emitted every time the base component receives wheel or pointer input that results in a scroll event.
- *
- * @emit dragInput - an event that contains a {@link DragInput}. This event is emitted every time the base component is dragged or dropped.
- */
-const emit = defineEmits<{
-  (e: "stateChange", payload: StateChange): void;
-  (e: "pointerInput", payload: EventInfo<PointerInput>): void;
-  (e: "focusInput", payload: EventInfo<FocusInput>): void;
-  (e: "keyboardInput", payload: EventInfo<KeyboardInput>): void;
-  (e: "scrollInput", payload: EventInfo<ScrollInput>): void;
-  (e: "dragInput", payload: EventInfo<DragInput>): void;
-}>();
+const emit = defineEmits(e);
 
 const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
@@ -88,9 +57,91 @@ const prev: PreviousInputs = reactive({
 
 const FSM = useMakeFiniteStateMachine();
 
-const makeEventHandlers = useMakeEventHandlers(prev, FSM);
+/* add and remove event listeners whenever affordances change */
 
-const eventHandlers = computed(() => makeEventHandlers({ ...props }));
+const a: ComputedRef<Affordances> = computed(() => ({
+  isHoverable: props.isHoverable,
+  isPressable: props.isPressable,
+  isPeekable: props.isPeekable,
+  isScrollable: props.isScrollable,
+  isSwipeable: props.isSwipeable,
+  isToggleable: props.isToggleable,
+  isDraggable: props.isDraggable,
+  isSelectable: props.isSelectable,
+  isFocusable: props.isFocusable,
+  isEditable: props.isEditable,
+}));
+
+watch(
+  [a, () => !!BCR.value],
+  (current, previous) => {
+    const isMounted = current[1];
+    const wasMounted = previous[1];
+
+    if (!isMounted) return;
+
+    const c = current[0];
+    const p =
+      !wasMounted /* we HAVE to discard previous[0] if the component wasn't mounted, because the affordances are set BEFORE the component is mounted */ ||
+      !previous[0]
+        ? {
+            isHoverable: false,
+            isPressable: false,
+            isPeekable: false,
+            isScrollable: false,
+            isSwipeable: false,
+            isToggleable: false,
+            isDraggable: false,
+            isSelectable: false,
+            isFocusable: false,
+            isEditable: false,
+          }
+        : previous[0];
+
+    const listenersToAdd: Set<string> = new Set();
+
+    const listenersToRemove: Set<string> = new Set();
+
+    const affordances = Object.keys(c);
+
+    affordances.forEach((affordance) => {
+      if (c[affordance] && !p[affordance]) {
+        listenersToAdd.add(affordance);
+      } else if (!c[affordance] && p[affordance]) {
+        listenersToRemove.add(affordance);
+      }
+    });
+
+    /* now, add and remove depdendent affordances */
+    [listenersToAdd, listenersToRemove].forEach((set) => {
+      // if(set.has('isEditable')) => set.add('') // what do we add for isEditable??
+      if (set.has("isFocusable")) set.add("isPressable");
+      if (set.has("isSelectable")) set.add("isPressable");
+      // if(set.has("isDraggable")) set.add("") // what do we add for isDraggable??
+      // if(set.has("isSwipeable")) set.add("") // what do we add for isSwipeable??
+      // if (set.has("isScrollable")) set.add("") // what do we add for isScrollable??
+      if (set.has("isPeekable")) set.add("isPressable");
+      if (set.has("isPressable")) set.add("isHoverable");
+    });
+
+    /* finally, if an affordance is to be removed, just to be added back again, don't do anything */
+    affordances.forEach((affordance) => {
+      if (listenersToAdd.has(affordance) && listenersToRemove.has(affordance)) {
+        listenersToAdd.delete(affordance);
+        listenersToRemove.delete(affordance);
+      }
+    });
+
+    const el = BCR.value as HTMLElement;
+
+    affordances.forEach((affordance) => {
+      if (listenersToRemove.has(affordance))
+        listeners[affordance](false, el, prev);
+      if (listenersToAdd.has(affordance)) listeners[affordance](true, el, prev);
+    });
+  },
+  { deep: true }
+);
 
 const selectThisEl = () => {
   const El = BCR.value ? BCR.value : false;
@@ -120,7 +171,6 @@ watch(
   (current) => {
     if (!current) return;
     const P = current;
-    // emit("pointerInput", P);
     emit("pointerInput", P);
     const XP = P.input.relative.xPercent;
     const YP = P.input.relative.yPercent;
@@ -402,20 +452,13 @@ watch(
 );
 
 const userSelect = computed(() => (props.isSelectable ? "all" : "none"));
-const pointerEvents = computed(() => (props.isFocusable ? "auto" : "none"));
+// const pointerEvents = computed(() => (props.isFocusable ? "auto" : "none"));
+
+/* inline CSS */
+
+const container: ComputedRef<CSSProperties> = computed(() => ({
+  // pointerEvents: pointerEvents.value,
+  userSelect: userSelect.value,
+  position: "relative",
+}));
 </script>
-
-<style module>
-.outer {
-  touch-action: manipulation;
-  position: relative;
-  user-select: v-bind(userSelect);
-}
-
-.inner {
-  pointer-events: v-bind(pointerEvents);
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-</style>

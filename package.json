@@ -11,7 +11,8 @@
     "create-package": "./createPackage.js",
     "clean": "lerna clean",
     "lint": "lerna run lint",
-    "dev": "lerna run dev"
+    "dev": "lerna run dev",
+    "serve": "lerna run serve"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

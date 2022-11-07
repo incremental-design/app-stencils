@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { RGBA, BlendMode, RGBAtoCSS, isColor, isBlendMode } from "./Color";
 
 export type Font<Color> = {
@@ -6,8 +7,8 @@ export type Font<Color> = {
   weight: number;
   color: Color;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
-  tracking?: number /* in px, omitted if not specified */;
-  leading?: number /* in px, also known as line height. Omitted if not specified */;
+  tracking?: number /* in root-ephemeral-units (rem), omitted if not specified */;
+  leading?: number /* in root-ephemeral-units (rem), also known as line height. Omitted if not specified */;
   align?: FontAlign /* defaults to 'left' */;
   verticalAlign?: FontVerticalAlign /* defaults to 'top' */;
 };
@@ -29,7 +30,17 @@ export const enum FontVerticalAlign {
 
 export const FontVerticalAlignStrings = ["top", "bottom", "middle"];
 
-export function makeFontCSSRules(F: Font<RGBA>) {
+export function makeFontCSSRules(F: Font<RGBA>): {
+  "font-family": string;
+  "font-size": string;
+  "font-weight": number;
+  "mix-blend-mode": string;
+} & Partial<{
+  "letter-spacing": string;
+  "line-height": string;
+  "text-align": string;
+  "align-self": string;
+}> {
   const {
     typeface,
     size,
@@ -44,13 +55,13 @@ export function makeFontCSSRules(F: Font<RGBA>) {
 
   const rules = {
     "font-family": typeface.join(", "),
-    "font-size": `${size}px` /* should we append px here? what if we need to change units elsewhere? */,
+    "font-size": `${size}rem`,
     "font-weight": weight,
     color: RGBAtoCSS(color),
     "mix-blend-mode": blendMode ? blendMode : "normal",
   };
-  if (tracking) Object.assign(rules, { "letter-spacing": `${tracking}px` });
-  if (leading) Object.assign(rules, { "line-height": `${leading}px` });
+  if (tracking) Object.assign(rules, { "letter-spacing": `${tracking}rem` });
+  if (leading) Object.assign(rules, { "line-height": `${leading}rem` });
   if (align) Object.assign(rules, { "text-align": align });
   if (verticalAlign)
     Object.assign(rules, {

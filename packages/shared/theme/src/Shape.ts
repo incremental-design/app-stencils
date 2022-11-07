@@ -1,35 +1,39 @@
 /**
  * A shape to apply to a DOM node
  *
- * @param minWidth - the minimum width of the shape in pixels (px) This must be a value greater than 0. this is required.
+ * @param minWidth - the minimum width of the shape in root-ephemeral-units (rem) This must be a value greater than 0. this is required.
  *
- * @param maxWidth - the optional maximum width of the shape in pixels (px). Defaults to the minWidth.
+ * @param maxWidth - the optional maximum width of the shape in root-ephemeral-units (rem). Defaults to the minWidth.
  *
- * @param minHeight - the minimum height of the shape in pixels (px) This must be a value greater than 0. this is required.
+ * @param minHeight - the minimum height of the shape in root-ephemeral-units (rem) This must be a value greater than 0. this is required.
  *
- * @param maxHeight - the optional maximum height of the shape in pixels (px). Defaults to the minHeight.
+ * @param maxHeight - the optional maximum height of the shape in root-ephemeral-units (rem). Defaults to the minHeight.
  *
- * @param borderRadius - the radius of the shape in pixels (px) This must be a value greater than 0. This is required.
+ * @param borderRadius - the radius of the shape in root-ephemeral-units (rem) This must be a value greater than 0. This is required.
  *
  */
 export type Shape = {
-  minWidth: number /* in px */;
-  maxWidth?: number /* in px */;
-  minHeight: number /* in px */;
-  maxHeight?: number /* in px */;
-  borderRadius: number /* in px*/;
+  minWidth: number /* in rem */;
+  maxWidth?: number /* in rem */;
+  minHeight: number /* in rem */;
+  maxHeight?: number /* in rem */;
+  borderRadius: number /* in rem*/;
 };
 
 export function makeShapeCSSRules(s: Shape) {
   const { minWidth, maxWidth, minHeight, maxHeight, borderRadius } = s;
+
+  const mwh = {};
+  if (maxHeight) Object.assign(mwh, { "max-height": `${maxHeight}rem` });
+  if (maxWidth) Object.assign(mwh, { "max-width": `${maxWidth}rem` });
+
   return {
     display: "flex",
     "flex-direction": "row",
-    "min-width": `${minWidth}px`,
-    "max-width": `${maxWidth ? maxWidth : minWidth}px`,
-    "min-height": `${minHeight}px`,
-    "max-height": `${maxHeight ? maxHeight : minHeight}px`,
-    "border-radius": `${borderRadius}px`,
+    "min-width": `${minWidth}rem`,
+    "min-height": `${minHeight}rem`,
+    "border-radius": `${borderRadius}rem`,
+    ...mwh,
   };
 }
 
@@ -40,4 +44,5 @@ export const validateShape = (s: unknown) => {
   if (typeof borderRadius !== "number") return false;
   if (maxWidth && typeof maxWidth !== "number") return false;
   if (maxHeight && typeof maxHeight !== "number") return false;
+  return true;
 };
