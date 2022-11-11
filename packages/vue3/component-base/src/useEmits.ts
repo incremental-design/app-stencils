@@ -30,7 +30,7 @@ export const enum State {
   peeking = "peeking",
   scrolling = "scrolling",
   swiping = "swiping",
-  toggled = "toggling",
+  toggled = "toggled",
   dragging = "dragging",
   selected = "selected",
   focused = "focused",

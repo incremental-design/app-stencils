@@ -118,6 +118,7 @@ watch(
       if (set.has("isFocusable")) set.add("isPressable");
       if (set.has("isSelectable")) set.add("isPressable");
       // if(set.has("isDraggable")) set.add("") // what do we add for isDraggable??
+      if (set.has("isToggleable")) set.add("isPressable");
       // if(set.has("isSwipeable")) set.add("") // what do we add for isSwipeable??
       // if (set.has("isScrollable")) set.add("") // what do we add for isScrollable??
       if (set.has("isPeekable")) set.add("isPressable");

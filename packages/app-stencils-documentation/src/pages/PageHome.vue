@@ -12,12 +12,12 @@
       grid-row: 0 span 1;
     "
   >
-    <Button :options="buttonOptions" />
-    <Button :options="buttonOptions" />
+    <Button ref="btn" :options="buttonOptions" />
   </div>
 </template>
 
 <script setup lang="ts">
+import { Ref, ref, watch, computed } from "vue";
 import VideoPlayer, {
   VideoPlayerOptions,
   VideoPlayerPlayback,
@@ -145,102 +145,207 @@ const streamPlayback: VideoPlayerPlayback = {
 const buttonOptions: ButtonProps = {
   style: {
     font: {
-      none: {
-        typeface: ["Helvetica", "Arial", "Sans Serif"],
-        size: 1,
-        weight: 400,
-        color: {
-          r: 0,
-          g: 0,
-          b: 0,
-          a: 1,
+      notToggled: {
+        none: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 0,
+            b: 0,
+            a: 1,
+          },
+        },
+        hovering: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 0,
+            b: 255,
+            a: 1,
+          },
+        },
+        pressing: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 255,
+            b: 0,
+            a: 1,
+          },
         },
       },
-      hovering: {
-        typeface: ["Helvetica", "Arial", "Sans Serif"],
-        size: 1,
-        weight: 400,
-        color: {
-          r: 0,
-          g: 0,
-          b: 255,
-          a: 1,
+      toggled: {
+        none: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 255,
+            b: 0,
+            a: 1,
+          },
         },
-      },
-      pressing: {
-        typeface: ["Helvetica", "Arial", "Sans Serif"],
-        size: 1,
-        weight: 400,
-        color: {
-          r: 0,
-          g: 255,
-          b: 0,
-          a: 1,
+        hovering: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 0,
+            b: 255,
+            a: 1,
+          },
+        },
+        pressing: {
+          typeface: ["Helvetica", "Arial", "Sans Serif"],
+          size: 1,
+          weight: 400,
+          color: {
+            r: 0,
+            g: 255,
+            b: 0,
+            a: 1,
+          },
         },
       },
     },
     shape: {
-      none: {
-        minWidth: 3,
-        minHeight: 3,
-        borderRadius: 1.5,
+      notToggled: {
+        none: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
+        hovering: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
+        pressing: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
       },
-      hovering: {
-        minWidth: 3,
-        minHeight: 3,
-        borderRadius: 1.5,
-      },
-      pressing: {
-        minWidth: 3,
-        minHeight: 3,
-        borderRadius: 1.5,
+      toggled: {
+        none: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
+        hovering: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
+        pressing: {
+          minWidth: 3,
+          minHeight: 3,
+          borderRadius: 1.5,
+        },
       },
     },
     elevation: {
-      none: {
-        fill: [
-          {
-            color: {
-              r: 128,
-              g: 128,
-              b: 128,
-              a: 1,
+      notToggled: {
+        none: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
             },
-          },
-        ],
-        innerShadow: [],
-        dropShadow: [],
-        stroke: [],
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
+        hovering: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
+            },
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
+        pressing: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
+            },
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
       },
-      hovering: {
-        fill: [
-          {
-            color: {
-              r: 128,
-              g: 128,
-              b: 128,
-              a: 1,
+      toggled: {
+        none: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
             },
-          },
-        ],
-        innerShadow: [],
-        dropShadow: [],
-        stroke: [],
-      },
-      pressing: {
-        fill: [
-          {
-            color: {
-              r: 128,
-              g: 128,
-              b: 128,
-              a: 1,
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
+        hovering: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
             },
-          },
-        ],
-        innerShadow: [],
-        dropShadow: [],
-        stroke: [],
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
+        pressing: {
+          fill: [
+            {
+              color: {
+                r: 128,
+                g: 128,
+                b: 128,
+                a: 1,
+              },
+            },
+          ],
+          innerShadow: [],
+          dropShadow: [],
+          stroke: [],
+        },
       },
     },
   },
@@ -255,5 +360,19 @@ const buttonOptions: ButtonProps = {
       animateOnPress: "show",
     },
   },
+  isToggleable: true,
 };
+
+const btn: Ref<InstanceType<typeof Button> | null> = ref(null);
+
+const btnToggled = computed(() => {
+  return btn.value ? btn.value.isToggled : false;
+});
+
+watch(
+  () => btnToggled.value,
+  (isToggled) => {
+    console.log(isToggled);
+  }
+);
 </script>

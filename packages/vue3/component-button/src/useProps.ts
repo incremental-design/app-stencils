@@ -14,19 +14,40 @@ import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
  */
 export interface ButtonStyles {
   font: {
-    none: Font<RGBA>;
-    hovering: Font<RGBA>;
-    pressing: Font<RGBA>;
+    notToggled: {
+      none: Font<RGBA>;
+      hovering: Font<RGBA>;
+      pressing: Font<RGBA>;
+    };
+    toggled: {
+      none: Font<RGBA>;
+      hovering: Font<RGBA>;
+      pressing: Font<RGBA>;
+    };
   };
   shape: {
-    none: Shape;
-    hovering: Shape;
-    pressing: Shape;
+    notToggled: {
+      none: Shape;
+      hovering: Shape;
+      pressing: Shape;
+    };
+    toggled: {
+      none: Shape;
+      hovering: Shape;
+      pressing: Shape;
+    };
   };
   elevation: {
-    none: Elevation<RGBA>;
-    hovering: Elevation<RGBA>;
-    pressing: Elevation<RGBA>;
+    notToggled: {
+      none: Elevation<RGBA>;
+      hovering: Elevation<RGBA>;
+      pressing: Elevation<RGBA>;
+    };
+    toggled: {
+      none: Elevation<RGBA>;
+      hovering: Elevation<RGBA>;
+      pressing: Elevation<RGBA>;
+    };
   };
 }
 
@@ -53,6 +74,8 @@ export interface Icon {
  *
  * @param content.iconRight - an object of type {@link Icon}
  *
+ * @param isToggleable - a boolean indicating whether the button is a toggle
+ *
  */
 export interface ButtonProps {
   style: ButtonStyles;
@@ -61,14 +84,29 @@ export interface ButtonProps {
     iconLeft?: Icon;
     iconRight?: Icon;
   };
+  isToggleable: boolean;
 }
 
 const validateStyle = (s: unknown) => {
   const style = s as ButtonStyles;
   if (!style.font || !style.shape || !style.elevation) return false;
-  if (!Object.values(style.font).every((f) => validateFont(f))) return false;
-  if (!Object.values(style.shape).every((s) => validateShape(s))) return false;
-  if (!Object.values(style.elevation).every((e) => validateElevation(e)))
+  if (!Object.values(style.font.notToggled).every((f) => validateFont(f)))
+    return false;
+  if (!Object.values(style.shape.notToggled).every((s) => validateShape(s)))
+    return false;
+  if (
+    !Object.values(style.elevation.notToggled).every((e) =>
+      validateElevation(e)
+    )
+  )
+    return false;
+  if (!Object.values(style.font.toggled).every((f) => validateFont(f)))
+    return false;
+  if (!Object.values(style.shape.toggled).every((s) => validateShape(s)))
+    return false;
+  if (
+    !Object.values(style.elevation.toggled).every((e) => validateElevation(e))
+  )
     return false;
   return true;
 };
@@ -90,6 +128,7 @@ const validateContent = (c: unknown) => {
 
 const validate = (o: unknown) => {
   const options = o as ButtonProps;
+  if (!(typeof options.isToggleable === "boolean")) return false;
   if (!options.style || !options.content) return false;
   if (!validateContent(options.content) || !validateStyle(options.style))
     return false;

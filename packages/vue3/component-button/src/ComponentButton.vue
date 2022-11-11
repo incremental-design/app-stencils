@@ -1,5 +1,10 @@
 <template>
-  <componentBase is-hoverable is-pressable @state-change="handleStateChange">
+  <componentBase
+    is-hoverable
+    is-pressable
+    :is-toggleable="isToggleable"
+    @state-change="handleStateChange"
+  >
     <template #default>
       <div :style="fill" role="button">
         <slot name="icon-left">
@@ -46,7 +51,16 @@ const props = defineProps(useProps);
 const emit = defineEmits<{
   (event: "pressing"): void;
   (event: "hovering"): void;
+  (event: "toggled"): boolean;
 }>();
+
+/* if button is toggle, set toggle */
+const isToggleable = computed(() => props.options?.isToggleable || false);
+const isToggled = ref(false);
+
+defineExpose({
+  isToggled,
+});
 
 /* set button icon and label */
 
@@ -107,13 +121,17 @@ watch(
       return "none";
     })();
 
-    if (s === "pressing") emit("pressing");
+    isToggled.value = currentState.includes(State.toggled);
+
+    const t = isToggled.value ? "toggled" : "notToggled";
+
+    if (s === "pressing");
     if (s === "hovering") emit("hovering");
 
-    fontCSS.value = { ...makeFontCSSRules(font[s]) };
-    shapeCSS.value = { ...makeShapeCSSRules(shape[s]) };
+    fontCSS.value = { ...makeFontCSSRules(font[t][s]) };
+    shapeCSS.value = { ...makeShapeCSSRules(shape[t][s]) };
     elevationCSS.value = {
-      ...makeElevationCSSRules(elevation[s]),
+      ...makeElevationCSSRules(elevation[t][s]),
     };
 
     if (!buttonContent) return;

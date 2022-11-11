@@ -132,6 +132,14 @@ const listenForSwipe = (
   return; // currently this is a no-op
 };
 
+const listenForToggle = (
+  enable: boolean,
+  element: HTMLElement,
+  prev: PreviousInputs
+) => {
+  return; // currently this is a no-op
+};
+
 const listenForDrag = (
   enable: boolean,
   element: HTMLElement,
@@ -170,6 +178,7 @@ export default {
   isPeekable: listenForPeek,
   isScrollable: listenForScroll,
   isSwipeable: listenForSwipe,
+  isToggleable: listenForToggle,
   isDraggable: listenForDrag,
   isSelectable: listenForSelect,
   isFocusable: listenForFocus,
