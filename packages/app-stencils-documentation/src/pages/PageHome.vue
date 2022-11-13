@@ -221,34 +221,88 @@ const buttonOptions: ButtonProps = {
         none: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
         hovering: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
         pressing: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
       },
       toggled: {
         none: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
         hovering: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
         pressing: {
           minWidth: 3,
           minHeight: 3,
-          borderRadius: 1.5,
+          borderRadius: {
+            top: {
+              left: 1.5,
+              right: 0,
+            },
+            bottom: {
+              left: 0,
+              right: 1.5,
+            },
+          },
         },
       },
     },

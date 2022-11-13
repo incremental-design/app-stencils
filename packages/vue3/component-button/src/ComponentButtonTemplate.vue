@@ -342,7 +342,7 @@ const styles: ComputedRef<{
 
   const padding = [0, 1].map((t) => {
     return [0, 1, 2].map((s) => {
-      return `max(0.5rem, ${shapeCSS[t][s]["border-radius"]})`;
+      return `max(0.5rem,${shapeCSS[t][s]["border-radius"].split(" ").join()})`;
     });
   });
 

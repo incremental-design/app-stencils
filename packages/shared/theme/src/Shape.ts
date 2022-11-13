@@ -17,7 +17,16 @@ export type Shape = {
   maxWidth?: number /* in rem */;
   minHeight: number /* in rem */;
   maxHeight?: number /* in rem */;
-  borderRadius: number /* in rem*/;
+  borderRadius: {
+    top: {
+      left: number /* in rem*/;
+      right: number /* in rem*/;
+    };
+    bottom: {
+      left: number /* in rem*/;
+      right: number /* in rem*/;
+    };
+  };
 };
 
 export function makeShapeCSSRules(s: Shape) {
@@ -32,16 +41,24 @@ export function makeShapeCSSRules(s: Shape) {
     "flex-direction": "row",
     "min-width": `${minWidth}rem`,
     "min-height": `${minHeight}rem`,
-    "border-radius": `${borderRadius}rem`,
+    "border-radius": `${borderRadius.top.left}rem ${borderRadius.top.right}rem ${borderRadius.bottom.right}rem ${borderRadius.bottom.left}rem`,
     ...mwh,
   };
 }
+
+const validateBorderRadius = (r: unknown) => {
+  const borderRadius = r as Shape["borderRadius"];
+  const { top, bottom } = borderRadius;
+  return [top, bottom].every((d) => {
+    return typeof d.left === "number" && typeof d.right === "number";
+  });
+};
 
 export const validateShape = (s: unknown) => {
   const { minWidth, minHeight, borderRadius, maxWidth, maxHeight } = s as Shape;
   if (typeof minWidth !== "number") return false;
   if (typeof minHeight !== "number") return false;
-  if (typeof borderRadius !== "number") return false;
+  if (!validateBorderRadius(borderRadius)) return false;
   if (maxWidth && typeof maxWidth !== "number") return false;
   if (maxHeight && typeof maxHeight !== "number") return false;
   return true;

@@ -1,5 +1,7 @@
 import ComponentButton from "./ComponentButton.vue";
-// import { ButtonProps, ButtonFontAwesomeIcon, ButtonStyles } from "./useProps";
+import ComponentButtonTemplate from "./ComponentButtonTemplate.vue";
 
 export default ComponentButton;
 export * from "./useProps";
+
+export { ComponentButtonTemplate };
