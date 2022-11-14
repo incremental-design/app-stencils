@@ -144,7 +144,7 @@ const props = {
   options: {
     type: Object as PropType<ButtonProps>,
     required: true,
-    validator: (options: any): boolean => validate(options),
+    validator: (options: unknown): boolean => validate(options),
   },
 };
 

@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "vue": "^3.2.37",
-    "@incremental.design/device-input-event-handlers": "workspace:*",
-    "@incremental.design/theme": "workspace:*"
+    "@incremental.design/device-input-event-handlers": "0.0.0",
+    "@incremental.design/theme": "0.0.0"
   },
   "devDependencies": {
     "typescript": "^4.6.4",

@@ -16,8 +16,8 @@ export default defineConfig({
     build: {
       lib: {
         entry: resolve(__dirname, 'src/index.ts'),
-        name: 'componentTabs',
-        fileName: 'componentTabs',
+        name: 'ComponentTabs',
+        fileName: 'ComponentTabs',
       },
       rollupOptions: {
       external: ['vue'],

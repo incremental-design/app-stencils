@@ -35,10 +35,10 @@ importers:
   packages/app-stencils-documentation:
     specifiers:
       '@fortawesome/pro-duotone-svg-icons': ^6.1.1
-      '@incremental.design/component-base': workspace:*
-      '@incremental.design/component-button': workspace:*
-      '@incremental.design/component-video-player': workspace:*
-      '@incremental.design/page-grid': workspace:*
+      '@incremental.design/component-base': 0.0.0
+      '@incremental.design/component-button': 0.0.0
+      '@incremental.design/component-video-player': 0.0.0
+      '@incremental.design/page-grid': 0.0.0
       '@types/node': ^18.0.3
       '@vitejs/plugin-vue': ^3.0.0
       compression: ^1.7.4
@@ -112,8 +112,8 @@ importers:
 
   packages/vue3/component-base:
     specifiers:
-      '@incremental.design/device-input-event-handlers': workspace:*
-      '@incremental.design/theme': workspace:*
+      '@incremental.design/device-input-event-handlers': 0.0.0
+      '@incremental.design/theme': 0.0.0
       '@vitejs/plugin-vue': ^3.0.0
       typescript: ^4.6.4
       vite: ^3.0.0
@@ -134,8 +134,8 @@ importers:
   packages/vue3/component-button:
     specifiers:
       '@fortawesome/vue-fontawesome': ^3.0.0
-      '@incremental.design/component-base': workspace:*
-      '@incremental.design/theme': workspace:*
+      '@incremental.design/component-base': 0.0.0
+      '@incremental.design/theme': 0.0.0
       '@vitejs/plugin-vue': ^3.0.0
       postcss-mixins: ^9.0.4
       postcss-nesting: ^10.1.10
@@ -160,18 +160,24 @@ importers:
 
   packages/vue3/component-tabs:
     specifiers:
-      '@incremental.design/component-base': latest
+      '@incremental.design/component-base': 0.0.0
+      '@incremental.design/component-button': 0.0.0
       '@vitejs/plugin-vue': ^3.0.0
+      postcss-mixins: ^9.0.4
+      postcss-nesting: ^10.1.10
       typescript: ^4.6.4
       vite: ^3.0.0
       vite-plugin-dts: ^1.4.0
       vue: ^3.2.37
-      vue-tsc: ^1.0.9
+      vue-tsc: ^1.0.0
     dependencies:
-      '@incremental.design/component-base': 0.0.1-alpha.306
+      '@incremental.design/component-base': link:../component-base
+      '@incremental.design/component-button': link:../component-button
       vue: 3.2.37
     devDependencies:
       '@vitejs/plugin-vue': 3.0.1_vite@3.0.4+vue@3.2.37
+      postcss-mixins: 9.0.4_postcss@8.4.14
+      postcss-nesting: 10.2.0_postcss@8.4.14
       typescript: 4.7.4
       vite: 3.0.4
       vite-plugin-dts: 1.4.0_vite@3.0.4
@@ -463,23 +469,6 @@ packages:
     resolution: {integrity: sha512-H9XAx3hc0BQHY6l+IFSWHDySypcXsvsuLhgYLUGywmJ5pswRVQJUHpOsobnLYp2ZUaUlKiKDrgWWhosOwAEM8Q==}
     engines: {node: '>=6.9.0'}
     dev: true
-
-  /@incremental.design/component-base/0.0.1-alpha.306:
-    resolution: {integrity: sha512-noMrRVrN/uwb62KSIfQR0HQPoe9CC+X+BIe0WODrA/H+08gIARuAaJsMp3HIG7WBfhbOCaF4HSYHki/7DxhNWg==}
-    dependencies:
-      '@incremental.design/device-input-event-handlers': 0.0.1
-      '@incremental.design/theme': 0.0.1
-      core-js: 3.24.0
-      vue: 3.2.37
-    dev: false
-
-  /@incremental.design/device-input-event-handlers/0.0.1:
-    resolution: {integrity: sha512-QKK91RyhlgsjmxNmmtW6qeFyfEo3RMxtANLg3fj86l8pHPRsxdtaHyqZMPDNTvvKcoQivW4V9//45Qd+JOrbhQ==}
-    dev: false
-
-  /@incremental.design/theme/0.0.1:
-    resolution: {integrity: sha512-QTRjrv9E7BHzcY/sKB8njpRgCglBiz7/OatJJm1pz8gQpgCLEDNltAPP0lRUPGLpReTV+QmMqCP1Es36fldYGQ==}
-    dev: false
 
   /@isaacs/string-locale-compare/1.1.0:
     resolution: {integrity: sha512-SQ7Kzhh9+D+ZW9MA0zkYv3VXhIDNx+LzM6EJ+/65I3QY+enU6Itte7E5XX7EWrqLW2FN4n06GWzBnPoC3th2aQ==}
@@ -1250,6 +1239,7 @@ packages:
     dependencies:
       '@nodelib/fs.stat': 2.0.4
       run-parallel: 1.1.10
+    dev: true
 
   /@nodelib/fs.scandir/2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -1257,16 +1247,15 @@ packages:
     dependencies:
       '@nodelib/fs.stat': 2.0.5
       run-parallel: 1.1.10
-    dev: true
 
   /@nodelib/fs.stat/2.0.4:
     resolution: {integrity: sha512-IYlHJA0clt2+Vg7bccq+TzRdJvv19c2INqBSsoOLp1je7xjtr7J26+WXR72MCdvU9q1qTzIWDfhMf+DRvQJK4Q==}
     engines: {node: '>= 8'}
+    dev: true
 
   /@nodelib/fs.stat/2.0.5:
     resolution: {integrity: sha512-RkhPPp2zrqDAQA/2jNhnztcPAlv64XdhIp7a7454A5ovI7Bukxgt7MX7udwAu3zg1DcpPU0rz3VV1SeaqvY4+A==}
     engines: {node: '>= 8'}
-    dev: true
 
   /@nodelib/fs.walk/1.2.6:
     resolution: {integrity: sha512-8Broas6vTtW4GIXTAHDoE32hnN2M5ykgCpWGbuXHQ15vEMqr23pB76e/GZcYsZCHALv50ktd24qhEyKr6wBtow==}
@@ -1274,6 +1263,7 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.4
       fastq: 1.10.0
+    dev: true
 
   /@nodelib/fs.walk/1.2.8:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
@@ -1281,7 +1271,6 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.10.0
-    dev: true
 
   /@npmcli/arborist/5.3.0:
     resolution: {integrity: sha512-+rZ9zgL1lnbl8Xbb1NQdMjveOMwj4lIYfcDtyJHHi5x4X8jtR6m8SXooJMZy5vmFVZ8w7A2Bnd/oX9eTuU8w5A==}
@@ -2748,11 +2737,6 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
-  /core-js/3.24.0:
-    resolution: {integrity: sha512-IeOyT8A6iK37Ep4kZDD423mpi6JfPRoPUdQwEWYiGolvn4o6j2diaRzNfDfpTdu3a5qMbrGUzKUpYpRY8jXCkQ==}
-    requiresBuild: true
-    dev: false
-
   /core-util-is/1.0.2:
     resolution: {integrity: sha512-3lqz5YjWTYnW6dlDa5TLaTCcShfar1e40rmcJVwCBJC6mWlFuj0eCHIElmG1g5kyuJ/GD+8Wn4FFCcz4gJPfaQ==}
     dev: true
@@ -3538,8 +3522,8 @@ packages:
     resolution: {integrity: sha512-DVj4CQIYYow0BlaelwK1pHl5n5cRSJfM60UA0zK891sVInoPri2Ekj7+e1CT3/3qxXenpI+nBBmQAcJPJgaj4w==}
     engines: {node: '>=8.6.0'}
     dependencies:
-      '@nodelib/fs.stat': 2.0.4
-      '@nodelib/fs.walk': 1.2.6
+      '@nodelib/fs.stat': 2.0.5
+      '@nodelib/fs.walk': 1.2.8
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.4
