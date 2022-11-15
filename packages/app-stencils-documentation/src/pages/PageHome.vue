@@ -1,11 +1,11 @@
 <!-- eslint-disable vue/max-attributes-per-line -->
 <template>
-  <!-- <VideoPlayer
+  <VideoPlayer
     :playback="filePlayback"
     :options="fileOptions"
     @click="playPauseFile"
-  /> -->
-  <!-- <VideoPlayer v-model:playback="streamPlayback" :options="streamOptions" /> -->
+  />
+  <VideoPlayer v-model:playback="streamPlayback" :options="streamOptions" />
   <div
     style="
       grid-column: left-content-start / left-content-end;
@@ -22,7 +22,6 @@ import VideoPlayer, {
   VideoPlayerOptions,
   VideoPlayerPlayback,
 } from "@incremental.design/component-video-player";
-import "@incremental.design/component-video-player/dist/style.css"; // todo: come up with a cleaner way to import styles
 import Button, { ButtonProps } from "@incremental.design/component-button";
 import { reactive } from "vue";
 import { faChessQueen } from "@fortawesome/pro-duotone-svg-icons";

@@ -1,11 +1,13 @@
 <template>
-  <div ref="frameElement" :class="$style.frame">
-    <video v-if="mounted" ref="videoElement" :style="scaleVideo" />
+  <div ref="frameElement" :style="frame">
+    <video v-if="mounted" ref="videoElement" :style="[scaleVideo, video]" />
     <img
+      v-if="iA.src"
       :src="iA.src.url"
       :srcset="iA.srcset"
       :sizes="iA.sizes"
       :alt="iA.alt"
+      :style="img"
     />
   </div>
 </template>
@@ -20,6 +22,7 @@ import {
   watch,
   Ref,
   StyleValue,
+  CSSProperties,
 } from "vue";
 import initVideo from "./initVideo";
 import { options, playback, VideoSource } from "./useProps";
@@ -36,29 +39,35 @@ onMounted(() => (mounted.value = true));
 const iA /* (i)mage(A)ttributes */ = reactive({
   /* for browsers that don't support srcset, fall back to the biggest poster image */
   src: computed(() =>
-    props.options.content.posters
-      .map((poster) => poster)
-      .sort((a, b) => {
-        const awh = a.w * a.h;
-        const bwh = b.w * b.h;
-        if (awh < bwh) return -1;
-        if (awh === bwh) return 0;
-        return 1;
-      })
-      .pop()
+    props.options
+      ? props.options.content.posters
+          .map((poster) => poster)
+          .sort((a, b) => {
+            const awh = a.w * a.h;
+            const bwh = b.w * b.h;
+            if (awh < bwh) return -1;
+            if (awh === bwh) return 0;
+            return 1;
+          })
+          .pop()
+      : false
   ),
   srcset: computed(() =>
-    props.options.content.posters
-      .map((poster) => `${poster.url} ${poster.w}w`)
-      .reduce((acc, curr) => `${acc}, ${curr}`)
+    props.options
+      ? props.options.content.posters
+          .map((poster) => `${poster.url} ${poster.w}w`)
+          .reduce((acc, curr) => `${acc}, ${curr}`)
+      : ""
   ),
   /* assume that the video will stretch to fill the viewport */
   sizes: computed(() =>
-    props.options.content.posters
-      .map((poster) => `(min-width: ${poster.w}px) ${poster.w}px`)
-      .reduce((acc, curr) => `${acc}, ${curr}`)
+    props.options
+      ? props.options.content.posters
+          .map((poster) => `(min-width: ${poster.w}px) ${poster.w}px`)
+          .reduce((acc, curr) => `${acc}, ${curr}`)
+      : ""
   ),
-  alt: computed(() => props.options.content.title),
+  alt: computed(() => (props.options ? props.options.content.title : "")),
 });
 
 /* set video playback controls */
@@ -139,9 +148,10 @@ const scaleVideo = computed(() => {
 const videoInitialized = ref(false);
 
 watch(
-  [() => props.options.content.sources, () => videoElement.value],
+  [() => props.options, () => videoElement.value],
   async (current) => {
-    const [sources, v] = current;
+    const [options, v] = current;
+    if (!options) return;
     if (v === null || frameElement.value === null) return;
     videoInitialized.value = false;
     destroyPlayer();
@@ -158,12 +168,12 @@ watch(
       destroy,
       useSource,
     } = await initVideo(
-      sources,
-      props.options.content.posters,
+      options.content.sources,
+      options.content.posters,
       v,
       clientWidth,
       clientHeight,
-      props.playback.startAt / 1000
+      props.playback ? props.playback.startAt / 1000 : 0
     );
 
     playVideo = play;
@@ -179,14 +189,14 @@ watch(
 
     stopTimeUpdate = getTimeUpdateVideo(updateCurrentTimeMs);
 
-    loopVideo(props.playback.loop);
+    loopVideo(props.playback ? props.playback.loop : false);
 
-    const volume = props.playback.volume;
+    const volume = props.playback ? props.playback.volume : 0;
 
     setVolumeVideo(volume);
     muteVideo(volume === 0);
 
-    const rate = props.playback.rate;
+    const rate = props.playback ? props.playback.rate : 0;
     if (rate !== 0) {
       setPlaybackRateVideo(rate);
       playVideo();
@@ -206,23 +216,20 @@ onUnmounted(() => {
 
 /* watch for changes to playback */
 watch(
-  [
-    () => props.playback.volume,
-    () => props.playback.rate,
-    () => props.playback.loop,
-    () => props.playback.startAt,
-  ],
+  () => props.playback,
+
   (current, previous) => {
     if (!videoInitialized.value) return;
+    if (!current || !previous) return;
 
-    const cV = current[0];
-    const pV = previous[0];
-    const cR = current[1];
-    const pR = previous[1];
-    const cL = current[2];
-    const pL = previous[2];
-    const cS = current[3];
-    const pS = previous[3];
+    const cV = current.volume;
+    const pV = previous.volume;
+    const cR = current.rate;
+    const pR = previous.rate;
+    const cL = current.loop;
+    const pL = previous.loop;
+    const cS = current.startAt;
+    const pS = previous.startAt;
 
     if (cV !== pV) {
       setVolumeVideo(cV);
@@ -246,13 +253,43 @@ watch(
 );
 
 /* bind width and height to <style> tag */
-const width = computed(() => props.options.content.dimensions.width);
-const height = computed(() => props.options.content.dimensions.height);
+const width = computed(() =>
+  props.options ? props.options.content.dimensions.width : 0
+);
+const height = computed(() =>
+  props.options ? props.options.content.dimensions.height : 0
+);
 
 /* hide the fallback image as soon as the video is mounted, because the image will be shoved into the poster attribute */
 const fallbackOpacity = computed(() => (mounted.value ? 0 : 1));
 
 // todo: figure out how to package multi-track streams so that there is a video for light mode and a video for dark mode, and the stream can auto-switch between the modes
+
+/* calculate inline CSS */
+
+const frame = computed(() => {
+  return {
+    position: "relative",
+    width: width.value,
+    height: height.value,
+  } as CSSProperties;
+});
+
+const img = computed(() => {
+  return {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    objectFit: "fill",
+    opacity: fallbackOpacity.value,
+  } as CSSProperties;
+});
+
+const video = computed(() => {
+  return {
+    position: "absolute",
+  } as CSSProperties;
+});
 </script>
 
 <style lang="postcss" module>
