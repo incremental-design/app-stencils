@@ -105,6 +105,7 @@ export default defineConfig({
         entry: resolve(__dirname, 'src/index.ts'),
         name: '${fileName}',
         fileName: '${fileName}',
+        formats: ["cjs", "es"],
       },
       ${
         isVuePackage
