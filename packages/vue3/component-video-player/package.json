@@ -9,12 +9,6 @@
   "main": "dist/ComponentVideoPlayer.umd.cjs",
   "module": "dist/ComponentVideoPlayer.js",
   "types": "dist/types/ComponentVideoPlayer.d.ts",
-  "exports": {
-    ".": {
-      "import": "dist/ComponentVideoPlayer.js",
-      "require": "dist/ComponentVideoPlayer.umd.cjs"
-    }
-  },
   "scripts": {
     "build": "vue-tsc --noEmit && vite build",
     "lint": "eslint src/**/*{.vue,.ts} --fix"
