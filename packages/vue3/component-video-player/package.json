@@ -6,7 +6,7 @@
   "author": "Ajay Ganapathy <ajay@incremental.design>",
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/ComponentVideoPlayer.umd.cjs",
+  "main": "dist/ComponentVideoPlayer.cjs",
   "module": "dist/ComponentVideoPlayer.js",
   "types": "dist/types/ComponentVideoPlayer.d.ts",
   "scripts": {

@@ -18,6 +18,7 @@ export default defineConfig({
       entry: resolve(__dirname, "src/index.ts"),
       name: "ComponentVideoPlayer",
       fileName: "ComponentVideoPlayer",
+      formats: ["cjs", "es"],
     },
     rollupOptions: {
       external: ["vue"],
