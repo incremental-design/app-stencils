@@ -3,7 +3,7 @@
   "private": false,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/ComponentBase.umd.cjs",
+  "main": "dist/ComponentBase.cjs",
   "module": "dist/ComponentBase.js",
   "types": "dist/types/ComponentBase.d.ts",
   "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",

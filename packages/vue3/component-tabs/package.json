@@ -6,7 +6,7 @@
   "author": "Ajay Ganapathy <ajay@incremental.design>",
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/ComponentTabs.umd.cjs",
+  "main": "dist/ComponentTabs.cjs",
   "module": "dist/ComponentTabs.js",
   "types": "dist/types/ComponentTabs.d.ts",
   "scripts": {

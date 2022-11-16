@@ -56,7 +56,7 @@ const makePackageJSON = (entryFileName, packageName, isVuePackage) =>
       author: "Ajay Ganapathy <ajay@incremental.design>",
       version,
       type: "module",
-      main: `dist/${entryFileName}.umd.cjs`,
+      main: `dist/${entryFileName}.cjs`,
       module: `dist/${entryFileName}.js`,
       types: `dist/types/${entryFileName}.d.ts`,
       scripts: {

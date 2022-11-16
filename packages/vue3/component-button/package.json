@@ -6,7 +6,7 @@
   "author": "Ajay Ganapathy <ajay@incremental.design>",
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/ComponentButton.umd.cjs",
+  "main": "dist/ComponentButton.cjs",
   "module": "dist/ComponentButton.js",
   "types": "dist/types/ComponentButton.d.ts",
   "scripts": {
