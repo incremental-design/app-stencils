@@ -124,6 +124,27 @@ const videoElement: Ref<HTMLVideoElement | null> = ref(null);
 
 const frameElement: Ref<HTMLElement | null> = ref(null);
 
+/* watch the size of the frame */
+const frameWidth = ref(0);
+const frameHeight = ref(0);
+let disconnectResizeObserver = ref(() => {
+  return; /* use a no-op to establish function signature */
+});
+
+onMounted(() => {
+  const f = frameElement.value as HTMLElement;
+  const resizeObserver = new ResizeObserver(() => {
+    const { clientWidth, clientHeight } = f;
+    frameWidth.value = clientWidth;
+    frameHeight.value = clientHeight;
+    console.log("hibob");
+  });
+  resizeObserver.observe(f);
+  disconnectResizeObserver.value = () => resizeObserver.disconnect(); // is there any performance advantage to passing a single resize observer into this component??
+});
+
+onUnmounted(() => disconnectResizeObserver.value());
+
 const source: Ref<VideoSource | null> = ref(null);
 
 const scaleVideo = computed(() => {
@@ -133,11 +154,9 @@ const scaleVideo = computed(() => {
       height: "100%",
       objectFit: "fill",
     } as StyleValue;
-
-  const { clientWidth, clientHeight } = frameElement.value;
   const { w, h } = source.value;
-  const scaleX = clientWidth / w;
-  const scaleY = clientHeight / h;
+  const scaleX = frameWidth.value / w;
+  const scaleY = frameHeight.value / h;
 
   return {
     transformOrigin: "top left",
@@ -291,21 +310,3 @@ const video = computed(() => {
   } as CSSProperties;
 });
 </script>
-
-<style lang="postcss" module>
-.frame {
-  position: relative;
-  width: v-bind(width);
-  height: v-bind(height);
-  & img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-    opacity: v-bind(fallbackOpacity);
-  }
-  & video {
-    position: absolute;
-  }
-}
-</style>

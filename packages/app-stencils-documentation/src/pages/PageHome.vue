@@ -5,7 +5,7 @@
     :options="fileOptions"
     @click="playPauseFile"
   />
-  <VideoPlayer v-model:playback="streamPlayback" :options="streamOptions" />
+  <VideoPlayer :playback="streamPlayback" :options="streamOptions" />
   <div
     style="
       grid-column: left-content-start / left-content-end;
@@ -128,8 +128,8 @@ const streamOptions: VideoPlayerOptions = {
     ],
     title: "bipbop",
     dimensions: {
-      width: "300px",
-      height: "200px",
+      width: "50vw",
+      height: "10vw",
     },
   },
 };
