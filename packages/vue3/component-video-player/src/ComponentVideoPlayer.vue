@@ -8,8 +8,10 @@
       :sizes="iA.sizes"
       :alt="iA.alt"
       :style="img"
+      fetchpriority="high"
     />
   </div>
+  <!-- see if this fetchpriority helps LCP https://web.dev/priority-hints/#the-fetchpriority-attribute -->
 </template>
 
 <script setup lang="ts">

@@ -116,8 +116,8 @@ const streamOptions: VideoPlayerOptions = {
       {
         url: "http://media.developer.dolby.com/DolbyVision_Atmos/profile5_HLS/master.m3u8",
         codec: "hvc1",
-        w: 1920,
-        h: 1080,
+        w: 3840,
+        h: 2160,
       },
       {
         url: "https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd",
