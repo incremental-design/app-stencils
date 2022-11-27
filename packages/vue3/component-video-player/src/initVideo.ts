@@ -75,7 +75,7 @@ type Controls = {
   getTimeUpdate: (updateFn: (timeMs: number) => void) => () => void;
   destroy: () => void;
   useSource: VideoSource;
-  usePoster: VideoPoster;
+  usePoster: VideoPoster | false;
 };
 
 /**
@@ -136,30 +136,36 @@ export default async (
     height: number
   ): {
     rightSizeSource: VideoSource;
-    rightSizePoster: VideoPoster;
+    rightSizePoster: VideoPoster | false;
   } => {
     const getAbsoluteDifference = (w, h) =>
       Math.abs(w - width) + Math.abs(h - height);
 
-    const rightSizeSource = sources
+    const s = sources
       .map((source) => {
         const { w, h } = source;
         const absdif = getAbsoluteDifference(w, h);
         return { source, absdif };
       })
       .sort((a, b) => a.absdif - b.absdif)
-      .shift().source;
+      .shift();
 
-    const rightSizePoster = posters
+    if (!s) throw new Error("no video sources provided");
+    const rightSizeSource = s.source;
+
+    const p = posters
       .map((poster) => {
         const { w, h } = poster;
         const absdif = getAbsoluteDifference(w, h);
         return { poster, absdif };
       })
       .sort((a, b) => a.absdif - b.absdif)
-      .shift().poster;
+      .shift();
 
-    return { rightSizeSource, rightSizePoster };
+    return {
+      rightSizeSource,
+      rightSizePoster: p ? p.poster : false,
+    };
   };
 
   const noOp = () => {
@@ -174,7 +180,7 @@ export default async (
   );
 
   const initShared = (): void => {
-    videoElement.poster = rightSizePoster.url;
+    if (rightSizePoster) videoElement.poster = rightSizePoster.url;
     videoElement.muted = true;
     videoElement.playsInline = true;
     preferredCodec === VideoCodec.hvc1 /* i.e. is safari */
