@@ -139,7 +139,6 @@ onMounted(() => {
     const { clientWidth, clientHeight } = f;
     frameWidth.value = clientWidth;
     frameHeight.value = clientHeight;
-    console.log("hibob");
   });
   resizeObserver.observe(f);
   disconnectResizeObserver.value = () => resizeObserver.disconnect(); // is there any performance advantage to passing a single resize observer into this component??

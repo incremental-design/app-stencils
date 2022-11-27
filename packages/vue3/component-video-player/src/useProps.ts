@@ -168,11 +168,7 @@ const validateOptions = (o: unknown): boolean => {
 
   if (typeof options.content.title !== "string") return false;
 
-  if (
-    options.content.posters.length === 0 ||
-    options.content.sources.length === 0
-  )
-    return false;
+  if (options.content.sources.length === 0) return false;
 
   if (!options.content.posters.every((poster) => validatePoster(poster)))
     return false;
