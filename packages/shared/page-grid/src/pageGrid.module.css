@@ -13,5 +13,5 @@
     --column-width: min(calc(50vw - var(--edge-width) - var(--nav-width)), var(--80-body-chars));
     display: grid;
     grid-template-columns: 0px [left-edge-start] 1fr [left-edge-end left-nav-start] var(--nav-width) [left-nav-end left-content-start] var(--column-width) [left-content-end middle right-content-start] var(--column-width)[right-content-end right-nav-start] var(--nav-width) [right-nav-end right-edge-start] 1fr [right-edge-end] 0px;
-    grid-template-rows: 0px [top-edge-start] var(--edge-width) [top-edge-end top-nav-start] var(--nav-height) [top-nav-end content-start] repeat(auto-fit, minmax(var(--edge-width), 1fr));
+    grid-template-rows: 0px [top-edge-start] var(--edge-width) [top-edge-end top-nav-start] var(--nav-height) [top-nav-end content-start] repeat(auto-fill, minmax(var(--edge-width), 1fr));
 }
