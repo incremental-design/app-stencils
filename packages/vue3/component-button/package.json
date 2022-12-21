@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "vue": "^3.2.37",
-    "@incremental.design/component-base": "0.0.0",
-    "@incremental.design/theme": "0.0.0",
+    "@incremental.design/component-base": "*",
+    "@incremental.design/theme": "*",
     "@fortawesome/vue-fontawesome": "^3.0.0"
   },
   "devDependencies": {
