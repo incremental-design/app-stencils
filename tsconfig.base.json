@@ -15,8 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@incremental.design/nx-plugin-component-vue3": [
-        "packages/nx-plugin/nx-plugin-component-vue3/src/index.ts"
+      "@incremental.design/nx-plugin-vue3": [
+        "libs/nx-plugins/vue3/src/index.ts"
       ]
     }
   },
