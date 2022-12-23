@@ -1,0 +1,17 @@
+{
+  "name": "nx-plugin-nx-plugin-component-vue3-e2e",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/nx-plugin/nx-plugin-component-vue3-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "nx-plugin-nx-plugin-component-vue3:build",
+        "jestConfig": "packages/nx-plugin/nx-plugin-component-vue3-e2e/jest.config.ts"
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["nx-plugin-nx-plugin-component-vue3"]
+}

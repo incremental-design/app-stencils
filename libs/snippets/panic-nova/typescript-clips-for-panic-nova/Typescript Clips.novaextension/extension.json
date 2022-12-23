@@ -1,0 +1,10 @@
+{
+  "identifier": "incremental.design.TypescriptClips",
+  "name": "Typescript Clips",
+  "organization": "incremental.design",
+  "description": "Clips for documenting Typescript, with TSdoc sections and tags.",
+  "version": "0.1.5",
+  "categories": ["clips"],
+  "repository": "https://github.com/incremental-design/app-stencils/tree/ajay-dev/libs/snippets/panic-nova/typescript-clips-for-panic-nova",
+  "bugs": "https://github.com/incremental-design/app-stencils/issues"
+}
