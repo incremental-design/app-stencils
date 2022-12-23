@@ -1,0 +1,61 @@
+{
+  "name": "nx-plugin-nx-plugin-component-vue3",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nx-plugin/nx-plugin-component-vue3/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-plugin/nx-plugin-component-vue3",
+        "main": "packages/nx-plugin/nx-plugin-component-vue3/src/index.ts",
+        "tsConfig": "packages/nx-plugin/nx-plugin-component-vue3/tsconfig.lib.json",
+        "assets": [
+          "packages/nx-plugin/nx-plugin-component-vue3/*.md",
+          {
+            "input": "./packages/nx-plugin/nx-plugin-component-vue3/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-plugin/nx-plugin-component-vue3/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-plugin/nx-plugin-component-vue3",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx-plugin/nx-plugin-component-vue3",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/nx-plugin/nx-plugin-component-vue3/**/*.ts",
+          "packages/nx-plugin/nx-plugin-component-vue3/generators.json",
+          "packages/nx-plugin/nx-plugin-component-vue3/executors.json",
+          "packages/nx-plugin/nx-plugin-component-vue3/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/nx-plugin/nx-plugin-component-vue3/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

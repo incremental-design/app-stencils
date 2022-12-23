@@ -1,4 +1,0 @@
-packages:
-  - "packages/shared/*"
-  - "packages/vue3/*"
-  - "packages/app-stencils-documentation"
