@@ -1,15 +1,14 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "incremental.design",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
-          "build",
           "lint",
-          "test",
-          "e2e"
+          "build",
+          "build:client",
+          "build:server",
+          "generate"
         ]
       }
     }
@@ -19,37 +18,24 @@
       "dependsOn": [
         "^build"
       ],
-      "inputs": [
-        "production",
-        "^production"
+      "outputs": [
+        "{projectRoot}/dist"
       ]
     },
-    "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
+    "build:client": {
+      "outputs": [
+        "{projectRoot}/dist/client"
       ]
     },
-    "test": {
-      "inputs": [
-        "default",
-        "^production",
-        "{workspaceRoot}/jest.preset.js"
+    "build:server": {
+      "outputs": [
+        "{projectRoot}/dist/server"
+      ]
+    },
+    "generate": {
+      "outputs": [
+        "{projectRoot}/dist/static"
       ]
     }
-  },
-  "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
-    "production": [
-      "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s"
-    ],
-    "sharedGlobals": []
   }
 }

@@ -1,7 +1,0 @@
-{
-  "name": "@incremental.design/nx-plugin-component-vue3",
-  "version": "0.0.1",
-  "main": "src/index.js",
-  "generators": "./generators.json",
-  "executors": "./executors.json"
-}
