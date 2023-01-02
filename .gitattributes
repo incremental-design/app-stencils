@@ -1,4 +1,0 @@
-packages/*/assets/** filter=lfs diff=lfs merge=lfs -text
-*.novaextension/Images/** filter=lfs diff=lfs merge=lfs -text
-**.readme/** filter=lfs diff=lfs merge=lfs -text
-*.png filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "Component",
+  "title": "",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use?"
+    },
+    "description": {
+      "type": "string",
+      "description": "what the component does. How it is distinct from the other components in this monorepo",
+      "x-prompt": "What does this component do?"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Add tags to the project (used for linting)",
+      "alias": "t"
+    },
+    "directory": {
+      "type": "string",
+      "description": "A directory where the project is placed"
+    },
+    "npmScope": {
+      "type": "string",
+      "description": "the npm scope under which this project will be published. Defaults to your nx.json npmScope",
+      "x-prompt": "What npm scope would you like to use?"
+    },
+    "importPrefix": {
+      "type": "string",
+      "description": "a string with which to prefix the component package, when it is published to npm.",
+      "x-prompt": "Would you like to prefix this package?"
+    },
+    "bugs": {
+      "type": "string",
+      "description": "url of place that consumers of this package can report bugs. This will be added to the package.json 'bugs' field if it is provided.",
+      "x-prompt": "Where should users go to report bugs?"
+    },
+    "vueVersion": {
+      "type": "string",
+      "description": "version of Vue to use. Defaults to the version in your root package.json, or the latest version if vue is not already installed."
+    }
+  },
+  "required": [
+    "name"
+  ]
+}

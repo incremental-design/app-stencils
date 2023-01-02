@@ -1,14 +1,15 @@
 {
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "@incremental.design",
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": [
-          "lint",
           "build",
-          "build:client",
-          "build:server",
-          "generate"
+          "lint",
+          "test",
+          "e2e"
         ]
       }
     }
@@ -18,24 +19,41 @@
       "dependsOn": [
         "^build"
       ],
-      "outputs": [
-        "{projectRoot}/dist"
+      "inputs": [
+        "production",
+        "^production"
       ]
     },
-    "build:client": {
-      "outputs": [
-        "{projectRoot}/dist/client"
+    "lint": {
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
       ]
+    }
+  },
+  "namedInputs": {
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json"
+    ],
+    "sharedGlobals": []
+  },
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  },
+  "generators": {
+    "@nrwl/nx-plugin:plugin": {
+      "directory": "nx-plugin"
     },
-    "build:server": {
-      "outputs": [
-        "{projectRoot}/dist/server"
-      ]
-    },
-    "generate": {
-      "outputs": [
-        "{projectRoot}/dist/static"
-      ]
+    "@incremental.design/nx-plugin-vue3:component": {
+      "directory": "vue3",
+      "importPrefix": "vue3-component-",
+      "bugs": "https://github.com/incremental-design/app-stencils/issues"
     }
   }
 }
