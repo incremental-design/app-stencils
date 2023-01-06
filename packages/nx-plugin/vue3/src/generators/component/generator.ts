@@ -9,7 +9,8 @@ import {
   readRootPackageJson,
   updateJson,
   addDependenciesToPackageJson,
-  installPackagesTask
+  installPackagesTask,
+  ensurePackage,
 } from '@nrwl/devkit';
 import * as path from 'path';
 import { ComponentGeneratorSchema } from './schema';
@@ -29,6 +30,7 @@ type NormalizedSchema = ComponentGeneratorSchema & {
   projectDirectory: string;
   parsedTags: string[];
   updatePackageJsonVueVersion: boolean;
+  rootEslintrc: string;
 };
 
 async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): Promise<NormalizedSchema> {
@@ -79,6 +81,8 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
+    const rootEslintrc = path.join(path.relative(projectRoot ,tree.root),".eslintrc.json")
+
   return {
     ...allNames,
     ...layout,
@@ -90,7 +94,8 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
     projectName,
     projectRoot,
     projectDirectory,
-    parsedTags
+    parsedTags,
+    rootEslintrc
   };
 }
 
@@ -122,6 +127,27 @@ async function addToTsconfigBaseJson (tree: Tree, options: NormalizedSchema){
   return add(tree, p)
 }
 
+// export async function addLint(
+//   tree: Tree,
+//   options: NormalizedSchema
+// ): Promise<GeneratorCallback> {
+//   await ensurePackage(tree, '@nrwl/linter', nxVersion);
+//   const { lintProjectGenerator } = require('@nrwl/linter');
+//   return lintProjectGenerator(tree, {
+//     project: options.name,
+//     linter: options.linter,
+//     skipFormat: true,
+//     tsConfigPaths: [
+//       joinPathFragments(options.projectRoot, 'tsconfig.lib.json'),
+//     ],
+//     unitTestRunner: options.unitTestRunner,
+//     eslintFilePatterns: [
+//       `${options.projectRoot}/**/*.${options.js ? 'js' : 'ts'}`,
+//     ],
+//     setParserOptionsProject: options.setParserOptionsProject,
+//   });
+// }
+
 export default async function (tree: Tree, options: ComponentGeneratorSchema) {
   const normalizedOptions = await normalizeOptions(tree, options);
 
@@ -142,21 +168,54 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
         test: {
           executor: "@incremental.design/nx-plugin-vue3:test",
         },
-        lint: {
-          executor: "@incremental.design/nx-plugin-vue3:lint",
-        },
+        // lint: {
+        //   executor: "@nrwl/linter:eslint",
+        // },
       },
       tags: normalizedOptions.parsedTags,
     },
     true
   );
 
+  async function getVersionOfPackage(pkgName: string, isDevDependency?: true): Promise<string> {
+    /* return the version in pkg json if available */
+    const {dependencies, devDependencies} = readRootPackageJson()
+    const dep = isDevDependency ? devDependencies : dependencies
+    const hasPkg = Object.keys(dep).includes(pkgName);
+
+
+    if(hasPkg) return dep[pkgName]
+
+    const response = await (await fetch(`https://registry.npmjs.org/${pkgName}/latest`)).json() as unknown as {version: string}
+    console.log(response)
+    return response.version
+
+  }
+
   addFiles(tree, normalizedOptions);
   await formatFiles(tree);
   await addToTsconfigBaseJson(tree, normalizedOptions)
-  if(normalizedOptions.updatePackageJsonVueVersion) await addDependenciesToPackageJson(tree, {
-    "vue": normalizedOptions.vueVersion
-  }, {}) // do not downgrade the vue version in the root package json if it is farther ahead of the specified vue version. instead, just let this one component have a different version of vue
 
-  return () => installPackagesTask(tree, true /* always run because we need to make sure that child node_modules are updated. Otherwise, Volar won't work. */) /* for some weird reason nx requires that we return a CALLBACK to this task */
+  const vuePkg = normalizedOptions.updatePackageJsonVueVersion ? {vue: normalizedOptions.vueVersion } : {} /* do not downgrade the vue version in the root package json if it is farther ahead of the specified vue version. instead, just let this one component have a different version of vue */
+
+  const [vp, ep] = await Promise.all([getVersionOfPackage('vue-eslint-parser'), getVersionOfPackage('eslint-plugin-vue')]) /* only get the latest version IF pkg not already installed */
+
+  console.log(vp, ep)
+
+  await addDependenciesToPackageJson(
+    tree,
+    {...vuePkg},
+    {
+      /* install the packages needed to successfully lint vue files */
+      "vue-eslint-parser": vp,
+      "eslint-plugin-vue": ep,
+    }
+  )
+
+  // start here: https://github.com/nrwl/nx/blob/master/packages/nx-plugin/src/generators/lint-checks/generator.ts // need to make sure that eslint and eslintrc are available and properly configured, or make a config that is local to this package if not
+
+  // todo: check root and add in a pnpm workspace (or npm or yarn workspace) if needed
+
+  return () =>
+    installPackagesTask(tree, true /* always run because we need to make sure that child node_modules are updated. Otherwise, Volar won't work. */) /* for some weird reason nx requires that we return a CALLBACK to this task */
 }
