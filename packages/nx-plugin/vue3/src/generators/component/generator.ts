@@ -11,6 +11,7 @@ import {
   addDependenciesToPackageJson,
   installPackagesTask,
   ensurePackage,
+  GeneratorCallback
 } from '@nrwl/devkit';
 import * as path from 'path';
 import { ComponentGeneratorSchema } from './schema';
@@ -30,7 +31,7 @@ type NormalizedSchema = ComponentGeneratorSchema & {
   projectDirectory: string;
   parsedTags: string[];
   updatePackageJsonVueVersion: boolean;
-  rootEslintrc: string;
+  // rootEslintrc: string;
 };
 
 async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): Promise<NormalizedSchema> {
@@ -81,7 +82,7 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
     ? options.tags.split(',').map((s) => s.trim())
     : [];
 
-    const rootEslintrc = path.join(path.relative(projectRoot ,tree.root),".eslintrc.json")
+    // const rootEslintrc = path.join(path.relative(projectRoot ,tree.root),".eslintrc.json")
 
   return {
     ...allNames,
@@ -95,7 +96,7 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
     projectRoot,
     projectDirectory,
     parsedTags,
-    rootEslintrc
+    // rootEslintrc
   };
 }
 
@@ -127,26 +128,25 @@ async function addToTsconfigBaseJson (tree: Tree, options: NormalizedSchema){
   return add(tree, p)
 }
 
-// export async function addLint(
-//   tree: Tree,
-//   options: NormalizedSchema
-// ): Promise<GeneratorCallback> {
-//   await ensurePackage(tree, '@nrwl/linter', nxVersion);
-//   const { lintProjectGenerator } = require('@nrwl/linter');
-//   return lintProjectGenerator(tree, {
-//     project: options.name,
-//     linter: options.linter,
-//     skipFormat: true,
-//     tsConfigPaths: [
-//       joinPathFragments(options.projectRoot, 'tsconfig.lib.json'),
-//     ],
-//     unitTestRunner: options.unitTestRunner,
-//     eslintFilePatterns: [
-//       `${options.projectRoot}/**/*.${options.js ? 'js' : 'ts'}`,
-//     ],
-//     setParserOptionsProject: options.setParserOptionsProject,
-//   });
-// }
+/* see: https://github.com/nrwl/nx/blob/master/packages/workspace/src/generators/library/library.ts */
+export async function addLint(
+  tree: Tree,
+  options: NormalizedSchema
+): Promise<GeneratorCallback> {
+
+  const nxVersion = readRootPackageJson().devDependencies['nx'];
+
+  await ensurePackage(tree, '@nrwl/linter', nxVersion);
+  const { lintProjectGenerator, Linter } = await import('@nrwl/linter');
+  return lintProjectGenerator(tree, {
+    project: options.projectName,
+    linter: Linter.EsLint,
+    skipFormat: true,
+    eslintFilePatterns: [
+      ...['.ts','.js','.json','.tsx','.jsx','.vue'].map(ext => `${options.projectRoot}/**/*${ext}`)
+    ],
+  });
+}
 
 export default async function (tree: Tree, options: ComponentGeneratorSchema) {
   const normalizedOptions = await normalizeOptions(tree, options);
@@ -168,9 +168,9 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
         test: {
           executor: "@incremental.design/nx-plugin-vue3:test",
         },
-        // lint: {
-        //   executor: "@nrwl/linter:eslint",
-        // },
+        lint: {
+          executor: "@nrwl/linter:eslint",
+        },
       },
       tags: normalizedOptions.parsedTags,
     },
@@ -187,7 +187,6 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
     if(hasPkg) return dep[pkgName]
 
     const response = await (await fetch(`https://registry.npmjs.org/${pkgName}/latest`)).json() as unknown as {version: string}
-    console.log(response)
     return response.version
 
   }
@@ -200,8 +199,6 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
 
   const [vp, ep] = await Promise.all([getVersionOfPackage('vue-eslint-parser'), getVersionOfPackage('eslint-plugin-vue')]) /* only get the latest version IF pkg not already installed */
 
-  console.log(vp, ep)
-
   await addDependenciesToPackageJson(
     tree,
     {...vuePkg},
@@ -212,10 +209,54 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
     }
   )
 
-  // start here: https://github.com/nrwl/nx/blob/master/packages/nx-plugin/src/generators/lint-checks/generator.ts // need to make sure that eslint and eslintrc are available and properly configured, or make a config that is local to this package if not
-
   // todo: check root and add in a pnpm workspace (or npm or yarn workspace) if needed
 
-  return () =>
-    installPackagesTask(tree, true /* always run because we need to make sure that child node_modules are updated. Otherwise, Volar won't work. */) /* for some weird reason nx requires that we return a CALLBACK to this task */
+  /* set up root .eslintrc.json if needed */
+  const addLintTask = await addLint(tree, normalizedOptions)
+
+  /* set up project .eslintrc.json */
+  updateJson(tree, path.join(normalizedOptions.projectRoot,'.eslintrc.json'), (json) => {
+
+    json.ignorePatterns.push("node_modules/**", "src/shims-vue.d.ts")
+
+    json.overrides = [
+      {
+        files: ["*.vue"],
+        extends: ["plugin:@nrwl/nx/typescript", "plugin:vue/vue3-recommended"],
+        env: {
+          node: false, /* so that SSR components can be rendered on edge */
+          browser: true,
+        },
+        parser: "vue-eslint-parser",
+        parserOptions: {
+          parser: "@typescript-eslint/parser",
+          sourceType: "module"
+        },
+        rules: {
+          "vue/max-attributes-per-line": "off",
+          "vue/html-self-closing": [
+            "error",
+            {
+              html: {
+                void: "always",
+                normal: "always",
+                component: "always"
+              },
+              svg: "always",
+              math: "always"
+            }
+          ]
+        }
+      }
+    ];
+    return json;
+  })
+
+  return () => {
+    installPackagesTask(
+      tree,
+      true /* always run because we need to make sure that child node_modules are updated. Otherwise, Volar won't work. */
+      ) /* for some weird reason nx requires that we return a CALLBACK to this task */
+    addLintTask();
+  }
 }
