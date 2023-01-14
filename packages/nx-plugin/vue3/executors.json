@@ -4,17 +4,7 @@
     "format": {
       "implementation": "./src/executors/format/executor",
       "schema": "./src/executors/format/schema.json",
-      "description": "format vue 3 component code with prettier"
-    },
-    "build": {
-      "implementation": "./src/executors/build/executor",
-      "schema": "./src/executors/build/schema.json",
-      "description": "use vite to build vue 3 component as both a library and a web component"
-    },
-    "test": {
-      "implementation": "./src/executors/test/executor",
-      "schema": "./src/executors/test/schema.json",
-      "description": "test vue 3 component with vitest"
+      "description": "format vue 3 projects with prettier"
     }
   }
 }

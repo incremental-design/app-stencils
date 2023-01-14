@@ -5,9 +5,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "vite": "^4.0.3",
-    "@vitejs/plugin-vue": "4.0.0",
-    "vite-plugin-dts": "^1.7.1",
-    "eslint": "^8.31.0"
+    "semver": "^7.3.8",
+    "yaml": "^2.2.1"
   }
 }
