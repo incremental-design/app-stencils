@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "nx-plugin-vue3",
+  "version": "0.0.1",
+  "generators": {
+    "component": {
+      "factory": "./src/generators/component/generator",
+      "schema": "./src/generators/component/schema.json",
+      "description": "create a vue 3 component that can be built as a library and as a web component"
+    }
+  }
+}
