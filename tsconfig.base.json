@@ -10,12 +10,17 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@incremental.design/abcdef": ["packages/shared/abcdef/src/index.ts"],
+      "@incremental.design/device-input-event-handlers": [
+        "packages/shared/device-input-event-handlers/src/index.ts"
+      ],
       "@incremental.design/nx-plugin-shared": [
         "packages/nx-plugin/shared/src/index.ts"
       ],
@@ -24,5 +29,8 @@
       ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

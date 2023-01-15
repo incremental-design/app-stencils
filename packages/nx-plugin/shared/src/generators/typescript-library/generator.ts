@@ -52,6 +52,12 @@ export default async function (tree: Tree, options: TypescriptLibraryGeneratorSc
       json.module = `index.mjs`
       json.types = `index.d.ts`
       json.description = options.description
+      json.private = false
+      json.sideEffects = true
+      json.publishConfig = {
+      access: 'public'
+      }
+      json.license = 'MIT'
       json.bugs = {
         url: options.bugs
       }

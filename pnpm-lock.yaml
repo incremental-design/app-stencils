@@ -77,6 +77,12 @@ importers:
       vitest: 0.25.8_eetf2xjpdhuqcs2dx4ndfgw7iq
       vue-eslint-parser: 9.1.0_eslint@8.15.0
 
+  packages/nx-plugin/shared:
+    specifiers:
+      '@incremental.design/nx-plugin-vue3': latest
+    dependencies:
+      '@incremental.design/nx-plugin-vue3': link:../vue3
+
   packages/nx-plugin/vue3:
     specifiers:
       pascal-case: ^3.1.2
@@ -87,18 +93,8 @@ importers:
       semver: 7.3.8
       yaml: 2.2.1
 
-  packages/vue3/abc:
-    specifiers:
-      '@vitejs/plugin-vue': 4.0.0
-      vite-plugin-dts: ~1.7.1
-      vite-tsconfig-paths: ^4.0.2
-      vue: 3.2.45
-    dependencies:
-      vue: 3.2.45
-    devDependencies:
-      '@vitejs/plugin-vue': 4.0.0_vite@4.0.4+vue@3.2.45
-      vite-plugin-dts: 1.7.1_vite@4.0.4
-      vite-tsconfig-paths: 4.0.3_vite@4.0.4
+  packages/shared/device-input-event-handlers:
+    specifiers: {}
 
 packages:
 
@@ -5550,17 +5546,6 @@ packages:
       code-block-writer: 11.0.3
     dev: true
 
-  /tsconfck/2.0.2:
-    resolution: {integrity: sha512-H3DWlwKpow+GpVLm/2cpmok72pwRr1YFROV3YzAmvzfGFiC1zEM/mc9b7+1XnrxuXtEbhJ7xUSIqjPFbedp7aQ==}
-    engines: {node: ^14.13.1 || ^16 || >=18, pnpm: ^7.18.0}
-    hasBin: true
-    peerDependencies:
-      typescript: ^4.3.5
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-    dev: true
-
   /tsconfck/2.0.2_typescript@4.8.4:
     resolution: {integrity: sha512-H3DWlwKpow+GpVLm/2cpmok72pwRr1YFROV3YzAmvzfGFiC1zEM/mc9b7+1XnrxuXtEbhJ7xUSIqjPFbedp7aQ==}
     engines: {node: ^14.13.1 || ^16 || >=18, pnpm: ^7.18.0}
@@ -5762,20 +5747,6 @@ packages:
       debug: 4.3.4
       globrex: 0.1.2
       tsconfck: 2.0.2_typescript@4.8.4
-      vite: 4.0.4
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
-    dev: true
-
-  /vite-tsconfig-paths/4.0.3_vite@4.0.4:
-    resolution: {integrity: sha512-gRO2Q/tOkV+9kMht5tz90+IaEKvW2zCnvwJV3tp2ruPNZOTM5rF+yXorJT4ggmAMYEaJ3nyXjx5P5jY5FwiZ+A==}
-    peerDependencies:
-      vite: '>2.0.0-0'
-    dependencies:
-      debug: 4.3.4
-      globrex: 0.1.2
-      tsconfck: 2.0.2
       vite: 4.0.4
     transitivePeerDependencies:
       - supports-color

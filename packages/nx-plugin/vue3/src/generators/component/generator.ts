@@ -168,7 +168,12 @@ async function addVueFiles(tree: Tree, options: NormalizedSchema){
     json.types = `index.d.ts`
     json.description = description
     json.dependencies = {vue: vueVersion}
-
+    json.private = false
+    json.sideEffects = true
+    json.publishConfig = {
+      access: 'public'
+    }
+    json.license = 'MIT'
     json.devDependencies = {
       'vite-plugin-dts': devDependencies['vite-plugin-dts'],
       'vite-tsconfig-paths': devDependencies['vite-tsconfig-paths'],
