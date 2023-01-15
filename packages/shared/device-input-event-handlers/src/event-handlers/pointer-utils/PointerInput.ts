@@ -253,10 +253,11 @@ export function getPointerInput(
               BoundingRect
             ) {
               const { left, top, width, height } = BoundingRect;
-              Target["viewportTranslateX"] = left;
-              Target["viewportTranslateY"] = top;
-              Target["scaleX"] = Target.width === 0 ? 0 : width / Target.width;
-              Target["scaleY"] = Target.height === 0 ? 0 : height / Target.height;
+              Target['viewportTranslateX'] = left;
+              Target['viewportTranslateY'] = top;
+              Target['scaleX'] = Target.width === 0 ? 0 : width / Target.width;
+              Target['scaleY'] =
+                Target.height === 0 ? 0 : height / Target.height;
             }
           };
           calculateTargetScaleAndTranslate();
@@ -265,14 +266,18 @@ export function getPointerInput(
 
           const calculateRelativeXY = (C: Centerpoint): void => {
             if (
-              typeof Target["scaleX"] === 'number' &&
-              typeof Target["scaleY"] === 'number' &&
-              typeof Target["viewportTranslateX"] === 'number' &&
-              typeof Target["viewportTranslateY"] === 'number'
+              typeof Target['scaleX'] === 'number' &&
+              typeof Target['scaleY'] === 'number' &&
+              typeof Target['viewportTranslateX'] === 'number' &&
+              typeof Target['viewportTranslateY'] === 'number'
             ) {
               C.relative = {
-                x: (C.viewport.x - Target["viewportTranslateX"]) * Target["scaleX"],
-                y: (C.viewport.y - Target["viewportTranslateY"]) * Target["scaleY"],
+                x:
+                  (C.viewport.x - Target['viewportTranslateX']) *
+                  Target['scaleX'],
+                y:
+                  (C.viewport.y - Target['viewportTranslateY']) *
+                  Target['scaleY'],
               };
             }
           };
@@ -455,29 +460,29 @@ export function getPointerInput(
             if (previous.viewport.x) {
               const MovementX = viewport.x - previous.viewport.x;
 
-              Viewport["dx"] =
+              Viewport['dx'] =
                 (MovementX / MillisecondsElapsedSincePrevious) * 1000;
-              Coordinates.relative.dxPercent = Viewport["dx"] / Target.width;
+              Coordinates.relative.dxPercent = Viewport['dx'] / Target.width;
             }
             if (previous.viewport.y) {
               const MovementY = viewport.y - previous.viewport.y;
 
-              Viewport["dy"] =
+              Viewport['dy'] =
                 (MovementY / MillisecondsElapsedSincePrevious) * 1000;
-              Coordinates.relative.dyPercent = Viewport["dy"] / Target.height;
+              Coordinates.relative.dyPercent = Viewport['dy'] / Target.height;
             }
           }
         }
 
         if (viewport.radius) {
-          Viewport["radius"] = viewport.radius;
+          Viewport['radius'] = viewport.radius;
           if (previous && previous.viewport && previous.viewport.radius) {
-            Viewport["dRadius"] = viewport.radius - previous.viewport.radius;
+            Viewport['dRadius'] = viewport.radius - previous.viewport.radius;
           }
         }
 
         if (viewport.rotation && MillisecondsElapsedSincePrevious) {
-          Viewport["dRotation"] =
+          Viewport['dRotation'] =
             (viewport.rotation / MillisecondsElapsedSincePrevious) * 1000;
         }
 

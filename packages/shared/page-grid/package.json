@@ -1,0 +1,22 @@
+{
+  "name": "@incremental.design/page-grid",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "private": false,
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "description": "A grid layout for webpages",
+  "sideEffects": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "postcss-mixins": "^9.0.4",
+    "postcss-nesting": "^10.1.10"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/incremental-design/app-stencils/issues"
+  }
+}

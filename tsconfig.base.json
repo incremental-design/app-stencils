@@ -10,10 +10,7 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
@@ -26,11 +23,11 @@
       ],
       "@incremental.design/nx-plugin-vue3": [
         "packages/nx-plugin/vue3/src/index.ts"
+      ],
+      "@incremental.design/page-grid": [
+        "packages/shared/page-grid/src/index.ts"
       ]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
