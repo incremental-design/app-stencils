@@ -1,5 +1,5 @@
 {
-  "name": "shared-theme",
+  "name": "vue3-button",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "tags": [],
   "targets": {
@@ -16,7 +16,7 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/packages/shared/theme"
+        "outputPath": "dist/packages/vue3/button"
       },
       "configurations": {
         "development": {
@@ -30,11 +30,11 @@
     "test": {
       "executor": "@nrwl/vite:test",
       "outputs": [
-        "coverage/packages/shared/theme"
+        "coverage/packages/vue3/button"
       ],
       "options": {
         "passWithNoTests": true,
-        "reportsDirectory": "../../../coverage/packages/shared/theme"
+        "reportsDirectory": "../../../coverage/packages/vue3/button"
       }
     },
     "lint": {
@@ -44,7 +44,7 @@
       ],
       "options": {
         "lintFilePatterns": [
-          "packages/shared/theme/**/*.ts"
+          "packages/vue3/button/**/*.ts"
         ]
       }
     },

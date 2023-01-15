@@ -5,6 +5,11 @@
       "implementation": "./src/executors/format/executor",
       "schema": "./src/executors/format/schema.json",
       "description": "format vue 3 projects with prettier"
+    },
+    "build": {
+      "implementation": "./src/executors/build/executor",
+      "schema": "./src/executors/build/schema.json",
+      "description": "build using @nrwl/vite:build, and then modify the package json"
     }
   }
 }

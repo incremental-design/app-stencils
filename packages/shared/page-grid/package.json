@@ -3,9 +3,7 @@
   "version": "0.0.1",
   "type": "commonjs",
   "private": false,
-  "main": "index.js",
-  "module": "index.mjs",
-  "types": "index.d.ts",
+  "module": "src/index.ts",
   "description": "A grid layout for webpages",
   "sideEffects": true,
   "publishConfig": {

@@ -4,14 +4,7 @@ import { ExecutorContext } from '@nrwl/devkit';
 import type * as Prettier from 'prettier';
 import { FormatExecutorSchema } from './schema';
 
-export default async function runExecutor(
-  options: FormatExecutorSchema,
-  context: ExecutorContext,
-) {
-
-  const toFormat = context.projectGraph.nodes[context.projectName].data.files.map(fileObject => path.join(context.root,fileObject.file)) as unknown as Array<string> /* file paths to format, relative to workspace root. Note that this is strongly coupled to ExecutorContext */
-
-  /* see: https://github.com/nrwl/nx/blob/master/packages/devkit/src/generators/format-files.ts */
+export async function getPrettier(){
 
   let prettier: typeof Prettier;
 
@@ -21,39 +14,49 @@ export default async function runExecutor(
     console.error(e)
   }
 
-  if(!prettier) return {
-    success: false
-  }
+  if(!prettier) return false;
 
+  return prettier;
+
+}
+
+export async function getPrettierOptions(prettier: typeof Prettier, root: string){
   const editorconfig = await (async () => {
     try {
-      await stat(path.join(context.root, '.editorconfig'))
+      await stat(path.join(root, '.editorconfig'))
       return true
     } catch (e) {
       return false
     }
   })()
 
-
-
-  const resolvedOptions = await prettier.resolveConfig(context.root, {
+  return prettier.resolveConfig(root, {
     editorconfig
   })
+}
+
+export default async function runExecutor(
+  options: FormatExecutorSchema,
+  context: ExecutorContext,
+) {
+
+  const toFormat = context.projectGraph.nodes[context.projectName].data.files.map(fileObject => path.join(context.root,fileObject.file)) as unknown as Array<string> /* file paths to format, relative to workspace root. Note that this is strongly coupled to ExecutorContext */
+
+  /* see: https://github.com/nrwl/nx/blob/master/packages/devkit/src/generators/format-files.ts */
+
+  const prettier = await getPrettier();
+
+  if(!prettier) return {
+    success: false
+  }
+
+  const resolvedOptions = await getPrettierOptions(prettier, context.root)
 
   await Promise.all(toFormat.map(async(file) => {
 
     const {ignored, inferredParser} = await prettier.getFileInfo(file)
 
     if(ignored) return;
-
-    // const parser = (() => {
-    //   const p = {}
-
-    //   if(file.endsWith('.swcrc')){
-    //     p['parser'] = 'json'
-    //   }
-    //   return p;
-    // })()
 
     const p = {
       parser: inferredParser

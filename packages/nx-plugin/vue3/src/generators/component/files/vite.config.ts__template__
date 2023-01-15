@@ -10,6 +10,8 @@ export default defineConfig({
     dts({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
+      entryRoot: './src',
+      outputDir: '<%- dtsOutputDir%>'
     }),
     viteTsConfigPaths({root: '<%- viteTsConfigPath %>'})
     ],

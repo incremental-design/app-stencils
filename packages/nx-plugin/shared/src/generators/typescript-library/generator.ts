@@ -39,18 +39,29 @@ export default async function (tree: Tree, options: TypescriptLibraryGeneratorSc
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
   const c = readProjectConfiguration(tree, projectName)
+
   c.targets['format'] = {
   executor: "@incremental.design/nx-plugin-vue3:format", // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
   outputs: ["{projectRoot}/**/*"]
-}
+  }
+
+  const viteBuild = c.targets['build']
+
+  c.targets['build'] = {
+    executor: '@incremental.design/nx-plugin-vue3:build',
+    options: {
+      viteConfig: 'production'
+    }
+  }
+
+  c.targets['vite-build'] = viteBuild
+
   updateProjectConfiguration(tree, projectName, c)
 
     /* update package.json */
     updateJson(tree, path.join(projectRoot,'package.json'), (json) => {
       json.private = false,
-      json.main = `index.js`
-      json.module = `index.mjs`
-      json.types = `index.d.ts`
+      json.module = `src/index.ts`
       json.description = options.description
       json.private = false
       json.sideEffects = true

@@ -4,8 +4,16 @@
   "tags": [],
   "targets": {
     "build": {
+      "executor": "@incremental.design/nx-plugin-vue3:build",
+      "options": {
+        "viteConfig": "production"
+      }
+    },
+    "vite-build": {
       "executor": "@nrwl/vite:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/packages/shared/page-grid"
@@ -21,7 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/packages/shared/page-grid"],
+      "outputs": [
+        "coverage/packages/shared/page-grid"
+      ],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/packages/shared/page-grid"
@@ -29,14 +39,20 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
-        "lintFilePatterns": ["packages/shared/page-grid/**/*.ts"]
+        "lintFilePatterns": [
+          "packages/shared/page-grid/**/*.ts"
+        ]
       }
     },
     "format": {
       "executor": "@incremental.design/nx-plugin-vue3:format",
-      "outputs": ["{projectRoot}/**/*"]
+      "outputs": [
+        "{projectRoot}/**/*"
+      ]
     }
   }
 }

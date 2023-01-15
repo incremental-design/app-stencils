@@ -4,8 +4,16 @@
   "tags": [],
   "targets": {
     "build": {
+      "executor": "@incremental.design/nx-plugin-vue3:build",
+      "options": {
+        "viteConfig": "production"
+      }
+    },
+    "vite-build": {
       "executor": "@nrwl/vite:build",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "defaultConfiguration": "production",
       "options": {
         "outputPath": "dist/packages/shared/device-input-event-handlers"
@@ -21,7 +29,9 @@
     },
     "test": {
       "executor": "@nrwl/vite:test",
-      "outputs": ["coverage/packages/shared/device-input-event-handlers"],
+      "outputs": [
+        "coverage/packages/shared/device-input-event-handlers"
+      ],
       "options": {
         "passWithNoTests": true,
         "reportsDirectory": "../../../coverage/packages/shared/device-input-event-handlers"
@@ -29,7 +39,9 @@
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "packages/shared/device-input-event-handlers/**/*.ts"
@@ -38,7 +50,9 @@
     },
     "format": {
       "executor": "@incremental.design/nx-plugin-vue3:format",
-      "outputs": ["{projectRoot}/**/*"]
+      "outputs": [
+        "{projectRoot}/**/*"
+      ]
     }
   }
 }

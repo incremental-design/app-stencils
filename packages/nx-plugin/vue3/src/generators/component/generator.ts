@@ -120,7 +120,7 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
 
   const {vueVersion, updatePackageJsonVueVersion, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion} = await getVueVersion(options)
 
-  const viteTsConfigPath = `${path.relative(projectRoot, tree.root)}/`
+  const viteTsConfigPath = `${path.relative(projectRoot, tree.root)}/` // will this break on windows?? i.e. '\'
 
   return {
     ...options,
@@ -140,19 +140,45 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
 
 async function addVueFiles(tree: Tree, options: NormalizedSchema){
 
-  const {projectRoot, name, description, vueVersion, bugs, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion, importPrefix } = options;
+  const {projectRoot, name, description, vueVersion, bugs, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion, importPrefix, projectName, viteTsConfigPath } = options;
 
   tree.delete(path.join(projectRoot,'src','lib'))
 
   const allNames = names(name)
   const className = `${pascalCase(importPrefix)}${allNames.className}`
 
+  /* update project json and get the output directory from it */
+
+  const c = readProjectConfiguration(tree, projectName)
+
+  c.targets['format'] = {
+  executor: "@incremental.design/nx-plugin-vue3:format", // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
+  outputs: ["{projectRoot}/**/*"]
+  }
+
+  const viteBuild = c.targets['build']
+
+  const dtsOutputDir = path.join(viteTsConfigPath, viteBuild.options['outputPath'])
+
+  c.targets['build'] = {
+    executor: '@incremental.design/nx-plugin-vue3:build',
+    options: {
+      viteConfig: 'production'
+    }
+  }
+
+  c.targets['vite-build'] = viteBuild
+
+  updateProjectConfiguration(tree, projectName, c)
+
+
   const templateOptions = {
     ...options,
     ...allNames,
     className,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
-    template: ''
+    template: '',
+    dtsOutputDir
   };
   generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
 
@@ -163,9 +189,7 @@ async function addVueFiles(tree: Tree, options: NormalizedSchema){
   /* update package.json */
   updateJson(tree, path.join(projectRoot,'package.json'), (json) => {
     json.private = false,
-    json.main = `index.js`
-    json.module = `index.mjs`
-    json.types = `index.d.ts`
+    json.module = `src/index.ts`
     json.description = description
     json.dependencies = {vue: vueVersion}
     json.private = false
@@ -188,40 +212,41 @@ async function addVueFiles(tree: Tree, options: NormalizedSchema){
   /* update .eslintrc.json */
   updateJson(tree, path.join(projectRoot,'.eslintrc.json'), (json) => {
 
-  json.ignorePatterns.push("node_modules/**", "src/shims-vue.d.ts")
+    json.ignorePatterns.push("node_modules/**", "src/shims-vue.d.ts")
 
-  json.overrides = [
-    {
-      files: ["*.vue"],
-      extends: ["plugin:@nrwl/nx/typescript", "plugin:vue/vue3-recommended"],
-      env: {
-        node: false, /* so that SSR components can be rendered on edge */
-        browser: true,
-      },
-      parser: "vue-eslint-parser",
-      parserOptions: {
-        parser: "@typescript-eslint/parser",
-        sourceType: "module"
-      },
-      rules: {
-        "vue/max-attributes-per-line": "off",
-        "vue/html-self-closing": [
-          "error",
-          {
-            html: {
-              void: "always",
-              normal: "always",
-              component: "always"
-            },
-            svg: "always",
-            math: "always"
-          }
-        ]
+    json.overrides = [
+      {
+        files: ["*.vue"],
+        extends: ["plugin:@nrwl/nx/typescript", "plugin:vue/vue3-recommended"],
+        env: {
+          node: false, /* so that SSR components can be rendered on edge */
+          browser: true,
+        },
+        parser: "vue-eslint-parser",
+        parserOptions: {
+          parser: "@typescript-eslint/parser",
+          sourceType: "module"
+        },
+        rules: {
+          "vue/max-attributes-per-line": "off",
+          "vue/html-self-closing": [
+            "error",
+            {
+              html: {
+                void: "always",
+                normal: "always",
+                component: "always"
+              },
+              svg: "always",
+              math: "always"
+            }
+          ]
+        }
       }
-    }
-  ];
-  return json;
-})
+    ];
+
+    return json;
+  })
 }
 
 async function addPackageManagerWorkspace(tree: Tree, options: NormalizedSchema){
@@ -245,7 +270,7 @@ async function addPackageManagerWorkspace(tree: Tree, options: NormalizedSchema)
       tree.write('pnpm-workspace.yaml', pnpmWorkspaceYaml)
     }
   }
-    // todo: check npm, yarn, yarn berry
+    // todo: check npm, yarn, yarn berry - use getPackageManagerCommand from nrwl devkit
 }
 
 export default async function (tree: Tree, options: ComponentGeneratorSchema) {
@@ -301,14 +326,6 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
       await addPackageManagerWorkspace(tree, n),
       // updateViteConfigTs(tree, n),
     ])
-
-    const c = readProjectConfiguration(tree, projectName)
-      c.targets['format'] = {
-      executor: "@incremental.design/nx-plugin-vue3:format",
-      outputs: ["{projectRoot}/**/*"]
-    }
-
-    updateProjectConfiguration(tree, projectName, c)
 
   await formatFiles(tree)
 
