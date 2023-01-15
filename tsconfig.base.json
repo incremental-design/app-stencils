@@ -26,7 +26,8 @@
       ],
       "@incremental.design/page-grid": [
         "packages/shared/page-grid/src/index.ts"
-      ]
+      ],
+      "@incremental.design/theme": ["packages/shared/theme/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
