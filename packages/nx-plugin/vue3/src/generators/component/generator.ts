@@ -177,8 +177,6 @@ async function addVueFiles(tree: Tree, options: NormalizedSchema){
     json.bugs = {
       url: bugs
     }
-
-    console.log(json.devDependencies)
     return json
   })
 
