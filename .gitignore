@@ -37,3 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+/.obsidian/hotkeys.json
+/.obsidian/workspace.json
+/.obsidian/appearance.json
+/.obsidian/themes
