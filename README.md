@@ -1,4 +1,4 @@
-# AppStencils2
+# App-Stencils
 
 <a href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
@@ -15,3 +15,129 @@ Run `npx nx connect-to-nx-cloud` to enable [remote caching](https://nx.app) and 
 ## Further help
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
+
+
+
+App Stencils is a finger-friendly set of Vue Components. Use it to build websites and web apps that respond to touch, mouse, keyboard, accelerometer and even game controller inputs. App stencils makes your websites and web apps feel just like native apps.
+
+App stencils is a monorepo. Each component has its own package. Only install the packages you need for your project. This will reduce the overall bundle size you ship to the browser, and improve performance.
+
+  
+
+## contents
+
+  
+
+### Vue 3 Components
+
+  
+  
+
+### Typescript Modules
+
+  
+
+All typescript modules are located in `packages/shared`. As the name suggests, these modules are shared among multiple components. They can also be used independently of Vue 3. So, if you want to make react, svelte, or web components, you can use these modules to get started.
+
+
+  
+
+## [Contribute to App Stencils ↗](./CONTRIBUTE.md)
+
+  
+  
+
+<!--
+
+==================
+
+  
+
+vue websites:
+
+  
+
+vitedge only (drop to ssr if >1mb)
+
+vitest + playwright
+
+vite plugin pwa
+
+typescript (done)
+
+Editorconfig
+
+pinia
+
+partytown
+
+supertokens (eventually)
+
+surrealdb in browser (eventually)
+
+uxlens
+
+strapi or directus for content api ... or maybe just supabase?
+
+  
+
+some kind of caching strategy??
+
+  
+
+for this repo, all of the site content will be served from strapi. Here's how it will work:
+
+  
+
+there will be a site: appstencils.io (or something like it)
+
+  
+
+this site will contain vue router, and an authentication mechanism. vue router will call out to strapi, and supply authentication credentials.
+
+  
+
+strapi will respond with a JSON document that contains an array of objects, each of which describes a section of documentation (e.g. a paragraph of text, a code block, an interactive sandbox, etc.)
+
+  
+
+vue router will use <component :is="" > to load in the content from strapi and display the docs.
+
+  
+
+in the case that vue router does not supply authentication, strapi will respond with a JSON document that contains the same array of objects. However, the text in the documentation will be replaced with hipster ipsum. The idea is that you can only access the documentation text if you authenticate.
+
+  
+
+To authenticate, you will have to create a .env file with your auth credentials. vue router will scoop up those credentials when you launch the site.
+
+  
+
+when this site is deployed, it will secure the content WITHOUT auth. Instead, it will use CORS to make sure that only appstencils.io can request the text from strapi
+
+  
+
+==================
+
+  
+
+vue libraries
+
+  
+
+vitest + playwright
+
+editorconfig (no prettier, no eslint)
+
+  
+
+typescript (done)
+
+some way to bundle <style> blocks (done w <style module>)
+
+  
+  
+
+==================
+
+-->
