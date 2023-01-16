@@ -11,7 +11,8 @@ export default defineConfig({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
       'outputDir': '../../../dist/packages/vue3/base',
-      'entryRoot': './src'
+      'entryRoot': './src',
+      'rollupTypes': true
     }),
     viteTsConfigPaths({ root: '../../../' }),
   ],

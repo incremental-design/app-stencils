@@ -1,0 +1,1 @@
+`pnpm -i` to install all dependencies
