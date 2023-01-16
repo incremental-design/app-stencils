@@ -4,19 +4,21 @@ import {
   readProjectConfiguration,
   names,
   updateProjectConfiguration,
-  updateJson
+  updateJson,
 } from '@nrwl/devkit';
 import { TypescriptLibraryGeneratorSchema } from './schema';
-import * as path from 'path'
-import { libraryGenerator } from '@nrwl/js'
+import * as path from 'path';
+import { libraryGenerator } from '@nrwl/js';
 
-export default async function (tree: Tree, options: TypescriptLibraryGeneratorSchema) {
+export default async function (
+  tree: Tree,
+  options: TypescriptLibraryGeneratorSchema
+) {
+  const { name, directory, tags } = options;
 
-    const { name, directory, tags } = options;
+  const { npmScope } = getWorkspaceLayout(tree);
 
-    const {npmScope} = getWorkspaceLayout(tree)
-
-    await libraryGenerator(tree, {
+  await libraryGenerator(tree, {
     name,
     directory,
     tags,
@@ -28,52 +30,59 @@ export default async function (tree: Tree, options: TypescriptLibraryGeneratorSc
     publishable: true,
     compiler: 'swc',
     bundler: 'vite',
-  })
+  });
 
   /* add format configuration */
 
   const projectDirectory = options.directory
-  ? `${names(options.directory).fileName}/${name}`
-  : name;
+    ? `${names(options.directory).fileName}/${name}`
+    : name;
   const projectName = projectDirectory.replace(new RegExp('/', 'g'), '-');
   const projectRoot = `${getWorkspaceLayout(tree).libsDir}/${projectDirectory}`;
 
-  const c = readProjectConfiguration(tree, projectName)
+  const c = readProjectConfiguration(tree, projectName);
 
   c.targets['format'] = {
-  executor: "@incremental.design/nx-plugin-vue3:format", // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
-  outputs: ["{projectRoot}/**/*"]
-  }
+    executor: '@incremental.design/nx-plugin-vue3:format', // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
+    outputs: ['{projectRoot}/**/*'],
+  };
 
-  const viteBuild = c.targets['build']
+  const viteBuild = c.targets['build'];
 
   c.targets['build'] = {
     executor: '@incremental.design/nx-plugin-vue3:build',
     options: {
-      viteConfig: 'production'
-    }
+      viteConfig: 'production',
+    },
+  };
+
+  c.targets['vite-build'] = viteBuild;
+
+  const outDir = viteBuild.options.outputPath
+
+    c.targets['extract-api'] = {
+    executor: '@incremental.design/nx-plugin-vue3:extract-api',
+    options: {
+      outDir
+    },
+    outputs: ["{options.outDir}"]
   }
 
-  c.targets['vite-build'] = viteBuild
+  updateProjectConfiguration(tree, projectName, c);
 
-  updateProjectConfiguration(tree, projectName, c)
-
-    /* update package.json */
-    updateJson(tree, path.join(projectRoot,'package.json'), (json) => {
-      json.private = false,
-      json.module = `src/index.ts`
-      json.description = options.description
-      json.private = false
-      json.sideEffects = true
-      json.publishConfig = {
-      access: 'public'
-      }
-      json.license = 'MIT'
-      json.bugs = {
-        url: options.bugs
-      }
-      return json
-    })
-
-
+  /* update package.json */
+  updateJson(tree, path.join(projectRoot, 'package.json'), (json) => {
+    (json.private = false), (json.module = `src/index.ts`);
+    json.description = options.description;
+    json.private = false;
+    json.sideEffects = true;
+    json.publishConfig = {
+      access: 'public',
+    };
+    json.license = 'MIT';
+    json.bugs = {
+      url: options.bugs,
+    };
+    return json;
+  });
 }

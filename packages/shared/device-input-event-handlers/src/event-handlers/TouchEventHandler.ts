@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
-import { PointerInput, getPointerInput } from './pointer-utils';
+import { Handler, mergeWithEventInfo, EventInfo } from './';
+import { PointerInput, getPointerInput } from './';
 
 /**
  * HandleTouch extracts the useful information from a sequence of touch events.

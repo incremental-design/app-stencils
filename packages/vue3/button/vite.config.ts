@@ -10,7 +10,8 @@ export default defineConfig({
     dts({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
-      root: '../../../'
+      'outputDir': '../../../dist/packages/vue3/button',
+      'entryRoot': './src',
     }),
     viteTsConfigPaths({ root: '../../../' }),
   ],

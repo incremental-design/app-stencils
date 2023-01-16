@@ -53,6 +53,15 @@
       "outputs": [
         "{projectRoot}/**/*"
       ]
+    },
+    "extract-api": {
+      "executor": "@incremental.design/nx-plugin-vue3:extract-api",
+      "options": {
+        "outDir": "dist/packages/shared/device-input-event-handlers"
+      },
+      "outputs": [
+        "{options.outDir}"
+      ]
     }
   }
 }

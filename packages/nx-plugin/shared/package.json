@@ -5,6 +5,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@incremental.design/nx-plugin-vue3": "latest"
+    "@incremental.design/nx-plugin-vue3": "latest",
+    "ts-morph": "^17.0.1"
   }
 }
