@@ -9,8 +9,7 @@ export default defineConfig({
     dts({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       // Faster builds by skipping tests. Set this to false to enable type checking.
-      skipDiagnostics: true,
-      rollupTypes: true,
+      skipDiagnostics: true
     }),
 
     viteTsConfigPaths({

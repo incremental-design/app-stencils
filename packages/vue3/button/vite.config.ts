@@ -12,7 +12,6 @@ export default defineConfig({
       skipDiagnostics: true,
       'outputDir': '../../../dist/packages/vue3/button',
       'entryRoot': './src',
-      'rollupTypes': true
     }),
     viteTsConfigPaths({ root: '../../../' }),
   ],

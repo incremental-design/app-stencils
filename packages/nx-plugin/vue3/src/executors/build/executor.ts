@@ -10,12 +10,12 @@ export default async function* build(
 ) {
 
   const project = context.projectName
-  const target = 'vite-build'
   const configuration = options.viteConfig
 
+  /* first, run vite build */
   /* see: https://nx.dev/recipes/executors/compose-executors */
   for await (const output of await runExecutor(
-    {project, target, configuration},
+    {project, target: 'vite-build', configuration},
     {},
     context
   )) {
@@ -23,6 +23,7 @@ export default async function* build(
     yield;
   }
 
+  /* then rewrite package json */
   const {outputPath} = context.projectsConfigurations.projects[context.projectName].targets['vite-build'].options
 
   const outDir = path.join(context.root, outputPath)
@@ -49,6 +50,15 @@ export default async function* build(
     await writeFile(packageJsonPath, formatted)
   }
 
+  /* finally, extract API */
+  for await (const output of await runExecutor(
+    {project, target: 'extract-api'},
+    {},
+    context
+  )) {
+    if(!output.success) throw new Error('extract api failed');
+    yield;
+  }
 
   return {success: true}
 }

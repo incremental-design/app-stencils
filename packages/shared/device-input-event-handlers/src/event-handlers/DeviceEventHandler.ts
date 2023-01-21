@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Handler, mergeWithEventInfo, EventInfo } from './handler-utils';
-import { DeviceInput, getDeviceInput } from './device-utils';
+import { Handler, mergeWithEventInfo, EventInfo } from './';
+import { DeviceInput, getDeviceInput } from './';
 
 declare type DeviceEvent = DeviceMotionEvent | DeviceOrientationEvent;
 

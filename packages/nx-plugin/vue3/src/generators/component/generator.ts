@@ -13,14 +13,13 @@ import {
   updateProjectConfiguration,
   readProjectConfiguration,
 } from '@nrwl/devkit';
-import { libraryGenerator } from '@nrwl/js'
-import { major, gte } from 'semver' // todo: dynamic import this AFTER installing package json
+import { libraryGenerator } from '@nrwl/js';
+import { major, gte } from 'semver'; // todo: dynamic import this AFTER installing package json
 import { ComponentGeneratorSchema } from './schema';
-import * as yaml from 'yaml' // todo: dynamic import this AFTER installing package json
-import {pascalCase} from 'pascal-case'
+import * as yaml from 'yaml'; // todo: dynamic import this AFTER installing package json
+import { pascalCase } from 'pascal-case';
 
-
-type WorkspaceLayout = ReturnType<typeof getWorkspaceLayout>
+type WorkspaceLayout = ReturnType<typeof getWorkspaceLayout>;
 
 type NormalizedSchema = ComponentGeneratorSchema & {
   [key in keyof WorkspaceLayout]: WorkspaceLayout[key];
@@ -33,79 +32,109 @@ type NormalizedSchema = ComponentGeneratorSchema & {
   vitePluginVueVersion: string;
   updatePackageJsonVitePluginVueVersion: boolean;
   viteTsConfigPath: string;
-}
+  vitestCachePath: string;
+};
 
-async function getVueVersion(options: ComponentGeneratorSchema){
-  if(options.vueVersion && major(options.vueVersion) !== 3) throw new Error(`You cannot use ${options.vueVersion}. You must use vue 3.x.x`)
+async function getVueVersion(options: ComponentGeneratorSchema) {
+  if (options.vueVersion && major(options.vueVersion) !== 3)
+    throw new Error(
+      `You cannot use ${options.vueVersion}. You must use vue 3.x.x`
+    );
 
-  const {dependencies, devDependencies} = readRootPackageJson();
+  const { dependencies, devDependencies } = readRootPackageJson();
 
   const packageJsonVueVersion = (() => {
-    if(Object.keys(dependencies).includes('vue')) return dependencies['vue'];
+    if (Object.keys(dependencies).includes('vue')) return dependencies['vue'];
     return false;
-  })()
+  })();
 
-  if(packageJsonVueVersion && major(packageJsonVueVersion) !== 3) throw new Error(`vue ${packageJsonVueVersion} is listed as a dependency, but this generator requires vue 3. Please remove vue ${packageJsonVueVersion} from the root package.json. If you need vue ${packageJsonVueVersion} for some of your packages, include it in those package's package.json files, instead of in the root package.json`)
+  if (packageJsonVueVersion && major(packageJsonVueVersion) !== 3)
+    throw new Error(
+      `vue ${packageJsonVueVersion} is listed as a dependency, but this generator requires vue 3. Please remove vue ${packageJsonVueVersion} from the root package.json. If you need vue ${packageJsonVueVersion} for some of your packages, include it in those package's package.json files, instead of in the root package.json`
+    );
 
-  const vueVersion = options.vueVersion || packageJsonVueVersion || await (async () => {
-    const response = await fetch('https://registry.npmjs.org/vue')
-    const { versions } = await response.json() as unknown as {versions: Record<string, any>}
-    const versionNumbers = Object.keys(versions).sort((a, b) => gte(a, b) ? 1 : -1) /* technically not needed, since the api returns version numbers in order. However, it is here to ENSURE that version numbers are ALWAYS ordered*/
+  const vueVersion =
+    options.vueVersion ||
+    packageJsonVueVersion ||
+    (await (async () => {
+      const response = await fetch('https://registry.npmjs.org/vue');
+      const { versions } = (await response.json()) as unknown as {
+        versions: Record<string, any>;
+      };
+      const versionNumbers = Object.keys(versions).sort((a, b) =>
+        gte(a, b) ? 1 : -1
+      ); /* technically not needed, since the api returns version numbers in order. However, it is here to ENSURE that version numbers are ALWAYS ordered*/
 
-    let majorVersion = 4
-    let latest = ''
+      let majorVersion = 4;
+      let latest = '';
 
-    do {
-      latest = versionNumbers.pop();
-      majorVersion = major(latest);
-    } while(majorVersion > 3)
+      do {
+        latest = versionNumbers.pop();
+        majorVersion = major(latest);
+      } while (majorVersion > 3);
 
-    return latest
-  })()
+      return latest;
+    })());
 
-  const updatePackageJsonVueVersion = !packageJsonVueVersion
+  const updatePackageJsonVueVersion = !packageJsonVueVersion;
 
-  const {vitePluginVueVersion, updatePackageJsonVitePluginVueVersion} = await ( async () => {
+  const { vitePluginVueVersion, updatePackageJsonVitePluginVueVersion } =
+    await (async () => {
+      const vv = '@vitejs/plugin-vue';
 
-    const vv = '@vitejs/plugin-vue'
-
-    if(Object.keys(dependencies).includes(vv)){
-      console.warn(`'${vv}' should be in devDependencies, not in dependencies`)
-      return {
-        vitePluginVueVersion: dependencies[vv],
-        updatePackageJsonVitePluginVueVersion: false
+      if (Object.keys(dependencies).includes(vv)) {
+        console.warn(
+          `'${vv}' should be in devDependencies, not in dependencies`
+        );
+        return {
+          vitePluginVueVersion: dependencies[vv],
+          updatePackageJsonVitePluginVueVersion: false,
+        };
       }
-    }
-    if(Object.keys(devDependencies).includes('@vitejs/plugin-vue'))
-    return {
-      vitePluginVueVersion: devDependencies[vv],
-      updatePackageJsonVitePluginVueVersion: false,
-    }
-    const response = await (await fetch('https://registry.npmjs.org/@vitejs/plugin-vue/latest')).json() as unknown as {version: string} /* coupled to npmjs api */
+      if (Object.keys(devDependencies).includes('@vitejs/plugin-vue'))
+        return {
+          vitePluginVueVersion: devDependencies[vv],
+          updatePackageJsonVitePluginVueVersion: false,
+        };
+      const response = (await (
+        await fetch('https://registry.npmjs.org/@vitejs/plugin-vue/latest')
+      ).json()) as unknown as { version: string }; /* coupled to npmjs api */
 
+      return {
+        vitePluginVueVersion: response.version,
+        updatePackageJsonVitePluginVueVersion: true,
+      };
+    })();
 
-
-    return {vitePluginVueVersion: response.version, updatePackageJsonVitePluginVueVersion: true}
-  })()
-
-  return {vueVersion, updatePackageJsonVueVersion, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion }
+  return {
+    vueVersion,
+    updatePackageJsonVueVersion,
+    vitePluginVueVersion,
+    updatePackageJsonVitePluginVueVersion,
+  };
 }
 
-async function getVersionOfPackage(pkgName: string, isDevDependency?: true): Promise<string> {
+async function getVersionOfPackage(
+  pkgName: string,
+  isDevDependency?: true
+): Promise<string> {
   /* return the version in pkg json if available */
-  const {dependencies, devDependencies} = readRootPackageJson()
-  const dep = isDevDependency ? devDependencies : dependencies
+  const { dependencies, devDependencies } = readRootPackageJson();
+  const dep = isDevDependency ? devDependencies : dependencies;
   const hasPkg = Object.keys(dep).includes(pkgName);
 
+  if (hasPkg) return dep[pkgName];
 
-  if(hasPkg) return dep[pkgName]
-
-  const response = await (await fetch(`https://registry.npmjs.org/${pkgName}/latest`)).json() as unknown as {version: string}
-  return response.version
-
+  const response = (await (
+    await fetch(`https://registry.npmjs.org/${pkgName}/latest`)
+  ).json()) as unknown as { version: string };
+  return response.version;
 }
 
-async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): Promise<NormalizedSchema> {
+async function normalizeOptions(
+  tree: Tree,
+  options: ComponentGeneratorSchema
+): Promise<NormalizedSchema> {
   const name = names(options.name).fileName;
   const projectDirectory = options.directory
     ? `${names(options.directory).fileName}/${name}`
@@ -118,9 +147,19 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
 
   const layout = getWorkspaceLayout(tree);
 
-  const {vueVersion, updatePackageJsonVueVersion, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion} = await getVueVersion(options)
+  const {
+    vueVersion,
+    updatePackageJsonVueVersion,
+    vitePluginVueVersion,
+    updatePackageJsonVitePluginVueVersion,
+  } = await getVueVersion(options);
 
-  const viteTsConfigPath = `${path.relative(projectRoot, tree.root)}/` // will this break on windows?? i.e. '\'
+  const viteTsConfigPath = `${path.relative(projectRoot, tree.root)}/`; // will this break on windows?? i.e. '\'
+
+  const vitestCachePath = path.relative(
+    path.resolve(projectDirectory, 'vite.config.ts'),
+    path.resolve(tree.root, 'node_modules', '.vitest')
+  );
 
   return {
     ...options,
@@ -134,43 +173,64 @@ async function normalizeOptions(tree: Tree, options: ComponentGeneratorSchema): 
     updatePackageJsonVueVersion,
     vitePluginVueVersion,
     updatePackageJsonVitePluginVueVersion,
-    viteTsConfigPath
+    viteTsConfigPath,
+    vitestCachePath,
   };
 }
 
-async function addVueFiles(tree: Tree, options: NormalizedSchema){
+async function addVueFiles(tree: Tree, options: NormalizedSchema) {
+  const {
+    projectRoot,
+    name,
+    description,
+    vueVersion,
+    bugs,
+    vitePluginVueVersion,
+    updatePackageJsonVitePluginVueVersion,
+    importPrefix,
+    projectName,
+    viteTsConfigPath,
+  } = options;
 
-  const {projectRoot, name, description, vueVersion, bugs, vitePluginVueVersion, updatePackageJsonVitePluginVueVersion, importPrefix, projectName, viteTsConfigPath } = options;
+  tree.delete(path.join(projectRoot, 'src', 'lib'));
 
-  tree.delete(path.join(projectRoot,'src','lib'))
-
-  const allNames = names(name)
-  const className = `${pascalCase(importPrefix)}${allNames.className}`
+  const allNames = names(name);
+  const className = `${pascalCase(importPrefix)}${allNames.className}`;
 
   /* update project json and get the output directory from it */
 
-  const c = readProjectConfiguration(tree, projectName)
+  const c = readProjectConfiguration(tree, projectName);
 
   c.targets['format'] = {
-  executor: "@incremental.design/nx-plugin-vue3:format", // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
-  outputs: ["{projectRoot}/**/*"]
-  }
+    executor: '@incremental.design/nx-plugin-vue3:format', // todo: test publishing and installing this generator in another repo - see if nx-plugin-vue3 will automatically be installed
+    outputs: ['{projectRoot}/**/*'],
+  };
 
-  const viteBuild = c.targets['build']
+  const viteBuild = c.targets['build'];
 
-  const dtsOutputDir = path.join(viteTsConfigPath, viteBuild.options['outputPath'])
+  const dtsOutputDir = path.join(
+    viteTsConfigPath,
+    viteBuild.options['outputPath']
+  );
 
   c.targets['build'] = {
     executor: '@incremental.design/nx-plugin-vue3:build',
     options: {
-      viteConfig: 'production'
-    }
+      viteConfig: 'production',
+    },
+  };
+
+  c.targets['vite-build'] = viteBuild;
+
+  c.targets['extract-api'] = {
+    executor: '@incremental.design/nx-plugin-vue3:extract-api',
+    options: {
+      outDir: viteBuild.options.outputPath
+    },
+    outputs: ["{options.outDir}"]
   }
 
-  c.targets['vite-build'] = viteBuild
-
-  updateProjectConfiguration(tree, projectName, c)
-
+  updateProjectConfiguration(tree, projectName, c);
 
   const templateOptions = {
     ...options,
@@ -178,104 +238,122 @@ async function addVueFiles(tree: Tree, options: NormalizedSchema){
     className,
     offsetFromRoot: offsetFromRoot(options.projectRoot),
     template: '',
-    dtsOutputDir
+    dtsOutputDir,
   };
-  generateFiles(tree, path.join(__dirname, 'files'), options.projectRoot, templateOptions);
+  generateFiles(
+    tree,
+    path.join(__dirname, 'files'),
+    options.projectRoot,
+    templateOptions
+  );
 
-  const {devDependencies} = JSON.parse(tree.read(`package.json`).toString())
+  const { devDependencies } = JSON.parse(tree.read(`package.json`).toString());
 
-  const vitePluginVue = updatePackageJsonVitePluginVueVersion ? {'@vitejs/plugin-vue': vitePluginVueVersion} : {}
+  const vitePluginVue = updatePackageJsonVitePluginVueVersion
+    ? { '@vitejs/plugin-vue': vitePluginVueVersion }
+    : {};
 
   /* update package.json */
-  updateJson(tree, path.join(projectRoot,'package.json'), (json) => {
-    json.private = false,
-    json.module = `src/index.ts`
-    json.description = description
-    json.dependencies = {vue: vueVersion}
-    json.private = false
-    json.sideEffects = true
+  updateJson(tree, path.join(projectRoot, 'package.json'), (json) => {
+    (json.private = false), (json.module = `src/index.ts`);
+    json.description = description;
+    json.dependencies = { vue: vueVersion };
+    json.private = false;
+    json.sideEffects = true;
     json.publishConfig = {
-      access: 'public'
-    }
-    json.license = 'MIT'
+      access: 'public',
+    };
+    json.license = 'MIT';
     json.devDependencies = {
       'vite-plugin-dts': devDependencies['vite-plugin-dts'],
       'vite-tsconfig-paths': devDependencies['vite-tsconfig-paths'],
-      ...vitePluginVue
-    }
+      ...vitePluginVue,
+    };
     json.bugs = {
-      url: bugs
-    }
-    return json
-  })
+      url: bugs,
+    };
+    return json;
+  });
 
   /* update .eslintrc.json */
-  updateJson(tree, path.join(projectRoot,'.eslintrc.json'), (json) => {
-
-    json.ignorePatterns.push("node_modules/**", "src/shims-vue.d.ts")
+  updateJson(tree, path.join(projectRoot, '.eslintrc.json'), (json) => {
+    json.ignorePatterns.push('node_modules/**', 'src/shims-vue.d.ts');
 
     json.overrides = [
       {
-        files: ["*.vue"],
-        extends: ["plugin:@nrwl/nx/typescript", "plugin:vue/vue3-recommended"],
+        files: ['*.vue'],
+        extends: ['plugin:@nrwl/nx/typescript', 'plugin:vue/vue3-recommended'],
         env: {
-          node: false, /* so that SSR components can be rendered on edge */
+          node: false /* so that SSR components can be rendered on edge */,
           browser: true,
         },
-        parser: "vue-eslint-parser",
+        parser: 'vue-eslint-parser',
         parserOptions: {
-          parser: "@typescript-eslint/parser",
-          sourceType: "module"
+          parser: '@typescript-eslint/parser',
+          sourceType: 'module',
         },
         rules: {
-          "vue/max-attributes-per-line": "off",
-          "vue/html-self-closing": [
-            "error",
+          'vue/max-attributes-per-line': 'off',
+          'vue/html-self-closing': [
+            'error',
             {
               html: {
-                void: "always",
-                normal: "always",
-                component: "always"
+                void: 'always',
+                normal: 'always',
+                component: 'always',
               },
-              svg: "always",
-              math: "always"
-            }
-          ]
-        }
-      }
+              svg: 'always',
+              math: 'always',
+            },
+          ],
+        },
+      },
     ];
 
     return json;
-  })
+  });
 }
 
-async function addPackageManagerWorkspace(tree: Tree, options: NormalizedSchema){
+async function addPackageManagerWorkspace(
+  tree: Tree,
+  options: NormalizedSchema
+) {
+  const { appsDir, libsDir } = options;
 
-  const {appsDir, libsDir } = options;
+  if (tree.exists('pnpm-lock.yaml')) {
+    if (tree.exists('pnpm-workspace.yaml')) {
+      const workspaceFileContents = yaml.parse(
+        tree.read('pnpm-workspace.yaml').toString()
+      );
+      if (!workspaceFileContents['packages'])
+        throw new Error(
+          `Your pnpm-workspace.yaml does not have a 'packages' entry that points to '${appsDir}/**'${
+            appsDir === libsDir ? '' : "and '" + libsDir + "/**'"
+          }. Cannot install this package's dependencies.`
+        );
 
-  if(tree.exists('pnpm-lock.yaml')){
-    if(tree.exists('pnpm-workspace.yaml')){
-      const workspaceFileContents = yaml.parse(tree.read('pnpm-workspace.yaml').toString())
-      if(!workspaceFileContents['packages']) throw new Error(`Your pnpm-workspace.yaml does not have a 'packages' entry that points to '${appsDir}/**'${appsDir === libsDir ? '' : 'and \'' + libsDir + '/**\''}. Cannot install this package's dependencies.`)
+      const dirs = [appsDir, libsDir];
 
-      const dirs = [appsDir, libsDir]
-
-      dirs.forEach(dir => {
-        if(!workspaceFileContents['packages'].includes(`${dir}/**`)) throw new Error(`Your pnpm-workspace.yaml 'packages' entry is missing '${dir}/**'. Cannot install this package's dependencies.`)
-      })
+      dirs.forEach((dir) => {
+        if (!workspaceFileContents['packages'].includes(`${dir}/**`))
+          throw new Error(
+            `Your pnpm-workspace.yaml 'packages' entry is missing '${dir}/**'. Cannot install this package's dependencies.`
+          );
+      });
       return;
     } else {
-      const pkgDirs = appsDir === libsDir ? [appsDir] : [appsDir, libsDir]
-      const pnpmWorkspaceYaml = yaml.stringify({packages: pkgDirs.map(d => `${d}/**`)})
-      tree.write('pnpm-workspace.yaml', pnpmWorkspaceYaml)
+      const pkgDirs = appsDir === libsDir ? [appsDir] : [appsDir, libsDir];
+      const pnpmWorkspaceYaml = yaml.stringify({
+        packages: pkgDirs.map((d) => `${d}/**`),
+      });
+      tree.write('pnpm-workspace.yaml', pnpmWorkspaceYaml);
     }
   }
-    // todo: check npm, yarn, yarn berry - use getPackageManagerCommand from nrwl devkit
+  // todo: check npm, yarn, yarn berry - use getPackageManagerCommand from nrwl devkit
 }
 
 export default async function (tree: Tree, options: ComponentGeneratorSchema) {
-
-  const n = await normalizeOptions(tree, options)
+  const n = await normalizeOptions(tree, options);
 
   const {
     name,
@@ -287,8 +365,7 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
     vueVersion,
     vitePluginVueVersion,
     updatePackageJsonVitePluginVueVersion,
-    projectName
-  } = n
+  } = n;
 
   await libraryGenerator(tree, {
     name,
@@ -302,35 +379,39 @@ export default async function (tree: Tree, options: ComponentGeneratorSchema) {
     publishable: true,
     compiler: 'swc',
     bundler: 'vite',
-  })
+  });
 
+  const vuePkg = updatePackageJsonVueVersion
+    ? { vue: vueVersion }
+    : {}; /* do not downgrade the vue version in the root package json if it is farther ahead of the specified vue version. instead, just let this one component have a different version of vue */
 
-  const vuePkg = updatePackageJsonVueVersion ? {vue: vueVersion } : {} /* do not downgrade the vue version in the root package json if it is farther ahead of the specified vue version. instead, just let this one component have a different version of vue */
+  const [vp, ep] = await Promise.all([
+    getVersionOfPackage('vue-eslint-parser'),
+    getVersionOfPackage('eslint-plugin-vue'),
+  ]); /* only get the latest version IF pkg not already installed */
 
-  const [vp, ep] = await Promise.all([getVersionOfPackage('vue-eslint-parser'), getVersionOfPackage('eslint-plugin-vue')]) /* only get the latest version IF pkg not already installed */
-
-  const addViteDevDeps = updatePackageJsonVitePluginVueVersion ? {'@vitejs/plugin-vue': vitePluginVueVersion} : {}
+  const addViteDevDeps = updatePackageJsonVitePluginVueVersion
+    ? { '@vitejs/plugin-vue': vitePluginVueVersion }
+    : {};
 
   await Promise.all([
     addDependenciesToPackageJson(
       tree,
-      {...vuePkg},
+      { ...vuePkg },
       {
         /* install the packages needed to successfully lint vue files */
-        "vue-eslint-parser": vp,
-        "eslint-plugin-vue": ep,
+        'vue-eslint-parser': vp,
+        'eslint-plugin-vue': ep,
         ...addViteDevDeps,
       }
-      ),
-      addVueFiles(tree, n),
-      await addPackageManagerWorkspace(tree, n),
-      // updateViteConfigTs(tree, n),
-    ])
+    ),
+    addVueFiles(tree, n),
+    await addPackageManagerWorkspace(tree, n),
+    // updateViteConfigTs(tree, n),
+  ]);
 
-  await formatFiles(tree)
+  await formatFiles(tree);
 
-  return () => installPackagesTask(
-    tree,
-    true /* always run, so that volar will work */
-    )
+  return () =>
+    installPackagesTask(tree, true /* always run, so that volar will work */);
 }

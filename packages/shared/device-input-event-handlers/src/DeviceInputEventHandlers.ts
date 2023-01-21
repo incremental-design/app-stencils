@@ -26,7 +26,7 @@ import {
   WindowResizeInput,
 } from './event-handlers';
 
-import { Handler, EventInfo } from './event-handlers/handler-utils';
+import { Handler, EventInfo } from './event-handlers';
 
 type AllDeviceEvents =
   | DeviceMotionEvent

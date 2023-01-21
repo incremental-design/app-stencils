@@ -10,9 +10,8 @@ export default defineConfig({
     dts({
       tsConfigFilePath: join(__dirname, 'tsconfig.lib.json'),
       skipDiagnostics: true,
-      'outputDir': '../../../dist/packages/vue3/base',
-      'entryRoot': './src',
-      'rollupTypes': true
+      outputDir: '../../../dist/packages/vue3/base',
+      entryRoot: './src'
     }),
     viteTsConfigPaths({ root: '../../../' }),
   ],
@@ -31,5 +30,13 @@ export default defineConfig({
         },
       },
     },
+  },
+  test: {
+    globals: true,
+    cache: {
+      dir: '../../../node_modules/.vitest',
+    },
+    environment: 'jsdom',
+    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
   },
 });
