@@ -11,7 +11,7 @@
   "auto_jump_to_cursor": false,
   "enable_system_commands": false,
   "shell_path": "",
-  "user_scripts_folder": "dist/packages/shared/obsidian-templater-scripts",
+  "user_scripts_folder": "tools/obsidian-templater-scripts",
   "enable_folder_templates": true,
   "folder_templates": [
     {
@@ -26,5 +26,5 @@
   "startup_templates": [
     ""
   ],
-  "enable_ribbon_icon": true
+  "enable_ribbon_icon": false
 }

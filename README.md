@@ -40,6 +40,9 @@ App stencils is a monorepo. Each component has its own package. Only install the
 All typescript modules are located in `packages/shared`. As the name suggests, these modules are shared among multiple components. They can also be used independently of Vue 3. So, if you want to make react, svelte, or web components, you can use these modules to get started
 
 
+<%+ tp.user.index().generateApiDocumentation() %>
+
+
 ## [Contribute to App Stencils](CONTRIBUTE.MD)
   
   

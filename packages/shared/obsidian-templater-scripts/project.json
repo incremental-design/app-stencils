@@ -43,7 +43,7 @@
       ],
       "defaultConfiguration": "production",
       "options": {
-        "outputPath": "dist/packages/shared/obsidian-templater-scripts"
+        "outputPath": "tools/obsidian-templater-scripts"
       },
       "configurations": {
         "development": {
@@ -57,7 +57,7 @@
     "extract-api": {
       "executor": "@incremental.design/nx-plugin-vue3:extract-api",
       "options": {
-        "outDir": "dist/packages/shared/obsidian-templater-scripts"
+        "outDir": "tools/obsidian-templater-scripts"
       },
       "outputs": [
         "{options.outDir}"
