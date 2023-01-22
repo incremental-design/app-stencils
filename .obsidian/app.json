@@ -1,6 +1,8 @@
 {
   "spellcheck": true,
   "newFileLocation": "current",
-  "alwaysUpdateLinks": true,
-  "showUnsupportedFiles": true
+  "useMarkdownLinks": true,
+  "showUnsupportedFiles": true,
+  "attachmentFolderPath": "/",
+  "alwaysUpdateLinks": true
 }
