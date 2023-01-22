@@ -24,6 +24,9 @@
       "@incremental.design/nx-plugin-vue3": [
         "packages/nx-plugin/vue3/src/index.ts"
       ],
+      "@incremental.design/obsidian-templater-scripts": [
+        "packages/shared/obsidian-templater-scripts/src/index.ts"
+      ],
       "@incremental.design/page-grid": [
         "packages/shared/page-grid/src/index.ts"
       ],

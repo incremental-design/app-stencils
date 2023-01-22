@@ -1,0 +1,67 @@
+{
+  "name": "shared-obsidian-templater-scripts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@incremental.design/nx-plugin-vue3:build",
+      "options": {
+        "viteConfig": "production"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": [
+        "coverage/packages/shared/obsidian-templater-scripts"
+      ],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/packages/shared/obsidian-templater-scripts"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/shared/obsidian-templater-scripts/**/*.ts"
+        ]
+      }
+    },
+    "format": {
+      "executor": "@incremental.design/nx-plugin-vue3:format",
+      "outputs": [
+        "{projectRoot}/**/*"
+      ]
+    },
+    "vite-build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "tools/obsidian-templater-scripts"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "extract-api": {
+      "executor": "@incremental.design/nx-plugin-vue3:extract-api",
+      "options": {
+        "outDir": "tools/obsidian-templater-scripts"
+      },
+      "outputs": [
+        "{options.outDir}"
+      ]
+    }
+  }
+}
