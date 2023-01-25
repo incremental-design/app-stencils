@@ -1,3 +1,5 @@
+import { SquarespaceTemplateLayout } from "../Template/Template"
+
 /**
  * Groups of content that will populate the {@link SquarespaceBlock | blocks} and {@link SquarespacePage | pages} on the site.
  *
@@ -27,10 +29,9 @@ export interface SquarespaceCollection {
  *
  * @param pageSize - the max number of items to show on a single page. This should be a positive number.
  *
- *
  * @param supportsVideoBackgrounds - whether the collection supports video backgrounds
  *
- *
+ * @param layout - a {@link SquarespaceTemplateLayout.name} to use for the collection. See {@link https://developers.squarespace.com/layouts-regions collection-specific default layout}
  */
 export interface SquarespaceCollectionConfig {
   title: string, // todo: make sure it is not 'album'
@@ -39,6 +40,7 @@ export interface SquarespaceCollectionConfig {
   acceptTypes: Array<'text' | 'image' | 'video' | 'audio' | 'event'>,
   pageSize: number, // fail if negative number or zero
   supportsVideoBackgrounds: boolean, //wtf does this mean?
+  layout?: string
 }
 
 /**
@@ -52,7 +54,9 @@ export interface SquarespaceCollectionConfig {
  *
  * @param icon - the icon that should represent the folder in the squarespace editor
  *
- * {@link https://developers.squarespace.com/folders-indexes | Squarespace - folders and indexes}
+ * @param layout - the name of a {@link SquarespaceTemplateLayout.name} to use for the collection. See {@link https://developers.squarespace.com/layouts-regions folder-specific default layout}
+ *
+ * {@link https://developers.squarespace.com/folders-indexes Squarespace - folders and indexes}
  *
  */
 export interface SquarespaceFolderConfig{
@@ -61,6 +65,7 @@ export interface SquarespaceFolderConfig{
   // folder: true, - // this will always be true by virtue of being included, so no need to specify it here.
   addText: string, // should default to 'add content'
   icon: string // should default to 'folder'
+  layout?: string
 }
 
 /**

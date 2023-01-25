@@ -70,3 +70,16 @@ flowchart RL
 ### Deploy:
 
 [ ] List the steps for deploying project name as a package
+
+unfortunately, squarespace development server is a java app. it has to be installed in global npm
+
+the best path around this is to install it in a docker container, attach to container, and then interact with it from there. But, that's out of scope right now. So, for now just `npm install -g @squarespace/server`
+
+the idea of the squarespace template generator is to:
+
+0. add in build hooks e.g. `<!--vite scripts-->`
+1. scan a squarespace template, and create a config object that lists everything that is in the template
+2. output a manifest of the original template contents
+3. add to the configuration object: include custom styles, components, etc
+4. build styles and components, and place them back into the original template
+5. on every rebuild, delete anything that is not present in the manifest of original template contents

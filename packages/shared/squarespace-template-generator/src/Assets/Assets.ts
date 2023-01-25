@@ -15,3 +15,5 @@ export interface SquarespaceAsset {
   mimeType?: string // todo: use mimetype to infer type, then convert it to SquarespaceTemplateConfig.systemCollections type??
   // todo: allow assets to be stored in buckets, and shimmed in
 }
+
+// todo: handle imageLoader https://developers.squarespace.com/image-loader - ie use image loader to pull images, or use custom code to pull images
