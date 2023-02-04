@@ -1,0 +1,53 @@
+{
+  "name": "nx-plugin-shared-new",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/nx-plugin/shared-new/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:swc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/nx-plugin/shared-new",
+        "main": "packages/nx-plugin/shared-new/src/index.ts",
+        "tsConfig": "packages/nx-plugin/shared-new/tsconfig.lib.json",
+        "assets": [
+          "packages/nx-plugin/shared-new/*.md",
+          {
+            "input": "./packages/nx-plugin/shared-new/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-plugin/shared-new/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/nx-plugin/shared-new",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/nx-plugin/shared-new",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/nx-plugin/shared-new/**/*.ts",
+          "packages/nx-plugin/shared-new/generators.json",
+          "packages/nx-plugin/shared-new/executors.json",
+          "packages/nx-plugin/shared-new/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}

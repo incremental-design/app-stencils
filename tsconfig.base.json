@@ -21,6 +21,9 @@
       "@incremental.design/nx-plugin-shared": [
         "packages/nx-plugin/shared/src/index.ts"
       ],
+      "@incremental.design/nx-plugin-shared-new": [
+        "packages/nx-plugin/shared-new/src/index.ts"
+      ],
       "@incremental.design/nx-plugin-vue3": [
         "packages/nx-plugin/vue3/src/index.ts"
       ],
