@@ -20,6 +20,11 @@
       "implementation": "./src/executors/document/executor",
       "schema": "./src/executors/document/schema.json",
       "description": "generate API docs from library source code"
+    },
+    "lint": {
+      "implementation": "./src/executors/lint/executor",
+      "schema": "./src/executors/lint/schema.json",
+      "description": "lint projects with eslint"
     }
   }
 }

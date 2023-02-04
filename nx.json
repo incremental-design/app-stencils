@@ -67,6 +67,10 @@
       "directory": "vue3",
       "importPrefix": "vue3-component-",
       "bugs": "https://github.com/incremental-design/app-stencils/issues"
+    },
+    "@incremental.design/nx-plugin-shared-new:typescript-browser-library": {
+      "directory": "shared",
+      "bugs": "https://github.com/incremental-design/app-stencils/issues"
     }
   }
 }

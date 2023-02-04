@@ -5,6 +5,17 @@
   "title": "Build executor",
   "description": "",
   "type": "object",
-  "properties": {},
-  "required": []
+  "properties": {
+    "outputPath": {
+      "type": "string",
+      "description": "Where to output the built package"
+    },
+    "bugs": {
+      "type": "string",
+      "description": "Where users of this package should report bugs"
+    }
+  },
+  "required": [
+    "outputPath"
+  ]
 }
