@@ -4,12 +4,13 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
-  "peerDependencies": {
+  "devDependencies": {
     "vite": "^4.1.1",
-    "vitest": "0.28.4",
+    "vitest": "^0.28.4",
     "vite-plugin-dts": "^1.7.1",
     "vite-tsconfig-paths": "^4.0.2",
     "eslint": "^8.33.0",
-    "@nrwl/linter": "^15.6.3"
+    "@nrwl/linter": "^15.6.3",
+    "tempy": "^3.0.0"
   }
 }

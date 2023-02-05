@@ -38,7 +38,7 @@
     "vite-plugin-dts": "~1.7.1",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^4.0.2",
-    "vitest": "0.28.4",
+    "vitest": "^0.28.4",
     "vue-eslint-parser": "9.1.0"
   },
   "dependencies": {

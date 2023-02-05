@@ -116,7 +116,7 @@ export default async function (
   addDependenciesToPackageJson(
     tree,
     {},
-    { '@nrwl/linter': '15.4.5', eslint: '^8.33.0', prettier: '^2.6.2', vitest:'0.28.4' }
+    { '@nrwl/linter': '15.4.5', eslint: '^8.33.0', prettier: '^2.6.2' }
   );
 
   installPackagesTask(tree);
