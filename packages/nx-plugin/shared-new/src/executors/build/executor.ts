@@ -1,10 +1,11 @@
 import * as path from 'path';
-import { readFile, writeFile } from 'fs/promises';
+import { spawn } from 'child_process';
+import { readFile, writeFile, stat } from 'fs/promises';
 import type { ExecutorContext } from '@nrwl/devkit';
 import { BuildExecutorSchema } from './schema';
-import { build } from 'vite';
+// import { build } from 'vite';
 import { getPrettier, getPrettierOptions } from '../format/getPrettier';
-import getViteInlineConfig from './getViteInlineConfig';
+// import getViteInlineConfig from './getViteInlineConfig';
 import getRoots from '../getRoots';
 
 /**
@@ -46,15 +47,53 @@ export default async function runExecutor(
     await readFile(path.join(projectRoot, 'package.json'), 'utf-8')
   );
 
-  const c = await getViteInlineConfig(
-    workspaceRoot,
-    projectRoot,
-    projectName,
-    outDir,
-    packageJson
-  );
+  // const c = await getViteInlineConfig(
+  //   workspaceRoot,
+  //   projectRoot,
+  //   projectName,
+  //   outDir,
+  //   packageJson
+  // );
 
-  await build(c);
+  // await build(c);
+
+  const __FRAMEWORK__ = 'ts-browser';
+  const __LIBRARY__ = 'true';
+  const __PROJECT_ROOT__ = projectRoot;
+  const __OUTDIR__ = outDir;
+  const __PROJECT_NAME__ = projectName;
+
+  const vitePath = path.resolve(workspaceRoot, 'node_modules', '.bin', 'vite');
+
+  try {
+    await stat(vitePath);
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
+
+  const buildProcess = spawn(
+    vitePath,
+    ['build', '--mode=production', '--config=vite.config.base.ts'],
+    {
+      cwd: workspaceRoot,
+      env: {
+        __FRAMEWORK__,
+        __LIBRARY__,
+        __PROJECT_ROOT__,
+        __OUTDIR__,
+        __PROJECT_NAME__,
+      },
+    }
+  );
+  buildProcess.on('message', (message) => console.log(message));
+
+  await new Promise<void>((resolve, reject) => {
+    buildProcess.on('close', (code) => {
+      if (code !== 0) reject();
+      resolve();
+    });
+  });
 
   const bugs = options.bugs ? { url: options.bugs } : {};
 

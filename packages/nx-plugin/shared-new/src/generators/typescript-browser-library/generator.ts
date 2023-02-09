@@ -1,3 +1,5 @@
+import * as path from 'path';
+import { readFile } from 'fs/promises';
 import {
   addProjectConfiguration,
   formatFiles,
@@ -9,7 +11,6 @@ import {
   addDependenciesToPackageJson,
   installPackagesTask,
 } from '@nrwl/devkit';
-import * as path from 'path';
 import { TypescriptBrowserLibraryGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends TypescriptBrowserLibraryGeneratorSchema {
@@ -65,6 +66,14 @@ function addFiles(tree: Tree, options: NormalizedSchema) {
   );
 }
 
+async function addViteConfigBaseTs(tree: Tree) {
+  tree.write(
+    './vite.config.base.ts',
+    await readFile(path.resolve(__dirname, 'vite.config.base.ts')),
+    {}
+  );
+}
+
 export default async function (
   tree: Tree,
   options: TypescriptBrowserLibraryGeneratorSchema
@@ -108,15 +117,25 @@ export default async function (
     tags: normalizedOptions.parsedTags,
   });
   addFiles(tree, normalizedOptions);
+  await addViteConfigBaseTs(tree);
   await formatFiles(tree);
 
-  /* make sure @nrwl/linter, ESlint, Prettier are installed */
+  /* make sure @nrwl/linter, ESlint, Prettier, vite, vite plugins, and vitest are installed */
 
   // todo: test this in a new repo!!
   addDependenciesToPackageJson(
     tree,
     {},
-    { '@nrwl/linter': '15.4.5', eslint: '^8.33.0', prettier: '^2.6.2' }
+    {
+      '@nrwl/linter': '15.4.5',
+      eslint: '^8.33.0',
+      prettier: '^2.6.2',
+      vite: '^4.1.1',
+      'vite-plugin-dts': '^1.7.1',
+      'vite-tsconfig-paths': '^4.0.2',
+      vitest: '^0.28.4',
+      'vue-eslint-parser': '9.1.0',
+    }
   );
 
   installPackagesTask(tree);
