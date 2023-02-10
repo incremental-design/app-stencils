@@ -43,20 +43,7 @@ export default async function runExecutor(
 
   const outDir = path.join(workspaceRoot, options.outputPath);
 
-  const packageJson = JSON.parse(
-    await readFile(path.join(projectRoot, 'package.json'), 'utf-8')
-  );
-
-  // const c = await getViteInlineConfig(
-  //   workspaceRoot,
-  //   projectRoot,
-  //   projectName,
-  //   outDir,
-  //   packageJson
-  // );
-
-  // await build(c);
-
+  // todo: set these based on project options
   const __FRAMEWORK__ = 'ts-browser';
   const __LIBRARY__ = 'true';
   const __PROJECT_ROOT__ = projectRoot;
@@ -86,7 +73,8 @@ export default async function runExecutor(
       },
     }
   );
-  buildProcess.on('message', (message) => console.log(message));
+  buildProcess.stdout.on('data', (data) => console.log(data.toString('utf8')));
+  buildProcess.stderr.on('data', (data) => console.error(data.toString('utf8')));
 
   await new Promise<void>((resolve, reject) => {
     buildProcess.on('close', (code) => {
@@ -103,6 +91,10 @@ export default async function runExecutor(
 
   const w = context.workspace;
   const { npmScope } = w;
+
+  const packageJson = JSON.parse(
+    await readFile(path.join(projectRoot, 'package.json'), 'utf-8')
+  );
 
   const name = npmScope ? `${npmScope}/${packageJson.name}` : packageJson.name;
   const [dependencies, devDependencies] = [

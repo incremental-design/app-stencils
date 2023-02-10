@@ -19,18 +19,11 @@ import { readFile } from 'fs/promises';
  * __PROJECT_ROOT__ absolute path to the project to build/test
  * __OUTDIR__ absolute path to the location of built files
  * __PROJECT_NAME__ the unscoped name of the project, as it would appear when imported in a browser
+ * __TEST_ENV__ is one of {@link https://vitest.dev/guide/environment.html vite's test environments} i.e. 'node', 'jsdom', 'happy-dom', 'edge-runtime', defaults to 'jsdom'
  */
 
 //@ts-expect-error defineConfig typing is messed up, but this function works
 export default defineConfig(async (command, mode) => {
-  /* this file is invoked by both vite and vitest, which are invoked by '@incremental.design/shared:build' and '@incremental.design/shared:test' respectively. This config receives the following environment variables:
-   * __FRAMEWORK__ one of 'vue3', 'ts-browser' - controls whether to use @vitejs/plugin-vue
-   * __LIBRARY__ one of 'true' or 'false' - controls whether to build as library and externalize deps, or build as app, and internalize deps
-   * __PROJECT_ROOT__ absolute path to the project to build/test
-   * __OUTDIR__ absolute path to the location of built files
-   * __PROJECT_NAME__ the unscoped name of the project, as it would appear when imported in a browser
-   */
-
   // todo: support vite serve for all 'serve-able' things
   if (command === 'serve' || mode === 'dev')
     throw new Error('serve and dev not supported ... yet');
@@ -42,6 +35,7 @@ export default defineConfig(async (command, mode) => {
   const projectRoot = process.env.__PROJECT_ROOT__;
   const outDir = process.env.__OUTDIR__;
   const projectName = process.env.__PROJECT_NAME__;
+  const testEnv = process.env.__TEST_ENV__ || 'jsdom';
 
   if (!framework) throw new Error('process.env.__FRAMEWORK__ not defined');
   if (!library) throw new Error('process.env.__LIBRARY__ not defined');
@@ -69,6 +63,17 @@ export default defineConfig(async (command, mode) => {
   );
 
   // todo: support build as web worker?
+
+  const test = {
+    globals: true,
+    cache: {
+      dir: path.resolve(__dirname, 'node_modules', '.vitest'),
+    },
+    environment: testEnv,
+    include: [
+      `${projectRoot}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}`,
+    ],
+  };
 
   if (library) {
     const lib = library
@@ -98,6 +103,7 @@ export default defineConfig(async (command, mode) => {
         lib,
         rollupOptions,
       },
+      test,
     };
   } else {
     return {
@@ -106,6 +112,7 @@ export default defineConfig(async (command, mode) => {
         outDir,
         plugins,
       },
+      test,
     };
   }
 });

@@ -1,36 +1,29 @@
 {
-  "name": "shared-abcdef",
+  "name": "shared-abcd",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/shared/abcdef/src",
+  "sourceRoot": "packages/shared/abcd/src",
   "targets": {
     "document": {
       "executor": "@incremental.design/nx-plugin-shared-new:document",
-      "dependsOn": [
-        "build"
-      ]
+      "dependsOn": ["build"]
     },
     "build": {
       "executor": "@incremental.design/nx-plugin-shared-new:build",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/shared/abcdef",
+        "outputPath": "dist/packages/shared/abcd",
         "bugs": "https://github.com/incremental-design/app-stencils/issues"
-      }
+      },
+      "dependsOn": ["test", "^build"]
     },
     "test": {
       "executor": "@incremental.design/nx-plugin-shared-new:test",
-      "dependsOn": [
-        "lint"
-      ]
+      "dependsOn": ["lint"]
     },
     "lint": {
       "executor": "@incremental.design/nx-plugin-shared-new:lint",
-      "dependsOn": [
-        "format"
-      ]
+      "dependsOn": ["format"]
     },
     "format": {
       "executor": "@incremental.design/nx-plugin-shared-new:format"

@@ -1,15 +1,10 @@
 import * as path from 'path';
 import { stat } from 'fs/promises';
-import { mergeConfig } from 'vite'; // do we need to import type, and then dynamic import this?
-import { defineConfig } from 'vitest/config'; // do we need to import type, and then dynamic import this?
 import { ExecutorContext } from '@nrwl/devkit';
 import { TestExecutorSchema } from './schema';
 import checkVite from '../build/checkVite';
 import getRoots from '../getRoots';
-import getViteInlineConfig from '../build/getViteInlineConfig';
 import { spawn } from 'child_process';
-import { temporaryFile } from 'tempy';
-import { writeFile } from 'fs';
 
 export default async function runExecutor(
   options: TestExecutorSchema,
@@ -19,9 +14,17 @@ export default async function runExecutor(
 
   if (!v) return { success: false };
 
-  const { workspaceRoot, projectRoot, projectName } = getRoots(context);
+  let R: ReturnType<typeof getRoots>;
+  try {
+    R = getRoots(context);
+  } catch (e) {
+    console.error(e);
+    return { success: false };
+  }
 
-  const viteBinPath = path.resolve(
+  const { workspaceRoot, projectRoot, projectName } = R;
+
+  const vitestBinPath = path.resolve(
     workspaceRoot,
     'node_modules',
     '.bin',
@@ -29,10 +32,10 @@ export default async function runExecutor(
   );
 
   try {
-    await stat(viteBinPath);
+    await stat(vitestBinPath);
   } catch (e) {
     console.error(e);
-    console.error(`vitest executable not found at ${viteBinPath}`);
+    console.error(`vitest executable not found at ${vitestBinPath}`);
     return { success: false };
   }
 
@@ -40,42 +43,36 @@ export default async function runExecutor(
     context.projectsConfigurations.projects[projectName].targets['build']
       .options.outputPath;
 
-  console.log(outDir);
+  // todo: set these based on project options
+  const __FRAMEWORK__ = 'ts-browser';
+  const __LIBRARY__ = 'true';
+  const __PROJECT_ROOT__ = projectRoot;
+  const __OUTDIR__ = outDir;
+  const __PROJECT_NAME__ = projectName;
 
-  const viteConfig = await getViteInlineConfig(
-    workspaceRoot,
-    projectRoot,
-    projectName,
-    outDir
-  );
-
-  /* see: https://vitest.dev/config/#configuration */
-  const vitestConfig = mergeConfig(
-    viteConfig,
-    defineConfig({
-      test: {
-        globals: true,
-        cache: {
-          dir: './node_modules/.vitest' /* because nx runs this from workspace root */,
-        },
-        environment: 'jsdom',
-        include: [
-          `${path.relative(
-            workspaceRoot,
-            projectRoot
-          )}/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}`,
-        ],
+  const testProcess = spawn(
+    vitestBinPath,
+    ['run', '--config=vite.config.base.ts'], // todo: try these options https://vitest.dev/guide/cli.html
+    {
+      cwd: workspaceRoot,
+      env: {
+        __FRAMEWORK__,
+        __LIBRARY__,
+        __PROJECT_ROOT__,
+        __OUTDIR__,
+        __PROJECT_NAME__,
       },
-    })
+    }
   );
+  testProcess.stdout.on('data', (data) => console.log(data.toString('utf8')));
+  testProcess.stderr.on('data', (data) => console.error(data.toString('utf8')));
 
-  const vitestConfigFile = temporaryFile({ name: 'vitest.config.ts' });
-
-  // await writeFile(vitestConfigFile, )
-
-  const cp = spawn(viteBinPath);
-
-  console.log(vitestConfig);
+  await new Promise<void>((resolve, reject) => {
+    testProcess.on('close', (code) => {
+      if (code !== 0) reject();
+      resolve();
+    });
+  });
 
   return { success: true };
 }
