@@ -59,6 +59,8 @@ export default defineConfig(async (command, mode) => {
       entryRoot: path.resolve(projectRoot, 'src'),
       //@ts-expect-error - the typings for dts are messed up, but this function call works
       emptyOutDir: false,
+      rollupTypes:
+        false /* don't roll up types with dts. Instead, roll them up with API extractor */,
     })
   );
 
