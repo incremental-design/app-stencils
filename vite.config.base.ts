@@ -56,7 +56,7 @@ export default defineConfig(async (command, mode) => {
       tsConfigFilePath: path.join(__dirname, 'tsconfig.base.json'), // todo: make sure that tsconfig.base.json exists and is what you think it is
       skipDiagnostics: true,
       outputDir: path.resolve(outDir, 'types'),
-      entryRoot: path.resolve(projectRoot, 'src'),
+      entryRoot: path.resolve(projectRoot),
       //@ts-expect-error - the typings for dts are messed up, but this function call works
       emptyOutDir: false,
       rollupTypes:
