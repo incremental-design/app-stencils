@@ -1,8 +1,8 @@
 {
-  "name": "shared-abcd",
+  "name": "shared-abc",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/shared/abcd/src",
+  "sourceRoot": "packages/shared/abc/src",
   "targets": {
     "document": {
       "executor": "@incremental.design/nx-plugin-shared-new:document",
@@ -12,7 +12,7 @@
       "executor": "@incremental.design/nx-plugin-shared-new:build",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/shared/abcd",
+        "outputPath": "dist/packages/shared/abc",
         "bugs": "https://github.com/incremental-design/app-stencils/issues"
       },
       "dependsOn": ["test", "^build"]

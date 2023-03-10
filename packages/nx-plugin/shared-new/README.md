@@ -23,3 +23,5 @@ How it works
 [] need to explain that tsconfig.json is just there to make typescript and volar work. don't actually edit it.
 
 [] need to explain that the eslintrc.json HAS to be included or @nrwl/linter rules cannot be used
+
+// need to make sure that this plugin installs the tsconfig.base.json when it is first run

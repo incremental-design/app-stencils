@@ -1,1 +1,1 @@
-export "<%= className %>" = () => {} // replace this no-op with whatever you want to export. Use named exports, rather than default exports.
+export const <%= className %> = () => {} // replace this no-op with whatever you want to export. Use named exports, rather than default exports.

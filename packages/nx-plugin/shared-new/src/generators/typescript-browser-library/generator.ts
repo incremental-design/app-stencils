@@ -9,8 +9,11 @@ import {
   offsetFromRoot,
   Tree,
   addDependenciesToPackageJson,
+  updateJson,
   installPackagesTask,
+  readJson,
 } from '@nrwl/devkit';
+
 import { TypescriptBrowserLibraryGeneratorSchema } from './schema';
 
 interface NormalizedSchema extends TypescriptBrowserLibraryGeneratorSchema {
@@ -72,6 +75,30 @@ async function addViteConfigBaseTs(tree: Tree) {
     await readFile(path.resolve(__dirname, 'vite.config.base.ts')),
     {}
   );
+}
+
+function addTsPath(tree: Tree, options: NormalizedSchema) {
+  const { npmScope } = readJson(tree, './nx.json');
+
+  const tsPathName = `${npmScope}/${options.projectName}`;
+
+  updateJson(tree, './tsconfig.base.json', (tsconfig) => {
+    return {
+      ...tsconfig,
+      compilerOptions: {
+        ...tsconfig.compilerOptions,
+        paths: {
+          ...tsconfig.compilerOptions.paths,
+          [tsPathName]: [
+            path.relative(
+              tree.root,
+              path.resolve(options.projectRoot, 'index.ts')
+            ),
+          ],
+        },
+      },
+    };
+  });
 }
 
 export default async function (
@@ -138,5 +165,10 @@ export default async function (
     }
   );
 
-  installPackagesTask(tree);
+  addTsPath(tree, normalizedOptions);
+
+  installPackagesTask(
+    tree,
+    true /* force run to trigger pnpm workspace installations */
+  );
 }
