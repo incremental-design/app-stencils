@@ -114,6 +114,7 @@ export default async function (
       document: {
         executor: '@incremental.design/nx-plugin-shared-new:document',
         dependsOn: ['build'],
+        outputs: [path.join('dist', normalizedOptions.projectRoot)],
       },
       build: {
         executor: '@incremental.design/nx-plugin-shared-new:build',
@@ -133,12 +134,14 @@ export default async function (
       },
       lint: {
         executor: '@incremental.design/nx-plugin-shared-new:lint',
+        outputs: [normalizedOptions.projectRoot],
         dependsOn: [
           'format',
         ] /* because we want the linter to have the final say on the contents of the file */,
       },
       format: {
         executor: '@incremental.design/nx-plugin-shared-new:format',
+        outputs: [normalizedOptions.projectRoot],
       },
     },
     tags: normalizedOptions.parsedTags,

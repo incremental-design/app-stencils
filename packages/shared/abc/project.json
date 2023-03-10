@@ -6,7 +6,8 @@
   "targets": {
     "document": {
       "executor": "@incremental.design/nx-plugin-shared-new:document",
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "outputs": ["dist/packages/shared/abc"]
     },
     "build": {
       "executor": "@incremental.design/nx-plugin-shared-new:build",
@@ -23,10 +24,12 @@
     },
     "lint": {
       "executor": "@incremental.design/nx-plugin-shared-new:lint",
+      "outputs": ["packages/shared/abc"],
       "dependsOn": ["format"]
     },
     "format": {
-      "executor": "@incremental.design/nx-plugin-shared-new:format"
+      "executor": "@incremental.design/nx-plugin-shared-new:format",
+      "outputs": ["packages/shared/abc"]
     }
   },
   "tags": []

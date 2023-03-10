@@ -10,6 +10,7 @@
     "vite-plugin-dts": "^1.7.1",
     "vite-tsconfig-paths": "^4.0.2",
     "eslint": "^8.33.0",
-    "@nrwl/linter": "^15.6.3"
+    "@nrwl/linter": "^15.6.3",
+    "@microsoft/api-extractor": "^7.34.4"
   }
 }

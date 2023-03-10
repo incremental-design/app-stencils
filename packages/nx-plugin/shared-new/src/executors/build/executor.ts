@@ -3,9 +3,7 @@ import { spawn } from 'child_process';
 import { readFile, writeFile, stat } from 'fs/promises';
 import type { ExecutorContext } from '@nrwl/devkit';
 import { BuildExecutorSchema } from './schema';
-// import { build } from 'vite';
 import { getPrettier, getPrettierOptions } from '../format/getPrettier';
-// import getViteInlineConfig from './getViteInlineConfig';
 import getRoots from '../getRoots';
 
 /**
@@ -74,7 +72,9 @@ export default async function runExecutor(
     }
   );
   buildProcess.stdout.on('data', (data) => console.log(data.toString('utf8')));
-  buildProcess.stderr.on('data', (data) => console.error(data.toString('utf8')));
+  buildProcess.stderr.on('data', (data) =>
+    console.error(data.toString('utf8'))
+  );
 
   await new Promise<void>((resolve, reject) => {
     buildProcess.on('close', (code) => {

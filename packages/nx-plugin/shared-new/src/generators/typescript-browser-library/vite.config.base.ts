@@ -55,7 +55,10 @@ export default defineConfig(async (command, mode) => {
     dts({
       tsConfigFilePath: path.join(__dirname, 'tsconfig.base.json'), // todo: make sure that tsconfig.base.json exists and is what you think it is
       skipDiagnostics: true,
-      outputDir: path.resolve(outDir, 'types'),
+      root: projectRoot,
+      outputDir: path.relative(projectRoot, outDir),
+      insertTypesEntry: true,
+      rollupTypes: false,
     })
   );
 
@@ -73,33 +76,29 @@ export default defineConfig(async (command, mode) => {
   };
 
   if (library) {
-    const lib = library
-      ? {
-          entry: path.resolve(projectRoot, 'index.ts'),
-          name: projectName,
-          fileName: 'index',
-          formats: ['es', 'cjs'] as Array<'es' | 'cjs'>,
-        }
-      : {};
+    const lib = {
+      entry: path.resolve(projectRoot, 'index.ts'),
+      name: projectName,
+      fileName: 'index',
+      formats: ['es', 'cjs'] as Array<'es' | 'cjs'>,
+    };
 
-    const rollupOptions = library
-      ? {
-          external: Object.keys(
-            JSON.parse(
-              await readFile(path.resolve(projectRoot, 'package.json'), 'utf-8')
-            ).dependencies
-          ),
-        }
-      : {};
+    const rollupOptions = {
+      external: Object.keys(
+        JSON.parse(
+          await readFile(path.resolve(projectRoot, 'package.json'), 'utf-8')
+        ).dependencies
+      ),
+    };
 
     return {
       root: __dirname,
       build: {
         outDir,
-        plugins,
         lib,
         rollupOptions,
       },
+      plugins,
       test,
     };
   } else {
@@ -107,8 +106,8 @@ export default defineConfig(async (command, mode) => {
       root: __dirname,
       build: {
         outDir,
-        plugins,
       },
+      plugins,
       test,
     };
   }
