@@ -7,7 +7,7 @@ import { getPrettier, getPrettierOptions } from '../format/getPrettier';
 import getRoots from '../getRoots';
 
 /**
- * Reads a package's src directory, and the dependencies in it's package JSON, and outputs:
+ * Reads a package's src directory, and the dependencies in its package JSON, and outputs:
  * - a new package JSON that is populated with all of the values needed to publish it to NPM
  * - a dist folder with three files: an index.cjs (common js module), an index.js (esmodule), and an index.d.ts (type declaration) file.
  *

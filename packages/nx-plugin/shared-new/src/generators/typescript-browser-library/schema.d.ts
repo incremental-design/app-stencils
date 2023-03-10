@@ -3,5 +3,6 @@ export interface TypescriptBrowserLibraryGeneratorSchema {
   tags?: string;
   directory?: string;
   description: string;
-  bugs: string
+  bugs: string;
+  repositoryUrl?: string;
 }

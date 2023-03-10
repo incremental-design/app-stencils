@@ -32,6 +32,11 @@
       "type": "string",
       "description": "url of place that consumers of this package can report bugs. This will be added to the package.json 'bugs' field if it is provided.",
       "x-prompt": "Where should users go to report bugs?"
+    },
+    "repositoryUrl": {
+      "type": "string",
+      "description": "url where code for this repo can be viewed",
+      "x-prompt": "Where is this repository located online?"
     }
   },
   "required": [

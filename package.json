@@ -2,11 +2,11 @@
   "name": "app-stencils",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {
-    "build": "vite build"
-  },
+  "scripts": {},
   "private": true,
   "devDependencies": {
+    "@microsoft/api-documenter": "^7.21.5",
+    "@microsoft/api-extractor": "^7.34.4",
     "@nrwl/devkit": "15.4.5",
     "@nrwl/eslint-plugin-nx": "15.4.5",
     "@nrwl/jest": "15.4.5",
@@ -29,6 +29,7 @@
     "eslint": "^8.33.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-vue": "9.9.0",
+    "glob": "^9.2.1",
     "jsdom": "~20.0.3",
     "jsonc-eslint-parser": "^2.1.0",
     "nx": "15.4.5",

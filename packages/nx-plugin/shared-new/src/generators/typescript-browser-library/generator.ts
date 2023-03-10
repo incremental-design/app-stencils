@@ -115,6 +115,9 @@ export default async function (
         executor: '@incremental.design/nx-plugin-shared-new:document',
         dependsOn: ['build'],
         outputs: [path.join('dist', normalizedOptions.projectRoot)],
+        options: {
+          repositoryUrl: options.repositoryUrl,
+        },
       },
       build: {
         executor: '@incremental.design/nx-plugin-shared-new:build',
@@ -150,21 +153,24 @@ export default async function (
   await addViteConfigBaseTs(tree);
   await formatFiles(tree);
 
-  /* make sure @nrwl/linter, ESlint, Prettier, vite, vite plugins, and vitest are installed */
+  /* make sure all of this plugin's dependencies are installed */
 
   // todo: test this in a new repo!!
   addDependenciesToPackageJson(
     tree,
     {},
     {
-      '@nrwl/linter': '15.4.5',
-      eslint: '^8.33.0',
-      prettier: '^2.6.2',
       vite: '^4.1.1',
+      vitest: '^0.28.4',
       'vite-plugin-dts': '^1.7.1',
       'vite-tsconfig-paths': '^4.0.2',
-      vitest: '^0.28.4',
+      eslint: '^8.33.0',
+      '@nrwl/linter': '15.4.5',
+      prettier: '^2.6.2',
       'vue-eslint-parser': '9.1.0',
+      '@microsoft/api-extractor': '^7.34.4',
+      glob: '^9.2.1',
+      '@microsoft/api-documenter': '^7.21.5',
     }
   );
 

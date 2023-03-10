@@ -7,7 +7,10 @@
     "document": {
       "executor": "@incremental.design/nx-plugin-shared-new:document",
       "dependsOn": ["build"],
-      "outputs": ["dist/packages/shared/abc"]
+      "outputs": ["dist/packages/shared/abc"],
+      "options": {
+        "repositoryUrl": "https://github.com/incremental-design/app-stencils"
+      }
     },
     "build": {
       "executor": "@incremental.design/nx-plugin-shared-new:build",

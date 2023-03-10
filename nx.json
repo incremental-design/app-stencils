@@ -72,7 +72,7 @@
     "@incremental.design/nx-plugin-shared-new:typescript-browser-library": {
       "directory": "shared",
       "bugs": "https://github.com/incremental-design/app-stencils/issues",
-      "baseUrl": "https://github.com/incremental-design/app-stencils"
+      "repositoryUrl": "https://github.com/incremental-design/app-stencils"
     }
   }
 }
