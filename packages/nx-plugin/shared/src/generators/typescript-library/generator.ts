@@ -134,6 +134,9 @@ export default async function (
       test: {
         executor: '@incremental.design/nx-plugin-shared:test',
         dependsOn: ['lint'],
+        options: {
+          testEnvironment: options.targetNode ? 'node' : 'jsdom',
+        },
       },
       lint: {
         executor: '@incremental.design/nx-plugin-shared:lint',

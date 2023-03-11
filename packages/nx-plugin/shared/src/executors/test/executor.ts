@@ -49,6 +49,7 @@ export default async function runExecutor(
   const __PROJECT_ROOT__ = projectRoot;
   const __OUTDIR__ = outDir;
   const __PROJECT_NAME__ = projectName;
+  const __TEST_ENV__ = options.testEnvironment || 'jsdom';
 
   const testProcess = spawn(
     vitestBinPath,
@@ -61,6 +62,7 @@ export default async function runExecutor(
         __PROJECT_ROOT__,
         __OUTDIR__,
         __PROJECT_NAME__,
+        __TEST_ENV__,
       },
     }
   );
