@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "cli": "nx",
+  "title": "Build executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "viteConfig": {
+      "type": "string",
+      "description": "the vite build mode: can be one of development or production",
+      "x-prompt": "build for development or production?"
+    }
+  },
+  "required": []
+}

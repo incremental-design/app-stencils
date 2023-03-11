@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "executors": {
+    "format": {
+      "implementation": "./src/executors/format/executor",
+      "schema": "./src/executors/format/schema.json",
+      "description": "format vue 3 projects with prettier"
+    },
+    "build": {
+      "implementation": "./src/executors/build/executor",
+      "schema": "./src/executors/build/schema.json",
+      "description": "build using @nrwl/vite:build, and then modify the package json"
+    },
+    "extract-api": {
+      "implementation": "./src/executors/extract-api/executor",
+      "schema": "./src/executors/extract-api/schema.json",
+      "description": "use API extractor to roll up types and make an API report"
+    }
+  }
+}

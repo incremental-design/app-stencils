@@ -1,0 +1,25 @@
+{
+  "name": "@incremental.design/vue3-component-base",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "private": false,
+  "module": "src/index.ts",
+  "description": "A starting point for your own components. The base component provides your components with affordances: states and appearances that change according to user interaction. The base component is the starting point for most of the other `@incremental.design/vue3-component-*`s.",
+  "dependencies": {
+    "vue": "3.2.45",
+    "@incremental.design/device-input-event-handlers": "*",
+    "@incremental.design/theme": "*"
+  },
+  "sideEffects": true,
+  "publishConfig": {
+    "access": "public"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vite-plugin-dts": "~1.7.1",
+    "vite-tsconfig-paths": "^4.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/incremental-design/app-stencils/issues"
+  }
+}
