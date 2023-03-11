@@ -1,17 +1,15 @@
 {
   "name": "@incremental.design/obsidian-templater-scripts",
-  "version": "0.0.1",
-  "type": "commonjs",
-  "private": false,
-  "module": "index.mjs",
   "description": "scripts that automate documentation with obsidian templater",
-  "sideEffects": true,
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": { "@microsoft/api-documenter": "^7.19.28" },
+  "version": "0.0.1",
+  "main": "index.js",
+  "module": "index.mjs",
+  "types": "index.d.ts",
+  "sideEffects": false,
   "publishConfig": { "access": "public" },
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/incremental-design/app-stencils/issues"
-  },
-  "peerDependencies": { "@microsoft/api-documenter": "^7.19.28" },
-  "main": "index.js",
-  "types": "index.d.ts"
+  "url": "https://github.com/incremental-design/app-stencils/issues"
 }

@@ -102,9 +102,6 @@ importers:
       semver: 7.3.8
       yaml: 2.2.1
 
-  packages/shared-old/device-input-event-handlers:
-    specifiers: {}
-
   packages/shared-old/obsidian-templater-scripts:
     specifiers:
       '@microsoft/api-documenter': ^7.19.28
@@ -119,6 +116,9 @@ importers:
       postcss-mixins: 9.0.4_postcss@8.4.21
       postcss-nesting: 10.2.0_postcss@8.4.21
 
+  packages/shared/device-input-event-handlers:
+    specifiers: {}
+
   packages/shared/theme:
     specifiers: {}
 
@@ -130,7 +130,7 @@ importers:
       vite-tsconfig-paths: ^4.0.2
       vue: 3.2.45
     dependencies:
-      '@incremental.design/device-input-event-handlers': link:../../shared-old/device-input-event-handlers
+      '@incremental.design/device-input-event-handlers': 0.0.1-alpha.305
       '@incremental.design/theme': 0.0.1-alpha.305
       vue: 3.2.45
     devDependencies:
@@ -1719,6 +1719,10 @@ packages:
   /@humanwhocodes/object-schema/1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
+
+  /@incremental.design/device-input-event-handlers/0.0.1-alpha.305:
+    resolution: {integrity: sha512-jUUj+ixtd6sChxmqOv/CyeUeOaip0P9Zdh+WrNcJtWbKkxqZJ6hCcD6R1bQbx53ITOE4Uo/+VKh0naVz1Q056A==}
+    dev: false
 
   /@incremental.design/theme/0.0.1-alpha.305:
     resolution: {integrity: sha512-uNRuN7TZClGx78X/vZiErEDH0P2h3ZIdzaHgvKhgyNNZfnikhRSTs4vYHRyiusf0hpMSuMwk42HYQIg91eXJig==}

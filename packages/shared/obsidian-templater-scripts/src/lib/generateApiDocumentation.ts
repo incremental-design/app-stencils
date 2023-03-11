@@ -7,12 +7,13 @@
  *
  * @returns a promise to make a string of markdown
  */
-const generateApiDocumentation = async (apiJsonPath?: string): Promise<string> => {
-
+const generateApiDocumentation = async (
+  apiJsonPath?: string
+): Promise<string> => {
   // console.log(start)
-  return 'abc'
+  return 'abc';
 
   // const process = spawn()
-}
+};
 
-export default generateApiDocumentation
+export default generateApiDocumentation;

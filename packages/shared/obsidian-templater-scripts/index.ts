@@ -1,4 +1,4 @@
-import generateApiDocumentation from './lib/generateApiDocumentation'
+import generateApiDocumentation from './src/lib/generateApiDocumentation';
 
 /**
  *
@@ -10,8 +10,9 @@ import generateApiDocumentation from './lib/generateApiDocumentation'
  * Obsidian templater {@link https://silentvoid13.github.io/Templater/user-functions/script-user-functions.html expects } to receive a commonjs module that exports a single function.
  *
  */
-function returnTemplaterScripts(): Record<string, Function>{
-  return {generateApiDocumentation}
+// eslint-disable-next-line @typescript-eslint/ban-types
+function returnTemplaterScripts(): Record<string, Function> {
+  return { generateApiDocumentation };
 }
 
-export default returnTemplaterScripts
+export default returnTemplaterScripts;

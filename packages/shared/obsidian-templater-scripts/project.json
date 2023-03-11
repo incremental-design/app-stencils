@@ -1,0 +1,42 @@
+{
+  "name": "shared-obsidian-templater-scripts",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/shared/obsidian-templater-scripts/src",
+  "targets": {
+    "document": {
+      "executor": "@incremental.design/nx-plugin-shared:document",
+      "dependsOn": ["build"],
+      "outputs": ["dist/packages/shared/obsidian-templater-scripts"],
+      "options": {
+        "repositoryUrl": "https://github.com/incremental-design/app-stencils"
+      }
+    },
+    "build": {
+      "executor": "@incremental.design/nx-plugin-shared:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "tools/obsidian-templater-scripts",
+        "bugs": "https://github.com/incremental-design/app-stencils/issues"
+      },
+      "dependsOn": ["test", "^build"]
+    },
+    "test": {
+      "executor": "@incremental.design/nx-plugin-shared:test",
+      "dependsOn": ["lint"],
+      "options": {
+        "testEnvironment": "node"
+      }
+    },
+    "lint": {
+      "executor": "@incremental.design/nx-plugin-shared:lint",
+      "outputs": ["packages/shared/obsidian-templater-scripts"],
+      "dependsOn": ["format"]
+    },
+    "format": {
+      "executor": "@incremental.design/nx-plugin-shared:format",
+      "outputs": ["packages/shared/obsidian-templater-scripts"]
+    }
+  },
+  "tags": []
+}
