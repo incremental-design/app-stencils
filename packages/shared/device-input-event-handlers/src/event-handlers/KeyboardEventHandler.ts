@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Handler, mergeWithEventInfo, EventInfo } from './';
-import { KeyboardInput, getKeyboardInput } from './';
+import { Handler, mergeWithEventInfo, EventInfo } from '.';
+import { KeyboardInput, getKeyboardInput } from '.';
 
 /**
  * Handles {@link KeyboardEvent}s. Turns them into {@link EventInfo}<{@link KeyboardInput}>. Tracks the change between successive {@link KeyboardEvent}s.

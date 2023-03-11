@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Handler, mergeWithEventInfo, EventInfo } from './';
-import { WindowResizeInput, getWindowResizeInput } from './';
+import { Handler, mergeWithEventInfo, EventInfo } from '.';
+import { WindowResizeInput, getWindowResizeInput } from '.';
 
 // resize
 

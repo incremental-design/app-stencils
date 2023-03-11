@@ -1,12 +1,12 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "name": "nx-plugin-shared",
+  "name": "nx-plugin-shared-new",
   "version": "0.0.1",
   "generators": {
-    "typescript-library": {
-      "factory": "./src/generators/typescript-library/generator",
-      "schema": "./src/generators/typescript-library/schema.json",
-      "description": "typescript library that can be run in both node and browser environments"
+    "typescript-browser-library": {
+      "factory": "./src/generators/typescript-browser-library/generator",
+      "schema": "./src/generators/typescript-browser-library/schema.json",
+      "description": "generate a typescript library that can be run in a browser"
     }
   }
 }

@@ -21,11 +21,9 @@ export * from './GamepadInput';
 export * from './KeyboardEventHandler';
 export * from './KeyboardInput';
 
-
 export * from './MouseEventHandler';
 export * from './TouchEventHandler';
 export * from './PointerInput';
 
 export * from './UIEventHandler';
 export * from './WindowResizeInput';
-

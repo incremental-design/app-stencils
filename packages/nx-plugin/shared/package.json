@@ -1,11 +1,7 @@
 {
   "name": "@incremental.design/nx-plugin-shared",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "main": "src/index.js",
   "generators": "./generators.json",
-  "executors": "./executors.json",
-  "peerDependencies": {
-    "@incremental.design/nx-plugin-vue3": "latest",
-    "ts-morph": "^17.0.1"
-  }
+  "executors": "./executors.json"
 }

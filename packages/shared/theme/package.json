@@ -1,16 +1,6 @@
 {
-  "name": "@incremental.design/theme",
-  "version": "0.0.1",
-  "type": "commonjs",
-  "private": false,
-  "module": "src/index.ts",
-  "description": "primitives for generating performant css-in-js",
-  "sideEffects": true,
-  "publishConfig": {
-    "access": "public"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/incremental-design/app-stencils/issues"
-  }
+  "name": "theme",
+  "description": "Utilities for making performant css-in-js",
+  "dependencies": {},
+  "devDependencies": {}
 }

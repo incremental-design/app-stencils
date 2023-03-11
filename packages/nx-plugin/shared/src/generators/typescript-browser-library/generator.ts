@@ -112,7 +112,7 @@ export default async function (
     sourceRoot: `${normalizedOptions.projectRoot}/src`,
     targets: {
       document: {
-        executor: '@incremental.design/nx-plugin-shared-new:document',
+        executor: '@incremental.design/nx-plugin-shared:document',
         dependsOn: ['build'],
         outputs: [path.join('dist', normalizedOptions.projectRoot)],
         options: {
@@ -120,7 +120,7 @@ export default async function (
         },
       },
       build: {
-        executor: '@incremental.design/nx-plugin-shared-new:build',
+        executor: '@incremental.design/nx-plugin-shared:build',
         outputs: ['{options.outputPath}'],
         options: {
           outputPath: path.join('dist', normalizedOptions.projectRoot),
@@ -132,18 +132,18 @@ export default async function (
         ] /* ^ means dependencies ... see: https://nx.dev/reference/project-configuration#dependson */,
       },
       test: {
-        executor: '@incremental.design/nx-plugin-shared-new:test',
+        executor: '@incremental.design/nx-plugin-shared:test',
         dependsOn: ['lint'],
       },
       lint: {
-        executor: '@incremental.design/nx-plugin-shared-new:lint',
+        executor: '@incremental.design/nx-plugin-shared:lint',
         outputs: [normalizedOptions.projectRoot],
         dependsOn: [
           'format',
         ] /* because we want the linter to have the final say on the contents of the file */,
       },
       format: {
-        executor: '@incremental.design/nx-plugin-shared-new:format',
+        executor: '@incremental.design/nx-plugin-shared:format',
         outputs: [normalizedOptions.projectRoot],
       },
     },

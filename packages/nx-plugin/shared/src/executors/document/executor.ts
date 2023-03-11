@@ -1,11 +1,11 @@
 import * as path from 'path';
 import { ExecutorContext } from '@nrwl/devkit';
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor';
-import { unlink } from 'fs/promises';
+import { unlink, readdir, rm } from 'fs/promises';
 import { glob } from 'glob';
 import { DocumentExecutorSchema } from './schema';
 import { exec, spawn } from 'child_process';
-import { detectPackageManager, getPackageManagerCommand } from '@nrwl/devkit';
+import { detectPackageManager } from '@nrwl/devkit';
 
 export default async function runExecutor(
   options: DocumentExecutorSchema,
@@ -42,7 +42,7 @@ export default async function runExecutor(
         ...(srcUrl
           ? { projectFolderUrl: `${srcUrl}/tree/${currentBranch}` }
           : {}),
-        apiJsonFilePath: '<projectFolder>/api.json',
+        apiJsonFilePath: '<projectFolder>/docs.api.json',
       },
     },
     configObjectFullPath: undefined,
@@ -51,30 +51,40 @@ export default async function runExecutor(
 
   Extractor.invoke(config);
 
+  /* at this point, everything we care about has been bundled at the top level of the output directory. anything left in ANY subfolder is garbage */
+
+  const entries = await readdir(outDir, { withFileTypes: true });
+  const subdirs = entries.filter((entry) => entry.isDirectory());
+  await Promise.all(
+    subdirs.map(
+      async (subdir) =>
+        await rm(path.resolve(outDir, subdir.name), {
+          recursive: true,
+          force: true,
+        })
+    )
+  );
+
+  /* once subdirs have been deleted, clean up any .d.ts files that aren't index.d.ts */
+
   const dtsFiles = await glob('**/*.d.ts', {
     cwd: outDir,
     root: './',
   });
 
-  const toDelete = dtsFiles.filter((d) => {
-    const { dir, base } = path.parse(d);
-    if (dir === '' && base === 'index.d.ts') return false;
-    return true;
-  });
+  const toDelete = dtsFiles
+    .filter((d) => {
+      const { dir, base } = path.parse(d);
+      if (dir === '' && base === 'index.d.ts') return false;
+      return true;
+    })
+    .map((entry) => path.resolve(outDir, entry));
 
-  await Promise.all(toDelete.map(async (item) => await unlink(item)));
+  await Promise.all(toDelete.map(async (entry) => await unlink(entry)));
+
+  /* finally, run api documenter, which was installed when this plugin's generator was called (see ../../generators/typescript-browser-library/generator.ts) */
 
   const pm = detectPackageManager(context.root);
-
-  // const { run } = getPackageManagerCommand(pm);
-
-  // const cmd = run(
-  //   'api-documenter',
-  //   `markdown --input-folder ${outDir} --output-folder ${path.resolve(
-  //     outDir,
-  //     'docs'
-  //   )}`
-  // );
 
   await new Promise<void>((resolve, reject) => {
     const childProcess = spawn(pm, [

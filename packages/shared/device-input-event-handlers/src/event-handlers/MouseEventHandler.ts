@@ -1,6 +1,6 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { Handler, mergeWithEventInfo, EventInfo } from './';
-import { PointerInput, getPointerInput } from './';
+import { Handler, mergeWithEventInfo, EventInfo } from '.';
+import { PointerInput, getPointerInput } from '.';
 
 /**
  * HandleMouse extracts the useful information from a sequence of mouse events.

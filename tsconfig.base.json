@@ -18,11 +18,14 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@incremental.design/nx-plugin-shared-new": [
-        "packages/nx-plugin/shared-new/src/index.ts"
+      "@incremental.design/nx-plugin-shared": [
+        "packages/nx-plugin/shared/src/index.ts"
       ],
-      "@incremental.design/shared-abc": [
-        "packages/shared/abc/index.ts"
+      "@incremental.design/shared-theme": [
+        "packages/shared/theme/index.ts"
+      ],
+      "@incremental.design/shared-device-input-event-handlers": [
+        "packages/shared/device-input-event-handlers/index.ts"
       ]
     }
   },

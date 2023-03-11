@@ -1,16 +1,6 @@
 {
-  "name": "@incremental.design/device-input-event-handlers",
-  "version": "0.0.1",
-  "type": "commonjs",
-  "private": false,
-  "module": "src/index.ts",
+  "name": "device-input-event-handlers",
   "description": "Handlers for `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` and `WheelEvent`. These handlers normalize and filter event details to make them easier to interpret.",
-  "sideEffects": true,
-  "publishConfig": {
-    "access": "public"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/incremental-design/app-stencils/issues"
-  }
+  "dependencies": {},
+  "devDependencies": {}
 }
