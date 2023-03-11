@@ -3,10 +3,10 @@
   "name": "nx-plugin-shared-new",
   "version": "0.0.1",
   "generators": {
-    "typescript-browser-library": {
-      "factory": "./src/generators/typescript-browser-library/generator",
-      "schema": "./src/generators/typescript-browser-library/schema.json",
-      "description": "generate a typescript library that can be run in a browser"
+    "typescript-library": {
+      "factory": "./src/generators/typescript-library/generator",
+      "schema": "./src/generators/typescript-library/schema.json",
+      "description": "generate a typescript library"
     }
   }
 }

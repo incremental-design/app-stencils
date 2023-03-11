@@ -82,7 +82,7 @@ export default async function runExecutor(
 
   await Promise.all(toDelete.map(async (entry) => await unlink(entry)));
 
-  /* finally, run api documenter, which was installed when this plugin's generator was called (see ../../generators/typescript-browser-library/generator.ts) */
+  /* finally, run api documenter, which was installed when this plugin's generator was called (see ../../generators/typescript-library/generator.ts) */
 
   const pm = detectPackageManager(context.root);
 
