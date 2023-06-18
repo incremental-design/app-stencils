@@ -31,7 +31,6 @@
     ```
 
 - we use the monorepo pattern so that we can make changes to all of our modules, without breaking their dependencies.
-- we use nx because it enables dependency mapping between projects of different languages. It also watches for file changes and continuously tests and builds as you code.
 <!--
 What are the prerequisites for contributing to the code?
     * provide users with containerized development environments, virtual machines, or, if developing for an embedded system, a pre-built OS image. Don't make them set up an environment from scratch.

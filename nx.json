@@ -1,28 +1,13 @@
 {
   "tasksRunnerOptions": {
     "default": {
-      "runner": "nx-cloud",
+      "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": []
       }
     }
   },
   "installation": {
-    "version": "16.3.2",
-    "plugins": {
-      "@nx/plugin": "16.3.2"
-    }
-  },
-  "plugins": [
-    "@nx/plugin"
-  ],
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  },
-  "generators": {
-    "@nx/nx-plugin:plugin": {
-      "directory": "typescript/nx-plugin"
-    }
+    "version": "16.3.2"
   }
 }
