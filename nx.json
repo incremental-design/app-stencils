@@ -1,68 +1,13 @@
 {
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "@incremental.design",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx/tasks-runners/default",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "NTYxNWJlMjQtNDExYS00M2Y4LTg5MzYtYzlkOTlhNTExNjg5fHJlYWQtd3JpdGU="
+        "cacheableOperations": []
       }
     }
   },
-  "targetDefaults": {
-    "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "production",
-        "^production"
-      ]
-    },
-    "test": {
-      "inputs": [
-        "default",
-        "^production"
-      ]
-    },
-    "lint": {
-      "inputs": [
-        "default",
-        "{workspaceRoot}/.eslintrc.json"
-      ]
-    }
-  },
-  "namedInputs": {
-    "default": [
-      "{projectRoot}/**/*",
-      "sharedGlobals"
-    ],
-    "production": [
-      "default",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/.eslintrc.json"
-    ],
-    "sharedGlobals": []
-  },
-  "workspaceLayout": {
-    "appsDir": "packages",
-    "libsDir": "packages"
-  },
-  "generators": {
-    "@nrwl/nx-plugin:plugin": {
-      "directory": "nx-plugin"
-    },
-    "@incremental.design/nx-plugin-shared:typescript-library": {
-      "directory": "shared",
-      "bugs": "https://github.com/incremental-design/app-stencils/issues",
-      "repositoryUrl": "https://github.com/incremental-design/app-stencils"
-    }
+  "installation": {
+    "version": "16.3.2"
   }
 }
