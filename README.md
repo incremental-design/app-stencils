@@ -1,6 +1,6 @@
 # app-stencils
 
-Low-code tools are faster and easier to use than code, but they impose hard limits on what you can build. At incremental.design, we use `app-stencils` to make no-compromise apps faster than low-code.
+Low-code tools are faster and easier to use than code, but they impose hard limits on what you can build. At incremental.design, we use `app-stencils` to make no-compromise apps without low-code tools.
 
 Custom development doesn't have to be difficult. Most apps have to solve the same problems:
 
@@ -89,9 +89,9 @@ Custom development doesn't have to be difficult. Most apps have to solve the sam
 
 Low-code tools have a lower learning curve than code, because they solve these problems, and hide the details from you. However, they also cut corners. Most fail at responding to touch, stylus and assistive device input. Most limit how and where you can persist data, and many skip the edge entirely when shuttling data between client and server. They leave subtle fractures in the user experience, and because they hide the details, it's impossible to fill in the cracks.
 
-`app-stencils` contains all of the reusable components that `incremental.design` uses to make frontends and edge services for web apps. These components are designed to work when deployed as web apps, progressive web apps, or hybrid apps on desktop and mobile. They consist of user interfaces that respond to a wide range of inputs, and business logic that handles authentication, session storage, and synchronization between the client and the edge.
+`app-stencils` contains all of the reusable components that `incremental.design` uses to make apps. They consist of user interfaces that respond to a wide range of inputs, and business logic that handles authentication, session storage, data persistence, and synchronization between the client and the edge.
 
-There are plenty of libraries for user interface component libraries, design systems, and libraries for authentication, persistence, and synchronization. However, these components have to be tested and shimmed together. `app-stencils` takes care of that. All of these components are tested to work together seamlessly.
+There are plenty of libraries for user interfaces, authentication, persistence, and synchronization. However, these components have to be tested and shimmed together. `app-stencils` takes care of that. All of these components are tested to work together seamlessly.
 
 `app-stencils` solves the same set of problems as low code tools, without hiding all the details from you. With `app-stencils`, you can build as fast as you can with a low-code tool, without getting locked into the same limitations.
 
@@ -124,6 +124,9 @@ Link to a webpage, web shell (e.g. runkit), or downloadable executable that demo
 ### Installation:
 
 <!--Explain how to import the modules of the project into the reader's codebase, install the containers of the project in the reader's cluster, or flash the binary of the project onto the reader's hardware-->
+
+<!-- explain where to get npm modules -->
+<!-- for other langs (python, go, swift) explain where to get modules -->
 
 ### Modules:
 
