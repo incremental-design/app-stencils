@@ -1,9 +1,0 @@
-<template></template>
-
-<script setup lang="ts">
-
-import {} from "vue";
-
-</script>
-
-<style module lang="postcss"></style>

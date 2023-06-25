@@ -1,9 +1,0 @@
-{
-  "name": "obsidian-templater-scripts",
-  "description": "scripts that automate documentation with obsidian templater",
-  "dependencies": {},
-  "devDependencies": {},
-  "peerDependencies": {
-    "@microsoft/api-documenter": "^7.19.28"
-  }
-}

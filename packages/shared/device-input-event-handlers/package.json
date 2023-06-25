@@ -1,6 +1,0 @@
-{
-  "name": "device-input-event-handlers",
-  "description": "Handlers for `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` and `WheelEvent`. These handlers normalize and filter event details to make them easier to interpret.",
-  "dependencies": {},
-  "devDependencies": {}
-}
