@@ -105,6 +105,10 @@ Tell your reader how to run the code in the development environment
 
     bun.build.ts          bun-specific build and test commands
 
+  /nx                     plugins for the nx build scripts that
+                          are specific to the languages and
+                          targets in this repository
+
   /vue3                   components that run in vue.js websites
     /<component>
     /<component>
@@ -150,6 +154,7 @@ Tell your reader how to run the code in the development environment
 
   cargo.toml              configuration for cargo package manager
 
+nx                        nx executable
 nx.json                   configuration for nx build scripts in /.nx
 Vagrantfile               configuration for the MacOS VM that
                           builds all swift components.
@@ -157,15 +162,18 @@ Vagrantfile               configuration for the MacOS VM that
 
 To start developing, run `vagrant up` and then `./nx g @incremental.design/<language>:<target>`
 
-This will create a new package in the `/<language>` and `/<target>` of your choice. This package will be incrementally and continously
+This will create a new component in the `/<language>` and `/<target>` of your choice. This component will be
 
-- formatted, when you run `./nx format`
-- linted, when you run `./nx lint`
-- formatted, linted and built, when you run `./nx build`
-- formatted, linted, built and tested, when you run `./nx test`
-- formatted, linted, built, tested and profiled, when you run `./nx profile`
+- [formatted](#format), when you run `./nx format`
+- [linted](#lint), when you run `./nx lint`
+- [documented](#document) when you run `./nx docgen`
+- formatted, linted and [built](#build), when you run `./nx build`
+- formatted, linted, built and [tested](#test), when you run `./nx test`
+- formatted, linted, built, tested and [profiled](#profile), when you run `./nx profile`
+- formatted, linted, built, tested, api documentation generated, and packaged for [publishing](#publish) when you run `./nx publish`
+  - note that this will not actually publish
 
-you can add the `--watch` flag to any of the aformentioned targets (e.g. `./nx)
+you can add the `--watch` flag to any of the aformentioned commands (e.g. `./nx) to continuously re-run the command every time you modify the component.
 
 If you just want to try out a component (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other components in the `/<language>`'s `/<target>`s. However, this component will NOT be automatically and continuously built. Also, I will not accept pull requests that contain components that are not created using `./nx g @incremental.design/<language>:<target>`.
 
@@ -178,6 +186,8 @@ To import components within `app-stencils` (e.g. to import a component in `/type
 | swift      |                                                           |
 | typescript | `pnpm add @incremental.design/<target>-<name of package>` |
 | rust       |                                                           |
+
+<!-- https://pnpm.io/workspaces -->
 
 #### Why monorepo?
 
@@ -193,28 +203,32 @@ Different languages have different strengths. It makes more sense to combine the
 
 Nx facilitates powerful code generation and dependency detection. It also supports continous, incremental rebuilding. Every time you save changes to a component, Nx can automatically rebuild and re-test it and its dependents. It can detect broken integration points before you publish components.
 
-### Test:
+### Format:
 
-<!--
-When the reader runs the code, what are the expected inputs and outputs?
-How can the reader tell if the code is malfunctioning?
--->
+<!-- list formatting configs by language and target. explain the inputs and outputs for formatting steps -->
+
+### Lint:
+
+<!-- list lint configs by language and target. explain inputs and outputs -->
 
 ### Document:
 
-<!--
-How should the reader document changes and additions to the code?
--->
+<!-- list documentation (e.g. api documentation, test site generation) by language and target. explain how users should document code
+by language and target -->
 
-### Deploy:
+### Profile:
 
-<!--
-How is the code deployed? When the reader submits a pull request, how is the code merged into main and converted into a package?
--->
+<!-- explain how each target is profiled for cpu and mem usage, speed -->
 
-<!--
-Additional tip: SHOW, don't TELL
-* DON'T try to sell your reader on using your code. Don't spend words on clever analogies or context. That material is great for a blog post or video, but bad for the documentation included in repository. Your reader wants to run the code, not read about it. Help your reader get to 'hello world' as fast as possible.
-* DO make diagrams. A diagram can help yoru reader organize information in ways that words alone can't.
-    * Do not put more than 50 nodes and edges into a single diagram. It will turn into an indecipherable spaghetti-string mess. Keep diagrams simple.
--->
+### Build
+
+<!-- explain how each target is built -->
+<!-- explain hermeticity (building in containers or vms) also note that even if you dev in a container, a nested container will be launched for build. that way you can't inadvertently screw up environment variables over the course of a dev session -->
+
+### Test:
+
+<!-- explain how each target is tested. explain how users should write tests that consume one or multiple targets -->
+
+### Publish:
+
+<!-- explain how each target is packaged for publishing. explain how CI publishes packages, and which branches and PRs have to pass before publish occurs. also explain how versioning works -->

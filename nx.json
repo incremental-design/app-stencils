@@ -8,6 +8,23 @@
     }
   },
   "installation": {
-    "version": "16.4.0"
+    "version": "16.4.0",
+    "plugins": {
+      "@incremental.design/nx-typescript": "../../typescript/nx/typescript"
+    }
+  },
+  "plugins": [
+    "@incremental.design/nx-typescript"
+  ],
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "packages"
+  },
+  "generators": {
+    "@incremental.design/nx-typescript:typescript-library": {
+      "directory": "shared",
+      "bugs": "https://github.com/incremental-design/app-stencils/issues",
+      "repositoryUrl": "https://github.com/incremental-design/app-stencils"
+    }
   }
 }
