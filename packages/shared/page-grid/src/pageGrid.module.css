@@ -1,0 +1,29 @@
+:root {
+  font-size: 12px;
+  --average-body-character-width: 1rem;
+  --80-body-chars: calc(var(--average-body-character-width) * 80);
+  --edge-width: 1.25rem;
+  --nav-width: 5rem;
+  --nav-height: 5rem;
+  --bottom-half: 50vh;
+}
+
+.pageGrid {
+  --column-width: min(
+    var(--80-body-chars),
+    calc(50vw - var(--edge-width) - var(--nav-width))
+  );
+
+  display: grid;
+  grid-template-columns: 0px [left-edge-start] 1fr [left-edge-end left-nav-start] var(
+      --nav-width
+    ) [left-nav-end left-content-start] var(--column-width) [left-content-end middle right-content-start] var(
+      --column-width
+    ) [right-content-end right-nav-start] var(--nav-width) [right-nav-end right-edge-start] 1fr [right-edge-end] 0px;
+  grid-template-rows: 0px [top-edge-start] var(--edge-width) [top-edge-end top-nav-start] var(
+      --nav-height
+    ) [top-nav-end content-start] repeat(
+      auto-fill,
+      minmax(var(--edge-width), min-content)
+    );
+}

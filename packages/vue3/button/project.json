@@ -1,0 +1,67 @@
+{
+  "name": "vue3-button",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@incremental.design/nx-plugin-vue3:build",
+      "options": {
+        "viteConfig": "production"
+      }
+    },
+    "vite-build": {
+      "executor": "@nrwl/vite:build",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "defaultConfiguration": "production",
+      "options": {
+        "outputPath": "dist/packages/vue3/button"
+      },
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "mode": "production"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/vite:test",
+      "outputs": [
+        "coverage/packages/vue3/button"
+      ],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/packages/vue3/button"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/vue3/button/**/*.ts"
+        ]
+      }
+    },
+    "format": {
+      "executor": "@incremental.design/nx-plugin-vue3:format",
+      "outputs": [
+        "{projectRoot}/**/*"
+      ]
+    },
+    "extract-api": {
+      "executor": "@incremental.design/nx-plugin-vue3:extract-api",
+      "options": {
+        "outDir": "dist/packages/vue3/button"
+      },
+      "outputs": [
+        "{options.outDir}"
+      ]
+    }
+  }
+}

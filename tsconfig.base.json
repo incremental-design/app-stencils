@@ -1,0 +1,46 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@incremental.design/device-input-event-handlers": [
+        "packages/shared/device-input-event-handlers/src/index.ts"
+      ],
+      "@incremental.design/nx-plugin-shared": [
+        "packages/nx-plugin/shared/src/index.ts"
+      ],
+      "@incremental.design/nx-plugin-vue3": [
+        "packages/nx-plugin/vue3/src/index.ts"
+      ],
+      "@incremental.design/obsidian-templater-scripts": [
+        "packages/shared/obsidian-templater-scripts/src/index.ts"
+      ],
+      "@incremental.design/page-grid": [
+        "packages/shared/page-grid/src/index.ts"
+      ],
+      "@incremental.design/theme": ["packages/shared/theme/src/index.ts"],
+      "@incremental.design/vue3-component-abdef": [
+        "packages/vue3/abdef/src/index.ts"
+      ],
+      "@incremental.design/vue3-component-base": [
+        "packages/vue3/base/src/index.ts"
+      ],
+      "@incremental.design/vue3-component-button": [
+        "packages/vue3/button/src/index.ts"
+      ]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}
