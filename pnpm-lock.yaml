@@ -118,12 +118,6 @@ importers:
       postcss-mixins: 9.0.4_postcss@8.4.21
       postcss-nesting: 10.2.0_postcss@8.4.21
 
-  packages/shared/squarespace-template-generator:
-    specifiers:
-      mime: ^3.0.0
-    dependencies:
-      mime: 3.0.0
-
   packages/shared/theme:
     specifiers: {}
 
@@ -4560,12 +4554,6 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
-
-  /mime/3.0.0:
-    resolution: {integrity: sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-    dev: false
 
   /mimic-fn/2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
