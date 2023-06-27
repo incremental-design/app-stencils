@@ -21,9 +21,6 @@ Tell your reader how to run the code in the development environment
 - Component folders do not contain any boilerplate, apart from the language's package manifest.
 
 ```
-/.nx                      scripts that build the components in
-                          this repo
-
 /.vscode                  configuration specific to vscode
 /.nova                    configuration specific to panic nova
 
@@ -154,8 +151,6 @@ Tell your reader how to run the code in the development environment
 
   cargo.toml              configuration for cargo package manager
 
-nx                        nx executable
-nx.json                   configuration for nx build scripts in /.nx
 Vagrantfile               configuration for the MacOS VM that
                           builds all swift components.
 ```
