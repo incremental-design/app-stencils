@@ -1,31 +1,29 @@
 export * from './DeviceEventHandler';
-export * from './DeviceInput';
+export * from './device-utils';
 
 export * from './DragEventHandler';
-export * from './PointerInput';
-export * from './DragInput';
+export * from './pointer-utils';
 
 export * from './EventHandler';
 export * from './WheelEventHandler';
-export * from './ScrollInput';
+export * from './scroll-utils';
 
-export * from './Handler';
-export * from './EventInfo';
+export * from './handler-utils';
 
 export * from './FocusEventHandler';
-export * from './FocusInput';
+export * from './focus-utils';
 
 export * from './GamepadEventHandler';
-export * from './GamepadInput';
+export * from './gamepad-utils';
 
 export * from './KeyboardEventHandler';
-export * from './KeyboardInput';
+export * from './keyboard-utils';
 
 
 export * from './MouseEventHandler';
 export * from './TouchEventHandler';
-export * from './PointerInput';
+export * from './pointer-utils';
 
 export * from './UIEventHandler';
-export * from './WindowResizeInput';
+export * from './window-resize-utils';
 
