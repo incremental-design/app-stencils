@@ -159,14 +159,14 @@ To start developing, run `vagrant up` and then `./nx g @incremental.design/<lang
 
 This will create a new component in the `/<language>` and `/<target>` of your choice. This component will be
 
-- [formatted](#format), when you run `./nx format`
-- [linted](#lint), when you run `./nx lint`
-- [documented](#document) when you run `./nx docgen`
-- formatted, linted and [built](#build), when you run `./nx build`
-- formatted, linted, built and [tested](#test), when you run `./nx test`
-- formatted, linted, built, tested and [profiled](#profile), when you run `./nx profile`
-- formatted, linted, built, tested, api documentation generated, and packaged for [publishing](#publish) when you run `./nx publish`
-  - note that this will not actually publish
+- [formatted](#format), when you run `???`
+- [linted](#lint), when you run `???`
+- [documented](#document) when you run `???`
+- formatted, linted and [built](#build), when you run `???`
+- formatted, linted, built and [tested](#test), when you run `???`
+- formatted, linted, built, tested and [profiled](#profile), when you run `???`
+- formatted, linted, built, tested, api documentation generated, and packaged for [publishing](#publish) when you run `???`
+  - note that this will not actually publish the packages. That is done by Github actions CI/CD.
 
 you can add the `--watch` flag to any of the aformentioned commands (e.g. `./nx) to continuously re-run the command every time you modify the component.
 
@@ -190,13 +190,13 @@ Monorepos let us combine the components we build, without accidentally breaking 
 
 #### Why polyglot?
 
-Different languages have different strengths. It makes more sense to combine them together in microservices and client-side code than it does to try and reimplement the features and libraries present in one language in another. E.g. it's less work to make a native UI in swift than it is to draw equivalent UI components in rust. It's less work to analyze data in python than it is to do so in Go.
+Different languages have different strengths. It makes more sense to combine them together in microservices and client-side code than it does to try and reimplement the features and libraries present in one language in another. E.g. it's less work to make a native UI for iOS in swift than it is to draw equivalent UI components in rust. It's less work to analyze data in python than it is to do so in Go.
 
 <!-- don't forget to set gopls "experimentalWorkspaceModule" to "true". see: https://earthly.dev/blog/golang-monorepo/ -->
 
-#### Why Nx?
+#### Why Pants?
 
-Nx facilitates powerful code generation and dependency detection. It also supports continous, incremental rebuilding. Every time you save changes to a component, Nx can automatically rebuild and re-test it and its dependents. It can detect broken integration points before you publish components.
+Pants facilitates powerful code generation and dependency detection. It also supports continous, incremental rebuilding. Every time you save changes to a component, Pants can automatically rebuild and re-test it and its dependents. It can detect broken integration points before you publish components.
 
 ### Format:
 
