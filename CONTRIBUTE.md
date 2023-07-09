@@ -13,91 +13,52 @@ Tell your reader how to run the code in the development environment
 
 #### Repository Structure:
 
-`app-stencils` is a polyglot monorepo. It contains typescript, <!-- python, go, swift, and rust --> code.
+`app-stencils` is a polyglot monorepo. It contains Typescript and Go code.
 
-- Components are organized by language and target
+- Packages are organized by language and environment
 - The language folder contains language-level boilerplate.
-- The target folder contains target-level boilerplate.
-- Component folders do not contain any boilerplate, apart from the language's package manifest.
+- The environment folder contains environment-level boilerplate.
+- Packages folders do not contain any boilerplate, apart from a `project.json`.
 
 ```
+/.nx                      scripts that build the packages in
+                          this repo
+
 /.vscode                  configuration specific to vscode
 /.nova                    configuration specific to panic nova
 
-/python
-
-  /nix                    components that run in nixOS containers
-    <component>
-    <component>
-    ...
-
-  ???                     pip or conda? Some sort of workspace
-                          package manager?
-
 /go
 
-  /ffi                    components that are embedded into native
+  /ffi                    packages that are embedded into native
                           MacOS, iOS and Android apps via (FFI)
-    <component>
-    <component>
+    <package>
+    <package>
     ...
 
-  /nix                    components that run in nixOS containers
+  /nix                    packages that run in nixOS containers
     Dockerfile            the dockerfile that builds the nixOS
                           containers
-    <component>
-    <component>
+    <package>
+    <package>
     ...
 
-  /shared                 components that run in other go targets
-    <component>
-    <component>
+  /shared                 packages that run in other go packages
+    <package>
+    <package>
     ...
 
-  /wasm                   components that run in webassembly
+  /wasm                   packages that run in webassembly
                           runtimes
-    <component>
-    <component>
+    <packaget>
+    <package>
     ...
-
-
-/swift
-
-  /iOS                    components that are included in iOS
-                          applications
-    /<component>
-    /<component>
-    ...
-
-  /MacOS                  components that are included in MacOS
-                          applications
-    /<component>
-    /<component>
-    ...
-
-  /nix                    components that run in nixOS containers
-    Dockerfile            the dockerfile that builds the nixOS
-                          containers
-    /<component>
-    /<component>
-    ...
-
-
-  /shared                 components that are shared among other
-                          swift targets
-    /<component>
-    /<component>
-    ...
-
-  ???                     an xcode workspace? something for swift
-                          package manager?
 
 /typescript
 
-  /bun                    components that run on the edge, in
+  /bun                    packages that run on the edge, in
                           bun.js
-    /<component>
-    /<component>
+    /<package>
+    /<package>
     ...
 
     bun.build.ts          bun-specific build and test commands
@@ -106,97 +67,83 @@ Tell your reader how to run the code in the development environment
                           are specific to the languages and
                           targets in this repository
 
-  /vue3                   components that run in vue.js websites
-    /<component>
-    /<component>
+  /vue3                   packages that run in vue.js websites
+    /<package>
+    /<package>
     ...
 
     vite.config.ts        vue-specific configuration for vite and
                           vitest
 
-  /shared                 components that run within the other
+  /shared                 packages that run within the other
                           typescript targets
-    /<component>
-    /<component>
+    /<package>
+    /<package>
     ...
 
     vite.config.ts        shared library configuration for vite
                           and vitest
 
   pnpm-lock.yaml          lockfile for all packages used in
-                          typescript components
+                          typescript packages
   pnpm-workspace.yaml     configuration for pnpm package manager
   .prettier.config.js     configuration for prettier
   .eslint.config.js       configuration for eslint
   tsconfig.json           configuration for typescript
 
-/rust
-
-  /ffi                    components that are embedded into native
-                          MacOS, iOS and Android apps via (FFI)
-    /<component>
-    /<component>
-    ...
-
-  /shared                 components that are shared with within other
-                          rust targets
-    /<component>
-    /<component>
-    ...
-
-  /wasm                   components that run in webassembly runtimes
-    /<component>
-    /<component>
-    ...
-
-  cargo.toml              configuration for cargo package manager
-
+nx                        nx executable
+nx.json                   configuration for nx build scripts in /.nx
 Vagrantfile               configuration for the MacOS VM that
-                          builds all swift components.
+                          builds all swift packages.
 ```
 
-To start developing, run `vagrant up` and then `./nx g @incremental.design/<language>:<target>`
+To start developing, run `vagrant up` and then `./nx g @incremental.design/<language>:<environment>`
 
-This will create a new component in the `/<language>` and `/<target>` of your choice. This component will be
+This will create a new component in the `/<language>` and `/<environment>` of your choice. This component will be
 
-- [formatted](#format), when you run `???`
-- [linted](#lint), when you run `???`
-- [documented](#document) when you run `???`
-- formatted, linted and [built](#build), when you run `???`
-- formatted, linted, built and [tested](#test), when you run `???`
-- formatted, linted, built, tested and [profiled](#profile), when you run `???`
-- formatted, linted, built, tested, api documentation generated, and packaged for [publishing](#publish) when you run `???`
-  - note that this will not actually publish the packages. That is done by Github actions CI/CD.
+- [formatted](#format), when you run `./nx format`
+- [linted](#lint), when you run `./nx lint`
+- [documented](#document) when you run `./nx docgen`
+- formatted, linted and [built](#build), when you run `./nx build`
+- formatted, linted, built and [tested](#test), when you run `./nx test`
+- formatted, linted, built, tested and [profiled](#profile), when you run `./nx profile`
+- formatted, linted, built, tested, api documentation generated, and packaged for [publishing](#publish) when you run `./nx publish`
+  - note that this will not actually publish
 
 you can add the `--watch` flag to any of the aformentioned commands (e.g. `./nx) to continuously re-run the command every time you modify the component.
 
-If you just want to try out a component (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other components in the `/<language>`'s `/<target>`s. However, this component will NOT be automatically and continuously built. Also, I will not accept pull requests that contain components that are not created using `./nx g @incremental.design/<language>:<target>`.
+If you just want to try out a component (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other components in the `/<language>`'s `/<environment>`s. However, this component will NOT be automatically and continuously built. Also, I will not accept pull requests that contain components that are not created using `./nx g @incremental.design/<language>:<environment>`.
 
 To import components within `app-stencils` (e.g. to import a component in `/typescript/shared`), use the language's package manager (e.g. pnpm add `<name of package>`). Each language has its own package manager:
 
 | Language   | Package import                                            |
 | :--------- | :-------------------------------------------------------- |
 | python     |                                                           |
-| go         | `go get incremental.design/<target>/<name of package>`    |
+| go         | `go get incremental.design/<environment>/<name of package>`    |
 | swift      |                                                           |
-| typescript | `pnpm add @incremental.design/<target>-<name of package>` |
+| typescript | `pnpm add @incremental.design/<environment>-<name of package>` |
 | rust       |                                                           |
 
 <!-- https://pnpm.io/workspaces -->
+### Why polyglot?
 
-#### Why monorepo?
+Different languages have different strengths. It makes more sense to combine them together in microservices and client-side code than it does to try and reimplement the features and libraries present in one language in another.
 
-Monorepos let us combine the components we build, without accidentally breaking dependents. It even lets us write
+### Why monorepo?
 
-#### Why polyglot?
+Monorepos help us reuse packages.
 
-Different languages have different strengths. It makes more sense to combine them together in microservices and client-side code than it does to try and reimplement the features and libraries present in one language in another. E.g. it's less work to make a native UI for iOS in swift than it is to draw equivalent UI components in rust. It's less work to analyze data in python than it is to do so in Go.
+A dependent is a piece of code that re-uses a package. Whenever you change a package, you might break a dependent. Without a monorepo, it's impossible to track all of a package's dependents - and therefore impossible to find out what might've broken.
 
-<!-- don't forget to set gopls "experimentalWorkspaceModule" to "true". see: https://earthly.dev/blog/golang-monorepo/ -->
+Monorepos put packages and their dependents in the same repository. They make it possible to find and test a package's dependents.
 
-#### Why Pants?
+### Why Nx?
 
-Pants facilitates powerful code generation and dependency detection. It also supports continous, incremental rebuilding. Every time you save changes to a component, Pants can automatically rebuild and re-test it and its dependents. It can detect broken integration points before you publish components.
+Testing can be a slow and tedious process - and it's one of the steps that we usually skip when we're in a hurry to build a new package.
+
+Nx lints, formats, builds and tests packages _and_ their dependents _every time you modify the package's code_. It alerts you when a change you've made breaks a dependent, so that you don't have to manually check each dependent.
+
+Without Nx, it's easy to introduce breaking changes that slip by undetected for several commits. When the bugs are finally detected, they often invalidate many of the commits that follow them, and take significant time to fix.
 
 ### Format:
 
