@@ -8,6 +8,12 @@
     }
   },
   "installation": {
-    "version": "16.5.0"
-  }
+    "version": "16.5.0",
+    "plugins": {
+      "@nx-dotnet/core": "1.22.0"
+    }
+  },
+  "plugins": [
+    "@nx-dotnet/core"
+  ]
 }
