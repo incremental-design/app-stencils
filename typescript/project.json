@@ -1,6 +1,12 @@
 {
     "root": "./typescript",
     "targets": {
+        "install": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript && pnpm i"
+            }
+        },
         "hello": {
             "executor": "tasks:hello"
         }

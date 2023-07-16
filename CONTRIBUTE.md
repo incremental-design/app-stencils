@@ -11,6 +11,8 @@ What are the prerequisites for contributing to the code?
 Tell your reader how to run the code in the development environment
 -->
 
+Run `./nx install` to download and install all dependencies.
+
 #### Repository Structure:
 
 `app-stencils` is a polyglot monorepo. It contains Typescript and Go code.
@@ -188,3 +190,14 @@ by language and target -->
 ### Publish:
 
 <!-- explain how each target is packaged for publishing. explain how CI publishes packages, and which branches and PRs have to pass before publish occurs. also explain how versioning works -->
+
+<!--
+notes about nx build
+
+project.json
+  contains 'targets'
+
+  a project is another name for a directory
+  a target is an action that can be performed on the project
+
+ -->
