@@ -203,4 +203,6 @@ project.json
 
   todo: need to explain the workspace:* part of pnpm, and adding pnpm deps to other projects
 
+  todo: explain that volar takeover mode requires disabling builtin typescript support https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode
+
  -->
