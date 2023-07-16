@@ -1,0 +1,12 @@
+{
+  "name": "typescript",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@typescript-eslint/parser": "6.0.0",
+    "@typescript-eslint/eslint-plugin": "6.0.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.1.6",
+    "globals": "^13.20.0"
+  },
+  "type": "module"
+}
