@@ -8,12 +8,14 @@
     }
   },
   "installation": {
-    "version": "16.5.0",
+    "version": "16.5.2",
     "plugins": {
-      "@nx-dotnet/core": "1.22.0"
+      "@nx-dotnet/core": "1.22.0",
+      "tasks": "../tasks"
     }
   },
   "plugins": [
-    "@nx-dotnet/core"
+    "@nx-dotnet/core",
+    "tasks"
   ]
 }

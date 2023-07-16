@@ -1,0 +1,10 @@
+{
+    "$schema": "http://json-schema.org/schema",
+    "executors": {
+        "hello": {
+            "implementation": "./dist/hello/executor",
+            "schema": "./src/hello/schema.json",
+            "description": "hello"
+        }
+    }
+}

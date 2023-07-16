@@ -1,0 +1,10 @@
+{
+    "version": 2,
+    "$schema": "http://json-schema.org/schema",
+    "cli": "nx",
+    "title": "hello",
+    "description": "Builds an app via the `dotnet` cli command.",
+    "type": "object",
+    "properties": {},
+    "required": []
+}

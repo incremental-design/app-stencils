@@ -1,0 +1,8 @@
+{
+    "root": "./typescript",
+    "targets": {
+        "hello": {
+            "executor": "tasks:hello"
+        }
+    }
+}
