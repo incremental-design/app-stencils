@@ -1,4 +1,4 @@
-import { BlendMode, isBlendMode, isColor, RGBA, RGBAtoCSS } from './Color';
+import { BlendMode, isBlendMode, isColor, RGBA, RGBAtoCSS } from "./Color";
 
 type Fill<Color> = {
   color: Color;
@@ -21,7 +21,7 @@ type InnerShadow<Color> = {
 type Stroke<Color> = {
   color: Color;
   width?: number /* in px, defaults to 1px */;
-  offset?: 'inner' | 'outer' | 'center' /* defaults to 'center' */;
+  offset?: "inner" | "outer" | "center" /* defaults to 'center' */;
   blendMode?: BlendMode /* defaults to BlendMode.normal */;
 };
 
@@ -106,13 +106,13 @@ export type Elevation<Color> = {
 };
 
 export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
-  'background-color': string;
-  'background-blend-mode': string;
-  'backdrop-filter': string;
-  'border-color': string;
-  'border-width': string;
-  'border-style': string;
-  'box-shadow': string;
+  "background-color": string;
+  "background-blend-mode": string;
+  "backdrop-filter": string;
+  "border-color": string;
+  "border-width": string;
+  "border-style": string;
+  "box-shadow": string;
 }> {
   const { fill, innerShadow, stroke, dropShadow } = E;
 
@@ -121,13 +121,13 @@ export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
   /* notice that right now we are literally discarding any fills other than fill[0] ... in fact the fill array is literally only included for future-proofing. Perhaps at some point we will use pseudo elements or maybe box shadows to hold the extra fills */
   if (fill[0])
     Object.assign(rules, {
-      'background-color': RGBAtoCSS(fill[0].color),
-      'background-blend-mode': fill[0].blendMode || BlendMode.normal,
+      "background-color": RGBAtoCSS(fill[0].color),
+      "background-blend-mode": fill[0].blendMode || BlendMode.normal,
     });
 
   if (fill[0].bgBlur)
     Object.assign(rules, {
-      'backdrop-filter': `blur(${fill[0].bgBlur.radius || 0}px) saturate(${
+      "backdrop-filter": `blur(${fill[0].bgBlur.radius || 0}px) saturate(${
         (fill[0].bgBlur.saturation || 0) * 100
       }%)`,
     });
@@ -135,9 +135,9 @@ export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
   /* notice that we are discarding everything other than the first stroke for the same reason as we are discarding any fills other than the first fill */
   if (stroke[0])
     Object.assign(rules, {
-      'border-color': RGBAtoCSS(stroke[0].color),
-      'border-width': `${stroke[0].width || 1}px`,
-      'border-style': 'solid',
+      "border-color": RGBAtoCSS(stroke[0].color),
+      "border-width": `${stroke[0].width || 1}px`,
+      "border-style": "solid",
       /* right now we discard offset and blend mode ... later on we can test using box shadow to achieve the same result */
     });
 
@@ -162,12 +162,12 @@ export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
     const c = RGBAtoCSS(color);
     // const bm = blendMode || BlendMode.normal; /* for right now, no blend mode support */
     BoxShadows.push(
-      `${xOffset}px ${yOffset}px ${blurOffset}px ${spreadOffset}px ${c}`
+      `${xOffset}px ${yOffset}px ${blurOffset}px ${spreadOffset}px ${c}`,
     );
   });
 
   if (BoxShadows.length > 0)
-    Object.assign(rules, { 'box-shadow': BoxShadows.join(', ') });
+    Object.assign(rules, { "box-shadow": BoxShadows.join(", ") });
 
   return rules;
 }
@@ -175,7 +175,7 @@ export function makeElevationCSSRules(E: Elevation<RGBA>): Partial<{
 const isUndefinedOrNumber = (a: Array<undefined | number>) => {
   return a.every((n) => {
     if (!n) return true;
-    if (typeof n === 'number') return true;
+    if (typeof n === "number") return true;
     return false;
   });
 };
@@ -208,8 +208,8 @@ const isFill = (f: unknown) => {
 const isStroke = (s: unknown) => {
   const { color, width, offset, blendMode } = s as Stroke<unknown>;
   if (!isColor(color)) return false;
-  if (width && typeof width !== 'number') return false;
-  if (offset && !['inner', 'outer', 'center'].includes(offset)) return false;
+  if (width && typeof width !== "number") return false;
+  if (offset && !["inner", "outer", "center"].includes(offset)) return false;
   if (blendMode && !isBlendMode(blendMode)) return false;
   return true;
 };

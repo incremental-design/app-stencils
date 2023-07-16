@@ -1,11 +1,17 @@
 {
-    "root": "./typescript",
-    "targets": {
-        "lint": {
-            "executor": "nx:run-commands",
-            "options": {
-                "command": "cd ./typescript && pnpm eslint --fix ./shared/theme"
-            }
-        }
+  "root": "./typescript",
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd ./typescript && pnpm eslint --fix ./shared/theme"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd ./typescript && pnpm prettier -c -w ./shared/theme"
+      }
     }
+  }
 }

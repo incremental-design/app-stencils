@@ -13,41 +13,41 @@ export type RGBA = {
 };
 
 export const enum BlendMode {
-  normal = 'normal',
-  multiply = 'multiply',
-  screen = 'screen',
-  overlay = 'overlay',
-  darken = 'darken',
-  lighten = 'lighten',
-  colorDodge = 'color-dodge',
-  colorBurn = 'color-burn',
-  hardLight = 'hard-light',
-  softLight = 'soft-light',
-  difference = 'difference',
-  exclusion = 'exclusion',
-  hue = 'hue',
-  saturation = 'saturation',
-  color = 'color',
-  luminosity = 'luminosity',
+  normal = "normal",
+  multiply = "multiply",
+  screen = "screen",
+  overlay = "overlay",
+  darken = "darken",
+  lighten = "lighten",
+  colorDodge = "color-dodge",
+  colorBurn = "color-burn",
+  hardLight = "hard-light",
+  softLight = "soft-light",
+  difference = "difference",
+  exclusion = "exclusion",
+  hue = "hue",
+  saturation = "saturation",
+  color = "color",
+  luminosity = "luminosity",
 }
 
 const blendModeStrings = [
-  'normal',
-  'multiply',
-  'screen',
-  'overlay',
-  'darken',
-  'lighten',
-  'color-dodge',
-  'color-burn',
-  'hard-light',
-  'soft-light',
-  'difference',
-  'exclusion',
-  'hue',
-  'saturation',
-  'color',
-  'luminosity',
+  "normal",
+  "multiply",
+  "screen",
+  "overlay",
+  "darken",
+  "lighten",
+  "color-dodge",
+  "color-burn",
+  "hard-light",
+  "soft-light",
+  "difference",
+  "exclusion",
+  "hue",
+  "saturation",
+  "color",
+  "luminosity",
 ];
 
 export const isBlendMode = (b: string) => blendModeStrings.includes(b);
@@ -63,16 +63,16 @@ export const isBlendMode = (b: string) => blendModeStrings.includes(b);
  */
 export function hexAlphaToRGBA(hex: string, alpha: number) {
   if (alpha < 0 || alpha > 1)
-    throw new Error('alpha should be between 0 and 1');
+    throw new Error("alpha should be between 0 and 1");
   let H = hex;
-  if (hex.startsWith('#')) H = H.slice(1);
+  if (hex.startsWith("#")) H = H.slice(1);
   if (H.length !== 6)
     throw new Error(
-      `'${hex}' is not a valid hex code because it doesn't contain 3 hexadecimals`
+      `'${hex}' is not a valid hex code because it doesn't contain 3 hexadecimals`,
     );
   if (H.match(/[^A-Fa-f0-9]/))
     throw new Error(
-      `'${hex}' is not a valid hex code because it contains characters other than 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C,D, E, F`
+      `'${hex}' is not a valid hex code because it contains characters other than 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C,D, E, F`,
     );
   H.toUpperCase();
   const HR /* (H)ex (R)ed*/ = H.slice(0, 2);
@@ -95,10 +95,10 @@ export function isColor(c: unknown) {
   const cR = c as RGBA;
   const { r, g, b, a } = cR;
   if (
-    typeof r === 'number' &&
-    typeof g === 'number' &&
-    typeof b === 'number' &&
-    typeof a === 'number'
+    typeof r === "number" &&
+    typeof g === "number" &&
+    typeof b === "number" &&
+    typeof a === "number"
   )
     return true;
   return false;

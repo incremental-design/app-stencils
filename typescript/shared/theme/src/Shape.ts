@@ -33,33 +33,33 @@ export function makeShapeCSSRules(s: Shape) {
   const { minWidth, maxWidth, minHeight, maxHeight, borderRadius } = s;
 
   const mwh = {};
-  if (maxHeight) Object.assign(mwh, { 'max-height': `${maxHeight}rem` });
-  if (maxWidth) Object.assign(mwh, { 'max-width': `${maxWidth}rem` });
+  if (maxHeight) Object.assign(mwh, { "max-height": `${maxHeight}rem` });
+  if (maxWidth) Object.assign(mwh, { "max-width": `${maxWidth}rem` });
 
   return {
-    display: 'flex',
-    'flex-direction': 'row',
-    'min-width': `${minWidth}rem`,
-    'min-height': `${minHeight}rem`,
-    'border-radius': `${borderRadius.top.left}rem ${borderRadius.top.right}rem ${borderRadius.bottom.right}rem ${borderRadius.bottom.left}rem`,
+    display: "flex",
+    "flex-direction": "row",
+    "min-width": `${minWidth}rem`,
+    "min-height": `${minHeight}rem`,
+    "border-radius": `${borderRadius.top.left}rem ${borderRadius.top.right}rem ${borderRadius.bottom.right}rem ${borderRadius.bottom.left}rem`,
     ...mwh,
   };
 }
 
 const validateBorderRadius = (r: unknown) => {
-  const borderRadius = r as Shape['borderRadius'];
+  const borderRadius = r as Shape["borderRadius"];
   const { top, bottom } = borderRadius;
   return [top, bottom].every((d) => {
-    return typeof d.left === 'number' && typeof d.right === 'number';
+    return typeof d.left === "number" && typeof d.right === "number";
   });
 };
 
 export const validateShape = (s: unknown) => {
   const { minWidth, minHeight, borderRadius, maxWidth, maxHeight } = s as Shape;
-  if (typeof minWidth !== 'number') return false;
-  if (typeof minHeight !== 'number') return false;
+  if (typeof minWidth !== "number") return false;
+  if (typeof minHeight !== "number") return false;
   if (!validateBorderRadius(borderRadius)) return false;
-  if (maxWidth && typeof maxWidth !== 'number') return false;
-  if (maxHeight && typeof maxHeight !== 'number') return false;
+  if (maxWidth && typeof maxWidth !== "number") return false;
+  if (maxHeight && typeof maxHeight !== "number") return false;
   return true;
 };
