@@ -200,4 +200,7 @@ project.json
   a project is another name for a directory
   a target is an action that can be performed on the project
 
+
+  todo: need to explain the workspace:* part of pnpm, and adding pnpm deps to other projects
+
  -->

@@ -16,16 +16,16 @@ import {
   reactive,
   CSSProperties,
   ComputedRef,
-} from 'vue';
+} from "vue";
 
-import { EventInfo } from '@incremental.design/device-input-event-handlers';
+import { EventInfo } from "@incremental.design/device-input-event-handlers";
 
-import e, { State } from './useEmits';
-import p, { Affordances } from './useProps';
+import e, { State } from "./useEmits";
+import p, { Affordances } from "./useProps";
 // import useMakeEventHandlers, { PreviousInputs } from "./useMakeEventHandlers";
-import useMakeFiniteStateMachine from './useMakeFiniteStateMachine';
+import useMakeFiniteStateMachine from "./useMakeFiniteStateMachine";
 
-import listeners, { PreviousInputs } from './useEventListeners';
+import listeners, { PreviousInputs } from "./useEventListeners";
 
 const props = defineProps(p);
 
@@ -43,7 +43,7 @@ watch(
     if (focusable || editable) return (el.tabIndex = 0);
     return (el.tabIndex = -1);
   },
-  { immediate: true }
+  { immediate: true },
 );
 
 /* keep track of previous inputs */
@@ -115,14 +115,14 @@ watch(
     /* now, add and remove depdendent affordances */
     [listenersToAdd, listenersToRemove].forEach((set) => {
       // if(set.has('isEditable')) => set.add('') // what do we add for isEditable??
-      if (set.has('isFocusable')) set.add('isPressable');
-      if (set.has('isSelectable')) set.add('isPressable');
+      if (set.has("isFocusable")) set.add("isPressable");
+      if (set.has("isSelectable")) set.add("isPressable");
       // if(set.has("isDraggable")) set.add("") // what do we add for isDraggable??
-      if (set.has('isToggleable')) set.add('isPressable');
+      if (set.has("isToggleable")) set.add("isPressable");
       // if(set.has("isSwipeable")) set.add("") // what do we add for isSwipeable??
       // if (set.has("isScrollable")) set.add("") // what do we add for isScrollable??
-      if (set.has('isPeekable')) set.add('isPressable');
-      if (set.has('isPressable')) set.add('isHoverable');
+      if (set.has("isPeekable")) set.add("isPressable");
+      if (set.has("isPressable")) set.add("isHoverable");
     });
 
     /* finally, if an affordance is to be removed, just to be added back again, don't do anything */
@@ -141,7 +141,7 @@ watch(
       if (listenersToAdd.has(affordance)) listeners[affordance](true, el, prev);
     });
   },
-  { deep: true }
+  { deep: true },
 );
 
 const selectThisEl = () => {
@@ -172,7 +172,7 @@ watch(
   (current) => {
     if (!current) return;
     const P = current;
-    emit('pointerInput', P);
+    emit("pointerInput", P);
     const XP = P.input.relative.xPercent;
     const YP = P.input.relative.yPercent;
     const XPOutOfBounds = XP ? XP < 0 || XP > 1 : false;
@@ -183,64 +183,64 @@ watch(
 
     const updateHovering = () => {
       switch (P.type) {
-        case 'mousemove':
+        case "mousemove":
           FSM.hovering = { state: true, changedBy: P };
           break;
-        case 'mouseleave':
+        case "mouseleave":
           FSM.hovering = { state: false, changedBy: P };
           break;
       }
     };
     const updatePressing = () => {
       switch (P.type) {
-        case 'mousedown':
+        case "mousedown":
           FSM.pressing = { state: true, changedBy: P };
           break;
-        case 'touchstart':
+        case "touchstart":
           FSM.pressing = { state: true, changedBy: P };
           break;
-        case 'mouseup':
+        case "mouseup":
           FSM.pressing = { state: false, changedBy: P };
           break;
-        case 'mouseleave':
+        case "mouseleave":
           FSM.pressing = { state: false, changedBy: P };
           break;
-        case 'touchcancel':
+        case "touchcancel":
           FSM.pressing = { state: false, changedBy: P };
           break;
-        case 'touchend':
+        case "touchend":
           FSM.pressing = { state: false, changedBy: P };
           break;
-        case 'touchmove':
+        case "touchmove":
           FSM.pressing = { state: PointerInBounds, changedBy: P };
           break;
       }
     };
     const updatePeeking = () => {
       switch (P.type) {
-        case 'mousemove':
+        case "mousemove":
           FSM.peeking = { state: true, changedBy: P };
           break;
-        case 'mouseleave':
+        case "mouseleave":
           FSM.peeking = { state: false, changedBy: P };
           break;
-        case 'touchstart':
+        case "touchstart":
           FSM.peeking = { state: true, changedBy: P };
           break;
-        case 'touchend':
+        case "touchend":
           FSM.peeking = { state: false, changedBy: P };
           break;
-        case 'touchcancel':
+        case "touchcancel":
           FSM.peeking = { state: false, changedBy: P };
           break;
       }
     };
     const updateToggled = () => {
       switch (P.type) {
-        case 'mouseup':
+        case "mouseup":
           FSM.toggled = { state: !FSM.toggled.state, changedBy: P };
           break;
-        case 'touchend':
+        case "touchend":
           if (PointerInBounds)
             FSM.toggled = { state: !FSM.toggled.state, changedBy: P };
           break;
@@ -250,7 +250,7 @@ watch(
     const updateSelected = () => {
       const listenForDeselect = (current: Node) => {
         if (document) {
-          const DE /* (D)eselect (E)vents */ = ['pointerup'];
+          const DE /* (D)eselect (E)vents */ = ["pointerup"];
           for (const E of DE) {
             document.addEventListener(
               E,
@@ -262,7 +262,7 @@ watch(
                     DS.anchorNode === current &&
                     DS.focusNode === current &&
                     !DS.isCollapsed &&
-                    DS.type === 'Range',
+                    DS.type === "Range",
                   changedBy: {
                     type: E.type,
                     timestamp: E.timeStamp,
@@ -270,7 +270,7 @@ watch(
                   },
                 };
               },
-              { once: true }
+              { once: true },
             );
           }
           return true;
@@ -279,13 +279,13 @@ watch(
         }
       };
       switch (P.type) {
-        case 'mouseup':
+        case "mouseup":
           if (BCR.value && selectThisEl()) {
             FSM.selected = { state: true, changedBy: P };
             listenForDeselect(BCR.value);
           }
           break;
-        case 'touchend':
+        case "touchend":
           if (PointerInBounds && BCR.value && selectThisEl()) {
             FSM.selected = { state: true, changedBy: P };
             listenForDeselect(BCR.value);
@@ -296,10 +296,10 @@ watch(
     const updateFocused = () => {
       // see: https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/focus
       switch (P.type) {
-        case 'mousedown':
+        case "mousedown":
           FSM.focused = { state: focusThisEl(), changedBy: P };
           break;
-        case 'touchstart':
+        case "touchstart":
           FSM.focused = { state: focusThisEl(), changedBy: P };
           break;
       }
@@ -308,19 +308,19 @@ watch(
     // const updateEditing = () => {}
     const updateScrolling = () => {
       switch (P.type) {
-        case 'mousemove':
+        case "mousemove":
           FSM.scrolling = { state: true, changedBy: P };
           break;
-        case 'touchmove':
+        case "touchmove":
           FSM.scrolling = { state: PointerInBounds, changedBy: P };
           break;
-        case 'touchend':
+        case "touchend":
           FSM.scrolling = { state: false, changedBy: P };
           break;
-        case 'mouseleave':
+        case "mouseleave":
           FSM.scrolling = { state: false, changedBy: P };
           break;
-        case 'mouseup':
+        case "mouseup":
           FSM.scrolling = { state: false, changedBy: P };
           break;
       }
@@ -355,7 +355,7 @@ watch(
   {
     deep: true,
     immediate: false,
-  }
+  },
 );
 
 watch(
@@ -375,7 +375,7 @@ watch(
       const newState: Array<State> = [];
       const oldState: Array<State> = [];
       const IES /* (I)nput (E)vent (S)et */ = new Set();
-      const flags: Array<'pointerReleasedInTarget'> = [];
+      const flags: Array<"pointerReleasedInTarget"> = [];
 
       if (current[0] /* FSM.hovered.state */) newState.push(State.hovering);
       if (current[1] /* FSM.pressed.state */) newState.push(State.pressing);
@@ -417,9 +417,9 @@ watch(
         let didReleaseInTarget = false;
         const ietype = inputEvents.map((e) => e.type);
 
-        if (ietype.includes('touchend')) {
+        if (ietype.includes("touchend")) {
           const touchEndedEvents = inputEvents.filter(
-            (e) => e.type === 'touchend'
+            (e) => e.type === "touchend",
           ) as Array<{
             input: { relative: { xPercent: number; yPercent: number } };
           }>;
@@ -429,30 +429,30 @@ watch(
                 e.input.relative.xPercent >= 0 ||
                 e.input.relative.xPercent <= 1 ||
                 e.input.relative.yPercent >= 0 ||
-                e.input.relative.yPercent <= 1
+                e.input.relative.yPercent <= 1,
             )
           )
             didReleaseInTarget = true;
-        } else if (ietype.includes('mouseup')) {
+        } else if (ietype.includes("mouseup")) {
           didReleaseInTarget = true;
         }
         if (didReleaseInTarget) {
-          flags.push('pointerReleasedInTarget');
+          flags.push("pointerReleasedInTarget");
         }
       }
 
       return { newState, oldState, inputEvents, flags };
     };
 
-    emit('stateChange', makeStateArrays());
+    emit("stateChange", makeStateArrays());
   },
   {
     deep: false,
     immediate: false,
-  }
+  },
 );
 
-const userSelect = computed(() => (props.isSelectable ? 'all' : 'none'));
+const userSelect = computed(() => (props.isSelectable ? "all" : "none"));
 // const pointerEvents = computed(() => (props.isFocusable ? "auto" : "none"));
 
 /* inline CSS */
@@ -460,6 +460,6 @@ const userSelect = computed(() => (props.isSelectable ? 'all' : 'none'));
 const container: ComputedRef<CSSProperties> = computed(() => ({
   // pointerEvents: pointerEvents.value,
   userSelect: userSelect.value,
-  position: 'relative',
+  position: "relative",
 }));
 </script>

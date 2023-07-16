@@ -78,11 +78,11 @@ importers:
   vue3/component-base:
     dependencies:
       '@incremental.design/device-input-event-handlers':
-        specifier: 0.0.0
-        version: 0.0.0
+        specifier: workspace:*
+        version: link:../../shared/device-input-event-handlers
       '@incremental.design/theme':
-        specifier: 0.0.0
-        version: 0.0.0
+        specifier: workspace:*
+        version: link:../../shared/theme
       '@types/node':
         specifier: ^20.3.3
         version: 20.3.3
@@ -115,11 +115,11 @@ importers:
         specifier: ^3.0.0
         version: 3.0.0(@fortawesome/fontawesome-svg-core@6.4.0)(vue@3.2.37)
       '@incremental.design/component-base':
-        specifier: 0.0.0
+        specifier: workspace:*
         version: link:../component-base
       '@incremental.design/theme':
-        specifier: 0.0.0
-        version: 0.0.0
+        specifier: workspace:*
+        version: link:../../shared/theme
       '@types/node':
         specifier: ^20.3.3
         version: 20.3.3
@@ -155,10 +155,10 @@ importers:
   vue3/component-tabs:
     dependencies:
       '@incremental.design/component-base':
-        specifier: 0.0.0
+        specifier: workspace:*
         version: link:../component-base
       '@incremental.design/component-button':
-        specifier: 0.0.0
+        specifier: workspace:*
         version: link:../component-button
       '@types/node':
         specifier: ^20.3.3
@@ -359,14 +359,6 @@ packages:
   /@humanwhocodes/object-schema@1.2.1:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
-
-  /@incremental.design/device-input-event-handlers@0.0.0:
-    resolution: {integrity: sha512-ymKke4M1Eymz8BHOe7+hBl0BRtZ2fafbt7jwCSIg9l1MvsKpNkf98uVKrvDrVZu2rrGAlVUfWTyNvNUv7sNI7g==}
-    dev: false
-
-  /@incremental.design/theme@0.0.0:
-    resolution: {integrity: sha512-LL/ZLbW5Ds4ljFL1rK5uwwDG3t+AVOEPjUpHdE4c8XD5axXu/IrnXbtX+nxnGnNO5zyhPeD8U9ev+bk8ydhSWA==}
-    dev: false
 
   /@jridgewell/sourcemap-codec@1.4.15:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}

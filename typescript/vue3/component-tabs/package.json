@@ -14,8 +14,8 @@
     "lint": "eslint src/**/*{.vue,.ts} --fix"
   },
   "dependencies": {
-    "@incremental.design/component-base": "0.0.0",
-    "@incremental.design/component-button": "0.0.0",
+    "@incremental.design/component-base": "workspace:*",
+    "@incremental.design/component-button": "workspace:*",
     "@types/node": "^20.3.3",
     "tslib": "^2.6.0",
     "typescript": "^5.1.6",
