@@ -4,11 +4,15 @@ import globals from "globals";
 import eslintJsPlugin from "@eslint/js";
 import vuelint from "eslint-plugin-vue";
 import vueparser from "vue-eslint-parser";
+import eslintConfigPrettier from "eslint-config-prettier";
 
 // see https://stackoverflow.com/questions/74237042/how-to-correctly-configure-the-parser-plugins-with-eslints-new-flat-config
 export default [
   {
-    rules: eslintJsPlugin.configs.recommended.rules,
+    rules: {
+      ...eslintJsPlugin.configs.recommended.rules,
+      ...eslintConfigPrettier.rules,
+    },
   },
   {
     files: ["**/*.ts"],

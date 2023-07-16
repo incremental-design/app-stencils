@@ -1,8 +1,10 @@
 {
     "vue.updateImportsOnFileMove.enabled": true,
     "typescript.tsdk": "typescript/node_modules/.pnpm/typescript@5.1.6/lib",
-    "eslint.experimental.useFlatConfig": true
+    "eslint.experimental.useFlatConfig": true,
     "eslint.workingDirectories": [
         "./typescript"
-    ]
+    ],
+    "prettier.configPath": "./typescript/.prettierrc.json",
+    "prettier.vueIndentScriptAndStyle": true
 }
