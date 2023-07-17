@@ -5,25 +5,26 @@ import {defineConfig} from 'vite';
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
 import * as fs from 'fs'
+import * as path from 'path'
 
-
-import { join } from 'path';
 const cwd = process.cwd();
 
-const packageJson = JSON.parse(fs.readFileSync(join(cwd, 'package.json'), 'utf-8'));
+const packageJson = JSON.parse(fs.readFileSync(path.join(cwd, 'package.json'), 'utf-8'));
 
 const {dependencies, devDependencies, peerDependencies} = packageJson;
 
 const external = [...Object.keys(dependencies || {}), ...Object.keys(devDependencies || []), ...Object.keys(peerDependencies || [])];
 
+const dtsConfig = {
+  tsconfigPath: path.resolve(cwd, '../../tsconfig.json'), 
+  include: [path.resolve(cwd, 'src/**/*.{ts,tsx}')],
+  outDir: path.resolve(cwd, 'dist'),
+  rollupTypes: true,
+}
+
 export default defineConfig({
   plugins: [
-    dts({
-      tsconfigPath: join(cwd, '../../tsconfig.json'), 
-      include: [join(cwd, 'src/**/*.{ts,tsx}')],
-      outDir: join(cwd, 'dist'),
-      rollupTypes: true,
-    }),
+    dts(dtsConfig),
 
     viteTsConfigPaths({
       root: '../',

@@ -10,7 +10,7 @@ import {
   //   handleDrag,
   //   handleScroll,
   //   handleFocus,
-} from '@incremental.design/device-input-event-handlers';
+} from '@incremental.design/shared-device-input-event-handlers';
 
 const addListener = (
   element: HTMLElement,

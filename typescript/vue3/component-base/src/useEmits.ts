@@ -5,7 +5,7 @@ import {
   KeyboardInput,
   ScrollInput,
   DragInput,
-} from '@incremental.design/device-input-event-handlers';
+} from '@incremental.design/shared-device-input-event-handlers';
 
 /**
  * A state is base component's response to an input. The states that base component can have depend on its affordances. For example: if an instance of baseComponent `isHoverable`, then it will enter a `hovering` state on mouseover. It will leave the `hovering` state on mouseout.

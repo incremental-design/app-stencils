@@ -1,0 +1,23 @@
+{
+    "root": "./typescript",
+    "targets": {
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript && pnpm eslint --fix ./vue3/component-base"
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript && pnpm prettier -c -w ./vue3/component-base"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript/vue3/component-base && pnpm vite build --config ../vite.config.ts"
+            }
+        }
+    }
+}

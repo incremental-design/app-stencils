@@ -11,7 +11,7 @@ What are the prerequisites for contributing to the code?
 Tell your reader how to run the code in the development environment
 -->
 
-Run `./nx install` to download and install all dependencies.
+Run `./nx run-many --target=install` to download and install all dependencies.
 
 #### Repository Structure:
 
