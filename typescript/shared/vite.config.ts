@@ -4,10 +4,17 @@ import {defineConfig} from 'vite';
 
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
+import * as fs from 'fs'
+
 
 import { join } from 'path';
 const cwd = process.cwd();
 
+const packageJson = JSON.parse(fs.readFileSync(join(cwd, 'package.json'), 'utf-8'));
+
+const {dependencies, devDependencies, peerDependencies} = packageJson;
+
+const external = [...Object.keys(dependencies || {}), ...Object.keys(devDependencies || []), ...Object.keys(peerDependencies || [])];
 
 export default defineConfig({
   plugins: [
@@ -35,7 +42,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // External packages that should not be bundled into your library.
-      external: [], /* need to pull everything from package json */
+      external, 
     },
   },
 
