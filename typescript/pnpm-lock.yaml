@@ -77,10 +77,10 @@ importers:
 
   vue3/component-base:
     dependencies:
-      '@incremental.design/device-input-event-handlers':
+      '@incremental.design/shared-device-input-event-handlers':
         specifier: workspace:*
         version: link:../../shared/device-input-event-handlers
-      '@incremental.design/theme':
+      '@incremental.design/shared-theme':
         specifier: workspace:*
         version: link:../../shared/theme
       '@types/node':
@@ -114,12 +114,12 @@ importers:
       '@fortawesome/vue-fontawesome':
         specifier: ^3.0.0
         version: 3.0.0(@fortawesome/fontawesome-svg-core@6.4.0)(vue@3.2.37)
-      '@incremental.design/component-base':
-        specifier: workspace:*
-        version: link:../component-base
-      '@incremental.design/theme':
+      '@incremental.design/shared-theme':
         specifier: workspace:*
         version: link:../../shared/theme
+      '@incremental.design/vue3-component-base':
+        specifier: workspace:*
+        version: link:../component-base
       '@types/node':
         specifier: ^20.3.3
         version: 20.3.3
@@ -154,10 +154,10 @@ importers:
 
   vue3/component-tabs:
     dependencies:
-      '@incremental.design/component-base':
+      '@incremental.design/vue3-component-base':
         specifier: workspace:*
         version: link:../component-base
-      '@incremental.design/component-button':
+      '@incremental.design/vue3-component-button':
         specifier: workspace:*
         version: link:../component-button
       '@types/node':

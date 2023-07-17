@@ -1,5 +1,5 @@
 {
-  "name": "@incremental.design/component-video-player",
+  "name": "@incremental.design/vue3-component-video-player",
   "private": false,
   "sideEffects": true,
   "license": "MIT",

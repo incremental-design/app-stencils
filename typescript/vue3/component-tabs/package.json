@@ -1,5 +1,5 @@
 {
-  "name": "@incremental.design/component-tabs",
+  "name": "@incremental.design/vue3-component-tabs",
   "private": false,
   "sideEffects": true,
   "license": "MIT",
@@ -14,8 +14,8 @@
     "lint": "eslint src/**/*{.vue,.ts} --fix"
   },
   "dependencies": {
-    "@incremental.design/component-base": "workspace:*",
-    "@incremental.design/component-button": "workspace:*",
+    "@incremental.design/vue3-component-base": "workspace:*",
+    "@incremental.design/vue3-component-button": "workspace:*",
     "@types/node": "^20.3.3",
     "tslib": "^2.6.0",
     "typescript": "^5.1.6",

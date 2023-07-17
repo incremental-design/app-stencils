@@ -1,5 +1,5 @@
 {
-  "name": "@incremental.design/device-input-event-handlers",
+  "name": "@incremental.design/shared-device-input-event-handlers",
   "version": "0.0.1",
   "type": "commonjs",
   "private": false,

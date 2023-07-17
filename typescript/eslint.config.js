@@ -21,7 +21,7 @@ export default [
     },
     languageOptions: {
       parser: tsparser,
-      globals: globals.node, // todo: change this once we've decided where to put "node" typescript things and "browser" typescript things
+      globals: globals.browser,
     },
     rules: {
       ...tslint.configs.recommended.rules,

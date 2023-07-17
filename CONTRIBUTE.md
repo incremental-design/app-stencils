@@ -205,4 +205,5 @@ project.json
 
   todo: explain that volar takeover mode requires disabling builtin typescript support https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode
 
+  todo: codegen - for a library to be used as a dependent, it needs to put an index.ts in <package name>/src
  -->

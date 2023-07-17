@@ -18,7 +18,7 @@ import {
   ComputedRef,
 } from "vue";
 
-import { EventInfo } from "@incremental.design/device-input-event-handlers";
+import { EventInfo } from "@incremental.design/shared-device-input-event-handlers";
 
 import e, { State } from "./useEmits";
 import p, { Affordances } from "./useProps";

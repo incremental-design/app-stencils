@@ -1,6 +1,6 @@
 import { computed, reactive } from 'vue';
 
-import { EventInfo } from '@incremental.design/device-input-event-handlers';
+import { EventInfo } from '@incremental.design/shared-device-input-event-handlers';
 
 type FSMEntry = { state: boolean; changedBy: EventInfo<unknown> | null };
 
