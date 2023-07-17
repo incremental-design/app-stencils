@@ -8,11 +8,20 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "importHelpers": true,
+        "isolatedModules": true,
         "target": "es2015",
         "module": "esnext",
         "lib": [
             "ESNext",
-            "dom"
+            "dom",
+        ],
+        "types": [
+            "vite/client"
+        ],
+        "typeRoots": [
+            "./node_modules/@types",
+            "./types",
+            "./node_modules"
         ],
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,

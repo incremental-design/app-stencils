@@ -1,0 +1,23 @@
+{
+    "root": "./typescript",
+    "targets": {
+        "lint": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript && pnpm eslint --fix ./shared/device-input-event-handlers"
+            }
+        },
+        "format": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript && pnpm prettier -c -w ./shared/device-input-event-handlers"
+            }
+        },
+        "build": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript/shared/device-input-event-handlers && pnpm vite build --config ../vite.config.ts"
+            }
+        }
+    }
+}

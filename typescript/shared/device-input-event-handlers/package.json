@@ -1,7 +1,7 @@
 {
   "name": "@incremental.design/shared-device-input-event-handlers",
   "version": "0.0.1",
-  "type": "commonjs",
+  "type": "module",
   "private": false,
   "module": "src/index.ts",
   "description": "Handlers for `DeviceMotionEvent` `DeviceOrientationEvent` `DragEvent` `FocusEvent` `GamepadEvent` `KeyboardEvent` `MouseEvent` `TouchEvent` and `WheelEvent`. These handlers normalize and filter event details to make them easier to interpret.",

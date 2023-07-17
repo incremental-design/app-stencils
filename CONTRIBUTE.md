@@ -101,38 +101,38 @@ Vagrantfile               configuration for the MacOS VM that
 
 To start developing, run `vagrant up` and then `./nx g tasks/<language>:<environment>`
 
-This will create a new component in the `/<language>` and `/<environment>` of your choice.
+This will create a new package in the `/<language>` and `/<environment>` of your choice.
 
-You can compose any of the other components in `/<language>` into this new component, by importing the other components with the language and framework specific tools.
+You can compose any of the other packages in `/<language>` into this new package, by importing the other packages with the language and framework specific tools.
 
 <!-- show examples? Or, maybe make a jupyter notebook?? -->
 
-Install the component's dependencies with `./nx i ./<language>/<environment>/<component>`
+Install the package's dependencies with `./nx i ./<language>/<environment>/<package>`
 
-Test the component, with `./nx test ./<language>/<environment>/<component>`
+Test the package, with `./nx test ./<language>/<environment>/<package>`
 
-- this will format and lint the component. If linting fails, this will fail.
-- this will test the component, and all of the component's dependents. If any test fails, this will fail.
+- this will format and lint the package. If linting fails, this will fail.
+- this will test the package, and all of the package's dependents. If any test fails, this will fail.
 
-Build the component, with `./nx build ./<language>/<environment>/<component>`
+Build the package, with `./nx build ./<language>/<environment>/<package>`
 
-- this will format and lint the component. If linting fails, this will fail.
-- this will test the component, and all of the component's dependents. If any test fails, this will fail.
-- this will build the component, and all of its dependents. If any build fails, this will fail.
+- this will format and lint the package. If linting fails, this will fail.
+- this will test the package, and all of the package's dependents. If any test fails, this will fail.
+- this will build the package, and all of its dependents. If any build fails, this will fail.
 
-you can add the `--watch` flag to any of the aformentioned commands to continuously re-run the command every time you modify the component.
+you can add the `--watch` flag to any of the aformentioned commands to continuously re-run the command every time you modify the package.
 
-you can run `./nx i`, `./nx test`, or `./nx build` against `./`, `./<language>`, `./<language>/<environment>`, to build all of the components contained within them.
+you can run `./nx i`, `./nx test`, or `./nx build` against `./`, `./<language>`, `./<language>/<environment>`, to build all of the packages contained within them.
 
 <!-- need to support ./nx [test | build] <language>/<environment> to build everything in language environment folder -->
 <!-- need to support ./nx [test | build] <language> to build everything in -->
 <!-- need to support ./nx [test | build] -->
 
-<!-- ./nx graph <language>/<environment>/<component> to show a graph of deps ? -->
+<!-- ./nx graph <language>/<environment>/<package> to show a graph of deps ? -->
 
-If you just want to try out a component (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other components in the `/<language>`'s `/<environment>`s. However, this component will NOT be automatically and continuously built. Also, I will not accept pull requests that contain components that are not created using `./nx g @incremental.design/<language>:<environment>`.
+If you just want to try out a package (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other packages in the `/<language>`'s `/<environment>`s. However, this package will NOT be automatically and continuously built. Also, I will not accept pull requests that contain packages that are not created using `./nx g @incremental.design/<language>:<environment>`.
 
-To import components within `app-stencils` (e.g. to import a component in `/typescript/shared`), use the language's package manager (e.g. pnpm add `<name of package>`). Each language has its own package manager:
+To import packages within `app-stencils` (e.g. to import a package in `/typescript/shared`), use the language's package manager (e.g. pnpm add `<name of package>`). Each language has its own package manager:
 
 | Language   | Package import                                                 |
 | :--------- | :------------------------------------------------------------- |
@@ -206,4 +206,5 @@ project.json
   todo: explain that volar takeover mode requires disabling builtin typescript support https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode
 
   todo: codegen - for a library to be used as a dependent, it needs to put an index.ts in <package name>/src
+  also todo: codegen - need to name libraries as @incremental.design/<environment>-<package name>
  -->

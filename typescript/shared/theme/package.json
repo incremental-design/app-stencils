@@ -1,7 +1,7 @@
 {
   "name": "@incremental.design/shared-theme",
   "version": "0.0.1",
-  "type": "commonjs",
+  "type": "module",
   "private": false,
   "module": "src/index.ts",
   "description": "primitives for generating performant css-in-js",

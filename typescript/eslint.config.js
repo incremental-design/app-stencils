@@ -21,7 +21,7 @@ export default [
     },
     languageOptions: {
       parser: tsparser,
-      globals: globals.browser,
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
       ...tslint.configs.recommended.rules,

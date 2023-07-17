@@ -1,15 +1,18 @@
 {
   "name": "typescript",
   "version": "0.0.1",
+  "type": "module",
   "devDependencies": {
+    "typescript": "^5.1.6",
+    "prettier": "3.0.0",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "8.8.0",
     "@typescript-eslint/parser": "6.0.0",
     "@typescript-eslint/eslint-plugin": "6.0.0",
-    "eslint": "^8.45.0",
     "eslint-plugin-vue": "^9.15.1",
-    "typescript": "^5.1.6",
     "globals": "^13.20.0",
-    "prettier": "3.0.0",
-    "eslint-config-prettier": "8.8.0"
-  },
-  "type": "module"
+    "vite": "^4.4.4",
+    "vite-tsconfig-paths": "^4.2.0",
+    "vite-plugin-dts": "^3.3.1"
+  }
 }
