@@ -14,7 +14,8 @@ export default defineConfig({
     dts({
       tsconfigPath: join(cwd, '../../tsconfig.json'), 
       include: [join(cwd, 'src/**/*.{ts,tsx}')],
-      outDir: join(cwd, 'dist/types'),
+      outDir: join(cwd, 'dist'),
+      rollupTypes: true,
     }),
 
     viteTsConfigPaths({
