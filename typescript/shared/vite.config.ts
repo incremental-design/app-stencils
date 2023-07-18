@@ -1,6 +1,6 @@
 /* this file MUST be run from within the package directory */
 
-import {defineConfig} from 'vite';
+import {defineConfig} from 'vitest/config';
 
 import viteTsConfigPaths from 'vite-tsconfig-paths';
 import dts from 'vite-plugin-dts';
@@ -23,6 +23,9 @@ const dtsConfig = {
 }
 
 export default defineConfig({
+  define: {
+    'import.meta.vitest': 'undefined'
+  },
   plugins: [
     dts(dtsConfig),
 
@@ -53,15 +56,17 @@ export default defineConfig({
     },
   },
 
-  // test: {
-  //   globals: true,
-  //   cache: {
-  //     dir: '../../../node_modules/.vitest',
-  //   },
-  //   environment: 'jsdom',
-  //   include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-  // },
+  test: {
+    globals: true,
+    cache: {
+      dir: '../../node_modules/.vitest',
+    },
+    environment: 'jsdom',
+    include: ['src/index.ts'], /* for now, dump the tests into index.ts see: https://vitest.dev/guide/in-source.html#setup */
+  },
 });
+
+// todo: change where tests live??
 
 /**
  * todo: try lighning css https://vitejs.dev/guide/features.html#lightning-css

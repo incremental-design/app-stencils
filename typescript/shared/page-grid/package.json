@@ -10,11 +10,8 @@
     "access": "public"
   },
   "dependencies": {
-    "@types/node": "^20.3.3",
     "postcss-mixins": "^9.0.4",
-    "postcss-nesting": "^10.1.10",
-    "tslib": "^2.6.0",
-    "typescript": "^5.1.6"
+    "postcss-nesting": "^10.1.10"
   },
   "license": "MIT",
   "bugs": {

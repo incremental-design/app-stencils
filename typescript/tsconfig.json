@@ -13,10 +13,11 @@
         "module": "esnext",
         "lib": [
             "ESNext",
-            "dom",
+            "dom"
         ],
         "types": [
-            "vite/client"
+            "vite/client",
+            "vitest/importMeta"
         ],
         "typeRoots": [
             "./node_modules/@types",

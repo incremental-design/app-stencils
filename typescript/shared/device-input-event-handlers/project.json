@@ -18,6 +18,12 @@
             "options": {
                 "command": "cd ./typescript/shared/device-input-event-handlers && pnpm vite build --config ../vite.config.ts"
             }
+        },
+        "test": {
+            "executor": "nx:run-commands",
+            "options": {
+                "command": "cd ./typescript/shared/device-input-event-handlers && pnpm vitest run --config ../vite.config.ts"
+            }
         }
     }
 }
