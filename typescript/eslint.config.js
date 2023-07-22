@@ -47,4 +47,12 @@ export default [
       "no-console": "error",
     },
   },
+  // so, this is 'cheating' a little bit. We shouldn't actually have this section in here. eventually, we'll use verdaccio and a separate project for this nuxt site
+  {
+    files: ["incremental-design/**/*"],
+    rules: {
+      "no-console": "error",
+      "no-undef": "off",
+    },
+  },
 ];
