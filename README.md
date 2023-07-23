@@ -107,7 +107,7 @@ why is it so important?
 
 1. a LOT of people use tablets: iPads, Galaxy Tab, Google tablet, etc.
 2. tablets aren't 'laptops without keyboards' - they are devices that are meant to be held, tapped, and written on.
-3. novelty turns friction into desirable friction. you can leverage the tablet input paradigms to inject novelty into an otherwise boring web app
+3. novelty turns friction into desirable friction. you can leverage the tablet input paradigms to inject novelty into an otherwise high-friction web app
 4. most native apps have web views. Some 'native' apps are just wrappers around web views. Web views have to be as finger-friendly as the interfaces that surround them.
 5. most web apps will NEVER gain native counterparts. It's too expensive for a web dev team to justify making a separate native app and maintaining feature parity. These apps will become progressive web apps. PWAs need to be finger friendly
 
@@ -138,6 +138,8 @@ List the methods or modules your project provides.
 
 <!--
 Explain how execution works. What is the entry point for your code? Which files correspond to which functionality? What is the lifecycle of your project? Are there any singletons, side effects or shared state among instances of your project? Take extra care to explain design decisions. After all, you wrote an ENTIRE codebase around your opinions. Make sure that the people using it understand them.
+
+will need to introduce notion of stacks, since that's something that coders like apparently: see https://github.com/antfu/vitesse#features
 -->
 
 ## Roadmap:
@@ -179,13 +181,6 @@ vitedge for individual demo pages (and *maybe* for each demo page)
 • Using D3 + canvas for 2D charts
 • And D3 + troisJS for 3D charts
 • Also explore motion canvas
-
-
-
-
-vitedge only (drop to ssr if >1mb)
-
-
 
 uxlens
 
