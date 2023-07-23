@@ -1,0 +1,16 @@
+{
+  "targets": {
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd ./typescript && pnpm eslint --fix ./shared/page-grid"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "cd ./typescript && pnpm prettier -c -w ./shared/page-grid"
+      }
+    }
+  }
+}
