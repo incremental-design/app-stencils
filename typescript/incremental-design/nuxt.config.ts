@@ -10,8 +10,9 @@ export default defineNuxtConfig({
       modules: {
         localsConvention: 'camelCaseOnly' 
       }
-    }
-  }
+    },
+  },
+  modules: ['@vueuse/nuxt']
 })
 
 /**
