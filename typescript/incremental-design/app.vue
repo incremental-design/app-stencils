@@ -1,6 +1,6 @@
 <template>
   <div ref="viewport" :class="g.pageGrid">
-    <!-- <NuxtWelcome /> -->
+    <NuxtPage></NuxtPage>
   </div>
 </template>
 
@@ -26,8 +26,8 @@ useResizeObserver(viewport, (entries) => {
   viewportHeight.value = height;
 }); /* in this instance, you could also useWindowSize. see: https://vueuse.org/core/useWindowSize/ */
 
-provide(windowWidthInjectable, viewportWidth);
-provide(windowHeightInjectable, viewportHeight);
+provide(viewportWidthInjectable, viewportWidth);
+provide(viewportHeightInjectable, viewportHeight);
 
 const isDarkMode = usePreferredDark();
 provide(isDarkModeInjectable, isDarkMode);
@@ -48,7 +48,6 @@ const intersectionObserver: Ref<IntersectionObserver | false> = ref(false);
 
 const intersectionCallbacks: Map<
   Element,
-  // eslint-disable-next-line no-unused-vars
   (e: IntersectionObserverEntry) => void
 > = reactive(
   new Map(),
@@ -82,11 +81,7 @@ onUnmounted(() => {
  *
  * @returns - a callback that
  */
-const observeIntersection = (
-  el: Element,
-  // eslint-disable-next-line no-unused-vars
-  cb: observeCb,
-): unobserveCb => {
+const observeIntersection = (el: Element, cb: observeCb): unobserveCb => {
   intersectionCallbacks.set(el, cb);
 
   return () => {
