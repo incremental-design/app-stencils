@@ -1,10 +1,99 @@
 <template>
-  <div :class="pageGrid">
+  <div ref="viewport" :class="g.pageGrid">
     <!-- <NuxtWelcome /> -->
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // useCssModule() // see: https://vuejs.org/api/sfc-css-features.html#css-modules
-import { pageGrid } from "@incremental.design/shared-page-grid/pageGrid.module.css";
+import g from "@incremental.design/shared-page-grid/pageGrid.module.css";
+import { observeCb, unobserveCb } from "composables/Injectables";
+
+/**
+ * track window size, scroll, and color scheme. Provide refs to components, so that they can animate
+ *
+ * we are NOT using a state manager here, because that would introduce latency.
+ */
+
+const viewport = ref(null);
+const viewportWidth = ref(0);
+const viewportHeight = ref(0);
+
+useResizeObserver(viewport, (entries) => {
+  const entry = entries[0];
+  const { width, height } = entry.contentRect;
+  viewportWidth.value = width;
+  viewportHeight.value = height;
+}); /* in this instance, you could also useWindowSize. see: https://vueuse.org/core/useWindowSize/ */
+
+provide(windowWidthInjectable, viewportWidth);
+provide(windowHeightInjectable, viewportHeight);
+
+const isDarkMode = usePreferredDark();
+provide(isDarkModeInjectable, isDarkMode);
+
+const { x, y } = useWindowScroll();
+provide(scrollXInjectable, x);
+provide(scrollYInjectable, y);
+
+// todo: track tilt
+
+/**
+ * make an intersection observer for the window. Provide a function that takes an element and a callback that will be run when the element is visible.
+ *
+ * we don't use https://vueuse.org/core/useIntersectionObserver/#useintersectionobserver in this site because it creates a whole new intersection observer every time it is used. I'm not actually sure if creating just one intersection observer actually conserves resources, but it couldn't hurt, right??
+ */
+
+const intersectionObserver: Ref<IntersectionObserver | false> = ref(false);
+
+const intersectionCallbacks: Map<
+  Element,
+  // eslint-disable-next-line no-unused-vars
+  (e: IntersectionObserverEntry) => void
+> = reactive(
+  new Map(),
+); /* vue recommends using ref! see: https://vuejs.org/guide/essentials/reactivity-fundamentals.html#limitations-of-reactive */
+
+/* when intersection observer runs, it passes a list of elements that have changed from not intersecting to intersecting, and intersecting to not intersecting. This function runs the callback that corresponds to each of those elements */
+const onIntersect = (es: Array<IntersectionObserverEntry>) => {
+  es.forEach((e) => {
+    const cb = intersectionCallbacks.get(e.target);
+
+    if (cb) cb(e);
+  });
+};
+
+onBeforeMount(() => {
+  intersectionObserver.value = new IntersectionObserver(onIntersect, {
+    rootMargin:
+      "100px" /* an element is intersecting when it is within 100px of viewport */,
+  });
+});
+
+onUnmounted(() => {
+  if (intersectionObserver.value) intersectionObserver.value.disconnect();
+  intersectionObserver.value = false;
+});
+
+/**
+ *
+ * @param el - the element to observe
+ * @param cb - the function to run whenever the position of the observed element changes
+ *
+ * @returns - a callback that
+ */
+const observeIntersection = (
+  el: Element,
+  // eslint-disable-next-line no-unused-vars
+  cb: observeCb,
+): unobserveCb => {
+  intersectionCallbacks.set(el, cb);
+
+  return () => {
+    intersectionCallbacks.delete(el);
+  };
+};
+// start here: figure out how to provide a function that registers elements and their corresponding callbacks
+
+provide(observeIntersectionInjectable, observeIntersection);
 </script>
