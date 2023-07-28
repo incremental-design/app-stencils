@@ -1,0 +1,6 @@
+/* breakpoints are in px because regardless of the em's and rem's in a document, the px will correspond to a physical device measurement */
+
+:root {
+  --breakpoint-tablet: 568px;
+  --breakpoint-desktop: 1024px;
+}
