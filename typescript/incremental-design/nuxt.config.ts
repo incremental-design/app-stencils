@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  css: ['~/assets/reset.css'], /* see: https://nuxt.com/docs/getting-started/styling#the-css-property */
   vite: {
     /* from typescript/vue3/vite.config.ts */ 
     build: {
