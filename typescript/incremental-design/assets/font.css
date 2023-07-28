@@ -61,3 +61,222 @@
     url("/fonts/Montserrat-ExtraBoldItalic.woff") format("woff");
   font-weight: 800;
 }
+
+/* type treatments */
+.assert {
+  font-family: "Gilroy";
+  font-weight: 800;
+  font-size: 3rem;
+
+  /* breakpoint tablet (sorry no vars in media queries) */
+  @media (max-width: 568px) {
+    font-size: calc(28rem / 12);
+  }
+
+  letter-spacing: 0.125rem;
+  line-height: calc(44rem / 12);
+  text-align: left;
+
+  color: var(--color-lake-tahoe);
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-lambs-ear);
+  }
+  /* force color */
+  &.dark {
+    color: var(--color-lambs-ear);
+  }
+  &.light {
+    color: var(--color-lake-tahoe);
+  }
+}
+
+.captivate {
+  font-family: "Gilroy";
+  font-weight: 300;
+  text-align: left;
+  font-size: 6rem;
+  letter-spacing: calc(1rem / 6);
+  line-height: 7rem;
+
+  @media (max-width: 568px) {
+    font-size: calc(10rem / 3);
+    letter-spacing: calc(-1.11rem / 12);
+    line-height: 4rem;
+  }
+
+  /* breakpoint tablet - sorry no media query */
+  @media (max-width: 1024px) {
+    font-size: 4rem;
+    letter-spacing: calc(-1.33rem / 12);
+    line-height: (14rem / 3);
+  }
+
+  color: var(--color-my-magenta);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-lambs-ear);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-lambs-ear);
+  }
+
+  &.light {
+    color: var(--color-my-magenta);
+  }
+}
+
+.echo {
+  font-family: "Gilroy";
+  font-weight: 800;
+  text-align: left;
+  font-size: calc(13rem / 3);
+
+  /* breakpoint desktop - sorry no var in media query */
+  @media (min-width: 1024px) {
+    font-size: calc(52rem / 6);
+    line-height: calc(28rem / 3);
+  }
+
+  color: var(
+    --color-lake-tahoe
+  ); /* note: at one point <568px this was --color-cloudy-day */
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-my-magenta);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-my-magenta);
+  }
+  &.light {
+    color: var(--color-lake-tahoe);
+  }
+}
+
+.hook {
+  font-family: "Gilroy";
+  font-weight: 800;
+  text-align: left;
+  line-height: 5rem;
+
+  /* breakpoint desktop - sorry no var in media query */
+  @media (min-width: 1024px) {
+    font-size: calc(52rem / 6);
+    line-height: calc(23rem / 3);
+  }
+
+  color: var(--color-lake-tahoe);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-my-magenta);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-my-magenta);
+  }
+
+  &.light {
+    color: var(--color-lake-tahoe);
+  }
+}
+
+.whisper {
+  font-family: "Gilroy";
+  font-weight: 800;
+  text-align: left;
+  font-size: calc(23rem / 3);
+  line-height: 10rem;
+
+  /* breakpoint mobile - sorry no var in breakpoints */
+  @media (max-width: 568px) {
+    font-size: calc(14rem / 3);
+    line-height: calc(17rem / 3);
+  }
+
+  /* breakpoint tablet - sorry no var in breakpoints */
+  @media (max-width: 1024px) {
+    font-size: calc(20rem / 3);
+    line-height: calc(49rem / 6);
+  }
+
+  color: var(--color-lake-tahoe);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-lambs-ear);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-lambs-ear);
+  }
+
+  &.light {
+    color: var(--color-lake-tahoe);
+  }
+}
+
+.subhead {
+  font-family: "Montserrat";
+  font-weight: 500;
+  line-height: 2.5rem;
+  font-size: 2rem;
+  text-align: left;
+
+  /* breakpoint mobile: sorry no var in media query */
+  @media (max-width: 568px) {
+    font-size: 1.5rem;
+  }
+
+  color: var(--color-lake-tahoe);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-cloudy-day);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-cloudy-day);
+  }
+
+  &.light {
+    color: var(--color-lake-tahoe);
+  }
+}
+
+.body,
+body {
+  font-family: "Montserrat";
+  font-weight: 400;
+  font-size: 1.5rem;
+  line-height: 2.5rem;
+  text-align: left;
+
+  color: var(--color-deep-navy);
+
+  @media (prefers-color-scheme: dark) {
+    color: var(--color-cloudy-day);
+  }
+
+  /* force color */
+  &.dark {
+    color: var(--color-cloudy-day);
+  }
+
+  &.light {
+    color: var(--color-deep-navy);
+  }
+}
+
+.emphasize-warm {
+  font-family: "Gilroy";
+  font-weight: 800;
+  font-size: 3rem;
+  letter-spacing: 0.125rem;
+  line-height: calc(11rem / 3);
+  text-align: left;
+  color: var(--color-my-magenta);
+}
