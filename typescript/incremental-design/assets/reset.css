@@ -2,6 +2,12 @@
 
 body {
   margin: 0;
+
+  background: white;
+
+  @media (prefers-color-scheme: dark) {
+    background: var(--color-deep-navy);
+  }
 }
 
 /* see: https://nuxt.com/docs/getting-started/styling#the-css-property */

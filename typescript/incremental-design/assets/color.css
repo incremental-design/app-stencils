@@ -1,0 +1,24 @@
+:root {
+  --color-cloudy-day: rgba(237, 239, 243, 1);
+  --color-cool-green: rgba(133, 203, 177, 1);
+  --color-coral-pink: rgba(247, 179, 176, 1);
+  --color-deep-navy: rgba(14, 30, 51, 1);
+  --color-highlighter: rgba(254, 242, 60, 1);
+  --color-lake-tahoe: rgba(22, 66, 124, 1);
+  --color-lambs-ear: rgba(215, 241, 226, 1);
+  --color-my-magenta: rgba(217, 57, 142, 1);
+  --color-vibrant-jade: rgba(56, 122, 31, 1);
+  --color-indigo: rgba(18, 43, 82, 1);
+  --background-image-highlight-light: linear-gradient(
+    75deg,
+    #16427c 0%,
+    #16427c 50%,
+    #d9398e 51%
+  );
+  --background-image-highlight-dark: linear-gradient(
+    75deg,
+    #d7f1e2 50%,
+    #5fa2fb 51%,
+    #33f5f6 100%
+  );
+}
