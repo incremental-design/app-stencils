@@ -10,4 +10,8 @@ body {
   }
 }
 
+p {
+  margin: 0;
+}
+
 /* see: https://nuxt.com/docs/getting-started/styling#the-css-property */

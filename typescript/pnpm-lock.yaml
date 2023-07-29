@@ -59,6 +59,9 @@ importers:
       '@incremental.design/shared-page-grid':
         specifier: workspace:*
         version: link:../shared/page-grid
+      '@incremental.design/vue3-component-base':
+        specifier: workspace:*
+        version: link:../vue3/component-base
       '@vueuse/core':
         specifier: ^10.2.1
         version: 10.2.1(vue@3.3.4)

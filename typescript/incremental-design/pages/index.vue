@@ -1,5 +1,5 @@
 <template>
-  <div :class="hero.headline"></div>
+  <HeroHeadline :class="hero.headline"></HeroHeadline>
   <div :class="hero.logotype"></div>
   <div :class="hero.cta"></div>
   <div :class="hero.lemonLady"></div>
@@ -18,10 +18,11 @@
 
 <style module="hero" lang="postcss">
 .headline {
-  background: red;
-  height: 200px;
   grid-row: content-start / span 1;
   grid-column: left-content-start / left-content-end;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
 }
 .logotype {
   background: green;
