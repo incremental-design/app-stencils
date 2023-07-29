@@ -1,5 +1,5 @@
 <template>
-  <B :is-hoverable="true" @state-change="handleStateChange">
+  <B ref="el" :is-hoverable="true" @state-change="handleStateChange">
     <template #default>
       <p
         v-for="(headline, index) in headlines"
@@ -22,6 +22,12 @@
 
 <script setup lang="ts">
 import B, { StateChange } from "@incremental.design/vue3-component-base";
+import {
+  ObserveCb,
+  RegisterObserve,
+  UnobserveCb,
+  observeIntersectionInjectable,
+} from "../composables/Injectables";
 
 /* I decided not to use props for these values, since this component isn't being reused, and I'd rather read less LOC than more */
 const headlines = [
@@ -36,13 +42,33 @@ const transitionCurrent = `all ${400}ms cubic-bezier(.16,.53,.06,1.4)`;
 const transitionNotCurrent = `all ${600}ms cubic-bezier(.16,.53,.06,1.4)`;
 
 const current = ref(0);
-const paused = ref(false);
+const intersecting = ref(false);
+const hovering = ref(false);
 
 const handleStateChange = (s: StateChange) => {
-  paused.value = s.newState.length == 1;
+  hovering.value = s.newState.length == 1;
 };
 
+const el: Ref<{ BCR: HTMLElement } | null> = ref(null);
+
+const oi = inject(observeIntersectionInjectable) as RegisterObserve;
+const onIntersect: ObserveCb = (e) => {
+  intersecting.value = e.isIntersecting;
+};
+
+const paused = ref(false);
+
+watchEffect(() => {
+  if (intersecting.value == false) {
+    paused.value = true;
+    return;
+  }
+
+  paused.value = hovering.value;
+});
+
 let clear: () => void;
+let cb: UnobserveCb;
 
 onMounted(() => {
   const id = setInterval(() => {
@@ -53,10 +79,15 @@ onMounted(() => {
   clear = () => {
     clearInterval(id);
   };
+
+  if (!el.value)
+    return; /* should NEVER execute ... here as a type guard only */
+  cb = oi(el.value.BCR, onIntersect);
 });
 
 onUnmounted(() => {
   clear();
+  cb();
 });
 </script>
 
