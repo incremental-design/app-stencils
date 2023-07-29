@@ -21,8 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import B from "@incremental.design/vue3-component-base";
-import { after, before } from "node:test";
+import B, { StateChange } from "@incremental.design/vue3-component-base";
 
 /* I decided not to use props for these values, since this component isn't being reused, and I'd rather read less LOC than more */
 const headlines = [
@@ -37,13 +36,27 @@ const transitionCurrent = `all ${400}ms cubic-bezier(.16,.53,.06,1.4)`;
 const transitionNotCurrent = `all ${600}ms cubic-bezier(.16,.53,.06,1.4)`;
 
 const current = ref(0);
+const paused = ref(false);
 
-const handleStateChange = () => true;
+const handleStateChange = (s: StateChange) => {
+  paused.value = s.newState.length == 1;
+};
+
+let clear: () => void;
 
 onMounted(() => {
-  setInterval(() => {
+  const id = setInterval(() => {
+    if (paused.value) return;
     current.value = (current.value + 1) % headlines.length;
   }, 4500);
+
+  clear = () => {
+    clearInterval(id);
+  };
+});
+
+onUnmounted(() => {
+  clear();
 });
 </script>
 
