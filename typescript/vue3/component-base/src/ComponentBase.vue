@@ -8,6 +8,12 @@
 <script lang="ts" setup>
 // needs to emit a stateChange, pointerInput, focusInput, keyboardInput, dragInput, scrollInput (no window resize input or gamepad input bc those are window events)
 
+// this needs to be even more versatile: people should be able to decide whether they want to provide this component with font, shape, elevation styles, OR have this component use classes e.g. .pressing, .hovering, etc. and be headless.
+
+// in addition, this component needs to work with other instances of base component nested inside it.
+
+// also, this component needs to RESPECT USER STYLING - if someone applies classes or styles directly to this component root, this component should not override those styles programmatically
+
 import {
   computed,
   watch,
