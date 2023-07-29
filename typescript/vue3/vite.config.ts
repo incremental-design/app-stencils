@@ -12,7 +12,7 @@ const cwd = process.cwd();
 
 const dtsConfig = {
   staticImport: true,
-  insertTypesEntry: true,
+  insertTypesEntry: false,
   rollupTypes: true,
   copyDtsFiles: false,
   tsconfigPath: path.resolve(cwd, '../../tsconfig.json'), 
@@ -25,7 +25,11 @@ const packageJson = JSON.parse(fs.readFileSync(path.resolve(cwd, 'package.json')
 
 const {dependencies, devDependencies, peerDependencies} = packageJson;
 
-const external = [...Object.keys(dependencies || {}), ...Object.keys(devDependencies || []), ...Object.keys(peerDependencies || [])];
+const external = [
+  ...Object.keys(dependencies || {}),
+  ...Object.keys(devDependencies || []),
+  ...Object.keys(peerDependencies || [])
+];
 
 export default defineConfig({
   plugins: [vue(), dts(dtsConfig)],
