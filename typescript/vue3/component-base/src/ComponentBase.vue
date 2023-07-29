@@ -39,6 +39,10 @@ const emit = defineEmits(e);
 
 const BCR: Ref<null | HTMLElement> /*(B)ase (C)omponent (R)oot */ = ref(null);
 
+defineExpose({
+  BCR,
+}); /* see: https://vuejs.org/api/sfc-script-setup.html#defineexpose */
+
 /* set tabIndex if component is focusable or editable */
 watch(
   [() => BCR.value, () => props.isFocusable, () => props.isEditable],
