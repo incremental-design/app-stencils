@@ -12,43 +12,10 @@
 
 <script setup lang="ts">
 const el = ref(null);
-const intersecting = useIntersect(el);
 
-const pause = ref(true);
-const index = ref(-6);
-const interval = useInterval(600, pause);
-
-watchEffect(() => {
-  if (!intersecting.value) {
-    pause.value = true;
-  } else {
-    pause.value = index.value > 2;
-  }
-});
-
-watchEffect(() => {
-  interval.value;
-  index.value = index.value + 1;
-});
+const index = useHighlight(el, 600, -6, 2);
 </script>
 
 <style module="s" lang="postcss">
-.hl {
-  /* background-position: -100%; */
-  transition: all 6.5s ease-out;
-  background-image: var(--background-image-highlight-light);
-  background-size: 750%;
-  background-position-x: 100%;
-  background-repeat: no-repeat;
-  background-clip: text;
-
-  @media (prefers-color-scheme: dark) {
-    background-image: var(--background-image-highlight-dark);
-  }
-
-  color: transparent;
-  &.show {
-    background-position-x: 0%;
-  }
-}
+@import url(~/assets/highlight.css);
 </style>

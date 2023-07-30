@@ -1,0 +1,18 @@
+.hl {
+  /* background-position: -100%; */
+  transition: all 6.5s ease-out;
+  background-image: var(--background-image-highlight-light);
+  background-size: 750%;
+  background-position-x: 100%;
+  background-repeat: no-repeat;
+  background-clip: text;
+
+  @media (prefers-color-scheme: dark) {
+    background-image: var(--background-image-highlight-dark);
+  }
+
+  color: transparent;
+  &.show {
+    background-position-x: 0%;
+  }
+}
