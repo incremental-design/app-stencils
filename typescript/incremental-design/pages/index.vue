@@ -1,7 +1,7 @@
 <template>
   <HeroHeadline :class="hero.headline"></HeroHeadline>
   <HeroLogotype :class="hero.logotype"></HeroLogotype>
-  <div :class="hero.cta"></div>
+  <HeroCTA :class="hero.cta"></HeroCTA>
   <div :class="hero.lemonLady"></div>
   <div :class="hero.sustainableGrowth"></div>
   <div :class="hero.trustGap"></div>
@@ -34,8 +34,6 @@
   }
 }
 .cta {
-  background: orange;
-  height: 200px;
   grid-row: 6 / span 1;
   grid-column: left-content-start / left-content-end;
 

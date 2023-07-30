@@ -10,13 +10,13 @@
   --color-vibrant-jade: rgba(56, 122, 31, 1);
   --color-indigo: rgba(18, 43, 82, 1);
   --background-image-highlight-light: linear-gradient(
-    75deg,
+    255deg,
     #16427c 0%,
     #16427c 50%,
     #d9398e 51%
   );
   --background-image-highlight-dark: linear-gradient(
-    75deg,
+    255deg,
     #d7f1e2 50%,
     #5fa2fb 51%,
     #33f5f6 100%
