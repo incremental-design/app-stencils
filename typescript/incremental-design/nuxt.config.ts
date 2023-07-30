@@ -7,6 +7,12 @@ export default defineNuxtConfig({
     '~/assets/color.css',
     '~/assets/breakpoint.css'
   ], /* see: https://nuxt.com/docs/getting-started/styling#the-css-property */
+  postcss:{
+    plugins: {
+      'postcss-nested': {},
+      'postcss-custom-media': {}
+    }
+  },
   vite: {
     /* from typescript/vue3/vite.config.ts */ 
     build: {

@@ -1,3 +1,5 @@
+@import "./breakpoint.css";
+
 @font-face {
   font-family: "Gilroy";
   src:
@@ -68,8 +70,7 @@
   font-weight: 800;
   font-size: 3rem;
 
-  /* breakpoint tablet (sorry no vars in media queries) */
-  @media (max-width: 568px) {
+  @media (max-width: var(--breakpoint-tablet)) {
     font-size: calc(28rem / 12);
   }
 
@@ -104,8 +105,7 @@
     line-height: 4rem;
   }
 
-  /* breakpoint tablet - sorry no media query */
-  @media (max-width: 1024px) {
+  @media (max-width: var(--breakpoint-desktop)) {
     font-size: 4rem;
     letter-spacing: calc(-1.33rem / 12);
     line-height: (14rem / 3);
@@ -133,8 +133,7 @@
   text-align: left;
   font-size: calc(13rem / 3);
 
-  /* breakpoint desktop - sorry no var in media query */
-  @media (min-width: 1024px) {
+  @media (min-width: var(--breakpoint-desktop)) {
     font-size: calc(52rem / 6);
     line-height: calc(28rem / 3);
   }
@@ -160,10 +159,10 @@
   font-family: "Gilroy";
   font-weight: 800;
   text-align: left;
+  font-size: 4rem;
   line-height: 5rem;
 
-  /* breakpoint desktop - sorry no var in media query */
-  @media (min-width: 1024px) {
+  @media (min-width: var(--breakpoint-desktop)) {
     font-size: calc(52rem / 6);
     line-height: calc(23rem / 3);
   }
@@ -191,14 +190,12 @@
   font-size: calc(23rem / 3);
   line-height: 10rem;
 
-  /* breakpoint mobile - sorry no var in breakpoints */
-  @media (max-width: 568px) {
+  @media (max-width: var(--breakpoint-tablet)) {
     font-size: calc(14rem / 3);
     line-height: calc(17rem / 3);
   }
 
-  /* breakpoint tablet - sorry no var in breakpoints */
-  @media (max-width: 1024px) {
+  @media (max-width: var(--breakpoint-desktop)) {
     font-size: calc(20rem / 3);
     line-height: calc(49rem / 6);
   }
@@ -226,8 +223,7 @@
   font-size: 2rem;
   text-align: left;
 
-  /* breakpoint mobile: sorry no var in media query */
-  @media (max-width: 568px) {
+  @media (max-width: var(--breakpoint-tablet)) {
     font-size: 1.5rem;
   }
 
