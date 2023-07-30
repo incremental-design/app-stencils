@@ -6,6 +6,14 @@
         :class="['captivate', l.segment, i <= showIndex ? l.show : '']"
         >{{ t }}</span
       >
+      <Logo
+        :class="[
+          'captivate',
+          l.segment,
+          showIndex >= titleSegments.length ? l.show : '',
+        ]"
+        style="padding-left: 0.5rem; top: 0.5rem; width: 4.5rem; height: 4.5rem"
+      ></Logo>
     </p>
     <p
       ref="definition"

@@ -79,15 +79,19 @@
   text-align: left;
 
   color: var(--color-lake-tahoe);
+  fill: var(--color-lake-tahoe); /* set fill so that we can also cover SVGs */
   @media (prefers-color-scheme: dark) {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
   /* force color */
   &.dark {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
   &.light {
     color: var(--color-lake-tahoe);
+    fill: var(--color-lake-tahoe);
   }
 }
 
@@ -112,18 +116,22 @@
   }
 
   color: var(--color-my-magenta);
+  fill: var(--color-my-magenta);
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
 
   /* force color */
   &.dark {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
 
   &.light {
     color: var(--color-my-magenta);
+    fill: var(--color-my-magenta);
   }
 }
 
@@ -141,17 +149,23 @@
   color: var(
     --color-lake-tahoe
   ); /* note: at one point <568px this was --color-cloudy-day */
+  fill: var(
+    --color-lake-tahoe
+  ); /* note: at one point <568px this was --color-cloudy-day */
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-my-magenta);
+    fill: var(--color-my-magenta);
   }
 
   /* force color */
   &.dark {
     color: var(--color-my-magenta);
+    fill: var(--color-my-magenta);
   }
   &.light {
     color: var(--color-lake-tahoe);
+    fill: var(--color-lake-tahoe);
   }
 }
 
@@ -168,18 +182,22 @@
   }
 
   color: var(--color-lake-tahoe);
+  fill: var(--color-lake-tahoe);
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-my-magenta);
+    fill: var(--color-my-magenta);
   }
 
   /* force color */
   &.dark {
     color: var(--color-my-magenta);
+    fill: var(--color-my-magenta);
   }
 
   &.light {
     color: var(--color-lake-tahoe);
+    fill: var(--color-lake-tahoe);
   }
 }
 
@@ -201,18 +219,22 @@
   }
 
   color: var(--color-lake-tahoe);
+  fill: var(--color-lake-tahoe);
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
 
   /* force color */
   &.dark {
     color: var(--color-lambs-ear);
+    fill: var(--color-lambs-ear);
   }
 
   &.light {
     color: var(--color-lake-tahoe);
+    fill: var(--color-lake-tahoe);
   }
 }
 
@@ -228,18 +250,22 @@
   }
 
   color: var(--color-lake-tahoe);
+  fill: var(--color-lake-tahoe);
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-cloudy-day);
+    fill: var(--color-cloudy-day);
   }
 
   /* force color */
   &.dark {
     color: var(--color-cloudy-day);
+    fill: var(--color-cloudy-day);
   }
 
   &.light {
     color: var(--color-lake-tahoe);
+    fill: var(--color-lake-tahoe);
   }
 }
 
@@ -252,18 +278,22 @@ body {
   text-align: left;
 
   color: var(--color-deep-navy);
+  fill: var(--color-deep-navy);
 
   @media (prefers-color-scheme: dark) {
     color: var(--color-cloudy-day);
+    fill: var(--color-cloudy-day);
   }
 
   /* force color */
   &.dark {
     color: var(--color-cloudy-day);
+    fill: var(--color-cloudy-day);
   }
 
   &.light {
     color: var(--color-deep-navy);
+    fill: var(--color-deep-navy);
   }
 }
 
@@ -275,4 +305,5 @@ body {
   line-height: calc(11rem / 3);
   text-align: left;
   color: var(--color-my-magenta);
+  fill: var(--color-my-magenta);
 }
