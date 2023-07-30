@@ -3,7 +3,9 @@
   <HeroLogotype :class="hero.logotype"></HeroLogotype>
   <HeroCTA :class="hero.cta"></HeroCTA>
   <div :class="hero.lemonLady"></div>
-  <div :class="hero.sustainableGrowth"></div>
+  <HeroSustainableGrowth
+    :class="hero.sustainableGrowth"
+  ></HeroSustainableGrowth>
   <div :class="hero.trustGap"></div>
   <div :class="hero.floatingIsland"></div>
   <div :class="hero.sizzle"></div>
@@ -51,8 +53,6 @@
   }
 }
 .sustainableGrowth {
-  height: 200px;
-  background: blue;
   grid-column: left-content-start / left-content-end;
   grid-row: 7 / span 1;
 }
