@@ -39,14 +39,14 @@ const BCR: Ref<{ BCR: HTMLElement } | null> = ref(null);
 const el: Ref<HTMLElement | null> = ref(null);
 
 const current = ref(0);
-const intersecting = useIntersect(el);
 const hovering = ref(false);
+const intersecting = useIntersect(el);
+const paused = ref(false);
+const t = useInterval(4500, paused);
 
 const handleStateChange = (s: StateChange) => {
   hovering.value = s.newState.length == 1;
 };
-
-const paused = ref(false);
 
 watchEffect(() => {
   if (intersecting.value == false) {
@@ -57,26 +57,16 @@ watchEffect(() => {
   paused.value = hovering.value;
 });
 
-let clear: () => void;
+watchEffect(() => {
+  t.value;
+  current.value = (current.value + 1) % headlines.length;
+});
 
 onMounted(() => {
-  const id = setInterval(() => {
-    if (paused.value) return;
-    current.value = (current.value + 1) % headlines.length;
-  }, 4500);
-
-  clear = () => {
-    clearInterval(id);
-  };
-
   if (BCR.value?.BCR) {
     /* type guard - this should ALWAYS exist */
     el.value = unref(BCR.value?.BCR);
   }
-});
-
-onUnmounted(() => {
-  clear();
 });
 </script>
 

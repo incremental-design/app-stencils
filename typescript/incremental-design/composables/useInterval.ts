@@ -1,4 +1,4 @@
-export default function(intervalMs: number): Ref<boolean>{
+export default function(intervalMs: number, pause: Ref<boolean>): Ref<boolean>{
 
   let clear: () => void;
   
@@ -6,8 +6,9 @@ export default function(intervalMs: number): Ref<boolean>{
   
   onMounted(() => {
     const id = setInterval(() => {
-      tickTock.value != tickTock.value
-    }, interval);
+      if (pause.value) return;
+      tickTock.value = !tickTock.value
+    }, intervalMs);
   
     clear = () => {
       clearInterval(id);

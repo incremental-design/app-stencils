@@ -1,6 +1,6 @@
 <template>
   <HeroHeadline :class="hero.headline"></HeroHeadline>
-  <div :class="hero.logotype"></div>
+  <HeroLogotype :class="hero.logotype"></HeroLogotype>
   <div :class="hero.cta"></div>
   <div :class="hero.lemonLady"></div>
   <div :class="hero.sustainableGrowth"></div>
@@ -25,8 +25,6 @@
   grid-template-rows: 1fr;
 }
 .logotype {
-  background: green;
-  height: 200px;
   grid-row: 5 / span 1;
   grid-column: left-content-start / left-content-end;
 
