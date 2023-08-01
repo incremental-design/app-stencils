@@ -42,7 +42,7 @@ const current = ref(0);
 const hovering = ref(false);
 const intersecting = useIntersect(el);
 const paused = ref(false);
-const t = useInterval(4500, paused);
+const t = useInterval(4500, paused, 0);
 
 const handleStateChange = (s: StateChange) => {
   hovering.value = s.newState.length == 1;
@@ -58,8 +58,7 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  t.value;
-  current.value = (current.value + 1) % headlines.length;
+  current.value = t.value % headlines.length;
 });
 
 onMounted(() => {

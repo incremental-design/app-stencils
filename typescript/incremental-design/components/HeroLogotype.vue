@@ -49,7 +49,7 @@ const el = ref(null);
 const interval = 300; /* ms */
 
 const paused = ref(true);
-const t = useInterval(interval, paused);
+const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
 const intersecting = useIntersect(el);
 
@@ -64,8 +64,7 @@ watchEffect(() => {
 });
 
 watchEffect(() => {
-  t.value;
-  showIndex.value = showIndex.value + 1;
+  showIndex.value = t.value;
 });
 </script>
 

@@ -1,9 +1,17 @@
+/**
+ * 
+ * @param el a [https://vuejs.org/api/reactivity-core.html#ref](Ref) of an [https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement](HTMLElement)
+ * @param intervalMs  
+ * @param startIndex 
+ * @param endIndex 
+ * @returns 
+ */
 export default function(el: Ref<HTMLElement | null>, intervalMs: number, startIndex: number, endIndex: number): Ref<number>{
     const intersecting = useIntersect(el);
     
     const pause = ref(true);
     const index = ref(startIndex);
-    const interval = useInterval(intervalMs, pause);
+    const interval = useInterval(intervalMs, pause, startIndex, endIndex);
     
     watchEffect(() => {
       if (!intersecting.value) {
