@@ -45,13 +45,13 @@ const titleSegments = [
 
 const def = "1. Designing small, positive change over time";
 
-const el = ref(null);
+const el: Ref<HTMLElement | null> = ref(null);
 const interval = 300; /* ms */
 
 const paused = ref(true);
 const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
-const intersecting = useIntersect(el);
+const intersecting = UseIntersect(el);
 
 const showIndex = ref(-2);
 
@@ -60,7 +60,6 @@ watchEffect(() => {
     paused.value = true;
     return;
   }
-  paused.value = showIndex.value == titleSegments.length + 1;
 });
 
 watchEffect(() => {

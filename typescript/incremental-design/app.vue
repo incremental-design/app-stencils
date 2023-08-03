@@ -56,7 +56,9 @@ const intersectionCallbacks: Map<
 /* when intersection observer runs, it passes a list of elements that have changed from not intersecting to intersecting, and intersecting to not intersecting. This function runs the callback that corresponds to each of those elements */
 const onIntersect = (es: Array<IntersectionObserverEntry>) => {
   es.forEach((e) => {
-    const cb = intersectionCallbacks.get(e.target);
+    const cb = intersectionCallbacks.get(
+      e.target,
+    ); /* if timing isn't critical, you can use a https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback */
 
     if (cb) cb(e);
   });
@@ -65,7 +67,7 @@ const onIntersect = (es: Array<IntersectionObserverEntry>) => {
 onBeforeMount(() => {
   intersectionObserver.value = new IntersectionObserver(onIntersect, {
     rootMargin:
-      "100px" /* an element is intersecting when it is within 100px of viewport */,
+      "100px" /* an element is intersecting when it is within 100px of viewport */, // todo: make this configurable
   });
 });
 
@@ -74,12 +76,14 @@ onUnmounted(() => {
   intersectionObserver.value = false;
 });
 
+//todo: get rid of observe inject once vue plugin is complete
+
 /**
  *
  * @param el - the element to observe
- * @param cb - the function to run whenever the position of the observed element changes
+ * @param cb - the function to run whenever the element starts or stops intersecting
  *
- * @returns - a callback that
+ * @returns - a callback t
  */
 const observeIntersection: RegisterObserve = (el, cb) => {
   intersectionCallbacks.set(el, cb);

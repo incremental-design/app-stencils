@@ -27,5 +27,8 @@ export default function(el: Ref<HTMLElement | null>, intervalMs: number, startIn
     });
 
     return index;
+
+    // 1. register a scroll listener on the parent window for each element
+    // 2. make more efficient by wrapping injectable and composable in a plugin (and maybe a directive??)
 }
 
