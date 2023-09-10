@@ -1,15 +1,4 @@
-export const viewportWidthInjectable = Symbol('windowWidth') as InjectionKey<Ref<number>>;
-export const viewportHeightInjectable = Symbol('windowHeight') as InjectionKey<Ref<number>>;
 export const isDarkModeInjectable = Symbol('isDarkMode') as InjectionKey<Ref<boolean>>;
-
-export const scrollXInjectable = Symbol('scrollX') as InjectionKey<Ref<number>>
-export const scrollYInjectable = Symbol('scrollY') as InjectionKey<Ref<number>>
-
-export type UnobserveCb = () => void
-export type ObserveCb = (entry: IntersectionObserverEntry) => void
-export type RegisterObserve = (el: HTMLElement, cb: ObserveCb) => UnobserveCb
-
-export const observeIntersectionInjectable = Symbol('observeIntersectionInjectable') as InjectionKey<RegisterObserve>
 
 /* 
 we aren't using https://vueuse.org/shared/createInjectionState/ because although we need to inject values, those values don't have to be stateful
