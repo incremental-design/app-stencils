@@ -8,7 +8,7 @@
   ></HeroSustainableGrowth>
   <div :class="hero.trustGap"></div>
   <div :class="hero.floatingIsland"></div>
-  <div :class="hero.sizzle"></div>
+  <TestLevel :class="hero.sizzle"></TestLevel>
   <div :class="hero.step"></div>
   <!-- <div id="gallery"></div>
   <div id="services"></div>
@@ -44,7 +44,7 @@
   }
 }
 .lemonLady {
-  background: pink;
+  /* background: rgb(4, 30, 78); */
   grid-column: right-content-start / right-edge;
   grid-row: top-edge-start / span 10;
 
@@ -68,8 +68,7 @@
   grid-row: 8 / span 1;
 }
 .sizzle {
-  background: orange;
-  height: 200px;
+  /* background: orange; */
   grid-row: 10 / span 1;
   grid-column: left-edge-start / right-edge-end;
 

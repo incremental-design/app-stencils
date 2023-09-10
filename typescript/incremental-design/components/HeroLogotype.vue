@@ -53,7 +53,6 @@ const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
 const i = useIntersect({
   el,
-  scroll: ref(true),
 });
 
 const showIndex = ref(-2);
@@ -63,13 +62,6 @@ watchEffect(() => {
     paused.value = true;
     return;
   }
-});
-
-watchEffect(() => {
-  const { intersecting, el, container } = i;
-  console.log(intersecting);
-  console.log(el?.center);
-  console.log(container?.center);
 });
 
 watchEffect(() => {

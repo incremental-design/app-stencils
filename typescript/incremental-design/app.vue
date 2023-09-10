@@ -1,5 +1,5 @@
 <template>
-  <div ref="viewport" :class="g.pageGrid">
+  <div :class="g.pageGrid">
     <NuxtPage></NuxtPage>
   </div>
 </template>
