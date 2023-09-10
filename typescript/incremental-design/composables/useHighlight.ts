@@ -7,7 +7,7 @@
  * @returns 
  */
 export default function(el: Ref<HTMLElement | null>, intervalMs: number, startIndex: number, endIndex: number): Ref<number>{
-    const intersecting = UseIntersect(el); // todo: refactor once plugin is complete
+    const intersecting = useIntersect(el); // todo: refactor once plugin is complete
     
     const pause = ref(true);
     const index = ref(startIndex);

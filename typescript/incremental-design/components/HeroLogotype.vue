@@ -51,7 +51,7 @@ const interval = 300; /* ms */
 const paused = ref(true);
 const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
-const intersecting = UseIntersect(el);
+const intersecting = useIntersect(el);
 
 const showIndex = ref(-2);
 
