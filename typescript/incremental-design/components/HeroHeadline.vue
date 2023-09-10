@@ -40,7 +40,7 @@ const el: Ref<HTMLElement | null> = ref(null);
 
 const current = ref(0);
 const hovering = ref(false);
-const intersecting = useIntersect(el);
+const intersecting = UseIntersect(el);
 const paused = ref(false);
 const t = useInterval(4500, paused, 0);
 
