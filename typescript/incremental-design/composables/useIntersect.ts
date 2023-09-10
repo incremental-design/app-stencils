@@ -169,7 +169,9 @@ const useIntersectWithScroll: (...args:[...shared:shared, scroll: Ref<boolean>])
 
         const stopWatchingEl = watchEffect(() => {
             /* we clear out resize observer and intersection observer any time anything changes, because we bake the container and element values into their callbacks */
-            [iOb, rOb].forEach(o => o.disconnect())
+            [iOb, rOb].forEach(o => {
+                if(o) o.disconnect;
+            })
             const e = el.value
 
             if(!e) return;
@@ -215,7 +217,9 @@ const useIntersectWithScroll: (...args:[...shared:shared, scroll: Ref<boolean>])
 
         const stopWatchingElandContainer = watchEffect(() => {
             /* we clear out resize observer and intersection observer any time anything changes, because we bake the container and element values into their callbacks */
-            [iOb, rOb].forEach(o => o.disconnect())
+            [iOb, rOb].forEach(o => {
+                if(o) o.disconnect;
+            })
 
             const c = container.value
             const e = el.value
