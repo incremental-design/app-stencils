@@ -51,15 +51,25 @@ const interval = 300; /* ms */
 const paused = ref(true);
 const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
-const intersecting = useIntersect(el);
+const i = useIntersect({
+  el,
+  scroll: ref(true),
+});
 
 const showIndex = ref(-2);
 
 watchEffect(() => {
-  if (!intersecting.value) {
+  if (!i.intersecting) {
     paused.value = true;
     return;
   }
+});
+
+watchEffect(() => {
+  const { intersecting, el, container } = i;
+  console.log(intersecting);
+  console.log(el?.center);
+  console.log(container?.center);
 });
 
 watchEffect(() => {
