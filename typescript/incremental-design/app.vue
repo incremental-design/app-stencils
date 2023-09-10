@@ -7,7 +7,7 @@
 <script setup lang="ts">
 // useCssModule() // see: https://vuejs.org/api/sfc-css-features.html#css-modules
 import g from "@incremental.design/shared-page-grid/pageGrid.module.css";
-import { RegisterObserve } from "composables/Injectables";
+import { RegisterObserve } from "composables/_injectables";
 
 /**
  * track window size, scroll, and color scheme. Provide refs to components, so that they can animate
