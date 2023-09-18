@@ -40,9 +40,7 @@ const el: Ref<HTMLElement | null> = ref(null);
 
 const current = ref(0);
 const hovering = ref(false);
-const i = useIntersect({
-  el,
-});
+const i = useIntersect(el, ref(false), ref(null));
 const paused = ref(false);
 const t = useInterval(4500, paused, 0);
 
@@ -51,7 +49,7 @@ const handleStateChange = (s: StateChange) => {
 };
 
 watchEffect(() => {
-  if (i.intersecting == false) {
+  if (i.value.intersecting == false) {
     paused.value = true;
     return;
   }

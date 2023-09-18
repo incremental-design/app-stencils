@@ -11,17 +11,16 @@
 
 <script setup lang="ts">
 const el: Ref<HTMLElement | null> = ref(null);
-const i = useIntersect({
-  el,
-  scroll: ref(true),
-});
+const i = useIntersect(el, ref(true), ref(null));
 
 const img: Ref<HTMLElement | null> = ref(null);
 
+// start here: solve the scroll jank in the level
+
 watchEffect(() => {
-  if (!i.el || !i.container || !img.value) return;
-  const eC = i.el.center;
-  const cC = i.container.center;
+  if (!i.value.el || !i.value.scrollContainer || !img.value) return;
+  const eC = i.value.el.center;
+  const cC = i.value.scrollContainer.center;
   const dY = eC.y / cC.y;
   requestAnimationFrame(() => {
     (img.value as HTMLElement).setAttribute(

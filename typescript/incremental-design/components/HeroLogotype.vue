@@ -51,14 +51,12 @@ const interval = 300; /* ms */
 const paused = ref(true);
 const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
-const i = useIntersect({
-  el,
-});
+const i = useIntersect(el, ref(false), ref(null));
 
 const showIndex = ref(-2);
 
 watchEffect(() => {
-  if (!i.intersecting) {
+  if (!i.value.intersecting) {
     paused.value = true;
     return;
   }

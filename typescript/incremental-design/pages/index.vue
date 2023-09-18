@@ -1,5 +1,5 @@
 <template>
-  <HeroHeadline :class="hero.headline"></HeroHeadline>
+  <!-- <HeroHeadline :class="hero.headline"></HeroHeadline>
   <HeroLogotype :class="hero.logotype"></HeroLogotype>
   <HeroCTA :class="hero.cta"></HeroCTA>
   <div :class="hero.lemonLady"></div>
@@ -7,10 +7,10 @@
     :class="hero.sustainableGrowth"
   ></HeroSustainableGrowth>
   <div :class="hero.trustGap"></div>
-  <div :class="hero.floatingIsland"></div>
+  <div :class="hero.floatingIsland"></div> -->
   <TestLevel :class="hero.sizzle"></TestLevel>
-  <div :class="hero.step"></div>
-  <!-- <div id="gallery"></div>
+  <!-- <div :class="hero.step"></div>
+  <div id="gallery"></div>
   <div id="services"></div>
   <div id="social-proof"></div>
   <div id="team"></div> -->
