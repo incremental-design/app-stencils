@@ -68,13 +68,14 @@ const unobserveResize = (el: HTMLElement) => {
 /* add el to array of els to update on scroll, and if no scroll handler on container, add it */
 const addScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 
-    const els = scrollObservedEls.get(container || document)
-    scrollObservedEls.set(container || document, els ? [...els, el] : [el])
+    const els = scrollObservedEls.get(container || document) || []
+    scrollObservedEls.set(container || document, [...els, el])
     
     observeResize(el); /* observeResize piggybacks off of the same data structures that are updated in addScrollHandler, so we run it here */
     
     if(scrollHandlers.has(container || document)) return;
 
+    
     /* this one scroll handler takes care of every element that has scroll set to true */
     const handleScroll = () => {
         const els = scrollObservedEls.get(container || document)
@@ -111,11 +112,9 @@ const addScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 
 /* remove el from array of els to update, and if the remaining array is zero, remove the handler entirely */
 const removeScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
-
     unobserveResize(el); /* unobserveResize piggybacks off of the same data structures that are updated in removeScrollHandler, so we run it here */
     const els = scrollObservedEls.get(container || document)
-    if(!els || els.length === 1){ 
-        scrollObservedEls.delete(container || document) /* if !els, this is a no-op */
+    if(!els){ 
         const handler = scrollHandlers.get(container || document)
         if(handler) (container || document).removeEventListener('scroll', handler); /* if removeScrollHandler is called on an el that never opted into scroll in the first place, and no other els of the container opted in, then handler will be undefined */
         scrollHandlers.delete(container || document)
@@ -180,7 +179,7 @@ const addIntersectionObserver = (el: HTMLElement, container: HTMLElement | null)
             elIntersectionCallback.delete(el)
             let els = intersectionObservedEls.get(o)
             if(els) {
-                if (els.length === 1){
+                if (els.length === 1 && els[0] === el){
                     disconnectIntersectionObserver(o) // possibly redundant to disconnect intersection observer after the last el has been deleted, but w/e
                     return intersectionObservedEls.delete(o) /* because el is the last element in els */
                 }
@@ -268,7 +267,7 @@ const removeWindowResize = () => {
  * 
  *  - onIntersect - the function you want to run whenever v-intersect detects as change in intersection. This is a function that accepts an argument of type {@link Intersection}
  *  - scrollContainer - the element with which the current element intersects. If this is not set, then the current element will intersect with {@link Window}, or if v-global-scroll-container is set, then the element to which v-global-scroll-container is applied.
- *  - scroll - a {@link Ref} of type boolean. Set this to ref(true) to run onIntersect whenever the scrollContainer is scrolled AND the element is intersecting it. Omit this, or set it to false to only run onIntersect when the current element starts or stops intersecting with its scroll container.
+ *  - scroll - a {@link Ref} of type boolean or a boolean. Set this to ref(true) to run onIntersect whenever the scrollContainer is scrolled AND the element is intersecting it. Omit this, or set it to false to only run onIntersect when the current element starts or stops intersecting with its scroll container.
  * 
  * v-global-scroll-container changes the default scroll container from {@link Window} to the HTMLElement to which it is applied. This means that any elements to which v-intersect is applied will observe the intersection between the element and the element to which v-global-scroll-container is applied.
  * 
