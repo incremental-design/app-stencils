@@ -1,5 +1,5 @@
 <template>
-  <div ref="el" :class="test.container">
+  <div v-intersect="{ scroll: true, onIntersect }" :class="test.container">
     <img
       ref="img"
       :class="test.bgIslands"
@@ -10,17 +10,14 @@
 </template>
 
 <script setup lang="ts">
-const el: Ref<HTMLElement | null> = ref(null);
-const i = useIntersect(el, ref(true), ref(null));
-
 const img: Ref<HTMLElement | null> = ref(null);
 
-// start here: solve the scroll jank in the level
+// start here: solve the scroll jank in the level on ipad
 
-watchEffect(() => {
-  if (!i.value.el || !i.value.scrollContainer || !img.value) return;
-  const eC = i.value.el.center;
-  const cC = i.value.scrollContainer.center;
+const onIntersect = (i) => {
+  if (!i.el || !i.scrollContainer) return;
+  const eC = i.el.center;
+  const cC = i.scrollContainer.center;
   const dY = eC.y / cC.y;
   requestAnimationFrame(() => {
     (img.value as HTMLElement).setAttribute(
@@ -30,7 +27,7 @@ watchEffect(() => {
       }%)`,
     );
   });
-});
+};
 </script>
 
 <style module="test" lang="postcss">

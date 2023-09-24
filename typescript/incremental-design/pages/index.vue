@@ -4,21 +4,6 @@
   <HeroCTA :class="hero.cta"></HeroCTA>
   <div :class="hero.lemonLady"></div>
   <HeroSustainableGrowth
-    v-intersect="{
-      scroll: true,
-      onIntersect: (i) =>
-        console.log(
-          i.intersecting,
-          i.el.x,
-          i.el.y,
-          i.el.width,
-          i.el.height,
-          i.scrollContainer.x,
-          i.scrollContainer.y,
-          i.scrollContainer.width,
-          i.scrollContainer.height,
-        ),
-    }"
     :class="hero.sustainableGrowth"
   ></HeroSustainableGrowth>
   <div :class="hero.trustGap"></div>
