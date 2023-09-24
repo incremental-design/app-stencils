@@ -7,17 +7,17 @@ import { App } from "vue"
 type unobserveFn = () => void
 
 let globalScrollContainer: HTMLElement | null = null /* will default to window */
-let intersectionObservers: WeakMap<HTMLElement | Window, IntersectionObserver> = new WeakMap()
-let intersectionObservedEls: WeakMap<IntersectionObserver, Array<HTMLElement>> = new WeakMap() 
-let elIntersectionUnobserve: WeakMap<HTMLElement, unobserveFn> = new WeakMap() 
+let intersectionObservers: WeakMap<HTMLElement | Window, IntersectionObserver> = new WeakMap() /* for a given container, get its intersection observer */
+let intersectionObservedEls: WeakMap<IntersectionObserver, Array<HTMLElement>> = new WeakMap() /* for a given intersection observer, get the els it's observing */
+let elIntersectionUnobserve: WeakMap<HTMLElement, unobserveFn> = new WeakMap() /* for a given observed element, get a callback that unobserves the element */
 let elIntersectionCallback: WeakMap<Element, {
     i: Intersection,
     cb: (i: Intersection) => void
-}> = new WeakMap()
+}> = new WeakMap() /* for a given observed element, get the intersection object and the element's callback */
 
-let scrollHandlers: WeakMap<HTMLElement | Document, () => void> = new WeakMap()
-let scrollObservedEls: WeakMap<HTMLElement | Document, Array<HTMLElement>> = new WeakMap()
-let scrollObservedNotIntersectingEls: WeakSet<HTMLElement> = new WeakSet()
+let scrollHandlers: WeakMap<HTMLElement | Document, () => void> = new WeakMap() /* for a given container, get its scroll handler */
+let scrollObservedEls: WeakMap<HTMLElement | Document, Array<HTMLElement>> = new WeakMap() /* for a given container, get the elements that have opted into update on scroll */
+let scrollObservedNotIntersectingEls: WeakMap<HTMLElement | Document, Array<HTMLElement>> = new WeakMap() /* for a given container, add elements that have opted into update on scroll, but are not intersecting, and remove elements that have opted into update on scroll, and ARE intersecting */
 
 const getCenter = (x: number, y: number, width: number, height: number) => {
     return {
@@ -26,12 +26,53 @@ const getCenter = (x: number, y: number, width: number, height: number) => {
     }
 }
 
+let resizeObserver: ResizeObserver
+let resizeObserverCount = 0
+const observeResize = (el: HTMLElement) => {
+    if(!resizeObserver) resizeObserver = new ResizeObserver((entries) => {
+       entries.forEach(entry => {
+        const iCb = elIntersectionCallback.get(entry.target)
+        if(!iCb){
+            /* check if el is actually a container */
+            const els = scrollObservedEls.get(el)
+            if(!els || els.length === 0) return;
+            els.forEach(e => {
+                const iCb = elIntersectionCallback.get(e)
+                if(!iCb) return;
+                /* for each element of the container, update the container's dimensions within the element's intersection */
+                const {i, cb} = iCb;
+                const {x, y, width, height} = entry.contentRect
+                i.scrollContainer = {x, y, width, height, center: getCenter(x, y, width, height)}
+                cb(i)
+                elIntersectionCallback.set(e, {i,cb})
+            })
+
+            return
+        }
+        const {i, cb} = iCb
+        const { x, y, width, height } = entry.contentRect
+        i.el = {x, y, width, height, center: getCenter(x, y, width, height)}
+        cb(i)
+        elIntersectionCallback.set(entry.target, {i, cb}) // todo: see if it isn't needed to set i, cb bc we are manipulating a reference to i. I am concerned that we are needlessly creating a new reference here when we can just re-use the same reference
+       })
+    })
+    resizeObserverCount += 1
+}
+const unobserveResize = (el: HTMLElement) => {
+    if(!resizeObserver) return;
+    resizeObserver.unobserve(el)
+    resizeObserverCount -= 1
+    if (resizeObserverCount === 0) resizeObserver.disconnect();
+}
+
 /* add el to array of els to update on scroll, and if no scroll handler on container, add it */
 const addScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 
     const els = scrollObservedEls.get(container || document)
     scrollObservedEls.set(container || document, els ? [...els, el] : [el])
-
+    
+    observeResize(el); /* observeResize piggybacks off of the same data structures that are updated in addScrollHandler, so we run it here */
+    
     if(scrollHandlers.has(container || document)) return;
 
     /* this one scroll handler takes care of every element that has scroll set to true */
@@ -70,6 +111,9 @@ const addScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 
 /* remove el from array of els to update, and if the remaining array is zero, remove the handler entirely */
 const removeScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
+
+    unobserveResize(el); /* unobserveResize piggybacks off of the same data structures that are updated in removeScrollHandler, so we run it here */
+
     const els = scrollObservedEls.get(container || document)
     if(!els || els.length === 1){ 
         scrollObservedEls.delete(container || document) /* if !els, this is a no-op */
@@ -88,8 +132,7 @@ const disconnectIntersectionObserver = (observer: IntersectionObserver) => {
     return observed
 }
 
-
-const addIObs = (el: HTMLElement, container: HTMLElement | null) => {
+const addIntersectionObserver = (el: HTMLElement, container: HTMLElement | null) => {
     const c = container || window
     let o = intersectionObservers.get(c)
     if (!o) {
@@ -104,12 +147,16 @@ const addIObs = (el: HTMLElement, container: HTMLElement | null) => {
 
                 if(!i.intersecting){
                     removeScrollHandler(el, container);
-                    scrollObservedNotIntersectingEls.add(el)
+                    const els = scrollObservedNotIntersectingEls.get(container || document)
+                    scrollObservedNotIntersectingEls.set(container || document, els ? [...els, el] : [el])
                 } else {
-                    if(scrollObservedNotIntersectingEls.has(el)) {
-                        console.log('hibob')
+                    let els = scrollObservedNotIntersectingEls.get(container || document);
+                    if(!els) return;
+                    if(els.includes(el)){
                         addScrollHandler(el, container);
-                        scrollObservedNotIntersectingEls.delete(el)
+                        els = els.filter(e => e !== el)
+                        if(els.length === 0) return scrollObservedNotIntersectingEls.delete(container || document);
+                        scrollObservedNotIntersectingEls.set(container || document, els)
                     }
                 }
 
@@ -144,6 +191,44 @@ const addIObs = (el: HTMLElement, container: HTMLElement | null) => {
     els = els ? [...els, el] : [el]
     intersectionObservedEls.set(o, els)
 }
+
+let onWindowResize: (() => void) | undefined = undefined
+
+const addWindowResize = () => {
+
+    const r = () => {
+        const els = scrollObservedEls.get(document)
+        if(els) els.forEach(e => {
+            const iCb = elIntersectionCallback.get(e)
+            if(!iCb) return;
+            const {i, cb} = iCb
+            i.scrollContainer = {
+                x: 0,
+                y: 0,
+                width: window.innerWidth,
+                height: window.innerHeight,
+                center: {
+                    x: window.innerWidth / 2,
+                    y: window.innerHeight / 2
+                }
+            }
+            cb(i)
+            elIntersectionCallback.set(e, {i, cb}) // todo: check if we can skip resetting, so that we don't have to put old refs on garbage heap
+        });
+    }
+        
+    if(onWindowResize || !scrollObservedEls.get(document) && !scrollObservedNotIntersectingEls.get(document)) return; /* only add resize listener if there are els that actually want to know when window has resized */
+    
+    window.addEventListener('resize', r, {passive: true /* NEEDED for perf */});
+    onWindowResize = r
+}
+
+const removeWindowResize = () => {
+    if(!onWindowResize || scrollObservedEls.get(document) || scrollObservedNotIntersectingEls.get(document)) return; /* only remove resize listener if there are NO els that want to know when window has resized */
+    window.removeEventListener('resize', onWindowResize)
+    onWindowResize = undefined
+}
+
 /**
  * intersectionPlugin provides the v-intersect and v-global-scroll-container directives. 
  * 
@@ -209,8 +294,9 @@ const intersectionPlugin = {
                     cb: onIntersect
                 })
 
-                addIObs(el, scrollContainer)
+                addIntersectionObserver(el, scrollContainer)
                 if(scroll) addScrollHandler(el, scrollContainer);
+                if(!scrollContainer) addWindowResize();
             },
             updated(el, binding){
 
@@ -222,6 +308,8 @@ const intersectionPlugin = {
                     removeScrollHandler(el, binding.oldValue.scrollContainer);
                     addScrollHandler(el, binding.value.scrollContainer)
                 }
+                return binding.value.scrollContainer ? removeWindowResize() : addWindowResize()
+                
             },
             unmounted(el, binding){
                 const unobserve = elIntersectionUnobserve.get(el)
@@ -229,30 +317,45 @@ const intersectionPlugin = {
 
                 removeScrollHandler(el, binding.oldValue.container)
                 if(binding.value.container !== binding.oldValue.container) removeScrollHandler(el, binding.value.container); /* in some cases, this call is redundant. However, removeScrollHandler is idempotent, so we can call it as many times as we want without creating nasty side effects. We do this just to be entirely sure that all possible scroll handlers are removed */
+                removeWindowResize() // technically this call can be optimized by skipping it in cases where we know it will no-op
                 
             }
         })
         /* if global-scroll-container changes, cleanup the intersection observer, and set up the new one. make sure all els that were being observed by the old intersection observer get observed by the new one */
         app.directive('global-scroll-container' /* becomes 'v-global-scroll-container' */, {
             mounted(el){
+                removeWindowResize()
                 globalScrollContainer = el /* this will ALWAYS be an HTMLElement because vue won't mount to window */
+                observeResize(el);
+                // todo: remove window event listener resize - how to make sure this only runs on client?
+                
                 const observer = intersectionObservers.get(window)
                 
                 if(observer){
-                    const observed = disconnectIntersectionObserver(observer)
-                    if(observed) observed.forEach(e => addIObs(e, el));
-                }
+                    let sEls = [...scrollObservedEls.get(document) || [], ...scrollObservedNotIntersectingEls.get(document) || []]
+                    scrollObservedEls.delete(document)
+                    scrollObservedNotIntersectingEls.delete(document)
 
-                // todo: don't forget to re-register scroll handlers if needed!!!
+                    const observed = disconnectIntersectionObserver(observer)
+                    sEls.forEach(e => addScrollHandler(e, el)) // todo: double-check that if an e is part of the scrollObservedNotIntersectingEls list, then even though it's scroll handler is added in, it doesn't start tracking scroll until it is intersecting el
+                    if(observed) observed.forEach(e => addIntersectionObserver(e, el));
+                }
             },
             unmounted(el){
+                unobserveResize(el);
+                
                 globalScrollContainer = null
                 const observer = intersectionObservers.get(el)
-
+                
                 if(observer){
+                    let sEls = [...scrollObservedEls.get(el) || [], ...scrollObservedNotIntersectingEls.get(el) || []]
+                    scrollObservedEls.delete(el)
+                    scrollObservedNotIntersectingEls.delete(el)
                     const observed = disconnectIntersectionObserver(observer)
-                    if(observed) observed.forEach(e => addIObs(e, null /* null becomes window */));
+                    sEls.forEach( e => addScrollHandler(e, null)) // todo: double-check that if an e is part of the scrollObservedNotIntersectingEls list, then even though it's scroll handler is added in, it doesn't start tracking scroll until it is intersecting el
+                    if(observed) observed.forEach(e => addIntersectionObserver(e, null /* null becomes window */));
                 }
+                addWindowResize()
             }
         })
     }
