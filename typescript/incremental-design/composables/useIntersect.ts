@@ -92,8 +92,6 @@ export default function useIntersect(el: Ref<IntersectArgs[0]>, scroll: Ref<Inte
             }
         })()
 
-        console.log(prev, curr, remove, add)
-
         /* refresh intersection observer */
         if(remove[0]) removeIOb();
 
