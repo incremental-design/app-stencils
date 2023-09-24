@@ -113,7 +113,6 @@ const addScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 const removeScrollHandler = (el: HTMLElement, container: HTMLElement | null) => {
 
     unobserveResize(el); /* unobserveResize piggybacks off of the same data structures that are updated in removeScrollHandler, so we run it here */
-
     const els = scrollObservedEls.get(container || document)
     if(!els || els.length === 1){ 
         scrollObservedEls.delete(container || document) /* if !els, this is a no-op */
@@ -148,15 +147,20 @@ const addIntersectionObserver = (el: HTMLElement, container: HTMLElement | null)
                 if(!i.intersecting){
                     removeScrollHandler(el, container);
                     const els = scrollObservedNotIntersectingEls.get(container || document)
-                    scrollObservedNotIntersectingEls.set(container || document, els ? [...els, el] : [el])
+                    if(els && els.includes(el)){
+                        const elsExcluded = scrollObservedNotIntersectingEls.get(container || document) || []
+                        scrollObservedNotIntersectingEls.set(container || document, [...elsExcluded, el])
+                    }
                 } else {
                     let els = scrollObservedNotIntersectingEls.get(container || document);
-                    if(!els) return;
-                    if(els.includes(el)){
+                    if(els && els.includes(el)){
                         addScrollHandler(el, container);
                         els = els.filter(e => e !== el)
-                        if(els.length === 0) return scrollObservedNotIntersectingEls.delete(container || document);
-                        scrollObservedNotIntersectingEls.set(container || document, els)
+                        if(els.length === 0){
+                            scrollObservedNotIntersectingEls.delete(container || document);
+                        } else {
+                            scrollObservedNotIntersectingEls.set(container || document, els)
+                        }
                     }
                 }
 
@@ -195,7 +199,9 @@ const addIntersectionObserver = (el: HTMLElement, container: HTMLElement | null)
 let onWindowResize: (() => void) | undefined = undefined
 
 const addWindowResize = () => {
-
+    
+    if(onWindowResize || !scrollObservedEls.get(document) && !scrollObservedNotIntersectingEls.get(document)) return; /* only add resize listener if there are els that actually want to know when window has resized */
+    
     const r = () => {
         const els = scrollObservedEls.get(document)
         if(els) els.forEach(e => {
@@ -217,8 +223,6 @@ const addWindowResize = () => {
         });
     }
         
-    if(onWindowResize || !scrollObservedEls.get(document) && !scrollObservedNotIntersectingEls.get(document)) return; /* only add resize listener if there are els that actually want to know when window has resized */
-    
     window.addEventListener('resize', r, {passive: true /* NEEDED for perf */});
     onWindowResize = r
 }
@@ -245,7 +249,7 @@ const removeWindowResize = () => {
  * <script setup lang="ts">
  * 
  *  import {ref, Ref} from 'vue'
- *  import { Intersection } from 'incremental.design
+ *  import { Intersection } from '@incremental.design/vue3-plugin-intersect'
  *  
  *  const scroll = ref(true) // set to false if you only want onIntersect to run when <div...> changes from intersecting to not intersecting and vice versa
  * 
@@ -284,7 +288,6 @@ const intersectionPlugin = {
     install(app: App /*, options */){
         app.directive('intersect'/* becomes 'v-intersect' */, {
             mounted(el, binding){
-
                 const scroll = binding.value.scroll
                 const scrollContainer = binding.value.scrollContainer || globalScrollContainer
                 const onIntersect = binding.value.onIntersect || (() => {throw new Error("v-intersect: onIntersect must be defined, and must be a function")})()
@@ -293,8 +296,8 @@ const intersectionPlugin = {
                     i: {intersecting: false},
                     cb: onIntersect
                 })
-
-                addIntersectionObserver(el, scrollContainer)
+                
+                addIntersectionObserver(el, scrollContainer);
                 if(scroll) addScrollHandler(el, scrollContainer);
                 if(!scrollContainer) addWindowResize();
             },
