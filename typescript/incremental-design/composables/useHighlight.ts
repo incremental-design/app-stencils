@@ -6,24 +6,15 @@
  * @param endIndex 
  * @returns 
  */
-export default function(el: Ref<HTMLElement | null>, intervalMs: number, startIndex: number, endIndex: number): Ref<number>{
-    const i = useIntersect({el}); // todo: refactor once plugin is complete
+export default function(pause: Ref<boolean>, intervalMs: number, startIndex: number, endIndex: number): Ref<number>{
     
-    const pause = ref(true);
     const index = ref(startIndex);
     const interval = useInterval(intervalMs, pause, startIndex, endIndex);
     
     watchEffect(() => {
-      if (!i.intersecting) {
-        pause.value = true;
-      } else {
-        pause.value = index.value > endIndex;
-      }
-    });
-    
-    watchEffect(() => {
-      interval.value;
+      if(interval.value >= endIndex - 1) pause.value = true;
       index.value = index.value + 1;
+
     });
 
     return index;

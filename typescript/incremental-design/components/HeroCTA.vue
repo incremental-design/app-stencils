@@ -1,5 +1,5 @@
 <template>
-  <div ref="el">
+  <div v-intersect="{ onIntersect }">
     <p :class="['assert']">
       We use
       <span :class="[s.hl, index >= 0 ? s.show : '']">art and design</span> to
@@ -11,9 +11,13 @@
 </template>
 
 <script setup lang="ts">
-const el = ref(null);
+const pause = ref(true);
 
-const index = useHighlight(el, 600, -6, 2);
+const onIntersect = (i) => {
+  pause.value = !i.intersecting;
+};
+
+const index = useHighlight(pause, 600, -6, 2);
 </script>
 
 <style module="s" lang="postcss">

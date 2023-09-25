@@ -1,5 +1,5 @@
 <template>
-  <div ref="el">
+  <div v-intersect="{ onIntersect }">
     <p ref="title">
       <span
         v-for="(t, i) in titleSegments"
@@ -51,18 +51,11 @@ const interval = 300; /* ms */
 const paused = ref(true);
 const t = useInterval(interval, paused, -2, titleSegments.length + 1);
 
-const i = useIntersect({
-  el,
-});
-
 const showIndex = ref(-2);
 
-watchEffect(() => {
-  if (!i.intersecting) {
-    paused.value = true;
-    return;
-  }
-});
+const onIntersect = (i) => {
+  paused.value = !i.intersecting;
+};
 
 watchEffect(() => {
   showIndex.value = t.value;

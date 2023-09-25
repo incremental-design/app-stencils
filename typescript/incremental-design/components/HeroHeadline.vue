@@ -1,5 +1,12 @@
 <template>
-  <B ref="BCR" :is-hoverable="true" @state-change="handleStateChange">
+  <B
+    ref="BCR"
+    v-intersect="{
+      onIntersect,
+    }"
+    :is-hoverable="true"
+    @state-change="handleStateChange"
+  >
     <template #default>
       <p
         v-for="(headline, index) in headlines"
@@ -40,9 +47,6 @@ const el: Ref<HTMLElement | null> = ref(null);
 
 const current = ref(0);
 const hovering = ref(false);
-const i = useIntersect({
-  el,
-});
 const paused = ref(false);
 const t = useInterval(4500, paused, 0);
 
@@ -50,14 +54,14 @@ const handleStateChange = (s: StateChange) => {
   hovering.value = s.newState.length == 1;
 };
 
-watchEffect(() => {
+const onIntersect = (i /* : Intersection*/) => {
   if (i.intersecting == false) {
     paused.value = true;
     return;
   }
 
   paused.value = hovering.value;
-});
+};
 
 watchEffect(() => {
   current.value = t.value % headlines.length;

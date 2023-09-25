@@ -10,10 +10,10 @@
   <div :class="hero.floatingIsland"></div>
   <TestLevel :class="hero.sizzle"></TestLevel>
   <div :class="hero.step"></div>
-  <!-- <div id="gallery"></div>
+  <div id="gallery"></div>
   <div id="services"></div>
   <div id="social-proof"></div>
-  <div id="team"></div> -->
+  <div id="team"></div>
 </template>
 
 <script setup lang="ts"></script>
