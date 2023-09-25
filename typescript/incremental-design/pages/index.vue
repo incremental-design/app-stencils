@@ -9,6 +9,7 @@
   <div :class="hero.trustGap"></div>
   <div :class="hero.floatingIsland"></div>
   <TestLevel :class="hero.sizzle"></TestLevel>
+  <!-- <TestRive :class="hero.rive"></TestRive> -->
   <div :class="hero.step"></div>
   <div id="gallery"></div>
   <div id="services"></div>
@@ -70,6 +71,15 @@
 .sizzle {
   /* background: orange; */
   grid-row: 10 / span 1;
+  grid-column: left-edge-start / right-edge-end;
+
+  @media (min-width: 1600px) {
+    grid-column: left-content-start / left-content-end;
+  }
+}
+.rive {
+  /* background: orange; */
+  grid-row: 11 / span 1;
   grid-column: left-edge-start / right-edge-end;
 
   @media (min-width: 1600px) {
