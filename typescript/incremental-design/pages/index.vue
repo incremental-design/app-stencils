@@ -9,7 +9,7 @@
   <div :class="hero.trustGap"></div>
   <div :class="hero.floatingIsland"></div>
   <TestLevel :class="hero.sizzle"></TestLevel>
-  <!-- <TestRive :class="hero.rive"></TestRive> -->
+  <TestRive :class="hero.rive"></TestRive>
   <div :class="hero.step"></div>
   <div id="gallery"></div>
   <div id="services"></div>
