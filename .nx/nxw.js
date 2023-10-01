@@ -56,42 +56,46 @@ function ensureUpToDateInstallation() {
 
     const taskDir = path.join(__dirname, "tasks");
 
-    if (
-      !matchesCurrentNxInstall(nxJson.installation) ||
-      !fs.existsSync(taskDir) ||
-      !fs.existsSync(path.join(taskDir, "package.json")) ||
-      !fs.existsSync(path.join(taskDir, "node_modules")) ||
-      !fs.existsSync(path.join(taskDir, "dist"))
-    ) {
-      fs.writeFileSync(
-        installationPath,
-        JSON.stringify({
-          name: "nx-installation",
-          devDependencies: Object.assign(
-            { nx: nxJson.installation.version },
-            nxJson.installation.plugins
-          ),
-        })
-      );
+    const pluginDirs = ["typescript", "go"].map((d) => path.join(__dirname, d));
 
-      // first install node modules for tasks
-      cp.execSync("npm i", {
-        cwd: taskDir,
-        stdio: "inherit",
-      });
+    pluginDirs.forEach((dir) => {
+      if (
+        !matchesCurrentNxInstall(nxJson.installation) ||
+        !fs.existsSync(dir) ||
+        !fs.existsSync(path.join(dir, "package.json")) ||
+        !fs.existsSync(path.join(dir, "node_modules")) ||
+        !fs.existsSync(path.join(dir, "dist"))
+      ) {
+        fs.writeFileSync(
+          installationPath,
+          JSON.stringify({
+            name: "nx-installation",
+            devDependencies: Object.assign(
+              { nx: nxJson.installation.version },
+              nxJson.installation.plugins
+            ),
+          })
+        );
 
-      // then link tasks into node_modules of the wrapper
-      cp.execSync("npm i", {
-        cwd: path.dirname(installationPath),
-        stdio: "inherit",
-      });
+        // first install node modules for the dir
+        cp.execSync("npm i", {
+          cwd: dir,
+          stdio: "inherit",
+        });
 
-      // then build tasks
-      cp.execSync("npm run build", {
-        cwd: path.join(taskDir),
-        stdio: "inherit",
-      });
-    }
+        // then link dir into node_modules of the wrapper
+        cp.execSync("npm i", {
+          cwd: path.dirname(installationPath),
+          stdio: "inherit",
+        });
+
+        // then build dir
+        cp.execSync("npm run build", {
+          cwd: path.join(dir),
+          stdio: "inherit",
+        });
+      }
+    });
   } catch (e) {
     const messageLines = [
       "[NX]: Nx wrapper failed to synchronize installation.",

@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "target": "ES2015",
+    "lib": [
+      "ESNext"
+    ],
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "types": [
+      "node"
+    ],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist"
+  },
+  "include": [
+    "./src/**/*.ts"
+  ]
+}

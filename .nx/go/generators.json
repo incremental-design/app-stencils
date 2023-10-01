@@ -3,7 +3,8 @@
     "generators": {
         "typescript/shared": {
             "implementation": "./dist/typescript/shared",
-            "schema": "./src/typescript/shared.json"
+            "schema": "./src/typescript/shared.json",
+            "description": "hibob"
         }
     }
 }
