@@ -3,17 +3,12 @@
 <!--
 What are the prerequisites for contributing to the code?
     * provide users with containerized development environments, virtual machines, or, if developing for an embedded system, a pre-built OS image. Don't make them set up an environment from scratch.
+    * the point of containerized dev env is to prevent the environment from leaking out - it should be totally optional (to a point)
 -->
 
 ### Develop:
 
-<!--
-Tell your reader how to run the code in the development environment
--->
-
-Run `./nx run-many --target=install` to download and install all dependencies.
-
-#### Repository Structure:
+<!-- todo: containerized (or VM) development environment -->
 
 `app-stencils` is a polyglot monorepo. It contains Typescript and Go code.
 
@@ -27,19 +22,11 @@ Run `./nx run-many --target=install` to download and install all dependencies.
                           this repo
 
 /.vscode                  configuration specific to vscode
-/.nova                    configuration specific to panic nova
 
 /go
 
-  /ffi                    packages that are embedded into native
+  /gomobile               packages that are embedded into native
                           MacOS, iOS and Android apps via (FFI)
-    <package>
-    <package>
-    ...
-
-  /nix                    packages that run in nixOS containers
-    Dockerfile            the dockerfile that builds the nixOS
-                          containers
     <package>
     <package>
     ...
@@ -51,23 +38,11 @@ Run `./nx run-many --target=install` to download and install all dependencies.
 
   /wasm                   packages that run in webassembly
                           runtimes
-    <packaget>
+    <package>
     <package>
     ...
 
 /typescript
-
-  /bun                    packages that run on the edge, in
-                          bun.js
-    /<package>
-    /<package>
-    ...
-
-    bun.build.ts          bun-specific build and test commands
-
-  /nx                     plugins for the nx build scripts that
-                          are specific to the languages and
-                          targets in this repository
 
   /vue3                   packages that run in vue.js websites
     /<package>
@@ -95,49 +70,33 @@ Run `./nx run-many --target=install` to download and install all dependencies.
 
 nx                        nx executable
 nx.json                   configuration for nx build scripts in /.nx
-Vagrantfile               configuration for the MacOS VM that
-                          builds all swift packages.
 ```
 
-To start developing, run `vagrant up` and then `./nx g tasks/<language>:<environment>`
+- **Download and install all dependencies for all packages**, with `./nx run-many --target=install`
+- **Build all packages** with `./nx run-many --target=build`
+- **test all packages** with `./nx run-many --target=test --watch`
 
-This will create a new package in the `/<language>` and `/<environment>` of your choice.
+### Create Packages:
 
-You can compose any of the other packages in `/<language>` into this new package, by importing the other packages with the language and framework specific tools.
-
-<!-- show examples? Or, maybe make a jupyter notebook?? -->
-
-Install the package's dependencies with `./nx i ./<language>/<environment>/<package>`
-
-Test the package, with `./nx test ./<language>/<environment>/<package>`
-
-- this will format and lint the package. If linting fails, this will fail.
-- this will test the package, and all of the package's dependents. If any test fails, this will fail.
-
-Build the package, with `./nx build ./<language>/<environment>/<package>`
-
-- this will format and lint the package. If linting fails, this will fail.
-- this will test the package, and all of the package's dependents. If any test fails, this will fail.
-- this will build the package, and all of its dependents. If any build fails, this will fail.
-
-you can add the `--watch` flag to any of the aformentioned commands to continuously re-run the command every time you modify the package.
-
-you can run `./nx i`, `./nx test`, or `./nx build` against `./`, `./<language>`, `./<language>/<environment>`, to build all of the packages contained within them.
-
-<!-- need to support ./nx [test | build] <language>/<environment> to build everything in language environment folder -->
-<!-- need to support ./nx [test | build] <language> to build everything in -->
-<!-- need to support ./nx [test | build] -->
-
-<!-- ./nx graph <language>/<environment>/<package> to show a graph of deps ? -->
+| Command                          | What it does                                                                                                                   |
+| :------------------------------- | :----------------------------------------------------------------------------------------------------------------------------- |
+| `./nx g tasks/typescript:vue3`   | creates a vue3 component or plugin in /typescript/vue3/<package>                                                               |
+| `./nx g tasks/typescript:shared` | creates a shared library in /typescript/shared/<package>                                                                       |
+| `./nx g tasks/go:gomobile`       | creates a golang shared library that can be run within an iOS, iPadOS, MacOS, or android application in /go/gomobile/<package> |
+| `./nx g tasks/go:wasm`           | creates a golang program or library that can be run within a webassembly runtime in /go/wasm/<package>                         |
+| `./nx g tasks/go:shared`         | creates a golang library that can be imported into any other go package in /go/shared/<package>                                |
 
 If you just want to try out a package (e.g. a project scaffolded with a JS framework's CLI), you can create a folder inside the `/<language>` of your choice, and use the language's package manager to import other packages in the `/<language>`'s `/<environment>`s. However, this package will NOT be automatically and continuously built. Also, I will not accept pull requests that contain packages that are not created using `./nx g @incremental.design/<language>:<environment>`.
 
-To import packages within `app-stencils` (e.g. to import a package in `/typescript/shared`), use the language's package manager (e.g. pnpm add `<name of package>`). Each language has its own package manager:
+### Compose Packages:
 
-| Language   | Package import                                                 |
-| :--------- | :------------------------------------------------------------- |
-| go         | `go get incremental.design/<environment>/<name of package>`    |
-| typescript | `pnpm add @incremental.design/<environment>-<name of package>` |
+| Language   | environment | Package import                                          |
+| :--------- | :---------- | :------------------------------------------------------ |
+| typescript | vue3        | `pnpm add @incremental.design/vue3-<name of package>`   |
+| typescript | shared      | `pnpm add @incremental.design/shared-<name of package>` |
+| go         | shared      | `go get incremental.design/shared/<name of package>`    |
+
+_do not try to import go/wasm or go/gomobile packages into each other. These packages should simply wrap go/shared packages with the bindings needed to run in their respective environments._
 
 ### Why polyglot?
 
@@ -161,27 +120,14 @@ Without Nx, it's easy to introduce breaking changes that slip by undetected for 
 
 <!-- a note on how nx is used: every tool can be run manually, without nx. Sometimes, this is useful for debugging purposes. Nx just automates the running of each of these tools -->
 
-### Format:
-
-<!-- list formatting configs by language and target. explain the inputs and outputs for formatting steps -->
-
-### Lint:
-
-<!-- list lint configs by language and target. explain inputs and outputs -->
-
 ### Document:
 
 <!-- list documentation (e.g. api documentation, test site generation) by language and target. explain how users should document code
-by language and target -->
-
-### Profile:
-
-<!-- explain how each target is profiled for cpu and mem usage, speed -->
+by language and target. make short checklist of what needs to be documented before a PR will be accepted -->
 
 ### Build
 
 <!-- explain how each target is built -->
-<!-- explain hermeticity (building in containers or vms) also note that even if you dev in a container, a nested container will be launched for build. that way you can't inadvertently screw up environment variables over the course of a dev session -->
 
 ### Test:
 
