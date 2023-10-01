@@ -10,12 +10,10 @@
   "installation": {
     "version": "16.5.2",
     "plugins": {
-      "@nx-dotnet/core": "1.22.0",
-      "tasks": "../tasks"
+      "typescript": "../tasks"
     }
   },
   "plugins": [
-    "@nx-dotnet/core",
-    "tasks"
+    "typescript"
   ]
 }

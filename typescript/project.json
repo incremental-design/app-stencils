@@ -8,7 +8,7 @@
             }
         },
         "hello": {
-            "executor": "tasks:hello"
+            "executor": "typescript:hello"
         }
     }
 }

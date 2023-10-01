@@ -29,3 +29,12 @@ To run a generator, `cd` to the root of this repository, and run any of the foll
 You can [create a generator](https://nx.dev/extending-nx/recipes/local-generators). When you are finished, make sure you add it to the [list of available generators](../CONTRIBUTE.md#create-packages).
 
 <!-- todo: explain dependency inference -->
+<<<<<<< Updated upstream
+=======
+
+<!-- tasks contains custom executors. so, you don't have to drop to shell every time -->
+
+<!-- but where do we put generators? -->
+
+<!-- to build/update, cd ./nx/tasks && pnpm run build -->
+>>>>>>> Stashed changes
