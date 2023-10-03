@@ -1,7 +1,6 @@
 {
     "name": "typescript",
     "generators": "./generators.json",
-    "executors": "./executors.json",
     "main": "./dist/index.js",
     "private": true,
     "scripts": {

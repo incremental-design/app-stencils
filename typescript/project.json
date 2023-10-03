@@ -6,9 +6,6 @@
             "options": {
                 "command": "cd ./typescript && pnpm i"
             }
-        },
-        "hello": {
-            "executor": "typescript:hello"
         }
     }
 }

@@ -20,6 +20,8 @@ Nx scans the directories in `app-stencils`, looking for `project.json` files. Ea
 
 > The `install` target uses the `nx:run-commands` executor. This executor reads the `options`, and runs the command `cd ./typescript && pnpm i`.
 
+Nx targes are similar to npm scripts. However, Nx can run tasks across multiple packages, and even in arbitrary folders.
+
 Nx also provides **generators**. A generator is a procedure that Nx runs in order to create a new directory. Generators can stub files, update dependencies, and even set up project.json files.
 
 To run a generator, `cd` to the root of this repository, and run any of the following commands:
