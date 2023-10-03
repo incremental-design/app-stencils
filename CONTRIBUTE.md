@@ -6,6 +6,8 @@ What are the prerequisites for contributing to the code?
     * the point of containerized dev env is to prevent the environment from leaking out - it should be totally optional (to a point)
 -->
 
+<!-- todo: a single nixos container with a shared volume to desktop. the idea is that anything that needs xcode will be run on a macos desktop. everything else will be run in a nixos box -->
+
 ### Develop:
 
 <!-- todo: containerized (or VM) development environment -->

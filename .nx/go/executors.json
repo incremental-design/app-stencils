@@ -2,8 +2,8 @@
     "$schema": "http://json-schema.org/schema",
     "executors": {
         "hello": {
-            "implementation": "./dist/typescript/hello",
-            "schema": "./src/typescript/hello.json",
+            "implementation": "./dist/hello",
+            "schema": "./src/hello.json",
             "description": "hello"
         }
     }

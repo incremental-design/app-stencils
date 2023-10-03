@@ -1,10 +1,15 @@
 {
     "$schema": "http://json-schema.org/schema",
     "generators": {
-        "typescript/shared": {
-            "implementation": "./dist/typescript/shared",
-            "schema": "./src/typescript/shared.json",
-            "description": "hibob"
+        "shared": {
+            "implementation": "./dist/shared",
+            "schema": "./src/shared.json",
+            "description": "Scaffold a typescript library that can be used in vue3 components and directives, and in bun or Node JS runtimes"
+        },
+        "vue3": {
+            "implementation": "./dist/vue3",
+            "schema": "./src/vue3.json",
+            "description": "Scaffold a vue3 component, composable, or plugin that can be run in browsers or in bun, NodeJS or nuxt nitro runtimes"
         }
     }
 }

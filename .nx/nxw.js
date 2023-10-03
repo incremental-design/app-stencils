@@ -54,8 +54,6 @@ function ensureUpToDateInstallation() {
   try {
     ensureDir(path.join(__dirname, "installation"));
 
-    const taskDir = path.join(__dirname, "tasks");
-
     const pluginDirs = ["typescript", "go"].map((d) => path.join(__dirname, d));
 
     pluginDirs.forEach((dir) => {
@@ -79,6 +77,7 @@ function ensureUpToDateInstallation() {
 
         // first install node modules for the dir
         cp.execSync("npm i", {
+          // todo: change this to bun AFTER setting up nixos container
           cwd: dir,
           stdio: "inherit",
         });

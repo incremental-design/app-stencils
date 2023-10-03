@@ -10,10 +10,12 @@
   "installation": {
     "version": "16.5.2",
     "plugins": {
-      "typescript": "../tasks"
+      "typescript": "../typescript",
+      "go": "../go"
     }
   },
   "plugins": [
-    "typescript"
+    "typescript",
+    "go"
   ]
 }
