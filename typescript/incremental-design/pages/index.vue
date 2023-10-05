@@ -6,7 +6,7 @@
   <HeroSustainableGrowth
     :class="hero.sustainableGrowth"
   ></HeroSustainableGrowth>
-  <div :class="hero.trustGap"></div>
+  <div v-clip-path="{ path, interpolate }" :class="hero.trustGap"></div>
   <div :class="hero.floatingIsland"></div>
   <TestLevel :class="hero.sizzle"></TestLevel>
   <div :class="hero.step"></div>
@@ -16,7 +16,28 @@
   <div id="team"></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const path: Ref<[string, ...Array<string>]> = ref([
+  "M 0 0 H 100 V 100 H 0 V 0 Z",
+  "M 0 0 H 200 V 50 H 0 V 0 Z",
+]);
+
+const interpolate: Ref<number> = ref(0.65);
+
+const shouldLoop = ref(false);
+
+// watchEffect(() => {
+//   if (!shouldLoop.value) return;
+//   window.requestAnimationFrame((t) => {
+//     interpolate.value = Math.sin(t / 1000) / 2 + 0.5;
+//     console.log(interpolate.value);
+//   });
+// });
+
+onMounted(() => {
+  shouldLoop.value = true;
+});
+</script>
 
 <style module="hero" lang="postcss">
 .headline {
@@ -64,6 +85,7 @@
 }
 .floatingIsland {
   background: gray;
+  height: 200px;
   grid-column: right-content-start / right-nav-end;
   grid-row: 8 / span 1;
 }

@@ -100,6 +100,8 @@ If you just want to try out a package (e.g. a project scaffolded with a JS frame
 
 _do not try to import go/wasm or go/gomobile packages into each other. These packages should simply wrap go/shared packages with the bindings needed to run in their respective environments._
 
+<!-- todo: link to README in typescript and go folders. Explain how to do the basic motions in this repo as compared to a typescript or go project. e.g. how to do things with nx as opposed to npm run or go run -->
+
 ### Why polyglot?
 
 Different languages have different strengths. It makes more sense to combine them together in microservices and client-side code than it does to try and reimplement the features and libraries present in one language in another.
