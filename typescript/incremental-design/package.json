@@ -11,7 +11,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "@types/node": "^18.16.19",
-    "nuxt": "^3.6.3",
+    "nuxt": "^3.7.4",
     "postcss-custom-media": "^10.0.0",
     "postcss-nested": "^6.0.1"
   },

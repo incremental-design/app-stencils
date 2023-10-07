@@ -60,7 +60,6 @@ const getFromBinding = (binding: { value: { path: [string, ...Array<string>]; in
     const interpolate = binding.value.interpolate
 
     if (interpolate < 0 || interpolate > path.length -1) throw new Error(`interpolate is out of range. Received ${interpolate}, should be between 0 and ${path.length -1} inclusive`)
-    console.log(path, interpolate)
     return {path, interpolate}
 }
 
