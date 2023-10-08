@@ -6,14 +6,9 @@
 </template>
 
 <script setup lang="ts">
-import {
-  CurveCommand,
-  Path,
-  PathArray,
-  PathCommand,
-  Svg,
-  SVG,
-} from "@svgdotjs/svg.js";
+// todo: consider renaming this from 'ClipPath' to 'ClipPathComp' or something because otherwise people will confuse this with <clipPath> svg element
+
+import { Path, PathArray, PathCommand, Svg, SVG } from "@svgdotjs/svg.js";
 import { Props, Emits } from "./ClipPath";
 
 const props = withDefaults(defineProps<Props>(), {
