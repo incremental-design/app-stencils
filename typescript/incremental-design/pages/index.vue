@@ -27,11 +27,11 @@
 
 <script setup lang="ts">
 const path: Ref<[string, ...Array<string>]> = ref([
-  "M 0 0 H 100 V 100 H 0 V 0 Z",
+  "M 0 0 H 50 V .5 H 0 V 0 Z",
   "M 0 0 H 200 V 50 H 0 V 0 Z",
 ]);
 
-const interpolate: Ref<number> = ref(0.65);
+const interpolate: Ref<number> = ref(0.2);
 
 const shouldLoop = ref(false);
 

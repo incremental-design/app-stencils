@@ -6,8 +6,16 @@
 </template>
 
 <script setup lang="ts">
-import { Path, PathArray, PathCommand, Svg, SVG } from "@svgdotjs/svg.js";
+import {
+  CurveCommand,
+  Path,
+  PathArray,
+  PathCommand,
+  Svg,
+  SVG,
+} from "@svgdotjs/svg.js";
 import { Props, Emits } from "./ClipPath";
+import { NuxtDevtoolsClient } from "@nuxt/devtools";
 
 const props = withDefaults(defineProps<Props>(), {
   background: "none",
@@ -36,7 +44,75 @@ onMounted(() => {
   /* path should go out of scope and get GC'd without having to do any sort of tear down */
 });
 
-/* validate paths and interpolate */
+const scalePathCommand = (
+  scaleFactor: [number, number],
+  c: PathCommand,
+): PathCommand => {
+  switch (c[0]) {
+    /* close curve */
+    case "z":
+    case "Z":
+      return c;
+    /* horizontal line */
+    case "h":
+    case "H":
+      return [c[0], c[1] * scaleFactor[0]];
+    /* vertical line */
+    case "v":
+    case "V":
+      return [c[0], c[1] * scaleFactor[1]];
+    /* diagonal line or bezier path continuation */
+    case "M":
+    case "m":
+    case "L":
+    case "l":
+    case "t":
+    case "T":
+      return [c[0], c[1] * scaleFactor[0], c[2] * scaleFactor[1]];
+    /* quadratic bezier */
+    case "S":
+    case "s":
+    case "Q":
+    case "q":
+      return [
+        c[0],
+        c[1] * scaleFactor[0],
+        c[2] * scaleFactor[1],
+        c[3] * scaleFactor[0],
+        c[4] * scaleFactor[1],
+      ];
+    /* cubic bezier */
+    case "C":
+    case "c":
+      return [
+        c[0],
+        c[1] * scaleFactor[0],
+        c[2] * scaleFactor[1],
+        c[3] * scaleFactor[0],
+        c[4] * scaleFactor[1],
+        c[5] * scaleFactor[0],
+        c[6] * scaleFactor[1],
+      ];
+    /* arc */
+    case "A":
+    case "a":
+      return [
+        c[0],
+        c[1],
+        c[2],
+        c[3],
+        c[4],
+        c[5],
+        c[6] * scaleFactor[0],
+        c[7] * scaleFactor[1],
+      ]; // https://www.nan.fyi/svg-paths/arcs
+    /* unknown type */
+    default:
+      return c;
+  }
+};
+
+/* validate and scale paths */
 const paths: ComputedRef<[PathArray, ...Array<PathArray>] | undefined> =
   computed(() => {
     if (!pathsValid(props.paths))
@@ -45,18 +121,48 @@ const paths: ComputedRef<[PathArray, ...Array<PathArray>] | undefined> =
     if (!path) return;
 
     // todo: normalize paths such that all paths have same number and type of commands ... there are several good solutions. consider using diff eq and local minima + bezier curves, and also make sure you spawn worker threads to run the calcs.
-    return props.paths.map(
+
+    // todo: use https://github.com/svgdotjs/svg.topath.js to convert any svg shape to a path
+
+    /* scale X and Y of all the paths by the 1/x and 1/y of largest bounding box */
+    const scaleFactor: [number, number] = props.paths
+      .map((ps) => {
+        const { x, y, w, h } = path.plot(ps).bbox();
+        return [
+          x + w,
+          y + h,
+        ]; /* this preserves the offset that a given curve has */ // todo: check this assumption
+      })
+      .reduce(
+        (acc, curr) => {
+          return [
+            acc[0] >= curr[0] ? acc[0] : curr[0],
+            acc[1] >= curr[1] ? acc[1] : curr[1],
+          ];
+        },
+        [0, 0],
+      )
+      .map((max) => 1 / max) as [number, number];
+
+    const p = props.paths.map(
       (ps) =>
         path
           .plot(ps)
           .array()
-          .map((pc) => pc.map((c) => c) as PathCommand) as PathArray,
+          .map((pc) => {
+            const pcClone = pc.map((c) => c) as PathCommand;
+            return scalePathCommand(scaleFactor, pcClone);
+          }) as PathArray,
     ) as [
       PathArray,
       ...Array<PathArray>,
     ]; /* deep clone to ensure that path arrays are not references to path's current path array */
+
+    console.log(p);
+    return p;
   });
 
+/* validate interpolate */
 const interpolate: ComputedRef<number> = computed(() => {
   if (!paths.value) return props.interpolate;
   if (props.interpolate < 0 || props.interpolate > paths.value.length - 1)
@@ -129,7 +235,6 @@ const pathEl: Ref<SVGElement | null> =
   ref(null); /* for some dumb reason vue can't ref nested SVG els??? */
 
 onMounted(() => {
-  console.log(svg.value);
   if (!svg.value) return;
   const clipPathEl = svg.value
     .appendChild(document.createElementNS("http://www.w3.org/2000/svg", "defs"))
@@ -138,6 +243,7 @@ onMounted(() => {
     );
 
   clipPathEl.setAttribute("id", id.value);
+  clipPathEl.setAttribute("clipPathUnits", "objectBoundingBox");
 
   pathEl.value = clipPathEl.appendChild(
     document.createElementNS("http://www.w3.org/2000/svg", "path"),
