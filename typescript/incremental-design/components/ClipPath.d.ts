@@ -14,7 +14,7 @@ export interface Props {
   }
 
 /**
- * when the path changes, emit an event containing the old and new path, i.e.:
+ * when the path changes, emit an event containing the new path, i.e.:
  *
  * ```vue
  * <template>
@@ -23,19 +23,18 @@ export interface Props {
  * 
  * <script>
  * 
- *  const onPathChange = (paths: Exclude<{old: string | null, new: string | null}, {old: null, new: null}>) => {
- *    // do something with old and new paths
+ *  const onPathChange = (path: string) => {
+ *    // do something with new path
  *  }
  * 
  * </script>
  * ```
+ * 
+ * It is up to you to keep track of the previous path
  */
 export interface Emits {
     (
       e: "pathChange",
-      p: Exclude<
-        { old: string | null; new: string | null },
-        { old: null; new: null }
-      >,
+      p: string,
     ): void;
   }

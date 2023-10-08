@@ -1,6 +1,6 @@
 <template>
   <div :class="cp.container">
-    <slot name="default"></slot>
+    <slot name="default" :clipPath="cpChild"></slot>
     <svg ref="svg" width="0" height="0"></svg>
   </div>
 </template>
@@ -15,7 +15,6 @@ import {
   SVG,
 } from "@svgdotjs/svg.js";
 import { Props, Emits } from "./ClipPath";
-import { NuxtDevtoolsClient } from "@nuxt/devtools";
 
 const props = withDefaults(defineProps<Props>(), {
   background: "none",
@@ -26,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
 const emit = defineEmits<Emits>();
 
 interface Slots {
-  default(props: any): any; // todo: pass curr path as prop
+  default(props: { clipPath: string }): any; // todo: pass curr path as prop
 }
 
 const slots = defineSlots<Slots>();
@@ -144,7 +143,7 @@ const paths: ComputedRef<[PathArray, ...Array<PathArray>] | undefined> =
       )
       .map((max) => 1 / max) as [number, number];
 
-    const p = props.paths.map(
+    return props.paths.map(
       (ps) =>
         path
           .plot(ps)
@@ -157,9 +156,6 @@ const paths: ComputedRef<[PathArray, ...Array<PathArray>] | undefined> =
       PathArray,
       ...Array<PathArray>,
     ]; /* deep clone to ensure that path arrays are not references to path's current path array */
-
-    console.log(p);
-    return p;
   });
 
 /* validate interpolate */
@@ -254,11 +250,21 @@ onBeforeUnmount(() => {
   document.removeChild(svg.value as HTMLElement); // todo: see if vue tears down the appended children of svg element without this
 });
 
+const cpChild = ref("");
+
 /* and finally, set the path of pathEl */
 watchEffect(() => {
   if (!pathEl.value || !clipPath.value) return;
   pathEl.value.setAttribute("d", clipPath.value);
+  /* don't forget to trigger path change event and pass the path to scoped slot as well */
+  emit("pathChange", clipPath.value);
+  cpChild.value = clipPath.value; // todo: see if we can avoid duplicating this reactive variable with watchEffect flush option. see: https://vuejs.org/api/reactivity-core.html#watcheffect
 });
+
+// watch(clipPath, (curr, prev) => {
+//   if (!pathEl.value || !clipPath) return;
+//   emit("pathChange", { old: prev || null, new: curr || null });
+// });
 </script>
 
 <style module="cp">
