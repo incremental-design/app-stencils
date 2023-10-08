@@ -270,6 +270,7 @@ watchEffect(() => {
 <style module="cp">
 .container {
   background: v-bind(background);
+  background-size: cover;
   clip-path: v-bind(url);
 }
 </style>
