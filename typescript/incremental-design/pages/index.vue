@@ -6,7 +6,16 @@
   <HeroSustainableGrowth
     :class="hero.sustainableGrowth"
   ></HeroSustainableGrowth>
-  <div v-clip-path="{ path, interpolate }" :class="hero.trustGap"></div>
+  <ClipPath
+    background="purple"
+    :interpolate="interpolate"
+    :paths="path"
+    :class="hero.trustGap"
+  >
+    <template #default>
+      <div></div>
+    </template>
+  </ClipPath>
   <div :class="hero.floatingIsland"></div>
   <TestLevel :class="hero.sizzle"></TestLevel>
   <div :class="hero.step"></div>
@@ -25,14 +34,6 @@ const path: Ref<[string, ...Array<string>]> = ref([
 const interpolate: Ref<number> = ref(0.65);
 
 const shouldLoop = ref(false);
-
-// watchEffect(() => {
-//   if (!shouldLoop.value) return;
-//   window.requestAnimationFrame((t) => {
-//     interpolate.value = Math.sin(t / 1000) / 2 + 0.5;
-//     console.log(interpolate.value);
-//   });
-// });
 
 onMounted(() => {
   shouldLoop.value = true;
